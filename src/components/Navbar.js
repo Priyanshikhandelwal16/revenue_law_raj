@@ -41,6 +41,7 @@ export default function Navbar() {
   return (
     <div className="header-wrapper" style={{ boxShadow: scrolled ? 'var(--shadow-md)' : 'none' }}>
       <nav className="navbar">
+        {/* Left Side: Logo and Text */}
         <Link href="/" className="logo-container" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.2rem 0' }}>
           <img 
             src="/images/logo.png" 
@@ -49,7 +50,9 @@ export default function Navbar() {
             style={{ 
               display: 'block', 
               borderRadius: '4px',
-              border: '1px solid var(--border-color)'
+              border: '1px solid var(--border-color)',
+              height: '42px',
+              width: 'auto'
             }} 
           />
           <div className="logo-text-group" style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.1' }}>
@@ -62,87 +65,72 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Menu */}
+        {/* Middle: Sections (Desktop Menu arranged in clean dropdowns) */}
         <div className="nav-links">
-          <Link href="/" className="nav-link">Home</Link>
+          <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`}>Home</Link>
+          <Link href="/about" className={`nav-link ${pathname === '/about' ? 'active' : ''}`}>About</Link>
           
-          <div 
-            style={{ position: 'static' }}
-            onMouseEnter={() => setIsMegaMenuOpen(true)}
-            onMouseLeave={() => setIsMegaMenuOpen(false)}
-          >
-            <div className="nav-link mega-menu-trigger" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-              Research Portal <ChevronDown size={14} />
-            </div>
-            
-            {/* Mega Menu */}
-            <div className={`mega-menu ${isMegaMenuOpen ? 'visible' : ''}`} style={{ opacity: isMegaMenuOpen ? 1 : 0, visibility: isMegaMenuOpen ? 'visible' : 'hidden' }}>
-              <div className="mega-menu-grid">
-                <div className="mega-menu-column">
-                  <h4><Gavel size={14} style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} /> Revenue Judgments</h4>
-                  <ul style={{ marginTop: '0.5rem' }}>
-                    <li><Link href="/judgments?court=board-of-revenue">Board of Revenue</Link></li>
-                    <li><Link href="/judgments?court=revenue-appeals">Revenue Appeals Commissioner</Link></li>
-                    <li><Link href="/judgments?court=collector">Collector Courts</Link></li>
-                    <li><Link href="/judgments?court=sdo">SDO & Tehsildar Courts</Link></li>
-                  </ul>
-                </div>
-                <div className="mega-menu-column">
-                  <h4><BookOpen size={14} style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} /> Statutory Laws</h4>
-                  <ul style={{ marginTop: '0.5rem' }}>
-                    <li><Link href="/laws/rajasthan-land-revenue-act-1956">Land Revenue Act, 1956</Link></li>
-                    <li><Link href="/laws/rajasthan-tenancy-act-1955">Rajasthan Tenancy Act, 1955</Link></li>
-                    <li><Link href="/laws?category=rules">Revenue Rules & Gazettes</Link></li>
-                    <li><Link href="/laws?category=amendments">Recent Amendments</Link></li>
-                  </ul>
-                </div>
-                <div className="mega-menu-column">
-                  <h4><FileText size={14} style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} /> Land Conversion</h4>
-                  <ul style={{ marginTop: '0.5rem' }}>
-                    <li><Link href="/articles/land-conversion-90-a">Section 90-A Rules</Link></li>
-                    <li><Link href="/articles/agricultural-to-non-agricultural">Agri to Non-Agri Process</Link></li>
-                    <li><Link href="/articles/panchayat-patta-regularisation">Patta Regularisation</Link></li>
-                    <li><Link href="/articles/urban-land-conversion-rules">Urban Conversion Guidelines</Link></li>
-                  </ul>
-                </div>
-                <div className="mega-menu-column">
-                  <h4><HelpCircle size={14} style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} /> Resources</h4>
-                  <ul style={{ marginTop: '0.5rem' }}>
-                    <li><Link href="/notifications">Circulars & Notifications</Link></li>
-                    <li><Link href="/downloads">Forms & Downloads</Link></li>
-                    <li><Link href="/contact">Ask an Expert</Link></li>
-                  </ul>
-                </div>
-              </div>
+          {/* Dropdown 1: Revenue Laws */}
+          <div className="nav-item-dropdown">
+            <span className={`nav-link ${['/laws', '/working-of-revenue-law', '/types-of-cases', '/important-concepts', '/land-conversion-under-sec-90-a'].includes(pathname) ? 'active' : ''}`}>
+              Revenue Laws <ChevronDown size={12} />
+            </span>
+            <div className="dropdown-menu">
+              <Link href="/laws" className="dropdown-item">Revenue Law in Raj</Link>
+              <Link href="/working-of-revenue-law" className="dropdown-item">Working of Revenue Law in Raj</Link>
+              <Link href="/types-of-cases" className="dropdown-item">Types of Cases in Revenue Law</Link>
+              <Link href="/important-concepts" className="dropdown-item">Important Concepts</Link>
+              <Link href="/land-conversion-under-sec-90-a" className="dropdown-item">Land Conversion under Sec-90-A</Link>
             </div>
           </div>
 
-          <Link href="/judgments" className="nav-link">Judgments</Link>
-          <Link href="/laws" className="nav-link">Revenue Laws</Link>
-          <Link href="/notifications" className="nav-link">Notifications</Link>
-          <Link href="/downloads" className="nav-link">Downloads</Link>
-          <Link href="/articles" className="nav-link">Articles & News</Link>
-          <Link href="/about" className="nav-link">About</Link>
-          <Link href="/contact" className="nav-link">Contact</Link>
+          {/* Dropdown 2: Courts & Judgments */}
+          <div className="nav-item-dropdown">
+            <span className={`nav-link ${['/hierarchy-of-courts', '/judgments'].includes(pathname) ? 'active' : ''}`}>
+              Courts & Judgments <ChevronDown size={12} />
+            </span>
+            <div className="dropdown-menu">
+              <Link href="/hierarchy-of-courts" className="dropdown-item">Hierarchy of Courts</Link>
+              <Link href="/judgments" className="dropdown-item">Judgements</Link>
+            </div>
+          </div>
 
-          <button className="search-icon-btn" onClick={() => setIsSearchOpen(true)}>
-            <Search size={20} />
-          </button>
+          {/* Dropdown 3: Resources */}
+          <div className="nav-item-dropdown">
+            <span className={`nav-link ${['/notifications', '/glossary'].includes(pathname) ? 'active' : ''}`}>
+              Resources <ChevronDown size={12} />
+            </span>
+            <div className="dropdown-menu">
+              <Link href="/notifications" className="dropdown-item">Important Notifications</Link>
+              <Link href="/glossary" className="dropdown-item">Glossary of Revenue Law</Link>
+            </div>
+          </div>
+
+          <Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}>Contact Form</Link>
         </div>
 
-        {/* Mobile menu toggle */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }} className="no-print">
-          <button className="search-icon-btn mobile-only-search" onClick={() => setIsSearchOpen(true)}>
-            <Search size={22} style={{ color: 'var(--primary-blue)' }} />
+        {/* Right Side: Actions (Search and Mobile Toggle) */}
+        <div className="nav-actions no-print">
+          <button className="search-icon-btn" onClick={() => setIsSearchOpen(true)} title="Search Database">
+            <Search size={18} />
           </button>
-          {/* Workaround display logic for responsive menu */}
-          <span className="mobile-toggle-btn-holder" style={{ cursor: 'pointer' }} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X size={26} className="mobile-only" style={{ display: 'none' }} /> : <Menu size={26} className="mobile-only" style={{ display: 'none' }} />}
+          
+          {/* Hamburger Menu Icon (Mobile Only) */}
+          <span 
+            className="mobile-toggle-btn-holder" 
+            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <X size={24} className="mobile-only" style={{ display: 'block', color: 'var(--primary-blue)' }} />
+            ) : (
+              <Menu size={24} className="mobile-only" style={{ display: 'block', color: 'var(--primary-blue)' }} />
+            )}
           </span>
         </div>
       </nav>
 
-      {/* Styled Responsive Overlay CSS & Mobile Toggle Block */}
+      {/* Styled Responsive Overlay CSS */}
       <style jsx global>{`
         @media (max-width: 1023px) {
           .nav-links {
@@ -151,14 +139,8 @@ export default function Navbar() {
           .mobile-only {
             display: block !important;
           }
-          .mobile-only-search {
-            display: block !important;
-          }
         }
         .mobile-toggle-btn-holder {
-          display: none;
-        }
-        .mobile-only-search {
           display: none;
         }
         @media (max-width: 1023px) {
@@ -168,7 +150,7 @@ export default function Navbar() {
         }
       `}</style>
 
-      {/* Mobile Menu Content */}
+      {/* Mobile Menu Content (All 12 items listed clearly with a scroll container) */}
       {isMobileMenuOpen && (
         <div style={{
           position: 'fixed',
@@ -182,25 +164,31 @@ export default function Navbar() {
           zIndex: 98,
           display: 'flex',
           flexDirection: 'column',
-          gap: '1rem'
+          gap: '0.75rem',
+          maxHeight: 'calc(100vh - 100px)',
+          overflowY: 'auto'
         }} className="no-print">
-          <Link href="/" className="nav-link active" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-          <Link href="/judgments" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>Judgments</Link>
-          <Link href="/laws" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>Revenue Laws</Link>
-          <Link href="/notifications" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>Notifications</Link>
-          <Link href="/downloads" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>Downloads</Link>
-          <Link href="/articles" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>Articles & News</Link>
-          <Link href="/about" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
-          <Link href="/contact" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
+          <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+          <Link href="/about" className={`nav-link ${pathname === '/about' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>About</Link>
+          <Link href="/laws" className={`nav-link ${pathname === '/laws' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Revenue Law in Raj</Link>
+          <Link href="/working-of-revenue-law" className={`nav-link ${pathname === '/working-of-revenue-law' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Working of Revenue Law in Raj</Link>
+          <Link href="/hierarchy-of-courts" className={`nav-link ${pathname === '/hierarchy-of-courts' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Hierarchy of Courts</Link>
+          <Link href="/types-of-cases" className={`nav-link ${pathname === '/types-of-cases' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Types of Cases in Revenue Law</Link>
+          <Link href="/judgments" className={`nav-link ${pathname === '/judgments' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Judgements</Link>
+          <Link href="/glossary" className={`nav-link ${pathname === '/glossary' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Glossary of Revenue Law</Link>
+          <Link href="/notifications" className={`nav-link ${pathname === '/notifications' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Important Notifications</Link>
+          <Link href="/important-concepts" className={`nav-link ${pathname === '/important-concepts' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Important Concepts</Link>
+          <Link href="/land-conversion-under-sec-90-a" className={`nav-link ${pathname === '/land-conversion-under-sec-90-a' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Land Conversion under Sec-90-A</Link>
+          <Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Contact Form</Link>
           
           <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
             <input 
               type="text" 
-              placeholder="Search platform..." 
+              placeholder="Search database..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="form-control"
-              style={{ padding: '0.5rem' }}
+              style={{ padding: '0.5rem', flexGrow: 1 }}
             />
             <button type="submit" className="btn-primary" style={{ padding: '0.5rem 1rem' }}>Search</button>
           </form>
