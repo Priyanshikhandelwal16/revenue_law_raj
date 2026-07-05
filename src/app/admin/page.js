@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Scale, Key, LogOut, LayoutDashboard, Newspaper, Gavel, BookOpen, 
-  Bell, Download, MessageSquare, HelpCircle, User, Plus, Edit, Trash, Check, CheckSquare, Eye 
+  Bell, Download, MessageSquare, HelpCircle, User, Plus, Edit, Trash, Check, CheckSquare, Eye, FileText, Image, RefreshCw, Shield, Database 
 } from 'lucide-react';
 import RichTextEditor from '@/components/RichTextEditor';
 
@@ -27,6 +27,11 @@ export default function AdminDashboard() {
   const [comments, setComments] = useState([]);
   const [queries, setQueries] = useState([]);
   const [glossary, setGlossary] = useState([]);
+  const [settings, setSettings] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [media, setMedia] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const [mediaSearch, setMediaSearch] = useState('');
 
   // Form Editing / Creation State
   const [editingItem, setEditingItem] = useState(null); // { type, data } or { type: 'new' }
@@ -86,7 +91,7 @@ export default function AdminDashboard() {
     try {
       if (activeTab === 'overview') {
         // Fetch counters
-        const [rArt, rJud, rLaw, rNot, rDwn, rCom, rQue, rGlo] = await Promise.all([
+        const [rArt, rJud, rLaw, rNot, rDwn, rCom, rQue, rGlo, rSet, rUsr] = await Promise.all([
           fetch('/api/articles'),
           fetch('/api/judgments'),
           fetch('/api/laws'),
@@ -94,7 +99,9 @@ export default function AdminDashboard() {
           fetch('/api/downloads'),
           fetch('/api/comments?adminMode=true'),
           fetch('/api/queries'),
-          fetch('/api/glossary')
+          fetch('/api/glossary'),
+          fetch('/api/settings'),
+          fetch('/api/users')
         ]);
         setArticles(await rArt.json());
         setJudgments(await rJud.json());
@@ -104,6 +111,8 @@ export default function AdminDashboard() {
         setComments(await rCom.json());
         setQueries(await rQue.json());
         setGlossary(await rGlo.json());
+        setSettings(await rSet.json());
+        setUsers(await rUsr.json());
       } else if (activeTab === 'articles') {
         const res = await fetch('/api/articles');
         setArticles(await res.json());
@@ -128,6 +137,15 @@ export default function AdminDashboard() {
       } else if (activeTab === 'glossary') {
         const res = await fetch('/api/glossary');
         setGlossary(await res.json());
+      } else if (activeTab === 'settings' || activeTab === 'homepage_cms' || activeTab === 'pages_cms' || activeTab === 'policies_cms') {
+        const res = await fetch('/api/settings');
+        setSettings(await res.json());
+      } else if (activeTab === 'media_library') {
+        const res = await fetch('/api/media');
+        setMedia(await res.json());
+      } else if (activeTab === 'users') {
+        const res = await fetch('/api/users');
+        setUsers(await res.json());
       }
     } catch (err) {
       console.error("Failed to load dashboard data", err);
@@ -249,7 +267,7 @@ export default function AdminDashboard() {
       <div className="layout-container" style={{ padding: '6rem 0', maxWidth: '420px' }}>
         <div style={{ backgroundColor: 'white', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '2.5rem', boxShadow: 'var(--shadow-lg)' }}>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <img src="/images/logo.png" alt="Revenue Law Raj Logo" className="brand-logo-img-large" style={{ margin: '0 auto 0.5rem auto', display: 'block' }} />
+            <img src="/images/new logo.png" alt="Revenue Law Raj Logo" className="brand-logo-img-large" style={{ margin: '0 auto 0.5rem auto', display: 'block', height: '90px', width: 'auto', borderRadius: '6px' }} />
             <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.5rem', fontWeight: 500 }}>Admin Credentials Required</p>
           </div>
 
@@ -300,7 +318,7 @@ export default function AdminDashboard() {
       {/* Sidebar Navigation */}
       <aside className="admin-sidebar">
         <div className="admin-logo" style={{ padding: '0.5rem 0', marginBottom: '2rem', textAlign: 'center' }}>
-          <img src="/images/logo.png" alt="Revenue Law Raj" className="brand-logo-img" style={{ filter: 'brightness(0) invert(1)', display: 'block', margin: '0 auto' }} />
+          <img src="/images/new logo.png" alt="Revenue Law Raj" className="brand-logo-img" style={{ display: 'block', margin: '0 auto', height: '60px', width: 'auto', borderRadius: '4px' }} />
           <div style={{ fontSize: '0.65rem', color: 'var(--accent-gold)', marginTop: '0.5rem', letterSpacing: '1.5px', fontWeight: 600 }}>ADMIN CONSOLE</div>
         </div>
         <ul className="admin-nav">
@@ -347,6 +365,41 @@ export default function AdminDashboard() {
           <li className={`admin-nav-item ${activeTab === 'glossary' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('glossary'); setEditingItem(null); }}>
               <Scale size={16} /> Legal Glossary
+            </a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`}>
+            <a href="#" onClick={() => { setActiveTab('settings'); setEditingItem(null); }}>
+              <Scale size={16} /> App Settings
+            </a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'homepage_cms' ? 'active' : ''}`}>
+            <a href="#" onClick={() => { setActiveTab('homepage_cms'); setEditingItem(null); }}>
+              <FileText size={16} style={{ color: 'var(--accent-gold)' }} /> Homepage CMS
+            </a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'pages_cms' ? 'active' : ''}`}>
+            <a href="#" onClick={() => { setActiveTab('pages_cms'); setEditingItem(null); }}>
+              <FileText size={16} /> Pages Copy CMS
+            </a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'policies_cms' ? 'active' : ''}`}>
+            <a href="#" onClick={() => { setActiveTab('policies_cms'); setEditingItem(null); }}>
+              <Shield size={16} /> Legal Policies
+            </a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'media_library' ? 'active' : ''}`}>
+            <a href="#" onClick={() => { setActiveTab('media_library'); setEditingItem(null); }}>
+              <Image size={16} /> Media Library
+            </a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'backup_restore' ? 'active' : ''}`}>
+            <a href="#" onClick={() => { setActiveTab('backup_restore'); setEditingItem(null); }}>
+              <RefreshCw size={16} /> Backup & Restore
+            </a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'users' ? 'active' : ''}`}>
+            <a href="#" onClick={() => { setActiveTab('users'); setEditingItem(null); }}>
+              <User size={16} /> CMS Users
             </a>
           </li>
           <li className="admin-nav-item" style={{ marginTop: '3rem' }}>
@@ -646,6 +699,94 @@ export default function AdminDashboard() {
                       onChange={(text) => setFormData({ ...formData, fullText: text })} 
                     />
                   </div>
+
+                  <div className="form-group" style={{ borderTop: '2px solid var(--accent-gold)', paddingTop: '1.5rem', marginTop: '1.5rem' }}>
+                    <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', fontWeight: 600 }}>Act Sections List</h3>
+                    
+                    {formData.sections && formData.sections.length > 0 ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+                        {formData.sections.map((sec, idx) => (
+                          <div key={idx} style={{ border: '1px solid var(--border-color)', borderRadius: '6px', padding: '1rem', backgroundColor: 'var(--bg-offwhite)', position: 'relative' }}>
+                            <button 
+                              type="button" 
+                              onClick={() => {
+                                const newSecs = [...formData.sections];
+                                newSecs.splice(idx, 1);
+                                setFormData({ ...formData, sections: newSecs });
+                              }}
+                              className="editor-btn" 
+                              style={{ color: 'red', position: 'absolute', top: '0.75rem', right: '0.75rem', border: 'none', background: 'none', cursor: 'pointer' }} 
+                              title="Delete Section"
+                            >
+                              <Trash size={16} />
+                            </button>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: '1rem', marginBottom: '0.5rem', maxWidth: '90%' }}>
+                              <div>
+                                <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>Sec Number</label>
+                                <input 
+                                  type="text" 
+                                  value={sec.sectionNumber || ''} 
+                                  onChange={(e) => {
+                                    const newSecs = [...formData.sections];
+                                    newSecs[idx].sectionNumber = e.target.value;
+                                    setFormData({ ...formData, sections: newSecs });
+                                  }}
+                                  className="form-control" 
+                                  placeholder="e.g. 90-A"
+                                  style={{ padding: '0.35rem' }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>Section Title</label>
+                                <input 
+                                  type="text" 
+                                  value={sec.title || ''} 
+                                  onChange={(e) => {
+                                    const newSecs = [...formData.sections];
+                                    newSecs[idx].title = e.target.value;
+                                    setFormData({ ...formData, sections: newSecs });
+                                  }}
+                                  className="form-control" 
+                                  placeholder="e.g. Use of agricultural land..."
+                                  style={{ padding: '0.35rem' }}
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>Section Content</label>
+                              <textarea 
+                                rows={3}
+                                value={sec.content || ''} 
+                                onChange={(e) => {
+                                    const newSecs = [...formData.sections];
+                                    newSecs[idx].content = e.target.value;
+                                    setFormData({ ...formData, sections: newSecs });
+                                }}
+                                className="form-control" 
+                                placeholder="Enter full statutory clause..."
+                                style={{ padding: '0.35rem' }}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1rem' }}>No sections defined for this act yet.</p>
+                    )}
+
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        const newSecs = formData.sections ? [...formData.sections] : [];
+                        newSecs.push({ sectionNumber: '', title: '', content: '' });
+                        setFormData({ ...formData, sections: newSecs });
+                      }}
+                      className="btn-outline" 
+                      style={{ padding: '0.5rem 1rem', fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}
+                    >
+                      <Plus size={14} /> Add New Section
+                    </button>
+                  </div>
                 </>
               )}
 
@@ -796,6 +937,87 @@ export default function AdminDashboard() {
                 </>
               )}
 
+              {/* Settings form */}
+              {editingItem.type === 'settings' && (
+                <>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div className="form-group">
+                      <label>Setting Key * (e.g. 'site_title')</label>
+                      <input 
+                        type="text" 
+                        value={formData.key || ''} 
+                        onChange={(e) => setFormData({ ...formData, key: e.target.value })} 
+                        className="form-control" 
+                        required 
+                        disabled={!editingItem.isNew}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Setting Value *</label>
+                      <input 
+                        type="text" 
+                        value={formData.value || ''} 
+                        onChange={(e) => setFormData({ ...formData, value: e.target.value })} 
+                        className="form-control" 
+                        required 
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* Users form */}
+              {editingItem.type === 'users' && (
+                <>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div className="form-group">
+                      <label>Full Name *</label>
+                      <input 
+                        type="text" 
+                        value={formData.name || ''} 
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+                        className="form-control" 
+                        required 
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Email Address *</label>
+                      <input 
+                        type="email" 
+                        value={formData.email || ''} 
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })} 
+                        className="form-control" 
+                        required 
+                      />
+                    </div>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div className="form-group">
+                      <label>Password {editingItem.isNew ? '*' : '(Leave blank to keep unchanged)'}</label>
+                      <input 
+                        type="password" 
+                        value={formData.password || ''} 
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })} 
+                        className="form-control" 
+                        required={editingItem.isNew}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Access Role *</label>
+                      <select 
+                        value={formData.role || 'admin'} 
+                        onChange={(e) => setFormData({ ...formData, role: e.target.value })} 
+                        className="form-control"
+                        required
+                      >
+                        <option value="admin">Admin</option>
+                        <option value="editor">Editor</option>
+                      </select>
+                    </div>
+                  </div>
+                </>
+              )}
+
               {/* Buttons */}
               <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
                 <button type="submit" className="btn-primary" style={{ padding: '0.75rem 2rem' }}>Save Record</button>
@@ -828,6 +1050,14 @@ export default function AdminDashboard() {
                   <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
                     <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Inquiry Tickets</h3>
                     <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)' }}>{queries.length}</p>
+                  </div>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>App Settings</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)' }}>{settings.length}</p>
+                  </div>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>CMS Users</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)' }}>{users.length}</p>
                   </div>
                 </div>
 
@@ -1162,6 +1392,491 @@ export default function AdminDashboard() {
                         <td style={{ display: 'flex', gap: '0.5rem' }}>
                           <button onClick={() => startEdit('glossary', g)} className="editor-btn" title="Edit"><Edit size={14} /></button>
                           <button onClick={() => handleDelete('glossary', g._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {/* Tab: Settings */}
+            {activeTab === 'settings' && (
+              <div className="admin-card">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                  <h2>Global Configurations ({settings.length})</h2>
+                  <button onClick={() => startCreate('settings')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                    <Plus size={16} /> Add Setting
+                  </button>
+                </div>
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Key</th>
+                      <th>Value</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {settings.map(s => (
+                      <tr key={s._id}>
+                        <td><strong>{s.key}</strong></td>
+                        <td>{typeof s.value === 'object' ? JSON.stringify(s.value) : String(s.value)}</td>
+                        <td style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button onClick={() => startEdit('settings', s)} className="editor-btn" title="Edit"><Edit size={14} /></button>
+                          <button onClick={() => handleDelete('settings', s._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {/* Tab: Homepage CMS */}
+            {activeTab === 'homepage_cms' && (() => {
+              const settingItem = settings.find(s => s.key === 'homepage_config') || { value: {} };
+              const val = settingItem.value || {};
+              
+              const saveHomepageConfig = async (e) => {
+                e.preventDefault();
+                const form = e.target;
+                const updated = {
+                  heroTitle: form.heroTitle.value,
+                  heroSubtitle: form.heroSubtitle.value,
+                  heroDesc: form.heroDesc.value,
+                  heroButtonText: form.heroButtonText.value,
+                  heroButtonUrl: form.heroButtonUrl.value,
+                  heroSecButtonText: form.heroSecButtonText.value,
+                  heroSecButtonUrl: form.heroSecButtonUrl.value,
+                  heroImage: form.heroImage.value,
+                  faqs: val.faqs || []
+                };
+                
+                const res = await fetch('/api/settings', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ key: 'homepage_config', value: updated })
+                });
+                if (res.ok) {
+                  alert('Homepage CMS updated successfully!');
+                  loadDashboardData();
+                } else {
+                  alert('Failed to update homepage CMS');
+                }
+              };
+
+              return (
+                <div className="admin-card">
+                  <h2>Homepage Hero & Configurations</h2>
+                  <form onSubmit={saveHomepageConfig} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+                    <div className="form-group">
+                      <label>Hero Title</label>
+                      <input type="text" name="heroTitle" defaultValue={val.heroTitle || ''} className="form-control" required />
+                    </div>
+                    <div className="form-group">
+                      <label>Hero Subtitle</label>
+                      <input type="text" name="heroSubtitle" defaultValue={val.heroSubtitle || ''} className="form-control" required />
+                    </div>
+                    <div className="form-group">
+                      <label>Hero Description</label>
+                      <textarea name="heroDesc" defaultValue={val.heroDesc || ''} className="form-control" rows={3} required />
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                      <div className="form-group">
+                        <label>Primary Button Text</label>
+                        <input type="text" name="heroButtonText" defaultValue={val.heroButtonText || ''} className="form-control" />
+                      </div>
+                      <div className="form-group">
+                        <label>Primary Button URL</label>
+                        <input type="text" name="heroButtonUrl" defaultValue={val.heroButtonUrl || ''} className="form-control" />
+                      </div>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                      <div className="form-group">
+                        <label>Secondary Button Text</label>
+                        <input type="text" name="heroSecButtonText" defaultValue={val.heroSecButtonText || ''} className="form-control" />
+                      </div>
+                      <div className="form-group">
+                        <label>Secondary Button URL</label>
+                        <input type="text" name="heroSecButtonUrl" defaultValue={val.heroSecButtonUrl || ''} className="form-control" />
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label>Hero Graphic Image URL</label>
+                      <input type="text" name="heroImage" defaultValue={val.heroImage || ''} className="form-control" />
+                    </div>
+                    <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start', padding: '0.6rem 2rem' }}>Save Homepage CMS</button>
+                  </form>
+
+                  <div style={{ marginTop: '2.5rem', borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem' }}>
+                    <h3>Manage Homepage FAQs ({val.faqs?.length || 0})</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem' }}>
+                      {(val.faqs || []).map((faq, idx) => (
+                        <div key={idx} style={{ padding: '1rem', border: '1px solid var(--border-color)', borderRadius: '6px', backgroundColor: 'var(--bg-offwhite)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <strong>Q: {faq.question}</strong>
+                            <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>A: {faq.answer}</p>
+                          </div>
+                          <button onClick={async () => {
+                            if (confirm('Delete this FAQ?')) {
+                              const updatedFaqs = val.faqs.filter((_, i) => i !== idx);
+                              await fetch('/api/settings', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ key: 'homepage_config', value: { ...val, faqs: updatedFaqs } })
+                              });
+                              loadDashboardData();
+                            }
+                          }} className="editor-btn" style={{ color: 'red' }}><Trash size={14} /></button>
+                        </div>
+                      ))}
+                    </div>
+
+                    <form onSubmit={async (e) => {
+                      e.preventDefault();
+                      const form = e.target;
+                      const newFaq = { question: form.question.value, answer: form.answer.value };
+                      const updatedFaqs = [...(val.faqs || []), newFaq];
+                      
+                      const res = await fetch('/api/settings', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ key: 'homepage_config', value: { ...val, faqs: updatedFaqs } })
+                      });
+                      if (res.ok) {
+                        form.reset();
+                        loadDashboardData();
+                      }
+                    }} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1.5rem', padding: '1rem', border: '1px solid var(--border-color)', borderRadius: '6px' }}>
+                      <h4>Add New FAQ</h4>
+                      <input type="text" name="question" placeholder="Question Text" className="form-control" required />
+                      <textarea name="answer" placeholder="Answer Text" className="form-control" rows={2} required />
+                      <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>Add FAQ</button>
+                    </form>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Tab: Pages Copy CMS */}
+            {activeTab === 'pages_cms' && (() => {
+              const aboutConfigSetting = settings.find(s => s.key === 'about_config') || { value: {} };
+              const contactConfigSetting = settings.find(s => s.key === 'contact_config') || { value: {} };
+              
+              const aboutVal = aboutConfigSetting.value || {};
+              const contactVal = contactConfigSetting.value || {};
+
+              const savePagesCMS = async (e) => {
+                e.preventDefault();
+                const form = e.target;
+
+                await fetch('/api/settings', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    key: 'about_config',
+                    value: {
+                      missionTitle: form.missionTitle.value,
+                      missionText: form.missionText.value
+                    }
+                  })
+                });
+
+                await fetch('/api/settings', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    key: 'contact_config',
+                    value: {
+                      phone: form.phone.value,
+                      email: form.email.value,
+                      address: form.address.value,
+                      socials: contactVal.socials || {}
+                    }
+                  })
+                });
+
+                alert('Pages Copy CMS updated successfully!');
+                loadDashboardData();
+              };
+
+              return (
+                <div className="admin-card">
+                  <h2>Pages & Copy Content Manager</h2>
+                  <form onSubmit={savePagesCMS} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '1rem' }}>
+                    <div style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
+                      <h3 style={{ color: 'var(--primary-blue)', marginBottom: '1rem' }}>About Us Page Copy</h3>
+                      <div className="form-group">
+                        <label>Mission Title</label>
+                        <input type="text" name="missionTitle" defaultValue={aboutVal.missionTitle || ''} className="form-control" required />
+                      </div>
+                      <div className="form-group" style={{ marginTop: '0.75rem' }}>
+                        <label>Mission Statement Text</label>
+                        <textarea name="missionText" defaultValue={aboutVal.missionText || ''} className="form-control" rows={4} required />
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 style={{ color: 'var(--primary-blue)', marginBottom: '1rem' }}>Contact Details & Help Desk</h3>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                        <div className="form-group">
+                          <label>Secretary Helpline</label>
+                          <input type="text" name="phone" defaultValue={contactVal.phone || ''} className="form-control" required />
+                        </div>
+                        <div className="form-group">
+                          <label>Support Email Address</label>
+                          <input type="email" name="email" defaultValue={contactVal.email || ''} className="form-control" required />
+                        </div>
+                      </div>
+                      <div className="form-group" style={{ marginTop: '0.75rem' }}>
+                        <label>Physical Office Address</label>
+                        <input type="text" name="address" defaultValue={contactVal.address || ''} className="form-control" required />
+                      </div>
+                    </div>
+
+                    <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start', padding: '0.6rem 2rem' }}>Save Pages Copy CMS</button>
+                  </form>
+                </div>
+              );
+            })()}
+
+            {/* Tab: Legal Policies */}
+            {activeTab === 'policies_cms' && (() => {
+              const legalConfigSetting = settings.find(s => s.key === 'legal_config') || { value: {} };
+              const legalVal = legalConfigSetting.value || {};
+
+              const savePolicies = async (e) => {
+                e.preventDefault();
+                const form = e.target;
+                const updated = {
+                  terms: form.terms.value,
+                  privacy: form.privacy.value,
+                  disclaimer: form.disclaimer.value
+                };
+
+                const res = await fetch('/api/settings', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ key: 'legal_config', value: updated })
+                });
+
+                if (res.ok) {
+                  alert('Legal Policies updated successfully!');
+                  loadDashboardData();
+                } else {
+                  alert('Failed to save policies');
+                }
+              };
+
+              return (
+                <div className="admin-card">
+                  <h2>Legal Copy & Disclaimer Editor</h2>
+                  <form onSubmit={savePolicies} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '1rem' }}>
+                    <div className="form-group">
+                      <label>Terms of Service (HTML format supported)</label>
+                      <textarea name="terms" defaultValue={legalVal.terms || ''} className="form-control" rows={6} required />
+                    </div>
+                    <div className="form-group">
+                      <label>Privacy Policy (HTML format supported)</label>
+                      <textarea name="privacy" defaultValue={legalVal.privacy || ''} className="form-control" rows={6} required />
+                    </div>
+                    <div className="form-group">
+                      <label>Platform Disclaimer (HTML format supported)</label>
+                      <textarea name="disclaimer" defaultValue={legalVal.disclaimer || ''} className="form-control" rows={6} required />
+                    </div>
+                    <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start', padding: '0.6rem 2rem' }}>Save Legal Policies</button>
+                  </form>
+                </div>
+              );
+            })()}
+
+            {/* Tab: Media Library */}
+            {activeTab === 'media_library' && (() => {
+
+              const handleMediaUploadSubmit = async (e) => {
+                e.preventDefault();
+                const file = e.target.mediaFile.files[0];
+                if (!file) return;
+
+                setUploading(true);
+
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = async () => {
+                  const base64Url = reader.result;
+                  const res = await fetch('/api/media', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      filename: file.name,
+                      fileType: file.type,
+                      fileSize: (file.size / 1024).toFixed(1) + ' KB',
+                      url: base64Url
+                    })
+                  });
+
+                  setUploading(false);
+                  if (res.ok) {
+                    e.target.reset();
+                    const updatedRes = await fetch('/api/media');
+                    setMedia(await updatedRes.json());
+                  } else {
+                    alert('Upload failed');
+                  }
+                };
+              };
+
+              const filteredMedia = media.filter(m => m.filename.toLowerCase().includes(mediaSearch.toLowerCase()));
+
+              return (
+                <div className="admin-card">
+                  <h2>Media Asset & PDF Library Manager</h2>
+                  
+                  <form onSubmit={handleMediaUploadSubmit} style={{ display: 'flex', gap: '1rem', alignItems: 'center', backgroundColor: 'var(--bg-offwhite)', padding: '1rem', borderRadius: '6px', border: '1px dashed var(--border-color)', margin: '1rem 0' }}>
+                    <div style={{ flexGrow: 1 }}>
+                      <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.8rem', fontWeight: 600 }}>Select Image or PDF Document:</label>
+                      <input type="file" name="mediaFile" className="form-control" accept="image/*,application/pdf" required style={{ padding: '0.35rem 0.75rem' }} />
+                    </div>
+                    <button type="submit" disabled={uploading} className="btn-primary" style={{ padding: '0.6rem 1.5rem', alignSelf: 'flex-end' }}>
+                      {uploading ? 'Uploading...' : 'Upload Asset'}
+                    </button>
+                  </form>
+
+                  <input type="text" placeholder="Search files by name..." value={mediaSearch} onChange={(e) => setMediaSearch(e.target.value)} className="form-control" style={{ margin: '1rem 0' }} />
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '1.25rem', marginTop: '1rem' }}>
+                    {filteredMedia.map(m => (
+                      <div key={m._id} style={{ border: '1px solid var(--border-color)', borderRadius: '6px', overflow: 'hidden', display: 'flex', flexDirection: 'column', backgroundColor: 'white' }}>
+                        <div style={{ height: '110px', backgroundColor: '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative' }}>
+                          {m.fileType.startsWith('image/') ? (
+                            <img src={m.url} alt={m.filename} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          ) : (
+                            <FileText size={36} style={{ color: 'var(--accent-gold)' }} />
+                          )}
+                        </div>
+                        <div style={{ padding: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.25rem', flexGrow: 1 }}>
+                          <span style={{ fontSize: '0.78rem', fontWeight: 700, wordBreak: 'break-all', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{m.filename}</span>
+                          <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{m.fileSize} · {m.fileType.split('/')[1]?.toUpperCase()}</span>
+                          
+                          <button type="button" onClick={() => {
+                            navigator.clipboard.writeText(m.url);
+                            alert('File URL copied to clipboard! You can paste this URL directly in the article or judgment editor.');
+                          }} className="btn-primary" style={{ fontSize: '0.7rem', padding: '0.25rem', marginTop: 'auto', display: 'block', textAlign: 'center', width: '100%', textDecoration: 'none' }}>
+                            Copy Link URL
+                          </button>
+
+                          <button type="button" onClick={async () => {
+                            if (confirm('Delete this file?')) {
+                              await fetch(`/api/media/${m._id}`, { method: 'DELETE' });
+                              const updatedRes = await fetch('/api/media');
+                              setMedia(await updatedRes.json());
+                            }
+                          }} className="btn-primary" style={{ fontSize: '0.7rem', padding: '0.25rem', marginTop: '0.25rem', backgroundColor: '#EF4444', border: '1px solid #EF4444', color: 'white' }}>
+                            Delete Asset
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Tab: Backup & Restore */}
+            {activeTab === 'backup_restore' && (() => {
+              const handleImportSubmit = async (e) => {
+                e.preventDefault();
+                const file = e.target.backupFile.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = async () => {
+                  try {
+                    const payload = JSON.parse(reader.result);
+                    const res = await fetch('/api/backup/restore', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(payload)
+                    });
+                    if (res.ok) {
+                      alert('Database restored successfully from backup!');
+                      loadDashboardData();
+                    } else {
+                      const data = await res.json();
+                      alert(data.error || 'Failed to restore database');
+                    }
+                  } catch (err) {
+                    alert('Invalid JSON file format.');
+                  }
+                };
+              };
+
+              return (
+                <div className="admin-card">
+                  <h2>System Backup & Restore Panel</h2>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '2rem' }}>
+                    Export your entire legal dataset (articles, judgments, bare acts, templates, circulars, media, and site configurations) to a single portable JSON file, or restore from an existing JSON dump.
+                  </p>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                    <div style={{ border: '1px solid var(--border-color)', borderRadius: '6px', padding: '1.5rem', backgroundColor: 'var(--bg-offwhite)' }}>
+                      <h3>Export & Backup Data</h3>
+                      <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', margin: '0.5rem 0 1.5rem 0' }}>Download a complete snapshot of all collections and files in the database.</p>
+                      <a href="/api/backup/export" className="btn-primary" style={{ display: 'inline-block', textDecoration: 'none', padding: '0.6rem 1.5rem' }}>
+                        Download Backup JSON
+                      </a>
+                    </div>
+
+                    <div style={{ border: '1px solid var(--border-color)', borderRadius: '6px', padding: '1.5rem', backgroundColor: 'var(--bg-offwhite)' }}>
+                      <h3>Restore Database from File</h3>
+                      <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', margin: '0.5rem 0 1.5rem 0' }}>Warning: Restoring will overwrite all existing records in the database.</p>
+                      <form onSubmit={handleImportSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        <input type="file" name="backupFile" accept=".json" className="form-control" required style={{ padding: '0.35rem' }} />
+                        <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start', backgroundColor: '#EF4444', borderColor: '#EF4444' }}>
+                          Upload & Restore Backup
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Tab: Users */}
+            {activeTab === 'users' && (
+              <div className="admin-card">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                  <h2>Administrative Users ({users.length})</h2>
+                  <button onClick={() => startCreate('users')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                    <Plus size={16} /> Create User
+                  </button>
+                </div>
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Created At</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map(u => (
+                      <tr key={u._id}>
+                        <td><strong>{u.name}</strong></td>
+                        <td>{u.email}</td>
+                        <td>
+                          <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: u.role === 'admin' ? '#EBF3FC' : '#F1F5F9', color: u.role === 'admin' ? 'var(--primary-blue)' : 'var(--text-muted)' }}>
+                            {u.role}
+                          </span>
+                        </td>
+                        <td>{new Date(u.createdAt).toLocaleDateString()}</td>
+                        <td style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button onClick={() => startEdit('users', u)} className="editor-btn" title="Edit"><Edit size={14} /></button>
+                          <button onClick={() => handleDelete('users', u._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
                         </td>
                       </tr>
                     ))}

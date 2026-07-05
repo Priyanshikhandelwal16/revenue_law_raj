@@ -18,6 +18,13 @@ const JudgmentSchema = new mongoose.Schema({
   views: { type: Number, default: 0 },
   seoTitle: { type: String },
   seoDescription: { type: String },
+  seoKeywords: { type: String },
+  isPinned: { type: Boolean, default: false },
+  scheduledPublishDate: { type: Date },
+  relatedJudgments: [{ type: String }], // Array of matching citation strings or IDs
+  relatedArticles: [{ type: String }], // Array of matching article slugs or IDs
+  tags: [{ type: String }],
+  category: { type: String, default: 'Land Laws' },
   createdAt: { type: Date, default: Date.now },
 });
 

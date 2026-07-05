@@ -95,21 +95,33 @@ function LawsContent() {
   }) || [];
 
   return (
-    <div className="layout-container" style={{ padding: '3rem 1.5rem' }}>
-      <div className="layout-with-sidebar">
-        <div>
-          {/* Header Banner */}
-          <div style={{ backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '2.5rem 2rem', marginBottom: '2rem' }}>
-            <span style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-              Statutes & Rules
-            </span>
-            <h1 style={{ fontSize: '2.25rem', color: 'var(--primary-blue)', margin: '0.5rem 0 1rem 0' }}>
-              Rajasthan Revenue Statutes
-            </h1>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-              Access consolidated bare Acts, land revenue manuals, agricultural tenancy codes, and easement rules.
-            </p>
+    <div>
+      {/* Hero Banner */}
+      <div style={{
+        background: 'linear-gradient(135deg, #0A192F 0%, #0d233e 100%)',
+        borderBottom: '4px solid var(--accent-gold)',
+        padding: '5rem 0 4rem 0',
+        textAlign: 'center',
+        color: 'white'
+      }}>
+        <div className="layout-container">
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.25)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
+            <Scale size={14} style={{ color: 'var(--accent-gold)' }} />
+            <span style={{ fontSize: '0.8rem', color: '#FFFFFF', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Statutes & Rules</span>
           </div>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: '#FFFFFF' }}>
+            Rajasthan Revenue Statutes<br />
+            <span style={{ color: 'var(--accent-gold)' }}>Bare Acts & Rules</span>
+          </h1>
+          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: '#E2E8F0', lineHeight: 1.7 }}>
+            Access consolidated bare Acts, land revenue manuals, agricultural tenancy codes, and easement rules.
+          </p>
+        </div>
+      </div>
+
+      <div className="layout-container" style={{ padding: '4rem 1.5rem' }}>
+        <div className="layout-with-sidebar">
+          <div>
 
           {loading ? (
             <div style={{ textAlign: 'center', padding: '4rem 0' }}>
@@ -232,6 +244,7 @@ function LawsContent() {
         </div>
         <NewsSidebar />
       </div>
+    </div>
     </div>
   );
 }

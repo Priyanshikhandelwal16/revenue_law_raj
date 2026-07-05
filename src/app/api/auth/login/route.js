@@ -6,24 +6,42 @@ import { signToken } from '@/lib/auth';
 
 export async function POST(req) {
   try {
-    await dbConnect();
     const { email, password } = await req.json();
 
     if (!email || !password) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
-    let user = await User.findOne({ email });
+    let user = null;
+    try {
+      await dbConnect();
+      user = await User.findOne({ email });
 
-    // Seed default admin if none exists
-    if (!user && email === 'admin@rajasthanrevenue.law') {
-      const hashedPassword = await bcrypt.hash('Admin@Rajasthan2026', 10);
-      user = await User.create({
-        email: 'admin@rajasthanrevenue.law',
-        password: hashedPassword,
-        name: 'Super Admin',
-        role: 'admin',
-      });
+      // Seed default admin if none exists in MongoDB
+      if (!user && email === 'admin@rajasthanrevenue.law') {
+        const hashedPassword = await bcrypt.hash('Admin@Rajasthan2026', 10);
+        user = await User.create({
+          email: 'admin@rajasthanrevenue.law',
+          password: hashedPassword,
+          name: 'Super Admin',
+          role: 'admin',
+        });
+      }
+    } catch (dbErr) {
+      console.warn("DB offline, checking local file DB for login:", dbErr.message);
+      const { readLocalDb, createLocalItem } = require('@/lib/localDb');
+      const localUsers = readLocalDb('users');
+      user = localUsers.find(u => u.email === email);
+
+      if (!user && email === 'admin@rajasthanrevenue.law') {
+        const hashedPassword = await bcrypt.hash('Admin@Rajasthan2026', 10);
+        user = createLocalItem('users', {
+          email: 'admin@rajasthanrevenue.law',
+          password: hashedPassword,
+          name: 'Super Admin',
+          role: 'admin'
+        });
+      }
     }
 
     if (!user) {

@@ -9,8 +9,12 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const court = searchParams.get('court');
     const q = searchParams.get('q');
+    const adminMode = searchParams.get('adminMode') === 'true';
     
-    let query = { status: 'published' };
+    let query = {};
+    if (!adminMode) {
+      query.status = 'published';
+    }
     
     if (court) {
       if (court === 'board-of-revenue') query.courtName = /Board of Revenue/i;
@@ -30,10 +34,12 @@ export async function GET(req) {
       ];
     }
 
-    const judgments = await Judgment.find(query).sort({ judgmentDate: -1 }).limit(30);
+    const judgments = await Judgment.find(query).sort({ isPinned: -1, judgmentDate: -1 }).limit(30);
     return NextResponse.json(judgments);
   } catch (err) {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    console.error('Judgments API error, serving fallbacks:', err);
+    const { fallbackJudgments } = require('@/lib/fallbacks');
+    return NextResponse.json(fallbackJudgments);
   }
 }
 

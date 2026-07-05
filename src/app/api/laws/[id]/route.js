@@ -5,21 +5,31 @@ import { verifyToken } from '@/lib/auth';
 
 export async function GET(req, { params }) {
   try {
-    await dbConnect();
     const { id } = params;
+    try {
+      await dbConnect();
+      let law = null;
+      if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        law = await RevenueLaw.findById(id);
+      } else {
+        law = await RevenueLaw.findOne({ slug: id });
+      }
 
-    let law = null;
-    if (id.match(/^[0-9a-fA-F]{24}$/)) {
-      law = await RevenueLaw.findById(id);
-    } else {
-      law = await RevenueLaw.findOne({ slug: id });
+      if (law) {
+        return NextResponse.json(law);
+      }
+    } catch (dbErr) {
+      console.warn("DB offline, checking fallbacks for individual law:", dbErr);
     }
 
-    if (!law) {
-      return NextResponse.json({ error: 'Law not found' }, { status: 404 });
+    // Serve from mock fallbacks if DB is down or item not found
+    const { fallbackLaws } = require('@/lib/fallbacks');
+    const matched = fallbackLaws.find(l => l._id === id || l.slug === id);
+    if (matched) {
+      return NextResponse.json(matched);
     }
 
-    return NextResponse.json(law);
+    return NextResponse.json({ error: 'Law not found' }, { status: 404 });
   } catch (err) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }

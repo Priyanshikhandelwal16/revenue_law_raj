@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send, Scale, Landmark, ShieldCheck } from 'lucide-react';
 
 export default function ContactPage() {
@@ -13,6 +13,22 @@ export default function ContactPage() {
   });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [config, setConfig] = useState({
+    phone: "+91 9982057461",
+    email: "revenuelawraj@gmail.com",
+    address: "Editorial Secretariat, Revenue Law Knowledge Platform, Revenue Board HQ, Ajmer, Rajasthan - 305001"
+  });
+
+  useEffect(() => {
+    fetch('/api/settings?key=contact_config')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.value) {
+          setConfig(data.value);
+        }
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,20 +54,38 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="layout-container" style={{ padding: '4rem 1.5rem' }}>
-      <div className="contact-split-grid">
+    <div>
+      {/* Hero Banner */}
+      <div style={{
+        background: 'linear-gradient(135deg, #0A192F 0%, #0d233e 100%)',
+        borderBottom: '4px solid var(--accent-gold)',
+        padding: '5rem 0 4rem 0',
+        textAlign: 'center',
+        color: 'white'
+      }}>
+        <div className="layout-container">
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255, 255, 255, 0.25)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
+            <Scale size={14} style={{ color: 'var(--accent-gold)' }} />
+            <span style={{ fontSize: '0.8rem', color: '#FFFFFF', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>RRLKP Consultation</span>
+          </div>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: '#FFFFFF' }}>
+            Contact Our Editorial Board<br />
+            <span style={{ color: 'var(--accent-gold)' }}>Submit Legal Query</span>
+          </h1>
+          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: '#E2E8F0', lineHeight: 1.7 }}>
+            Have questions regarding a publication, need technical help, or want to contribute articles to the platform? Fill out the query form.
+          </p>
+        </div>
+      </div>
+
+      <div className="layout-container" style={{ padding: '4rem 1.5rem' }}>
+        <div className="contact-split-grid">
           {/* Info Card */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem' }}>
-                <Scale size={18} />
-                <span>RRLKP Consultation</span>
-              </div>
-              <h1 style={{ fontSize: '2.5rem', color: 'var(--primary-blue)', lineHeight: '1.2', marginBottom: '1rem' }}>
-                Contact Our Editorial Board
-              </h1>
-              <p style={{ color: 'var(--text-muted)', lineHeight: '1.6' }}>
-                Have questions regarding a publication, need technical help, or want to contribute articles to the platform? Fill out the query form.
+              <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>Get in Touch</h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6' }}>
+                You can reach us through any of the channels below or submit the form on the right.
               </p>
             </div>
 
@@ -62,7 +96,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-blue)' }}>Mailing Address</h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Editorial Secretariat, Revenue Law Knowledge Platform, Revenue Board HQ, Ajmer, Rajasthan - 305001</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{config.address}</p>
                 </div>
               </div>
 
@@ -72,7 +106,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-blue)' }}>Secretary Helpline</h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>+91 145 2420111 (Mon-Fri, 10 AM to 5 PM)</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{config.phone}</p>
                 </div>
               </div>
 
@@ -82,7 +116,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-blue)' }}>Email Support</h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>editorial@rajasthanrevenue.law</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{config.email}</p>
                 </div>
               </div>
             </div>
@@ -104,14 +138,14 @@ export default function ContactPage() {
                 </div>
                 <h2 style={{ fontSize: '1.75rem', color: 'var(--primary-blue)', marginBottom: '0.5rem' }}>Query Submitted</h2>
                 <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
-                  Thank you for writing to RRLKP. Your query has been logged and assigned case ticket reference #{Math.floor(Math.random() * 900000 + 100000)}. Our support desk will reach out within 48 business hours.
+                  Thank you for writing to RRLKP. Your query has been logged and assigned case reference #{Math.floor(Math.random() * 900000 + 100000)}. Our support desk will reach out within 48 business hours.
                 </p>
                 <button onClick={() => setSuccess(false)} className="btn-outline">Send another message</button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <h2 style={{ fontSize: '1.5rem', borderBottom: '2px solid var(--accent-gold)', paddingBottom: '0.5rem', color: 'var(--primary-blue)' }}>
-                  Submit Inquiry Ticket
+                  Submit Legal Query
                 </h2>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
@@ -173,12 +207,13 @@ export default function ContactPage() {
                 </div>
 
                 <button type="submit" disabled={submitting} className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '1rem 2rem' }}>
-                  <Send size={16} /> {submitting ? 'Submitting query...' : 'Submit Inquiry'}
+                  <Send size={16} /> {submitting ? 'Submitting query...' : 'Submit Query'}
                 </button>
               </form>
             )}
           </div>
         </div>
+      </div>
     </div>
   );
 }

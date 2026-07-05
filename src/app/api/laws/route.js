@@ -9,8 +9,12 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const category = searchParams.get('category');
     const q = searchParams.get('q');
+    const adminMode = searchParams.get('adminMode') === 'true';
 
-    let query = { status: 'published' };
+    let query = {};
+    if (!adminMode) {
+      query.status = 'published';
+    }
     if (category) query.category = category;
 
     if (q) {
@@ -26,7 +30,9 @@ export async function GET(req) {
     const laws = await RevenueLaw.find(query).sort({ createdAt: -1 });
     return NextResponse.json(laws);
   } catch (err) {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    console.error('Laws API error, serving fallbacks:', err);
+    const { fallbackLaws } = require('@/lib/fallbacks');
+    return NextResponse.json(fallbackLaws);
   }
 }
 

@@ -8,7 +8,14 @@ export async function GET(req) {
     await dbConnect();
     const { searchParams } = new URL(req.url);
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')) : 30;
-    const notifications = await Notification.find({ status: 'published' }).sort({ publishDate: -1 }).limit(limit);
+    const adminMode = searchParams.get('adminMode') === 'true';
+    
+    let query = {};
+    if (!adminMode) {
+      query.status = 'published';
+    }
+
+    const notifications = await Notification.find(query).sort({ publishDate: -1 }).limit(limit);
     return NextResponse.json(notifications);
   } catch (err) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });

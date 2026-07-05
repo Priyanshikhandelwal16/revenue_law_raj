@@ -79,7 +79,7 @@ a {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(235, 243, 252, 0.95);
+  background-color: rgba(10, 25, 47, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(197, 168, 128, 0.2);
   transition: var(--transition-normal);
@@ -89,7 +89,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
+  height: 100px;
   max-width: var(--max-width-content);
   margin: 0 auto;
   padding: 0 1.5rem;
@@ -133,7 +133,7 @@ a {
 .nav-link {
   font-size: 0.88rem;
   font-weight: 600;
-  color: var(--secondary-blue);
+  color: rgba(255, 255, 255, 0.85);
   position: relative;
   padding: 0.5rem 0;
   cursor: pointer;
@@ -172,8 +172,8 @@ a {
   top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(10px);
-  background-color: var(--bg-white);
-  border: 1px solid var(--border-color);
+  background-color: var(--secondary-blue);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-top: 3px solid var(--accent-gold);
   box-shadow: var(--shadow-lg);
   border-radius: 0 0 6px 6px;
@@ -195,10 +195,10 @@ a {
   display: block;
   padding: 0.65rem 1.25rem;
   font-size: 0.85rem;
-  color: var(--text-dark);
+  color: rgba(255, 255, 255, 0.85);
   font-weight: 500;
   transition: var(--transition-fast);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .dropdown-item:last-child {
@@ -206,8 +206,8 @@ a {
 }
 
 .dropdown-item:hover {
-  background-color: var(--bg-navbar-blue);
-  color: var(--primary-blue);
+  background-color: var(--primary-blue);
+  color: var(--accent-gold);
   padding-left: 1.5rem;
 }
 
@@ -222,7 +222,7 @@ a {
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--primary-blue);
+  color: rgba(255, 255, 255, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -230,12 +230,12 @@ a {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background-color: rgba(10, 25, 47, 0.04);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 .search-icon-btn:hover {
   color: var(--accent-gold);
-  background-color: rgba(197, 168, 128, 0.1);
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .btn-primary {
@@ -401,9 +401,6 @@ a {
 }
 
 .hero-image {
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border: 3px solid rgba(197, 168, 128, 0.3);
   max-width: 100%;
   height: auto;
   transition: var(--transition-normal);
@@ -411,7 +408,6 @@ a {
 
 .hero-image:hover {
   transform: scale(1.02);
-  border-color: var(--accent-gold);
 }
 
 /* News Sticky Sidebar */
@@ -1331,6 +1327,143 @@ a {
 @media (max-width: 580px) {
   .hero-search-wrapper {
     display: none !important;
+  }
+}
+
+/* Court Hierarchy Tree Styles */
+.hierarchy-tree-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 2.5rem auto 1rem auto;
+  width: 100%;
+}
+
+.hierarchy-tree-node-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.hierarchy-tree-node {
+  background-color: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-left: 5px solid var(--accent-gold);
+  border-radius: 8px;
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+}
+
+.hierarchy-tree-node:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-gold);
+  background-color: var(--bg-offwhite);
+}
+
+.node-icon {
+  width: 46px;
+  height: 46px;
+  background-color: rgba(197, 168, 128, 0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-blue);
+  flex-shrink: 0;
+  transition: var(--transition-normal);
+}
+
+.hierarchy-tree-node:hover .node-icon {
+  background-color: var(--primary-blue);
+  color: var(--accent-gold);
+}
+
+.node-content {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.node-content h3 {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin: 0;
+}
+
+.node-role {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-gold);
+  margin-top: 0.2rem;
+}
+
+.node-loc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+
+.tree-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 40px;
+  position: relative;
+}
+
+.connector-line {
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--accent-gold), rgba(197, 168, 128, 0.4));
+  border-radius: 4px;
+}
+
+.connector-arrow {
+  width: 10px;
+  height: 10px;
+  border-right: 3px solid var(--accent-gold);
+  border-bottom: 3px solid var(--accent-gold);
+  transform: rotate(45deg);
+  position: absolute;
+  bottom: 2px;
+}
+
+/* Responsive Footer Grid & Global Mobile Overflow Prevention */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden !important;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  margin-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr;
   }
 }
 

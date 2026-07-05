@@ -57,7 +57,43 @@ export async function GET(req) {
       glossary
     });
   } catch (err) {
-    console.error('Search API error:', err);
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    console.error('Search API error, serving fallbacks:', err);
+    const { searchParams } = new URL(req.url);
+    const sidebar = searchParams.get('sidebar');
+    const { fallbackArticles, fallbackJudgments, fallbackLaws, fallbackNotifications, fallbackDownloads, fallbackGlossary } = require('@/lib/fallbacks');
+
+    if (sidebar === 'true') {
+      return NextResponse.json({
+        articles: fallbackArticles,
+        judgments: fallbackJudgments,
+        notifications: fallbackNotifications,
+        downloads: fallbackDownloads,
+        glossary: fallbackGlossary
+      });
+    }
+
+    const q = searchParams.get('q');
+    const regex = q ? new RegExp(q, 'i') : null;
+
+    const filterFallback = (items, field) => {
+      if (!regex) return items;
+      return items.filter(item => 
+        regex.test(item[field] || '') || 
+        (item.summary && regex.test(item.summary)) || 
+        (item.content && regex.test(item.content)) || 
+        (item.definition && regex.test(item.definition)) ||
+        (item.description && regex.test(item.description))
+      );
+    };
+
+    return NextResponse.json({
+      query: q || '',
+      articles: filterFallback(fallbackArticles, 'title'),
+      judgments: filterFallback(fallbackJudgments, 'title'),
+      laws: filterFallback(fallbackLaws, 'title'),
+      notifications: filterFallback(fallbackNotifications, 'title'),
+      downloads: filterFallback(fallbackDownloads, 'title'),
+      glossary: filterFallback(fallbackGlossary, 'term')
+    });
   }
 }

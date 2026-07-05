@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Gavel, Calendar, Landmark, Printer, Share2, Bookmark, Check, Send, Download, ArrowLeft, MessageSquare } from 'lucide-react';
-import PdfViewer from '@/components/PdfViewer';
+import { Gavel, Calendar, Landmark, Printer, Share2, Bookmark, Check, Send, Download, ArrowLeft, MessageSquare, BookOpen } from 'lucide-react';
 
 export default function JudgmentDetailPage({ params }) {
   const { id } = params;
@@ -240,22 +239,7 @@ export default function JudgmentDetailPage({ params }) {
             />
           </div>
 
-          {/* PDF Previewer Block */}
-          {(judgment.pdfData || judgment.pdfUrl) && (
-            <div style={{ backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '2rem' }} className="no-print">
-              <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', borderBottom: '2px solid var(--accent-gold)', paddingBottom: '0.5rem' }}>
-                Official Document Preview
-              </h2>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                Scroll/inspect inside the frame, download to local disk or print direct page copy.
-              </p>
-              <PdfViewer 
-                pdfData={judgment.pdfData} 
-                pdfUrl={judgment.pdfUrl} 
-                title={`${judgment.citation} - ${judgment.title}`} 
-              />
-            </div>
-          )}
+
 
           {/* Related Items Section */}
             <div className="related-section-grid">

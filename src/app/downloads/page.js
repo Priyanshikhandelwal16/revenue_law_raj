@@ -69,21 +69,33 @@ export default async function DownloadsPage() {
   };
 
   return (
-    <div className="layout-container" style={{ padding: '3rem 1.5rem' }}>
-      <div className="layout-with-sidebar">
-        <div>
-          {/* Header */}
-          <div style={{ backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '2.5rem 2rem', marginBottom: '2rem' }}>
-            <span style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-              bare acts & utility templates
-            </span>
-            <h1 style={{ fontSize: '2.25rem', color: 'var(--primary-blue)', margin: '0.5rem 0 1rem 0' }}>
-              Downloads & Forms Portal
-            </h1>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-              Download draft petitions, official application formats, and consolidated legal texts for offline practice.
-            </p>
+    <div>
+      {/* Hero Banner */}
+      <div style={{
+        background: 'linear-gradient(135deg, #0A192F 0%, #0d233e 100%)',
+        borderBottom: '4px solid var(--accent-gold)',
+        padding: '5rem 0 4rem 0',
+        textAlign: 'center',
+        color: 'white'
+      }}>
+        <div className="layout-container">
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255, 255, 255, 0.25)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
+            <FileText size={14} style={{ color: 'var(--accent-gold)' }} />
+            <span style={{ fontSize: '0.8rem', color: '#FFFFFF', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Bare Acts & Utility Templates</span>
           </div>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: '#FFFFFF' }}>
+            Downloads & Forms Portal<br />
+            <span style={{ color: 'var(--accent-gold)' }}>Legal Drafts & Templates</span>
+          </h1>
+          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: '#E2E8F0', lineHeight: 1.7 }}>
+            Download draft petitions, official application formats, and consolidated legal texts for offline practice.
+          </p>
+        </div>
+      </div>
+
+      <div className="layout-container" style={{ padding: '4rem 1.5rem' }}>
+        <div className="layout-with-sidebar">
+          <div>
 
           {/* List Display */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -156,6 +168,7 @@ export default async function DownloadsPage() {
         </div>
         <NewsSidebar />
       </div>
+    </div>
     </div>
   );
 }

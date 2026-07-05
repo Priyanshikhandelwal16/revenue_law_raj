@@ -1,7 +1,8 @@
 "use client";
 
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Layers, ShieldAlert, Compass, Gavel, HelpCircle, FileCheck, Landmark } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Layers, ShieldAlert, Compass, Gavel, HelpCircle, FileCheck, Landmark } from 'lucide-react';
+import NewsSidebar from '@/components/NewsSidebar';
 
 const caseTypes = [
   {
@@ -47,22 +48,22 @@ export default function TypesOfCasesPage() {
     <div>
       {/* Hero Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, var(--primary-blue) 0%, #1a3a6b 100%)',
+        background: 'linear-gradient(135deg, #0A192F 0%, #0d233e 100%)',
         borderBottom: '4px solid var(--accent-gold)',
         padding: '5rem 0 4rem 0',
         textAlign: 'center',
         color: 'white'
       }}>
         <div className="layout-container">
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(197,168,128,0.15)', border: '1px solid var(--accent-gold)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255, 255, 255, 0.25)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
             <BookOpen size={14} style={{ color: 'var(--accent-gold)' }} />
-            <span style={{ fontSize: '0.8rem', color: 'var(--accent-gold)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Legal Categories</span>
+            <span style={{ fontSize: '0.8rem', color: '#FFFFFF', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Legal Categories</span>
           </div>
-          <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2 }}>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: '#FFFFFF' }}>
             Types of Cases<br />
             <span style={{ color: 'var(--accent-gold)' }}>in Rajasthan Revenue Law</span>
           </h1>
-          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>
+          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: '#E2E8F0', lineHeight: 1.7 }}>
             A guide to the most common legal disputes, applications, and suits handled under the jurisdiction of state revenue officers.
           </p>
         </div>
@@ -73,68 +74,72 @@ export default function TypesOfCasesPage() {
           <ArrowLeft size={16} /> Back to Home
         </Link>
 
-        {/* Case Types Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem', marginBottom: '4rem' }}>
-          {caseTypes.map((c, i) => (
-            <div key={i} style={{
-              background: 'white',
-              border: '1px solid var(--border-color)',
-              borderRadius: '10px',
-              padding: '2rem',
-              boxShadow: 'var(--shadow-sm)',
-              transition: 'var(--transition-normal)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1rem'
-            }}
-            onMouseEnter={e => { e.currentTarget.style.boxShadow = 'var(--shadow-md)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
-            onMouseLeave={e => { e.currentTarget.style.boxShadow = 'var(--shadow-sm)'; e.currentTarget.style.transform = 'none'; }}
-            >
-              <div style={{ width: '46px', height: '46px', background: 'rgba(197,168,128,0.12)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <c.icon size={22} style={{ color: 'var(--accent-gold)' }} />
-              </div>
-              <div>
-                <h3 style={{ fontSize: '1.1rem', color: 'var(--primary-blue)', fontWeight: 700, marginBottom: '0.5rem' }}>{c.title}</h3>
-                <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6, margin: 0 }}>{c.desc}</p>
-              </div>
-              <div style={{
-                marginTop: 'auto',
-                paddingTop: '0.75rem',
-                borderTop: '1px solid var(--border-color)',
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                color: 'var(--primary-blue)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.25rem'
-              }}>
-                <Gavel size={14} style={{ color: 'var(--accent-gold)' }} />
-                <span>Statutory Source: {c.statute}</span>
-              </div>
+        <div className="layout-with-sidebar">
+          <div>
+            {/* Case Types Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem', marginBottom: '4rem' }}>
+              {caseTypes.map((c, i) => (
+                <div key={i} style={{
+                  background: 'white',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '10px',
+                  padding: '2rem',
+                  boxShadow: 'var(--shadow-sm)',
+                  transition: 'var(--transition-normal)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem'
+                }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = 'var(--shadow-md)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = 'var(--shadow-sm)'; e.currentTarget.style.transform = 'none'; }}
+                >
+                  <div style={{ width: '46px', height: '46px', background: 'rgba(197,168,128,0.12)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <c.icon size={22} style={{ color: 'var(--accent-gold)' }} />
+                  </div>
+                  <div>
+                    <h3 style={{ fontSize: '1.1rem', color: 'var(--primary-blue)', fontWeight: 700, marginBottom: '0.5rem' }}>{c.title}</h3>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6, margin: 0 }}>{c.desc}</p>
+                  </div>
+                  <div style={{
+                    marginTop: 'auto',
+                    paddingTop: '0.75rem',
+                    borderTop: '1px solid var(--border-color)',
+                    fontSize: '0.8rem',
+                    fontWeight: 600,
+                    color: 'var(--primary-blue)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem'
+                  }}>
+                    <Gavel size={14} style={{ color: 'var(--accent-gold)' }} />
+                    <span>Statutory Source: {c.statute}</span>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {/* CTA Card */}
-        <div style={{
-          background: 'linear-gradient(135deg, #f0f6fc 0%, #e6f0fa 100%)',
-          borderRadius: '12px',
-          padding: '3rem 2rem',
-          textAlign: 'center',
-          maxWidth: '850px',
-          margin: '0 auto',
-          border: '1px solid var(--border-color)'
-        }}>
-          <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>Looking for Judicial Precedents?</h2>
-          <p style={{ color: 'var(--text-dark)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem auto', fontSize: '0.95rem', lineHeight: 1.7 }}>
-            Search through our database of judgments filtered by specific case categories like partition, mutation rights, and land conversions.
-          </p>
-          <Link href="/judgments" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span>Explore Board of Revenue Judgments</span>
-            <ArrowRight size={16} />
-          </Link>
+            {/* CTA Card */}
+            <div style={{
+              background: 'linear-gradient(135deg, #f0f6fc 0%, #e6f0fa 100%)',
+              borderRadius: '12px',
+              padding: '3rem 2rem',
+              textAlign: 'center',
+              maxWidth: '850px',
+              margin: '0 auto',
+              border: '1px solid var(--border-color)'
+            }}>
+              <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>Looking for Judicial Precedents?</h2>
+              <p style={{ color: 'var(--text-dark)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem auto', fontSize: '0.95rem', lineHeight: 1.7 }}>
+                Search through our database of judgments filtered by specific case categories like partition, mutation rights, and land conversions.
+              </p>
+              <Link href="/judgments" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span>Explore Board of Revenue Judgments</span>
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+          <NewsSidebar />
         </div>
-
       </div>
     </div>
   );

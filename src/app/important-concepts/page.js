@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ArrowLeft, BookOpen, Key, Info, HelpCircle, FileText, Bookmark, Scale } from 'lucide-react';
+import NewsSidebar from '@/components/NewsSidebar';
 
 const concepts = [
   {
@@ -41,22 +42,22 @@ export default function ImportantConceptsPage() {
     <div>
       {/* Hero Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, var(--primary-blue) 0%, #1a3a6b 100%)',
+        background: 'linear-gradient(135deg, #0A192F 0%, #0d233e 100%)',
         borderBottom: '4px solid var(--accent-gold)',
         padding: '5rem 0 4rem 0',
         textAlign: 'center',
         color: 'white'
       }}>
         <div className="layout-container">
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(197,168,128,0.15)', border: '1px solid var(--accent-gold)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255, 255, 255, 0.25)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
             <Key size={14} style={{ color: 'var(--accent-gold)' }} />
-            <span style={{ fontSize: '0.8rem', color: 'var(--accent-gold)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Knowledge Base</span>
+            <span style={{ fontSize: '0.8rem', color: '#FFFFFF', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Knowledge Base</span>
           </div>
-          <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2 }}>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: '#FFFFFF' }}>
             Important Concepts<br />
             <span style={{ color: 'var(--accent-gold)' }}>in Rajasthan Land Laws</span>
           </h1>
-          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>
+          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: '#E2E8F0', lineHeight: 1.7 }}>
             A detailed breakdown of key terminology, land classifications, and statutory definitions frequently used in state land proceedings.
           </p>
         </div>
@@ -67,68 +68,72 @@ export default function ImportantConceptsPage() {
           <ArrowLeft size={16} /> Back to Home
         </Link>
 
-        {/* Concepts Stack */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '850px', margin: '0 auto 4rem auto' }}>
-          {concepts.map((c, idx) => (
-            <div key={idx} style={{
-              background: 'white',
-              border: '1px solid var(--border-color)',
-              borderRadius: '8px',
-              padding: '2rem',
-              boxShadow: 'var(--shadow-sm)',
-              position: 'relative',
-              overflow: 'hidden'
-            }}>
-              {/* Gold Accent Tag */}
-              <div style={{ width: '4px', height: '100%', backgroundColor: 'var(--accent-gold)', position: 'absolute', left: 0, top: 0 }}></div>
-              
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-                <Info size={18} style={{ color: 'var(--accent-gold)' }} />
-                <h3 style={{ fontSize: '1.2rem', color: 'var(--primary-blue)', margin: 0, fontWeight: 700 }}>
-                  {c.title}
-                </h3>
-              </div>
-              
-              <p style={{ fontSize: '0.92rem', color: 'var(--text-dark)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
-                {c.desc}
-              </p>
-              
-              <div style={{
-                background: 'var(--bg-offwhite)',
-                border: '1px dashed var(--border-color)',
-                borderRadius: '6px',
-                padding: '0.75rem 1rem',
-                fontSize: '0.82rem',
-                color: 'var(--text-muted)',
-                fontWeight: 500
-              }}>
-                {c.impact}
-              </div>
+        <div className="layout-with-sidebar">
+          <div>
+            {/* Concepts Stack */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '850px', margin: '0 auto 4rem auto' }}>
+              {concepts.map((c, idx) => (
+                <div key={idx} style={{
+                  background: 'white',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '8px',
+                  padding: '2rem',
+                  boxShadow: 'var(--shadow-sm)',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  {/* Gold Accent Tag */}
+                  <div style={{ width: '4px', height: '100%', backgroundColor: 'var(--accent-gold)', position: 'absolute', left: 0, top: 0 }}></div>
+                  
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+                    <Info size={18} style={{ color: 'var(--accent-gold)' }} />
+                    <h3 style={{ fontSize: '1.2rem', color: 'var(--primary-blue)', margin: 0, fontWeight: 700 }}>
+                      {c.title}
+                    </h3>
+                  </div>
+                  
+                  <p style={{ fontSize: '0.92rem', color: 'var(--text-dark)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
+                    {c.desc}
+                  </p>
+                  
+                  <div style={{
+                    background: 'var(--bg-offwhite)',
+                    border: '1px dashed var(--border-color)',
+                    borderRadius: '6px',
+                    padding: '0.75rem 1rem',
+                    fontSize: '0.82rem',
+                    color: 'var(--text-muted)',
+                    fontWeight: 500
+                  }}>
+                    {c.impact}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {/* Glossary Link Card */}
-        <div style={{
-          background: 'linear-gradient(135deg, #f0f6fc 0%, #e6f0fa 100%)',
-          borderRadius: '12px',
-          padding: '3rem 2rem',
-          textAlign: 'center',
-          maxWidth: '850px',
-          margin: '0 auto',
-          border: '1px solid var(--border-color)'
-        }}>
-          <Bookmark size={36} style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }} />
-          <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>Need to look up specific legal terms?</h2>
-          <p style={{ color: 'var(--text-dark)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem auto', fontSize: '0.95rem', lineHeight: 1.7 }}>
-            Search our comprehensive, database-backed legal glossary containing definitions for local vernacular land terms like Jamabandi, Khasra, Girdawari, and Fauti.
-          </p>
-          <Link href="/glossary" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span>Explore Revenue Glossary</span>
-            <ArrowLeft size={16} style={{ transform: 'rotate(180deg)' }} />
-          </Link>
+            {/* Glossary Link Card */}
+            <div style={{
+              background: 'linear-gradient(135deg, #f0f6fc 0%, #e6f0fa 100%)',
+              borderRadius: '12px',
+              padding: '3rem 2rem',
+              textAlign: 'center',
+              maxWidth: '850px',
+              margin: '0 auto',
+              border: '1px solid var(--border-color)'
+            }}>
+              <Bookmark size={36} style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }} />
+              <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>Need to look up specific legal terms?</h2>
+              <p style={{ color: 'var(--text-dark)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem auto', fontSize: '0.95rem', lineHeight: 1.7 }}>
+                Search our comprehensive, database-backed legal glossary containing definitions for local vernacular land terms like Jamabandi, Khasra, Girdawari, and Fauti.
+              </p>
+              <Link href="/glossary" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span>Explore Revenue Glossary</span>
+                <ArrowLeft size={16} style={{ transform: 'rotate(180deg)' }} />
+              </Link>
+            </div>
+          </div>
+          <NewsSidebar />
         </div>
-
       </div>
     </div>
   );

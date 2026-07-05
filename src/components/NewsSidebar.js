@@ -52,12 +52,15 @@ export default function NewsSidebar() {
     <div className="news-sidebar-sticky no-print">
       {/* Latest News */}
       <div className="sidebar-widget">
-        <h3><Newspaper size={16} style={{ marginRight: '0.5rem', display: 'inline-block', verticalAlign: 'middle' }} /> Latest News</h3>
+        <h3>
+          <Newspaper size={16} style={{ marginRight: '0.5rem', display: 'inline-block', verticalAlign: 'middle' }} />
+          Latest News
+        </h3>
         <ul className="sidebar-news-list">
           {loading ? (
             <li className="sidebar-news-item" style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Loading news...</li>
           ) : data.articles && data.articles.length > 0 ? (
-            data.articles.map(article => (
+            data.articles.slice(0, 3).map(article => (
               <li key={article._id} className="sidebar-news-item">
                 <span className="sidebar-news-category">{article.category}</span>
                 <Link href={`/articles/${article.slug}`} className="sidebar-news-title">

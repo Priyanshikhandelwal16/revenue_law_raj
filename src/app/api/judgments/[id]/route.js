@@ -5,18 +5,27 @@ import { verifyToken } from '@/lib/auth';
 
 export async function GET(req, { params }) {
   try {
-    await dbConnect();
     const { id } = params;
-
-    const judgment = await Judgment.findById(id);
-    if (!judgment) {
-      return NextResponse.json({ error: 'Judgment not found' }, { status: 404 });
+    try {
+      await dbConnect();
+      const judgment = await Judgment.findById(id);
+      if (judgment) {
+        judgment.views = (judgment.views || 0) + 1;
+        await judgment.save();
+        return NextResponse.json(judgment);
+      }
+    } catch (dbErr) {
+      console.warn("DB offline, checking fallbacks for individual judgment:", dbErr);
     }
 
-    judgment.views = (judgment.views || 0) + 1;
-    await judgment.save();
+    // Serve from mock fallbacks if DB is down or item not found
+    const { fallbackJudgments } = require('@/lib/fallbacks');
+    const matched = fallbackJudgments.find(j => j._id === id);
+    if (matched) {
+      return NextResponse.json(matched);
+    }
 
-    return NextResponse.json(judgment);
+    return NextResponse.json({ error: 'Judgment not found' }, { status: 404 });
   } catch (err) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }

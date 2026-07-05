@@ -35,9 +35,35 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('error', (event) => {
+                if (
+                  (event.message && (event.message.includes('MetaMask') || event.message.includes('ethereum'))) ||
+                  (event.filename && event.filename.includes('chrome-extension'))
+                ) {
+                  event.stopImmediatePropagation();
+                  event.preventDefault();
+                }
+              }, true);
+              window.addEventListener('unhandledrejection', (event) => {
+                if (
+                  (event.reason && event.reason.message && event.reason.message.includes('MetaMask')) ||
+                  (event.reason && event.reason.stack && event.reason.stack.includes('chrome-extension'))
+                ) {
+                  event.stopImmediatePropagation();
+                  event.preventDefault();
+                }
+              }, true);
+            `
+          }}
+        />
+      </head>
       <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Navbar />
-        <main style={{ flexGrow: 1, minHeight: 'calc(100vh - 80px - 400px)' }}>
+        <main style={{ flexGrow: 1, minHeight: 'calc(100vh - 100px - 400px)' }}>
           {children}
         </main>
         <Footer />

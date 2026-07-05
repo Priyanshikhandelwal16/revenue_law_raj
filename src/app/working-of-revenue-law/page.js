@@ -1,7 +1,8 @@
 "use client";
 
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Clock, ShieldCheck, Scale, FileText, ArrowRight, Gavel, HelpCircle } from 'lucide-react';
+import { ArrowLeft, BookOpen, Clock, ShieldCheck, Scale, FileText, ArrowRight, Gavel } from 'lucide-react';
+import NewsSidebar from '@/components/NewsSidebar';
 
 const steps = [
   {
@@ -36,22 +37,22 @@ export default function WorkingOfRevenueLawPage() {
     <div>
       {/* Hero Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, var(--primary-blue) 0%, #1a3a6b 100%)',
+        background: 'linear-gradient(135deg, #0A192F 0%, #0d233e 100%)',
         borderBottom: '4px solid var(--accent-gold)',
         padding: '5rem 0 4rem 0',
         textAlign: 'center',
         color: 'white'
       }}>
         <div className="layout-container">
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(197,168,128,0.15)', border: '1px solid var(--accent-gold)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255, 255, 255, 0.25)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
             <Scale size={14} style={{ color: 'var(--accent-gold)' }} />
-            <span style={{ fontSize: '0.8rem', color: 'var(--accent-gold)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Procedural Guide</span>
+            <span style={{ fontSize: '0.8rem', color: '#FFFFFF', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Procedural Guide</span>
           </div>
-          <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2 }}>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: '#FFFFFF' }}>
             Working of Revenue Law<br />
             <span style={{ color: 'var(--accent-gold)' }}>in Rajasthan</span>
           </h1>
-          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>
+          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: '#E2E8F0', lineHeight: 1.7 }}>
             Understand the step-by-step workflow of revenue litigation, land record corrections, and judicial processes in Rajasthan courts.
           </p>
         </div>
@@ -62,88 +63,92 @@ export default function WorkingOfRevenueLawPage() {
           <ArrowLeft size={16} /> Back to Home
         </Link>
 
-        {/* Section 1: Overview */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem', marginBottom: '4rem' }}>
-          <div style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '2.5rem', boxShadow: 'var(--shadow-sm)' }}>
-            <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1.25rem', fontFamily: 'var(--font-serif)' }}>
-              The Statutory Framework
-            </h2>
-            <p style={{ color: 'var(--text-dark)', fontSize: '1rem', lineHeight: 1.8, marginBottom: '1rem' }}>
-              The administration of land in Rajasthan revolves around two primary legislations: 
-              the <strong>Rajasthan Land Revenue Act, 1956</strong> (which governs records, surveys, boundaries, and the powers of revenue officers) 
-              and the <strong>Rajasthan Tenancy Act, 1955</strong> (which determines rights of tenancy, land transfer, division of agricultural holdings, and disputes).
-            </p>
-            <p style={{ color: 'var(--text-dark)', fontSize: '1rem', lineHeight: 1.8 }}>
-              Revenue courts act as quasi-judicial authorities. Unlike civil courts, they follow special procedures that emphasize field verifications, reports from village patwaris, and settlement rules designed to protect agrarian rights and maintain state land logs.
-            </p>
-          </div>
-        </div>
-
-        {/* Section 2: Step-by-Step Workflow */}
-        <div style={{ marginBottom: '5rem' }}>
-          <h2 style={{ fontSize: '1.75rem', color: 'var(--primary-blue)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)', textAlign: 'center' }}>
-            Workflow of a Revenue Proceeding
-          </h2>
-          <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '3rem', fontSize: '0.95rem' }}>
-            From initiating a petition to final decree execution in the field.
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '850px', margin: '0 auto' }}>
-            {steps.map((s, idx) => (
-              <div key={idx} style={{
-                background: 'white',
-                border: '1px solid var(--border-color)',
-                borderRadius: '8px',
-                padding: '2rem',
-                boxShadow: 'var(--shadow-sm)',
-                borderLeft: '4px solid var(--primary-blue)',
-                transition: 'transform var(--transition-fast)'
-              }}
-              onMouseEnter={e => e.currentTarget.style.transform = 'translateX(5px)'}
-              onMouseLeave={e => e.currentTarget.style.transform = 'none'}
-              >
-                <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-blue)', fontWeight: 700, marginBottom: '0.75rem' }}>{s.title}</h3>
-                <p style={{ fontSize: '0.95rem', color: 'var(--text-dark)', lineHeight: 1.7, marginBottom: '1rem' }}>{s.desc}</p>
-                <div style={{
-                  backgroundColor: 'var(--bg-navbar-blue)',
-                  padding: '0.75rem 1rem',
-                  borderRadius: '6px',
-                  fontSize: '0.85rem',
-                  color: 'var(--secondary-blue)',
-                  fontWeight: 500,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem'
-                }}>
-                  <Clock size={14} style={{ color: 'var(--accent-gold)' }} />
-                  <span>{s.details}</span>
-                </div>
+        <div className="layout-with-sidebar">
+          <div>
+            {/* Section 1: Overview */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem', marginBottom: '4rem' }}>
+              <div style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '2.5rem', boxShadow: 'var(--shadow-sm)' }}>
+                <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1.25rem', fontFamily: 'var(--font-serif)' }}>
+                  The Statutory Framework
+                </h2>
+                <p style={{ color: 'var(--text-dark)', fontSize: '1rem', lineHeight: 1.8, marginBottom: '1rem' }}>
+                  The administration of land in Rajasthan revolves around two primary legislations: 
+                  the <strong>Rajasthan Land Revenue Act, 1956</strong> (which governs records, surveys, boundaries, and the powers of revenue officers) 
+                  and the <strong>Rajasthan Tenancy Act, 1955</strong> (which determines rights of tenancy, land transfer, division of agricultural holdings, and disputes).
+                </p>
+                <p style={{ color: 'var(--text-dark)', fontSize: '1rem', lineHeight: 1.8 }}>
+                  Revenue courts act as quasi-judicial authorities. Unlike civil courts, they follow special procedures that emphasize field verifications, reports from village patwaris, and settlement rules designed to protect agrarian rights and maintain state land logs.
+                </p>
               </div>
-            ))}
+            </div>
+
+            {/* Section 2: Step-by-Step Workflow */}
+            <div style={{ marginBottom: '5rem' }}>
+              <h2 style={{ fontSize: '1.75rem', color: 'var(--primary-blue)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)', textAlign: 'center' }}>
+                Workflow of a Revenue Proceeding
+              </h2>
+              <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '3rem', fontSize: '0.95rem' }}>
+                From initiating a petition to final decree execution in the field.
+              </p>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '850px', margin: '0 auto' }}>
+                {steps.map((s, idx) => (
+                  <div key={idx} style={{
+                    background: 'white',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '8px',
+                    padding: '2rem',
+                    boxShadow: 'var(--shadow-sm)',
+                    borderLeft: '4px solid var(--primary-blue)',
+                    transition: 'transform var(--transition-fast)'
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'translateX(5px)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+                  >
+                    <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-blue)', fontWeight: 700, marginBottom: '0.75rem' }}>{s.title}</h3>
+                    <p style={{ fontSize: '0.95rem', color: 'var(--text-dark)', lineHeight: 1.7, marginBottom: '1rem' }}>{s.desc}</p>
+                    <div style={{
+                      backgroundColor: 'var(--bg-navbar-blue)',
+                      padding: '0.75rem 1rem',
+                      borderRadius: '6px',
+                      fontSize: '0.85rem',
+                      color: 'var(--secondary-blue)',
+                      fontWeight: 500,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem'
+                    }}>
+                      <Clock size={14} style={{ color: 'var(--accent-gold)' }} />
+                      <span>{s.details}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Section 3: Summary Box */}
+            <div style={{
+              background: 'linear-gradient(135deg, #f0f6fc 0%, #e6f0fa 100%)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '12px',
+              padding: '2.5rem 2rem',
+              textAlign: 'center',
+              maxWidth: '850px',
+              margin: '0 auto'
+            }}>
+              <Gavel size={36} style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }} />
+              <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>Need Detailed Procedural Form Templates?</h2>
+              <p style={{ color: 'var(--text-dark)', fontSize: '0.95rem', lineHeight: 1.7, marginBottom: '1.5rem', maxWidth: '600px', margin: '0 auto 1.5rem auto' }}>
+                We provide official application forms, mutation draft templates, and statutory appeal formats prepared by senior advocates.
+              </p>
+              <Link href="/downloads" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span>Go to Downloads Section</span>
+                <ArrowRight size={16} />
+              </Link>
+            </div>
           </div>
+          <NewsSidebar />
         </div>
-
-        {/* Section 3: Summary Box */}
-        <div style={{
-          background: 'linear-gradient(135deg, #f0f6fc 0%, #e6f0fa 100%)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '12px',
-          padding: '2.5rem 2rem',
-          textAlign: 'center',
-          maxWidth: '850px',
-          margin: '0 auto'
-        }}>
-          <Gavel size={36} style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }} />
-          <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>Need Detailed Procedural Form Templates?</h2>
-          <p style={{ color: 'var(--text-dark)', fontSize: '0.95rem', lineHeight: 1.7, marginBottom: '1.5rem', maxWidth: '600px', margin: '0 auto 1.5rem auto' }}>
-            We provide official application forms, mutation draft templates, and statutory appeal formats prepared by senior advocates.
-          </p>
-          <Link href="/downloads" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span>Go to Downloads Section</span>
-            <ArrowRight size={16} />
-          </Link>
-        </div>
-
       </div>
     </div>
   );
