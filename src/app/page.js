@@ -189,7 +189,7 @@ export default async function HomePage() {
             </form>
 
             {/* Quick search tags */}
-            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div className="hero-search-tags" style={{ display: 'flex', gap: '0.5rem', marginTop: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
               <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>Popular Searches:</span>
               {popularSearches.map((tag, idx) => (
                 <Link 

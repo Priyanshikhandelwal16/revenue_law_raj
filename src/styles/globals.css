@@ -1504,17 +1504,7 @@ html, body {
 }
 
 @media (max-width: 580px) {
-  .hero-search-form {
-    padding: 0.25rem;
-  }
-  .hero-search-input {
-    padding: 0.5rem;
-    font-size: 0.85rem;
-  }
-  .hero-search-button {
-    padding: 0.5rem 1rem;
-  }
-  .hero-search-btn-text {
+  .hero-search-form, .hero-search-tags {
     display: none !important;
   }
   
