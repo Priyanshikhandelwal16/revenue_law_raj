@@ -7,6 +7,8 @@ import Notification from '@/lib/models/Notification';
 import Download from '@/lib/models/Download';
 import Glossary from '@/lib/models/Glossary';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req) {
   try {
     await dbConnect();

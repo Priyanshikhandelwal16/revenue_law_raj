@@ -59,6 +59,7 @@ export default async function DownloadsPage() {
   const downloads = await getDownloads();
 
   const getFileIcon = (type) => {
+    if (!type) return <FileText size={24} style={{ color: 'var(--primary-blue)' }} />;
     switch (type.toUpperCase()) {
       case 'PDF': return <FileText size={24} style={{ color: '#E11D48' }} />;
       case 'XLS':

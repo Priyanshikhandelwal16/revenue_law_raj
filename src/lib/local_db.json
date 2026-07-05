@@ -586,7 +586,9 @@
       "category": "Forms",
       "description": "Standard form for inheritance mutation succession applications.",
       "fileUrl": "/samples/sample.pdf",
-      "status": "published"
+      "status": "published",
+      "fileType": "PDF",
+      "fileSize": "85 KB"
     },
     {
       "_id": "dwn_mock_2",
@@ -594,7 +596,9 @@
       "category": "Templates",
       "description": "Vakalatnama form to represent clients before SDO and Board of Revenue.",
       "fileUrl": "/samples/sample.pdf",
-      "status": "published"
+      "status": "published",
+      "fileType": "PDF",
+      "fileSize": "110 KB"
     },
     {
       "_id": "dwn_mock_3",
@@ -602,7 +606,9 @@
       "category": "Forms",
       "description": "Form for agricultural land use conversion requests under Section 90-A.",
       "fileUrl": "/samples/sample.pdf",
-      "status": "published"
+      "status": "published",
+      "fileType": "PDF",
+      "fileSize": "135 KB"
     }
   ],
   "glossary": [

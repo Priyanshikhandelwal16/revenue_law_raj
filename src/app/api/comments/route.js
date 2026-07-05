@@ -3,6 +3,8 @@ import dbConnect from '@/lib/db';
 import Comment from '@/lib/models/Comment';
 import { verifyToken } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req) {
   try {
     await dbConnect();

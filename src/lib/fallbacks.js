@@ -154,11 +154,11 @@ export const fallbackNotifications = [
 
 // 5. DUMMY DOWNLOADS (5 items)
 export const fallbackDownloads = [
-  { _id: "dwn_mock_1", title: "Mutation Application Form (Namantaran)", category: "Forms", description: "Standard form for inheritance mutation succession applications.", fileUrl: "/samples/sample.pdf", status: "published" },
-  { _id: "dwn_mock_2", title: "Vakalatnama Template for Revenue Courts", category: "Templates", description: "Vakalatnama form to represent clients before SDO and Board of Revenue.", fileUrl: "/samples/sample.pdf", status: "published" },
-  { _id: "dwn_mock_3", title: "Section 90-A Conversion Application Sheet", category: "Forms", description: "Form for agricultural land use conversion requests under Section 90-A.", fileUrl: "/samples/sample.pdf", status: "published" },
-  { _id: "dwn_mock_4", title: "Suit for Division of Agricultural holding Draft template", category: "Templates", description: "Model draft petition sheet for Section 53 partition suits.", fileUrl: "/samples/sample.pdf", status: "published" },
-  { _id: "dwn_mock_5", title: "Revenue Appeals checklist", category: "Checklists", description: "Administrative checklist of documents required for RAC first appeals.", fileUrl: "/samples/sample.pdf", status: "published" }
+  { _id: "dwn_mock_1", title: "Mutation Application Form (Namantaran)", category: "Forms", description: "Standard form for inheritance mutation succession applications.", fileUrl: "/samples/sample.pdf", status: "published", fileType: "PDF", fileSize: "120 KB" },
+  { _id: "dwn_mock_2", title: "Vakalatnama Template for Revenue Courts", category: "Templates", description: "Vakalatnama form to represent clients before SDO and Board of Revenue.", fileUrl: "/samples/sample.pdf", status: "published", fileType: "PDF", fileSize: "85 KB" },
+  { _id: "dwn_mock_3", title: "Section 90-A Conversion Application Sheet", category: "Forms", description: "Form for agricultural land use conversion requests under Section 90-A.", fileUrl: "/samples/sample.pdf", status: "published", fileType: "PDF", fileSize: "150 KB" },
+  { _id: "dwn_mock_4", title: "Suit for Division of Agricultural holding Draft template", category: "Templates", description: "Model draft petition sheet for Section 53 partition suits.", fileUrl: "/samples/sample.pdf", status: "published", fileType: "PDF", fileSize: "110 KB" },
+  { _id: "dwn_mock_5", title: "Revenue Appeals checklist", category: "Checklists", description: "Administrative checklist of documents required for RAC first appeals.", fileUrl: "/samples/sample.pdf", status: "published", fileType: "PDF", fileSize: "95 KB" }
 ];
 
 // 6. DUMMY GLOSSARY (10 items)
