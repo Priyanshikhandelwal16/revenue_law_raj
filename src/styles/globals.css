@@ -413,9 +413,9 @@ a {
 /* News Sticky Sidebar */
 .news-sidebar-sticky {
   position: sticky;
-  top: 100px;
+  top: 120px;
   height: fit-content;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 140px);
   overflow-y: auto;
   padding-bottom: 1rem;
   align-self: start;
@@ -1445,7 +1445,7 @@ a {
 /* Responsive Footer Grid & Global Mobile Overflow Prevention */
 html, body {
   max-width: 100%;
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
 }
 
 .footer-grid {
