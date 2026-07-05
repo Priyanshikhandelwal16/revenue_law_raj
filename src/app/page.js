@@ -166,7 +166,7 @@ export default async function HomePage() {
               <Scale size={15} style={{ color: 'var(--accent-gold)' }} />
               <span style={{ color: 'var(--accent-gold)', fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Rajasthan Legal Research Portal</span>
             </div>
-            <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 3.8rem)', fontWeight: 700, lineHeight: 1.15, marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', color: 'white' }}>
+            <h1 style={{ fontSize: 'clamp(1.8rem, 6vw, 3.8rem)', fontWeight: 700, lineHeight: 1.15, marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', color: 'white' }}>
               {heroTitle} <br />
               <span style={{ background: 'linear-gradient(to right, #FFEAA7, var(--accent-gold))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{heroSubtitle}</span>
             </h1>
@@ -175,16 +175,16 @@ export default async function HomePage() {
             </p>
 
             {/* Standard HTML search form for Next.js Server Components */}
-            <form action="/search" method="GET" style={{ marginTop: '2.25rem', display: 'flex', gap: '0.5rem', width: '100%', maxWidth: '600px', backgroundColor: 'white', padding: '0.4rem', borderRadius: '8px', boxShadow: '0 12px 30px rgba(0,0,0,0.25)', border: '1px solid rgba(197, 168, 128, 0.25)' }}>
+            <form action="/search" method="GET" className="hero-search-form">
               <input 
                 type="text" 
                 name="q"
                 placeholder="Search judgments, acts, circulars, or citation..." 
                 required
-                style={{ flexGrow: 1, border: 'none', outline: 'none', padding: '0.75rem 1rem', fontSize: '0.95rem', color: 'var(--text-dark)' }}
+                className="hero-search-input"
               />
-              <button type="submit" className="btn-gold" style={{ padding: '0.75rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', border: 'none', borderRadius: '6px' }}>
-                <Search size={16} /> Search
+              <button type="submit" className="btn-gold hero-search-button">
+                <Search size={16} /> <span className="hero-search-btn-text">Search</span>
               </button>
             </form>
 

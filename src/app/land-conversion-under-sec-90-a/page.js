@@ -52,7 +52,7 @@ export default function LandConversionPage() {
             <FileCheck size={14} style={{ color: 'var(--accent-gold)' }} />
             <span style={{ fontSize: '0.8rem', color: '#FFFFFF', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Section 90-A Guide</span>
           </div>
-          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: '#FFFFFF' }}>
+          <h1 style={{ fontSize: 'clamp(1.6rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: '#FFFFFF' }}>
             Land Conversion under Sec-90-A<br />
             <span style={{ color: 'var(--accent-gold)' }}>Rajasthan Land Revenue Act</span>
           </h1>
@@ -140,7 +140,7 @@ export default function LandConversionPage() {
                 <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', marginBottom: '1.5rem', fontFamily: 'var(--font-serif)' }}>
                   Documents Checklist
                 </h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
                   {documents.map((d, i) => (
                     <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
                       <CheckCircle2 size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.15rem' }} />
