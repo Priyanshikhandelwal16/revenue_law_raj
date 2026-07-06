@@ -90,24 +90,16 @@ function SearchResultsContent() {
             <p style={{ color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
               {query ? `Showing matches for "${query}"` : 'Enter a query below to search the database.'}
             </p>
-            <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: '0.5rem' }}>
+            <form onSubmit={handleSearchSubmit} className="search-page-form">
               <input 
                 type="text" 
                 value={localQuery}
                 onChange={(e) => setLocalQuery(e.target.value)}
                 placeholder="Enter citation, keywords, sections or case name..." 
                 autoFocus
-                style={{
-                  flexGrow: 1,
-                  padding: '0.75rem 1rem',
-                  fontSize: '1rem',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '4px',
-                  outline: 'none',
-                  backgroundColor: 'var(--bg-offwhite)'
-                }}
+                className="search-page-form-input"
               />
-              <button type="submit" className="btn-gold" style={{ padding: '0.75rem 2rem', borderRadius: '4px', fontWeight: 600 }}>
+              <button type="submit" className="btn-gold search-page-form-btn">
                 Search
               </button>
             </form>
