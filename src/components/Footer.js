@@ -22,11 +22,14 @@ export default function Footer() {
                   width: 'auto'
                 }} 
               />
-              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.2', marginLeft: '-0.35rem' }}>
-                <span className="logo-title-text" style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 700, color: 'white', letterSpacing: '-0.5px' }}>
-                  Revenue Law <span style={{ color: 'var(--accent-gold)' }}>Rajasthan</span>
+              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.1', marginLeft: '-0.35rem' }}>
+                <span className="logo-title-text" style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 700, color: '#FFFFFF', letterSpacing: '-0.5px' }}>
+                  Revenue Law
                 </span>
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.65rem', fontWeight: 600, color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>
+                <span className="logo-subtitle-text" style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 700, color: 'var(--accent-gold)', letterSpacing: '-0.5px' }}>
+                  Rajasthan
+                </span>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.65rem', fontWeight: 600, color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px', marginTop: '0.2rem' }}>
                   RAJASTHAN REVENUE PORTAL
                 </span>
               </div>
