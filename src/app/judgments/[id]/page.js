@@ -327,7 +327,7 @@ export default function JudgmentDetailPage({ params }) {
             ) : (
               <form onSubmit={handleCommentSubmit} className="comment-form" style={{ marginTop: 0 }}>
                 <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', fontWeight: 600 }}>Contribute to Thread</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                <div className="form-row-grid" style={{ marginBottom: '1rem' }}>
                   <div className="form-group" style={{ marginBottom: 0 }}>
                     <label>Name</label>
                     <input 

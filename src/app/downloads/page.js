@@ -108,14 +108,10 @@ export default async function DownloadsPage() {
                   border: '1px solid var(--border-color)',
                   borderRadius: '8px',
                   padding: '1.5rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1.5rem',
-                  justifyContent: 'space-between',
                   boxShadow: 'var(--shadow-sm)',
                   transition: 'var(--transition-normal)'
                 }}
-                className="premium-card"
+                className="premium-card downloads-list-card"
               >
                 <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}>
                   <div style={{
@@ -158,7 +154,7 @@ export default async function DownloadsPage() {
                     transition: 'var(--transition-normal)',
                     cursor: 'pointer'
                   }}
-                  className="btn-primary"
+                  className="btn-primary downloads-btn"
                   title="Download File"
                 >
                   <Download size={18} />

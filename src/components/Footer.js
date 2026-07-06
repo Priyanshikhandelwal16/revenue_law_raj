@@ -11,7 +11,7 @@ export default function Footer() {
           
           {/* Logo & Description */}
           <div className="footer-column footer-column-wide" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <div className="footer-logo" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div className="footer-logo" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
               <img 
                 src="/images/new logo.png" 
                 alt="Revenue Law Raj" 
@@ -22,9 +22,9 @@ export default function Footer() {
                   width: 'auto'
                 }} 
               />
-              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.2' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.2', marginLeft: '-0.35rem' }}>
                 <span className="logo-title-text" style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 700, color: 'white', letterSpacing: '-0.5px' }}>
-                  Revenue Law <span style={{ color: 'var(--accent-gold)' }}>Rajasthan</span>
+                  Revenue Law <span style={{ color: 'var(--accent-gold)' }}>Raj</span>
                 </span>
                 <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.65rem', fontWeight: 600, color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1px' }}>
                   RAJASTHAN REVENUE PORTAL

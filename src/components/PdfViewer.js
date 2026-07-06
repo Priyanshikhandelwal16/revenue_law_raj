@@ -115,7 +115,7 @@ export default function PdfViewer({ pdfData, pdfUrl, title = "document" }) {
         </div>
       </div>
       
-      <div style={{ flexGrow: 1, backgroundColor: '#525659', height: isFullscreen ? 'calc(100vh - 48px)' : '550px' }}>
+      <div style={{ flexGrow: 1, backgroundColor: '#525659', height: isFullscreen ? 'calc(100vh - 48px)' : 'clamp(350px, 60vh, 550px)' }}>
         <iframe 
           id="pdf-iframe-element"
           src={pdfSource}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { Search, Menu, X, ChevronDown, BookOpen, Scale, FileText, Download, Gavel, HelpCircle } from 'lucide-react';
@@ -8,8 +8,6 @@ import { Search, Menu, X, ChevronDown, BookOpen, Scale, FileText, Download, Gave
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -30,19 +28,13 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      setIsSearchOpen(false);
-      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
-    }
-  };
+
 
   return (
     <div className="header-wrapper" style={{ boxShadow: scrolled ? 'var(--shadow-md)' : 'none' }}>
       <nav className="navbar">
         {/* Left Side: Logo and Text */}
-        <Link href="/" className="logo-container" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.2rem 0' }}>
+        <Link href="/" className="logo-container" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.2rem 0' }}>
           <img 
             src="/images/new logo.png" 
             alt="Revenue Law Raj" 
@@ -54,12 +46,12 @@ export default function Navbar() {
               width: 'auto'
             }} 
           />
-          <div className="logo-text-group" style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.1' }}>
+          <div className="logo-text-group" style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.1', marginLeft: '-0.35rem' }}>
             <span className="logo-title-text" style={{ fontFamily: 'var(--font-serif)', fontWeight: 700, color: '#FFFFFF', letterSpacing: '-0.5px' }}>
               Revenue Law
             </span>
             <span className="logo-subtitle-text" style={{ fontFamily: 'var(--font-serif)', fontWeight: 700, color: 'var(--accent-gold)', letterSpacing: '-0.5px' }}>
-              Rajasthan
+              Raj
             </span>
           </div>
         </Link>
@@ -109,11 +101,10 @@ export default function Navbar() {
           <Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}>Contact Us</Link>
         </div>
 
-        {/* Right Side: Actions (Search and Mobile Toggle) */}
         <div className="nav-actions no-print">
-          <button className="search-icon-btn" onClick={() => setIsSearchOpen(true)} title="Search Database">
+          <Link href="/search" className="search-icon-btn" title="Search Database">
             <Search size={18} />
-          </button>
+          </Link>
           
           {/* Hamburger Menu Icon (Mobile Only) */}
           <span 
@@ -192,77 +183,11 @@ export default function Navbar() {
           <Link href="/land-conversion-under-sec-90-a" className={`nav-link ${pathname === '/land-conversion-under-sec-90-a' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Land Conversion under Section 90-A</Link>
           <Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Contact Us</Link>
           
-          <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-            <input 
-              type="text" 
-              placeholder="Search database..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="form-control"
-              style={{ padding: '0.5rem', flexGrow: 1 }}
-            />
-            <button type="submit" className="btn-primary" style={{ padding: '0.5rem 1rem' }}>Search</button>
-          </form>
+
         </div>
       )}
 
-      {/* Global Search Overlay */}
-      {isSearchOpen && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(10, 25, 47, 0.95)',
-          zIndex: 1000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '2rem'
-        }} className="no-print">
-          <button 
-            onClick={() => setIsSearchOpen(false)}
-            style={{
-              position: 'absolute',
-              top: '2rem',
-              right: '2rem',
-              background: 'none',
-              border: 'none',
-              color: 'white',
-              cursor: 'pointer'
-            }}
-          >
-            <X size={32} />
-          </button>
-          <form onSubmit={handleSearchSubmit} style={{ width: '100%', maxWidth: '600px' }}>
-            <h2 style={{ color: 'white', fontFamily: 'var(--font-sans)', fontSize: '1.5rem', marginBottom: '1rem', fontWeight: 600 }}>
-              Search Legal Database
-            </h2>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <input 
-                type="text" 
-                placeholder="Enter citation, keywords, sections or case name..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                autoFocus
-                style={{
-                  flexGrow: 1,
-                  padding: '1rem',
-                  fontSize: '1.2rem',
-                  border: 'none',
-                  borderRadius: '4px',
-                  outline: 'none'
-                }}
-              />
-              <button type="submit" className="btn-gold" style={{ padding: '1rem 2rem' }}>Search</button>
-            </div>
-            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem', marginTop: '0.75rem' }}>
-              E.g., "90-A land conversion", "Board of Revenue", "2026 RRD"
-            </p>
-          </form>
-        </div>
-      )}
+
     </div>
   );
 }

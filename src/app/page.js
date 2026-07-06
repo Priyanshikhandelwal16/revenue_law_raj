@@ -10,6 +10,7 @@ import Judgment from '@/lib/models/Judgment';
 import Notification from '@/lib/models/Notification';
 import Setting from '@/lib/models/Setting';
 import NewsSidebar from '@/components/NewsSidebar';
+import ScrollReveal from '@/components/ScrollReveal';
 
 // Mock data fallbacks for a premium editorial presentation if database is empty
 const defaultNews = [
@@ -174,19 +175,15 @@ export default async function HomePage() {
               {heroDesc}
             </p>
 
-            {/* Standard HTML search form for Next.js Server Components */}
-            <form action="/search" method="GET" className="hero-search-form">
-              <input 
-                type="text" 
-                name="q"
-                placeholder="Search judgments, acts, circulars, or citation..." 
-                required
-                className="hero-search-input"
-              />
-              <button type="submit" className="btn-gold hero-search-button">
-                <Search size={16} /> <span className="hero-search-btn-text">Search</span>
-              </button>
-            </form>
+            {/* CTA search triggers */}
+            <div style={{ marginTop: '2.25rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <Link href={heroButtonUrl} className="btn-gold" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.85rem 2.25rem', fontWeight: 700, borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.5px', transition: 'var(--transition-normal)' }}>
+                <Gavel size={16} /> {heroButtonText}
+              </Link>
+              <Link href={heroSecButtonUrl} className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.85rem 2.25rem', fontWeight: 700, borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.5px', color: 'white', borderColor: 'rgba(255,255,255,0.3)', transition: 'var(--transition-normal)' }}>
+                <BookOpen size={16} /> {heroSecButtonText}
+              </Link>
+            </div>
 
             {/* Quick search tags */}
             <div className="hero-search-tags" style={{ display: 'flex', gap: '0.5rem', marginTop: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -246,254 +243,258 @@ export default async function HomePage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
               
               {/* 3. Revenue Law Categories */}
-              <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
-                  <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Subject Directory</div>
-                  <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Revenue Law Categories</h2>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Access structured directories covering key subject matters in Rajasthan land and tenancy codes.</p>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
-                  {categories.map((cat, i) => (
-                    <div key={i} className="premium-card" style={{ padding: '1.5rem', border: '1px solid var(--border-color)', borderRadius: '8px', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-white)', transition: 'var(--transition-normal)' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-                        <div style={{ backgroundColor: 'rgba(197, 168, 128, 0.12)', color: 'var(--accent-gold)', padding: '0.5rem', borderRadius: '8px', display: 'flex', alignItems: 'center' }}>
-                          {cat.icon}
+              <ScrollReveal>
+                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                  <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
+                    <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Subject Directory</div>
+                    <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Revenue Law Categories</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Access structured directories covering key subject matters in Rajasthan land and tenancy codes.</p>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
+                    {categories.map((cat, i) => (
+                      <div key={i} className="premium-card" style={{ padding: '1.5rem', border: '1px solid var(--border-color)', borderRadius: '8px', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-white)', transition: 'var(--transition-normal)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                          <div style={{ backgroundColor: 'rgba(197, 168, 128, 0.12)', color: 'var(--accent-gold)', padding: '0.5rem', borderRadius: '8px', display: 'flex', alignItems: 'center' }}>
+                            {cat.icon}
+                          </div>
+                          <h3 style={{ fontSize: '1.05rem', fontFamily: 'var(--font-sans)', fontWeight: 700, color: 'var(--primary-blue)' }}>{cat.title}</h3>
                         </div>
-                        <h3 style={{ fontSize: '1.05rem', fontFamily: 'var(--font-sans)', fontWeight: 700, color: 'var(--primary-blue)' }}>{cat.title}</h3>
-                      </div>
-                      <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.25rem', flexGrow: 1, lineHeight: 1.6 }}>{cat.desc}</p>
-                      <Link href={`/articles?category=${encodeURIComponent(cat.title)}`} style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--accent-gold)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginTop: 'auto', transition: 'var(--transition-fast)' }} className="link-hover-gold">
-                        Browse Category Articles <ChevronRight size={12} />
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 4. Latest News & Commentaries */}
-              <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
-                  <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Latest Updates & News</div>
-                  <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Latest News & Commentaries</h2>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Read explanations of recent policy shifts, land ceiling notifications, and latest news changes in Rajasthan.</p>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
-                  {articles.map(article => (
-                    <div key={article._id} className="premium-card" style={{ display: 'flex', flexDirection: 'column', height: '100%', borderRadius: '8px', border: '1px solid var(--border-color)', overflow: 'hidden', backgroundColor: 'white' }}>
-                      <div className="card-img-container" style={{ height: '160px', position: 'relative', overflow: 'hidden' }}>
-                        <img src={article.featuredImage || "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=800&q=80"} alt={article.title} className="card-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        <span className="card-badge" style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', backgroundColor: 'var(--primary-blue)', color: 'var(--accent-gold)', fontSize: '0.7rem', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 600 }}>{article.category}</span>
-                      </div>
-                      <div className="card-content" style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, padding: '1.5rem' }}>
-                        <span className="card-date" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.4rem' }}>{new Date(article.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-                        <h3 className="card-title" style={{ fontSize: '1.1rem', minHeight: '2.8rem', marginBottom: '0.75rem', fontFamily: 'var(--font-sans)', fontWeight: 700, color: 'var(--primary-blue)' }}>{article.title}</h3>
-                        <p className="card-summary" style={{ fontSize: '0.85rem', flexGrow: 1, color: 'var(--text-muted)', lineHeight: 1.6 }}>{article.summary}</p>
-                        <Link href={`/articles/${article.slug}`} className="card-link" style={{ marginTop: '1.25rem', alignSelf: 'flex-start', color: 'var(--accent-gold)', fontSize: '0.78rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                          Read Article <ArrowRight size={12} />
+                        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.25rem', flexGrow: 1, lineHeight: 1.6 }}>{cat.desc}</p>
+                        <Link href={`/articles?category=${encodeURIComponent(cat.title)}`} style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--accent-gold)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginTop: 'auto', transition: 'var(--transition-fast)' }} className="link-hover-gold">
+                          Browse Category Articles <ChevronRight size={12} />
                         </Link>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </ScrollReveal>
 
               {/* 5. Latest Court Judgments */}
-              <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
-                  <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Case Law Updates</div>
-                  <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Latest Court Judgments</h2>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Access the latest rulings, orders, and precedents set by the Board of Revenue Ajmer.</p>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                  {judgments.map(j => (
-                    <div key={j._id} style={{ border: '1px solid var(--border-color)', borderRadius: '8px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', backgroundColor: 'var(--bg-offwhite)', transition: 'var(--transition-normal)' }} className="premium-card">
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: '0.75rem', fontWeight: 700, backgroundColor: 'rgba(10, 25, 47, 0.06)', color: 'var(--primary-blue)', padding: '0.25rem 0.5rem', borderRadius: '4px', border: '1px solid rgba(10, 25, 47, 0.1)' }}>
-                          {j.citation}
-                        </span>
-                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 500 }}>
-                          {new Date(j.judgmentDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
-                        </span>
-                      </div>
-                      <h3 style={{ fontSize: '1.2rem', fontFamily: 'var(--font-serif)', fontStyle: 'italic', color: 'var(--primary-blue)', fontWeight: 700 }}>{j.title}</h3>
-                      <p style={{ fontSize: '0.8rem', color: 'var(--accent-gold)', fontWeight: 600 }}>{j.courtName} • {j.caseNumber}</p>
-                      <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{j.summary ? j.summary.slice(0, 180) + '...' : ''}</p>
-                      <Link href={`/judgments/${j._id}`} className="card-link" style={{ marginTop: '0.5rem', alignSelf: 'flex-start', color: 'var(--accent-gold)', fontWeight: 700, fontSize: '0.78rem', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                        Open Judgment Details <ArrowRight size={12} />
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 6. Latest Government Notifications & Circulars */}
-              <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
-                  <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Official Gazettes</div>
-                  <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Latest Government Notifications & Circulars</h2>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Track direct circular orders and rules amendments released by the Revenue Department, Government of Rajasthan.</p>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {notifications.map((notif, idx) => (
-                    <div key={idx} style={{ backgroundColor: 'var(--bg-offwhite)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1.25rem', alignItems: 'center', transition: 'var(--transition-normal)' }} className="premium-card">
-                      <div style={{ flexGrow: 1, maxWidth: '80%' }}>
-                        <div style={{ display: 'flex', gap: '0.75rem', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 500 }}>
-                          <span style={{ fontWeight: 700, color: 'var(--accent-gold)' }}>Ref: {notif.refNumber}</span>
-                          <span>•</span>
-                          <span>{new Date(notif.publishDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                        </div>
-                        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary-blue)', fontFamily: 'var(--font-sans)' }}>{notif.title}</h3>
-                        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.35rem', lineHeight: 1.6 }}>{notif.summary}</p>
-                      </div>
-                      <Link href="/notifications" className="btn-outline" style={{ padding: '0.5rem 1rem', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', border: '1px solid var(--primary-blue)', borderRadius: '4px', fontWeight: 600 }}>
-                        <Download size={12} /> Download PDF
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 7. Revenue Court Hierarchy (Tree Form) */}
-              <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)', textAlign: 'center' }}>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem' }}>
-                  <Landmark size={14} />
-                  <span>Judicial Structure</span>
-                </div>
-                <h2 style={{ fontSize: '1.8rem', color: 'var(--primary-blue)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>
-                  Revenue Court Hierarchy of Rajasthan
-                </h2>
-                <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', fontSize: '0.95rem', maxWidth: '600px', margin: '0 auto' }}>
-                  The administrative and judicial hierarchy of forums handling land tenancy, mutation, and ceiling cases in the state.
-                </p>
-                
-                <div className="hierarchy-tree-container">
-                  {courts.map((court, idx) => (
-                    <div key={idx} className="hierarchy-tree-node-wrapper">
-                      <div className="hierarchy-tree-node">
-                        <div className="node-icon">
-                          <Landmark size={20} />
-                        </div>
-                        <div className="node-content">
-                          <h3>{court.title}</h3>
-                          <span className="node-role">{court.role}</span>
-                          <span className="node-loc">{court.loc}</span>
-                        </div>
-                      </div>
-                      {idx < courts.length - 1 && (
-                        <div className="tree-connector">
-                          <div className="connector-line"></div>
-                          <div className="connector-arrow"></div>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 8. Land Conversion (Section 90-A) */}
-              <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                <div className="conversion-grid">
-                  <div>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem' }}>
-                      <ShieldAlert size={14} />
-                      <span>Statutory Practice Guide</span>
-                    </div>
-                    <h2 style={{ fontSize: '1.8rem', marginBottom: '1rem', lineHeight: '1.2', color: 'var(--primary-blue)', fontFamily: 'var(--font-serif)' }}>Section 90-A: Land Conversion</h2>
-                    <p style={{ marginBottom: '1.25rem', color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.65 }}>
-                      Section 90-A of the Rajasthan Land Revenue Act, 1956 regulates the conversion of agricultural land for non-agricultural purposes.
-                    </p>
-                    <ul style={{ listStyle: 'none', marginBottom: '2rem', fontSize: '0.88rem', color: 'var(--text-dark)' }}>
-                      <li style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', alignItems: 'flex-start' }}>
-                        <Award size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.15rem' }} />
-                        <span><strong>SDO Powers:</strong> Rural conversion power rests with Sub-Divisional Officers.</span>
-                      </li>
-                      <li style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', alignItems: 'flex-start' }}>
-                        <Award size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.15rem' }} />
-                        <span><strong>Urban Masterplans:</strong> Urban bodies (JDA, UITs) hold conversion rights inside masterplans.</span>
-                      </li>
-                    </ul>
-                    <Link href="/articles/land-conversion-90-a" className="btn-primary" style={{ padding: '0.75rem 1.5rem', fontSize: '0.8rem', borderRadius: '4px' }}>
-                      Read 90-A Guide
-                    </Link>
+              <ScrollReveal>
+                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                  <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
+                    <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Case Law Updates</div>
+                    <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Latest Court Judgments</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Access the latest rulings, orders, and precedents set by the Board of Revenue Ajmer.</p>
                   </div>
-                  <div>
-                    <img 
-                      src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80" 
-                      alt="Agricultural lands and cadastral revenue map"
-                      style={{ borderRadius: '8px', boxShadow: 'var(--shadow-md)', width: '100%', maxHeight: '260px', objectFit: 'cover', border: '1px solid var(--border-color)' }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* 9. Popular Articles */}
-              <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
-                  <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Trending Content</div>
-                  <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Popular Articles</h2>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Explore the most viewed analyses and legal publications across the Rajasthan revenue landscape.</p>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
-                  {popularArticles.map(article => (
-                    <div key={article._id} className="premium-card" style={{ border: '1px solid var(--border-color)', borderRadius: '8px', overflow: 'hidden', backgroundColor: 'white' }}>
-                      <div className="card-img-container" style={{ height: '150px' }}>
-                        <img src={article.featuredImage || "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=800&q=80"} alt={article.title} className="card-img" />
-                      </div>
-                      <div className="card-content" style={{ padding: '1.25rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: '0.5rem', fontWeight: 600 }}>
-                          <span style={{ color: 'var(--accent-gold)' }}>{article.category}</span>
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><Eye size={12} /> {article.views || 0} views</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    {judgments.slice(0, 2).map(j => (
+                      <div key={j._id} style={{ border: '1px solid var(--border-color)', borderRadius: '8px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', backgroundColor: 'var(--bg-offwhite)', transition: 'var(--transition-normal)' }} className="premium-card">
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 700, backgroundColor: 'rgba(10, 25, 47, 0.06)', color: 'var(--primary-blue)', padding: '0.25rem 0.5rem', borderRadius: '4px', border: '1px solid rgba(10, 25, 47, 0.1)' }}>
+                            {j.citation}
+                          </span>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                            {new Date(j.judgmentDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                          </span>
                         </div>
-                        <h3 className="card-title" style={{ fontSize: '0.95rem', minHeight: '2.5rem', color: 'var(--primary-blue)', fontWeight: 700 }}>
-                          <Link href={`/articles/${article.slug}`}>{article.title}</Link>
-                        </h3>
-                        <Link href={`/articles/${article.slug}`} className="card-link" style={{ fontSize: '0.78rem', marginTop: '0.5rem', color: 'var(--accent-gold)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                          Read Commentary <ArrowRight size={12} />
+                        <h3 style={{ fontSize: '1.2rem', fontFamily: 'var(--font-serif)', fontStyle: 'italic', color: 'var(--primary-blue)', fontWeight: 700 }}>{j.title}</h3>
+                        <p style={{ fontSize: '0.8rem', color: 'var(--accent-gold)', fontWeight: 600 }}>{j.courtName} • {j.caseNumber}</p>
+                        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{j.summary ? j.summary.slice(0, 180) + '...' : ''}</p>
+                        <Link href={`/judgments/${j._id}`} className="card-link" style={{ marginTop: '0.5rem', alignSelf: 'flex-start', color: 'var(--accent-gold)', fontWeight: 700, fontSize: '0.78rem', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                          Open Judgment Details <ArrowRight size={12} />
                         </Link>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 10. Frequently Asked Questions */}
-              <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
-                  <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Knowledge Base</div>
-                  <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Frequently Asked Questions</h2>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Answers to common questions regarding land tenures, conversion fees, and revenue appeals.</p>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  {faqs.map((faq, idx) => (
-                    <div key={idx} style={{ backgroundColor: 'var(--bg-offwhite)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '1.25rem' }}>
-                      <h3 style={{ fontSize: '0.98rem', fontFamily: 'var(--font-sans)', fontWeight: 700, display: 'flex', gap: '0.5rem', alignItems: 'center', color: 'var(--primary-blue)' }}>
-                        <HelpCircle size={16} style={{ color: 'var(--accent-gold)' }} />
-                        {faq.question}
-                      </h3>
-                      <p style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: 'var(--text-muted)', paddingLeft: '1.3rem', lineHeight: 1.6 }}>
-                        {faq.answer}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 11. Contact CTA Section */}
-              <div style={{ backgroundColor: 'var(--primary-blue)', borderRadius: '12px', padding: '3rem 2.5rem', color: 'white', position: 'relative', overflow: 'hidden', border: '1px solid rgba(197,168,128,0.25)' }} className="premium-card">
-                <div className="cta-grid">
-                  <div>
-                    <h2 style={{ color: 'white', fontSize: '1.8rem', marginBottom: '0.75rem', fontFamily: 'var(--font-serif)' }}>Need Statutory Clarification?</h2>
-                    <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.88rem', lineHeight: '1.65', marginBottom: 0 }}>
-                      If you need guidance regarding Land Revenue Section 90-A conversions, mutation successions, partition dispute rules, or Board appeals, submit an expert inquiry.
-                    </p>
+                    ))}
                   </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <Link href="/contact" className="btn-gold" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.8rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontSize: '0.8rem', borderRadius: '4px', fontWeight: 700 }}>
-                      <Send size={14} /> Submit Legal Query
+                  <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                    <Link href="/judgments" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontSize: '0.8rem', fontWeight: 700, padding: '0.75rem 2rem' }}>
+                      View All Judgments <ArrowRight size={14} />
                     </Link>
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
+
+              {/* 6. Latest Government Notifications & Circulars */}
+              <ScrollReveal>
+                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                  <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
+                    <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Official Gazettes</div>
+                    <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Latest Government Notifications & Circulars</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Track direct circular orders and rules amendments released by the Revenue Department, Government of Rajasthan.</p>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {notifications.slice(0, 2).map((notif, idx) => (
+                      <div key={idx} style={{ backgroundColor: 'var(--bg-offwhite)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1.25rem', alignItems: 'center', transition: 'var(--transition-normal)' }} className="premium-card">
+                        <div style={{ flexGrow: 1, maxWidth: '80%' }}>
+                          <div style={{ display: 'flex', gap: '0.75rem', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: 500 }}>
+                            <span style={{ fontWeight: 700, color: 'var(--accent-gold)' }}>Ref: {notif.refNumber}</span>
+                            <span>•</span>
+                            <span>{new Date(notif.publishDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                          </div>
+                          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary-blue)', fontFamily: 'var(--font-sans)' }}>{notif.title}</h3>
+                          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.35rem', lineHeight: 1.6 }}>{notif.summary}</p>
+                        </div>
+                        <Link href="/notifications" className="btn-outline" style={{ padding: '0.5rem 1rem', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', border: '1px solid var(--primary-blue)', borderRadius: '4px', fontWeight: 600 }}>
+                          <Download size={12} /> Download PDF
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                    <Link href="/notifications" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontSize: '0.8rem', fontWeight: 700, padding: '0.75rem 2rem' }}>
+                      View All Notifications <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                </div>
+              </ScrollReveal>
+
+              {/* 7. Revenue Court Hierarchy (Tree Form) */}
+              <ScrollReveal>
+                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)', textAlign: 'center' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem' }}>
+                    <Landmark size={14} />
+                    <span>Judicial Structure</span>
+                  </div>
+                  <h2 style={{ fontSize: '1.8rem', color: 'var(--primary-blue)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>
+                    Revenue Court Hierarchy of Rajasthan
+                  </h2>
+                  <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', fontSize: '0.95rem', maxWidth: '600px', margin: '0 auto' }}>
+                    The administrative and judicial hierarchy of forums handling land tenancy, mutation, and ceiling cases in the state.
+                  </p>
+                  
+                  <div className="hierarchy-tree-container">
+                    {courts.map((court, idx) => (
+                      <div key={idx} className="hierarchy-tree-node-wrapper">
+                        <div className="hierarchy-tree-node">
+                          <div className="node-icon">
+                            <Landmark size={20} />
+                          </div>
+                          <div className="node-content">
+                            <h3>{court.title}</h3>
+                            <span className="node-role">{court.role}</span>
+                            <span className="node-loc">{court.loc}</span>
+                          </div>
+                        </div>
+                        {idx < courts.length - 1 && (
+                          <div className="tree-connector">
+                            <div className="connector-line"></div>
+                            <div className="connector-arrow"></div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+
+              {/* 8. Land Conversion (Section 90-A) */}
+              <ScrollReveal>
+                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                  <div className="conversion-grid">
+                    <div>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem' }}>
+                        <ShieldAlert size={14} />
+                        <span>Statutory Practice Guide</span>
+                      </div>
+                      <h2 style={{ fontSize: '1.8rem', marginBottom: '1rem', lineHeight: '1.2', color: 'var(--primary-blue)', fontFamily: 'var(--font-serif)' }}>Section 90-A: Land Conversion</h2>
+                      <p style={{ marginBottom: '1.25rem', color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.65 }}>
+                        Section 90-A of the Rajasthan Land Revenue Act, 1956 regulates the conversion of agricultural land for non-agricultural purposes.
+                      </p>
+                      <ul style={{ listStyle: 'none', marginBottom: '2rem', fontSize: '0.88rem', color: 'var(--text-dark)' }}>
+                        <li style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', alignItems: 'flex-start' }}>
+                          <Award size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.15rem' }} />
+                          <span><strong>SDO Powers:</strong> Rural conversion power rests with Sub-Divisional Officers.</span>
+                        </li>
+                        <li style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', alignItems: 'flex-start' }}>
+                          <Award size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.15rem' }} />
+                          <span><strong>Urban Masterplans:</strong> Urban bodies (JDA, UITs) hold conversion rights inside masterplans.</span>
+                        </li>
+                      </ul>
+                      <Link href="/articles/land-conversion-90-a" className="btn-primary" style={{ padding: '0.75rem 1.5rem', fontSize: '0.8rem', borderRadius: '4px' }}>
+                        Read 90-A Guide
+                      </Link>
+                    </div>
+                    <div>
+                      <img 
+                        src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80" 
+                        alt="Agricultural lands and cadastral revenue map"
+                        style={{ borderRadius: '8px', boxShadow: 'var(--shadow-md)', width: '100%', maxHeight: '260px', objectFit: 'cover', border: '1px solid var(--border-color)' }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
+
+              {/* 9. Popular Articles */}
+              <ScrollReveal>
+                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                  <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
+                    <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Trending Content</div>
+                    <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Popular Articles</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Explore the most viewed analyses and legal publications across the Rajasthan revenue landscape.</p>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+                    {popularArticles.slice(0, 2).map(article => (
+                      <div key={article._id} className="premium-card" style={{ border: '1px solid var(--border-color)', borderRadius: '8px', overflow: 'hidden', backgroundColor: 'white' }}>
+                        <div className="card-img-container" style={{ height: '150px' }}>
+                          <img src={article.featuredImage || "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=800&q=80"} alt={article.title} className="card-img" />
+                        </div>
+                        <div className="card-content" style={{ padding: '1.25rem' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: '0.5rem', fontWeight: 600 }}>
+                            <span style={{ color: 'var(--accent-gold)' }}>{article.category}</span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><Eye size={12} /> {article.views || 0} views</span>
+                          </div>
+                          <h3 className="card-title" style={{ fontSize: '0.95rem', minHeight: '2.5rem', color: 'var(--primary-blue)', fontWeight: 700 }}>
+                            <Link href={`/articles/${article.slug}`}>{article.title}</Link>
+                          </h3>
+                          <Link href={`/articles/${article.slug}`} className="card-link" style={{ fontSize: '0.78rem', marginTop: '0.5rem', color: 'var(--accent-gold)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                            Read Commentary <ArrowRight size={12} />
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                    <Link href="/articles" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontSize: '0.8rem', fontWeight: 700, padding: '0.75rem 2rem' }}>
+                      See More Commentaries <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                </div>
+              </ScrollReveal>
+
+              {/* 10. Frequently Asked Questions */}
+              <ScrollReveal>
+                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                  <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
+                    <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Knowledge Base</div>
+                    <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Frequently Asked Questions</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Answers to common questions regarding land tenures, conversion fees, and revenue appeals.</p>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    {faqs.map((faq, idx) => (
+                      <div key={idx} style={{ backgroundColor: 'var(--bg-offwhite)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '1.25rem' }}>
+                        <h3 style={{ fontSize: '0.98rem', fontFamily: 'var(--font-sans)', fontWeight: 700, display: 'flex', gap: '0.5rem', alignItems: 'center', color: 'var(--primary-blue)' }}>
+                          <HelpCircle size={16} style={{ color: 'var(--accent-gold)' }} />
+                          {faq.question}
+                        </h3>
+                        <p style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: 'var(--text-muted)', paddingLeft: '1.3rem', lineHeight: 1.6 }}>
+                          {faq.answer}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+
+              {/* 11. Contact CTA Section */}
+              <ScrollReveal>
+                <div style={{ backgroundColor: 'var(--primary-blue)', borderRadius: '12px', padding: '3rem 2.5rem', color: 'white', position: 'relative', overflow: 'hidden', border: '1px solid rgba(197,168,128,0.25)' }} className="premium-card">
+                  <div className="cta-grid">
+                    <div>
+                      <h2 style={{ color: 'white', fontSize: '1.8rem', marginBottom: '0.75rem', fontFamily: 'var(--font-serif)' }}>Need Statutory Clarification?</h2>
+                      <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.88rem', lineHeight: '1.65', marginBottom: 0 }}>
+                        If you need guidance regarding Land Revenue Section 90-A conversions, mutation successions, partition dispute rules, or Board appeals, submit an expert inquiry.
+                      </p>
+                    </div>
+                    <div style={{ textAlign: 'center' }}>
+                      <Link href="/contact" className="btn-gold" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.8rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontSize: '0.8rem', borderRadius: '4px', fontWeight: 700 }}>
+                        <Send size={14} /> Submit Legal Query
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
 
             </div>
 

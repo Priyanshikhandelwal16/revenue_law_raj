@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search, Gavel, BookOpen, Newspaper, Bell, Download, ChevronRight, Scale } from 'lucide-react';
 import NewsSidebar from '@/components/NewsSidebar';
@@ -9,6 +9,8 @@ import NewsSidebar from '@/components/NewsSidebar';
 function SearchResultsContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
+  const router = useRouter();
+  const [localQuery, setLocalQuery] = useState(query);
   const [results, setResults] = useState({
     articles: [],
     judgments: [],
@@ -20,8 +22,15 @@ function SearchResultsContent() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLocalQuery(query);
+  }, [query]);
+
+  useEffect(() => {
     async function performSearch() {
-      if (!query) return;
+      if (!query) {
+        setLoading(false);
+        return;
+      }
       setLoading(true);
       try {
         const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
@@ -37,6 +46,12 @@ function SearchResultsContent() {
     }
     performSearch();
   }, [query]);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (!localQuery.trim()) return;
+    router.push(`/search?q=${encodeURIComponent(localQuery.trim())}`);
+  };
 
   const hasResults = 
     results.articles.length > 0 ||
@@ -55,9 +70,29 @@ function SearchResultsContent() {
               <Search size={28} style={{ color: 'var(--accent-gold)' }} />
               Search Results
             </h1>
-            <p style={{ color: 'var(--text-muted)' }}>
-              {query ? `Showing matches for "${query}"` : 'Enter a query in the search bar above.'}
+            <p style={{ color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
+              {query ? `Showing matches for "${query}"` : 'Enter a query below to search the database.'}
             </p>
+            <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: '0.5rem' }}>
+              <input 
+                type="text" 
+                value={localQuery}
+                onChange={(e) => setLocalQuery(e.target.value)}
+                placeholder="Enter citation, keywords, sections or case name..." 
+                style={{
+                  flexGrow: 1,
+                  padding: '0.75rem 1rem',
+                  fontSize: '1rem',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '4px',
+                  outline: 'none',
+                  backgroundColor: 'var(--bg-offwhite)'
+                }}
+              />
+              <button type="submit" className="btn-gold" style={{ padding: '0.75rem 2rem', borderRadius: '4px', fontWeight: 600 }}>
+                Search
+              </button>
+            </form>
           </div>
 
           {loading ? (

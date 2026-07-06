@@ -148,7 +148,7 @@ export default function ContactPage() {
                   Submit Legal Query
                 </h2>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div className="form-row-grid">
                   <div className="form-group" style={{ marginBottom: 0 }}>
                     <label>Full Name *</label>
                     <input 
@@ -171,7 +171,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div className="form-row-grid">
                   <div className="form-group" style={{ marginBottom: 0 }}>
                     <label>Contact Number (Optional)</label>
                     <input 
