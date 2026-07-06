@@ -336,44 +336,7 @@ export default async function HomePage() {
                 </div>
               </ScrollReveal>
 
-              {/* 7. Revenue Court Hierarchy (Tree Form) */}
-              <ScrollReveal>
-                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)', textAlign: 'center' }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem' }}>
-                    <Landmark size={14} />
-                    <span>Judicial Structure</span>
-                  </div>
-                  <h2 style={{ fontSize: '1.8rem', color: 'var(--primary-blue)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>
-                    Revenue Court Hierarchy of Rajasthan
-                  </h2>
-                  <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', fontSize: '0.95rem', maxWidth: '600px', margin: '0 auto' }}>
-                    The administrative and judicial hierarchy of forums handling land tenancy, mutation, and ceiling cases in the state.
-                  </p>
-                  
-                  <div className="hierarchy-tree-container">
-                    {courts.map((court, idx) => (
-                      <div key={idx} className="hierarchy-tree-node-wrapper">
-                        <div className="hierarchy-tree-node">
-                          <div className="node-icon">
-                            <Landmark size={20} />
-                          </div>
-                          <div className="node-content">
-                            <h3>{court.title}</h3>
-                            <span className="node-role">{court.role}</span>
-                            <span className="node-loc">{court.loc}</span>
-                          </div>
-                        </div>
-                        {idx < courts.length - 1 && (
-                          <div className="tree-connector">
-                            <div className="connector-line"></div>
-                            <div className="connector-arrow"></div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </ScrollReveal>
+
 
               {/* 8. Land Conversion (Section 90-A) */}
               <ScrollReveal>

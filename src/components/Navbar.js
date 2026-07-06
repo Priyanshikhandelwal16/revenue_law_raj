@@ -51,7 +51,7 @@ export default function Navbar() {
               Revenue Law
             </span>
             <span className="logo-subtitle-text" style={{ fontFamily: 'var(--font-serif)', fontWeight: 700, color: 'var(--accent-gold)', letterSpacing: '-0.5px' }}>
-              Raj
+              Rajasthan
             </span>
           </div>
         </Link>
