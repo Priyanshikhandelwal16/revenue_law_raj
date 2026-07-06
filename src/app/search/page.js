@@ -47,10 +47,27 @@ function SearchResultsContent() {
     performSearch();
   }, [query]);
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (!localQuery.trim()) return;
-    router.push(`/search?q=${encodeURIComponent(localQuery.trim())}`);
+  const handleSearchSubmit = async (e) => {
+    if (e) e.preventDefault();
+    const trimmed = localQuery.trim();
+    if (!trimmed) return;
+    
+    // Update URL query parameters
+    router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+    
+    // Immediately fetch from API so content loads right here
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/search?q=${encodeURIComponent(trimmed)}`);
+      if (res.ok) {
+        const json = await res.json();
+        setResults(json);
+      }
+    } catch (err) {
+      console.error("Search failed", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const hasResults = 
@@ -79,6 +96,7 @@ function SearchResultsContent() {
                 value={localQuery}
                 onChange={(e) => setLocalQuery(e.target.value)}
                 placeholder="Enter citation, keywords, sections or case name..." 
+                autoFocus
                 style={{
                   flexGrow: 1,
                   padding: '0.75rem 1rem',

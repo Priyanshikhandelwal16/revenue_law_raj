@@ -49,7 +49,26 @@ export function patchMongooseModels() {
         items = items.filter(item => {
           for (let key in query) {
             let val = query[key];
-            if (key.startsWith('$')) continue; // Skip operators for simple list responses
+            if (key === '$or' && Array.isArray(val)) {
+              const matchesOr = val.some(condition => {
+                for (let k in condition) {
+                  let v = condition[k];
+                  if (v && typeof v === 'object' && v instanceof RegExp) {
+                    if (v.test(item[k] || '')) return true;
+                  } else if (v && typeof v === 'object' && v.$regex) {
+                    const opts = v.$options || '';
+                    const r = new RegExp(v.$regex, opts);
+                    if (r.test(item[k] || '')) return true;
+                  } else {
+                    if (item[k] === v) return true;
+                  }
+                }
+                return false;
+              });
+              if (!matchesOr) return false;
+              continue;
+            }
+            if (key.startsWith('$')) continue; // Skip other operators for simple list responses
             if (val && typeof val === 'object' && val instanceof RegExp) {
               if (!val.test(item[key] || '')) return false;
             } else if (val && typeof val === 'object' && val.$regex) {

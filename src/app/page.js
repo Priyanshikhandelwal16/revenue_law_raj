@@ -177,10 +177,7 @@ export default async function HomePage() {
 
             {/* CTA search triggers */}
             <div style={{ marginTop: '2.25rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <Link href={heroButtonUrl} className="btn-gold" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.85rem 2.25rem', fontWeight: 700, borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.5px', transition: 'var(--transition-normal)' }}>
-                <Gavel size={16} /> {heroButtonText}
-              </Link>
-              <Link href={heroSecButtonUrl} className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.85rem 2.25rem', fontWeight: 700, borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.5px', color: 'white', borderColor: 'rgba(255,255,255,0.3)', transition: 'var(--transition-normal)' }}>
+              <Link href={heroSecButtonUrl} className="btn-gold" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.85rem 2.25rem', fontWeight: 700, borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.5px', transition: 'var(--transition-normal)' }}>
                 <BookOpen size={16} /> {heroSecButtonText}
               </Link>
             </div>
