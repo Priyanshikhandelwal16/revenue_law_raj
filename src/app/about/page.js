@@ -9,22 +9,22 @@ export default function AboutPage() {
     <div>
       {/* Hero Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, #0A192F 0%, #0d233e 100%)',
+        background: 'linear-gradient(135deg, #FAF8F5 0%, #EFECE6 100%)',
         borderBottom: '4px solid var(--accent-gold)',
         padding: '5rem 0 4rem 0',
         textAlign: 'center',
-        color: 'white'
+        color: 'var(--text-dark)'
       }}>
         <div className="layout-container">
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255, 255, 255, 0.25)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
-            <Info size={14} style={{ color: 'var(--accent-gold)' }} />
-            <span style={{ fontSize: '0.8rem', color: '#FFFFFF', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>About the Platform</span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(30, 27, 24, 0.05)', border: '1px solid rgba(30, 27, 24, 0.15)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
+            <Info size={14} style={{ color: 'var(--accent-gold-hover)' }} />
+            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>About the Platform</span>
           </div>
-          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: '#FFFFFF' }}>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: 'var(--primary-blue)' }}>
             Rajasthan Revenue Law<br />
-            <span style={{ color: 'var(--accent-gold)' }}>Knowledge Platform</span>
+            <span style={{ color: '#B38F4F' }}>Knowledge Platform</span>
           </h1>
-          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: '#E2E8F0', lineHeight: 1.7 }}>
+          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
             An enterprise-grade legal publishing and research portal built for advocates, judges, and landowners of Rajasthan.
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function AboutPage() {
                 Who We Are
               </h2>
               <p style={{ fontSize: '1.05rem', color: 'var(--text-dark)', lineHeight: 1.8 }}>
-                The Rajasthan Revenue Law Knowledge Platform (RRLKP) is a premium digital research portal founded by advocates and legal scholars. Our mission is to simplify state land rules, organize Board of Revenue Ajmer precedents, and make updated statutory gazette notifications instantly accessible. We serve legal practitioners, revenue officials, and land owners across Rajasthan to ensure clear legal understanding and smooth administrative navigation.
+                Revenue Law Raj is a dedicated Rajasthan Revenue Law Knowledge Platform designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The platform offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.
               </p>
             </div>
 

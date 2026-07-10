@@ -34,20 +34,20 @@ export default function Navbar() {
     <div className="header-wrapper" style={{ boxShadow: scrolled ? 'var(--shadow-md)' : 'none' }}>
       <nav className="navbar">
         {/* Left Side: Logo and Text */}
-        <Link href="/" className="logo-container" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.2rem 0' }}>
+        <Link href="/" className="logo-container" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.2rem 0' }}>
           <img 
-            src="/images/new logo.png" 
+            src="/images/logo_main.jpg" 
             alt="Revenue Law Raj" 
             className="brand-logo-img" 
             style={{ 
               display: 'block', 
-              borderRadius: '4px',
-              height: '80px',
+              borderRadius: '6px',
+              height: '65px',
               width: 'auto'
             }} 
           />
-          <div className="logo-text-group" style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.1', marginLeft: '-0.35rem' }}>
-            <span className="logo-title-text" style={{ fontFamily: 'var(--font-serif)', fontWeight: 700, color: '#FFFFFF', letterSpacing: '-0.5px' }}>
+          <div className="logo-text-group" style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.1' }}>
+            <span className="logo-title-text" style={{ fontFamily: 'var(--font-serif)', fontWeight: 700, color: 'var(--primary-blue)', letterSpacing: '-0.5px' }}>
               Revenue Law
             </span>
             <span className="logo-subtitle-text" style={{ fontFamily: 'var(--font-serif)', fontWeight: 700, color: 'var(--accent-gold)', letterSpacing: '-0.5px' }}>
@@ -85,7 +85,18 @@ export default function Navbar() {
             </div>
           </div>
 
-          <Link href="/judgments" className={`nav-link ${pathname === '/judgments' ? 'active' : ''}`}>Judgments</Link>
+          {/* Dropdown: Judgments */}
+          <div className="nav-item-dropdown">
+            <span className={`nav-link ${['/judgments', '/judgments/supreme-court', '/judgments/high-court', '/judgments/writing-guide'].includes(pathname) ? 'active' : ''}`}>
+              Judgments <ChevronDown size={12} />
+            </span>
+            <div className="dropdown-menu">
+              <Link href="/judgments" className="dropdown-item">All Judgments</Link>
+              <Link href="/judgments/supreme-court" className="dropdown-item">Supreme Court Judgments</Link>
+              <Link href="/judgments/high-court" className="dropdown-item">Rajasthan High Court Judgments</Link>
+              <Link href="/judgments/writing-guide" className="dropdown-item">How to Write a Judgment</Link>
+            </div>
+          </div>
 
           {/* Dropdown 3: Resources */}
           <div className="nav-item-dropdown">
@@ -98,7 +109,8 @@ export default function Navbar() {
             </div>
           </div>
 
-          <Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}>Contact Us</Link>
+          <Link href="/faq" className={`nav-link ${pathname === '/faq' ? 'active' : ''}`}>FAQ</Link>
+          <Link href="/contact" className={`nav-link nav-btn-cta ${pathname === '/contact' ? 'active' : ''}`}>Contact Us</Link>
         </div>
 
         <div className="nav-actions no-print">
@@ -113,9 +125,9 @@ export default function Navbar() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
-              <X size={24} className="mobile-only" style={{ display: 'block', color: '#FFFFFF' }} />
+              <X size={24} className="mobile-only" style={{ display: 'block', color: 'var(--primary-blue)' }} />
             ) : (
-              <Menu size={24} className="mobile-only" style={{ display: 'block', color: '#FFFFFF' }} />
+              <Menu size={24} className="mobile-only" style={{ display: 'block', color: 'var(--primary-blue)' }} />
             )}
           </span>
         </div>
@@ -176,12 +188,16 @@ export default function Navbar() {
           <Link href="/working-of-revenue-law" className={`nav-link ${pathname === '/working-of-revenue-law' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Working of Revenue Law</Link>
           <Link href="/hierarchy-of-courts" className={`nav-link ${pathname === '/hierarchy-of-courts' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Hierarchy of Revenue Courts</Link>
           <Link href="/types-of-cases" className={`nav-link ${pathname === '/types-of-cases' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Types of Cases in Revenue Law</Link>
-          <Link href="/judgments" className={`nav-link ${pathname === '/judgments' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Judgments</Link>
+          <Link href="/judgments" className={`nav-link ${pathname === '/judgments' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>All Judgments</Link>
+          <Link href="/judgments/supreme-court" className={`nav-link ${pathname === '/judgments/supreme-court' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Supreme Court Judgments</Link>
+          <Link href="/judgments/high-court" className={`nav-link ${pathname === '/judgments/high-court' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Rajasthan High Court Judgments</Link>
+          <Link href="/judgments/writing-guide" className={`nav-link ${pathname === '/judgments/writing-guide' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>How to Write a Judgment</Link>
           <Link href="/glossary" className={`nav-link ${pathname === '/glossary' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Glossary of Revenue Law</Link>
           <Link href="/notifications" className={`nav-link ${pathname === '/notifications' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Imp Notifications</Link>
           <Link href="/important-concepts" className={`nav-link ${pathname === '/important-concepts' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Imp Concepts</Link>
           <Link href="/land-conversion-under-sec-90-a" className={`nav-link ${pathname === '/land-conversion-under-sec-90-a' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Land Conversion under Section 90-A</Link>
-          <Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Contact Us</Link>
+          <Link href="/faq" className={`nav-link ${pathname === '/faq' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>FAQ</Link>
+          <Link href="/contact" className={`nav-link nav-btn-cta ${pathname === '/contact' ? 'active' : ''}`} style={{ width: '100%', justifyContent: 'center', marginTop: '1rem' }} onClick={() => setIsMobileMenuOpen(false)}>Contact Us</Link>
           
 
         </div>

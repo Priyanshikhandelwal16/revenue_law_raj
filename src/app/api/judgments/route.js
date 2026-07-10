@@ -21,6 +21,8 @@ export async function GET(req) {
       else if (court === 'revenue-appeals') query.courtName = /Revenue Appeals/i;
       else if (court === 'collector') query.courtName = /Collector/i;
       else if (court === 'sdo') query.courtName = /(SDO|Tehsildar)/i;
+      else if (court === 'supreme-court') query.courtName = /Supreme Court/i;
+      else if (court === 'high-court') query.courtName = /High Court/i;
     }
 
     if (q) {

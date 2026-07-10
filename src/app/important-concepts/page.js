@@ -42,22 +42,22 @@ export default function ImportantConceptsPage() {
     <div>
       {/* Hero Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, #0A192F 0%, #0d233e 100%)',
+        background: 'linear-gradient(135deg, #FAF8F5 0%, #EFECE6 100%)',
         borderBottom: '4px solid var(--accent-gold)',
         padding: '5rem 0 4rem 0',
         textAlign: 'center',
-        color: 'white'
+        color: 'var(--text-dark)'
       }}>
         <div className="layout-container">
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255, 255, 255, 0.25)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
-            <Key size={14} style={{ color: 'var(--accent-gold)' }} />
-            <span style={{ fontSize: '0.8rem', color: '#FFFFFF', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Knowledge Base</span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(30, 27, 24, 0.05)', border: '1px solid rgba(30, 27, 24, 0.15)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
+            <Key size={14} style={{ color: 'var(--accent-gold-hover)' }} />
+            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Knowledge Base</span>
           </div>
-          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: '#FFFFFF' }}>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: 'var(--primary-blue)' }}>
             Important Concepts<br />
-            <span style={{ color: 'var(--accent-gold)' }}>in Rajasthan Land Laws</span>
+            <span style={{ color: '#B38F4F' }}>in Rajasthan Land Laws</span>
           </h1>
-          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: '#E2E8F0', lineHeight: 1.7 }}>
+          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
             A detailed breakdown of key terminology, land classifications, and statutory definitions frequently used in state land proceedings.
           </p>
         </div>

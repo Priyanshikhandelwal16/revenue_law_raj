@@ -117,7 +117,7 @@ export default async function HomePage() {
 
   const heroTitle = config?.heroTitle || "Rajasthan Revenue Law";
   const heroSubtitle = config?.heroSubtitle || "Knowledge Platform";
-  const heroDesc = config?.heroDesc || "An enterprise legal publishing and research portal containing Board of Revenue judgments, updated Land Revenue Acts, Tenancy Rules, official gazette circulars, and Section 90-A conversion tools. Built for advocates, judges, and revenue administrators.";
+  const heroDesc = config?.heroDesc || "Revenue Law Raj is a dedicated Rajasthan Revenue Law Knowledge Platform designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The platform offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.";
   const heroButtonText = config?.heroButtonText || "Search Judgments";
   const heroButtonUrl = config?.heroButtonUrl || "/judgments";
   const heroSecButtonText = config?.heroSecButtonText || "Acts & Statutes";
@@ -159,37 +159,43 @@ export default async function HomePage() {
       {/* 1. Hero Section */}
       <section className="hero-section" style={{ position: 'relative', padding: '6.5rem 0' }}>
         <div className="hero-bg-graphic"></div>
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'radial-gradient(rgba(197, 168, 128, 0.15) 1px, transparent 1px)', backgroundSize: '24px 24px', opacity: 0.5, pointerEvents: 'none' }}></div>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'radial-gradient(rgba(10, 25, 47, 0.08) 1px, transparent 1px)', backgroundSize: '24px 24px', opacity: 0.5, pointerEvents: 'none' }}></div>
         
         <div className="layout-container hero-grid">
           <div className="hero-content">
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(197,168,128,0.15)', border: '1px solid rgba(197,168,128,0.3)', borderRadius: '50px', padding: '0.35rem 1.1rem', marginBottom: '1.25rem' }}>
-              <Scale size={15} style={{ color: 'var(--accent-gold)' }} />
-              <span style={{ color: 'var(--accent-gold)', fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Rajasthan Legal Research Portal</span>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(197,168,128,0.12)', border: '1px solid rgba(197,168,128,0.25)', borderRadius: '50px', padding: '0.35rem 1.1rem', marginBottom: '1.25rem' }}>
+              <Scale size={15} style={{ color: '#9A7B56' }} />
+              <span style={{ color: '#9A7B56', fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Rajasthan Legal Research Portal</span>
             </div>
-            <h1 style={{ fontSize: 'clamp(1.8rem, 6vw, 3.8rem)', fontWeight: 700, lineHeight: 1.15, marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', color: 'white' }}>
+            <h1 style={{ fontSize: 'clamp(1.8rem, 6vw, 3.8rem)', fontWeight: 700, lineHeight: 1.15, marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)' }}>
               {heroTitle} <br />
-              <span style={{ background: 'linear-gradient(to right, #FFEAA7, var(--accent-gold))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{heroSubtitle}</span>
+              <span style={{ color: '#B38F4F' }}>{heroSubtitle}</span>
             </h1>
-            <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.85)', lineHeight: 1.7, maxWidth: '650px', margin: 0 }}>
+            <p style={{ fontSize: '1.05rem', color: 'var(--text-dark)', lineHeight: 1.7, maxWidth: '650px', margin: 0 }}>
               {heroDesc}
             </p>
 
             {/* CTA search triggers */}
             <div style={{ marginTop: '2.25rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <Link href={heroSecButtonUrl} className="btn-gold" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.85rem 2.25rem', fontWeight: 700, borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.5px', transition: 'var(--transition-normal)' }}>
-                <BookOpen size={16} /> {heroSecButtonText}
+              <Link href="/hierarchy-of-courts" className="btn-hero-quick-access">
+                <Landmark size={18} style={{ color: 'var(--accent-gold-hover)' }} /> Hierarchy of Revenue Courts
+              </Link>
+              <Link href="/glossary" className="btn-hero-quick-access">
+                <BookOpen size={18} style={{ color: 'var(--accent-gold-hover)' }} /> Revenue Law Glossary
+              </Link>
+              <Link href="/types-of-cases" className="btn-hero-quick-access">
+                <Scale size={18} style={{ color: 'var(--accent-gold-hover)' }} /> Types of Cases
               </Link>
             </div>
 
             {/* Quick search tags */}
-            <div className="hero-search-tags" style={{ display: 'flex', gap: '0.5rem', marginTop: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>Popular Searches:</span>
+            <div className="hero-search-tags" style={{ display: 'flex', gap: '0.5rem', marginTop: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Popular Searches:</span>
               {popularSearches.map((tag, idx) => (
                 <Link 
                   key={idx} 
                   href={`/search?q=${encodeURIComponent(tag)}`}
-                  style={{ fontSize: '0.75rem', backgroundColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.85)', padding: '0.25rem 0.75rem', borderRadius: '50px', border: '1px solid rgba(255,255,255,0.12)', transition: 'var(--transition-fast)' }}
+                  style={{ fontSize: '0.75rem', backgroundColor: 'rgba(30, 27, 24, 0.05)', color: 'var(--text-dark)', padding: '0.25rem 0.75rem', borderRadius: '50px', border: '1px solid rgba(30, 27, 24, 0.1)', transition: 'var(--transition-fast)' }}
                   className="search-tag-hover"
                 >
                   {tag}
@@ -204,30 +210,8 @@ export default async function HomePage() {
               src={heroImage} 
               alt="Rajasthan Legal Research Platform"
               className="hero-image"
-              style={{ maxHeight: '430px', objectFit: 'contain', filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.4))' }}
+              style={{ maxHeight: '430px', objectFit: 'contain', filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.12))' }}
             />
-          </div>
-        </div>
-      </section>
-
-      {/* Counters & Featured Badges */}
-      <section style={{ backgroundColor: 'var(--primary-blue)', borderBottom: '1px solid rgba(255,255,255,0.1)', padding: '2.5rem 0', color: 'white' }} className="no-print">
-        <div className="layout-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '2rem', textAlign: 'center' }}>
-          <div style={{ flex: '1 1 200px' }}>
-            <h3 style={{ fontSize: '2.5rem', color: 'var(--accent-gold)', fontWeight: 700, fontFamily: 'var(--font-serif)' }}>1956</h3>
-            <p style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', letterSpacing: '1px', fontWeight: 600 }}>Land Revenue Act Baseline</p>
-          </div>
-          <div style={{ flex: '1 1 200px' }}>
-            <h3 style={{ fontSize: '2.5rem', color: 'var(--accent-gold)', fontWeight: 700, fontFamily: 'var(--font-serif)' }}>1955</h3>
-            <p style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', letterSpacing: '1px', fontWeight: 600 }}>Tenancy Act Baseline</p>
-          </div>
-          <div style={{ flex: '1 1 200px' }}>
-            <h3 style={{ fontSize: '2.5rem', color: 'var(--accent-gold)', fontWeight: 700, fontFamily: 'var(--font-serif)' }}>33+</h3>
-            <p style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', letterSpacing: '1px', fontWeight: 600 }}>District Revenue Divisions</p>
-          </div>
-          <div style={{ flex: '1 1 200px' }}>
-            <h3 style={{ fontSize: '2.5rem', color: 'var(--accent-gold)', fontWeight: 700, fontFamily: 'var(--font-serif)' }}>24/7</h3>
-            <p style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', letterSpacing: '1px', fontWeight: 600 }}>Digital Access for advocates</p>
           </div>
         </div>
       </section>
@@ -262,6 +246,48 @@ export default async function HomePage() {
                         </Link>
                       </div>
                     ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+              
+              {/* 4. Hierarchy of Revenue Courts Preview */}
+              <ScrollReveal>
+                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                  <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
+                    <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Judicial Structure</div>
+                    <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Hierarchy of Revenue Courts in Rajasthan</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.6 }}>
+                      Revenue Courts in Rajasthan follow a structured hierarchy from the local Tehsildar Court up to the Board of Revenue. This organization ensures step-by-step judicial escalation and administrative governance of land records.
+                    </p>
+                  </div>
+                  
+                  {/* Simplified Pyramid Preview */}
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', margin: '2.5rem auto 2rem auto', maxWidth: '500px' }}>
+                    <div style={{ width: '45%', padding: '0.65rem', backgroundColor: 'var(--primary-blue)', color: 'white', textAlign: 'center', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '4px solid var(--accent-gold)', boxShadow: 'var(--shadow-sm)' }}>
+                      Board of Revenue (Highest Court)
+                    </div>
+                    <div style={{ width: '15px', height: '10px', borderLeft: '2px dashed var(--accent-gold)' }}></div>
+                    <div style={{ width: '58%', padding: '0.65rem', backgroundColor: 'var(--secondary-blue)', color: 'white', textAlign: 'center', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '4px solid var(--accent-gold)', boxShadow: 'var(--shadow-sm)' }}>
+                      Divisional Commissioner
+                    </div>
+                    <div style={{ width: '15px', height: '10px', borderLeft: '2px dashed var(--accent-gold)' }}></div>
+                    <div style={{ width: '72%', padding: '0.65rem', backgroundColor: '#4E463E', color: 'white', textAlign: 'center', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '4px solid var(--accent-gold)', boxShadow: 'var(--shadow-sm)' }}>
+                      District Collector / Additional Collector
+                    </div>
+                    <div style={{ width: '15px', height: '10px', borderLeft: '2px dashed var(--accent-gold)' }}></div>
+                    <div style={{ width: '85%', padding: '0.65rem', backgroundColor: '#6E645A', color: 'white', textAlign: 'center', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '4px solid var(--accent-gold)', boxShadow: 'var(--shadow-sm)' }}>
+                      Sub Divisional Officer (SDO Court)
+                    </div>
+                    <div style={{ width: '15px', height: '10px', borderLeft: '2px dashed var(--accent-gold)' }}></div>
+                    <div style={{ width: '100%', padding: '0.65rem', backgroundColor: '#8E8275', color: 'white', textAlign: 'center', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '4px solid var(--accent-gold)', boxShadow: 'var(--shadow-sm)' }}>
+                      Tehsildar / Naib Tehsildar Court (Base Level)
+                    </div>
+                  </div>
+                  
+                  <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                    <Link href="/hierarchy-of-courts" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontSize: '0.8rem', fontWeight: 700, padding: '0.75rem 2rem' }}>
+                      Explore Complete Hierarchy <ArrowRight size={14} />
+                    </Link>
                   </div>
                 </div>
               </ScrollReveal>
@@ -409,30 +435,6 @@ export default async function HomePage() {
                     <Link href="/articles" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontSize: '0.8rem', fontWeight: 700, padding: '0.75rem 2rem' }}>
                       See More Commentaries <ArrowRight size={14} />
                     </Link>
-                  </div>
-                </div>
-              </ScrollReveal>
-
-              {/* 10. Frequently Asked Questions */}
-              <ScrollReveal>
-                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                  <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
-                    <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Knowledge Base</div>
-                    <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Frequently Asked Questions</h2>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Answers to common questions regarding land tenures, conversion fees, and revenue appeals.</p>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                    {faqs.map((faq, idx) => (
-                      <div key={idx} style={{ backgroundColor: 'var(--bg-offwhite)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '1.25rem' }}>
-                        <h3 style={{ fontSize: '0.98rem', fontFamily: 'var(--font-sans)', fontWeight: 700, display: 'flex', gap: '0.5rem', alignItems: 'center', color: 'var(--primary-blue)' }}>
-                          <HelpCircle size={16} style={{ color: 'var(--accent-gold)' }} />
-                          {faq.question}
-                        </h3>
-                        <p style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: 'var(--text-muted)', paddingLeft: '1.3rem', lineHeight: 1.6 }}>
-                          {faq.answer}
-                        </p>
-                      </div>
-                    ))}
                   </div>
                 </div>
               </ScrollReveal>

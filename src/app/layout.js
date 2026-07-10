@@ -7,7 +7,7 @@ export const metadata = {
     default: 'Rajasthan Revenue Law Knowledge Platform | RRLKP',
     template: '%s | RRLKP'
   },
-  description: 'Premium Legal Publishing and Research Platform for Rajasthan Revenue Law, Board of Revenue Judgments, Land Acts, circulars, and 90-A conversion guidelines.',
+  description: 'Revenue Law Raj is a dedicated Rajasthan Revenue Law Knowledge Platform designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The platform offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.',
   keywords: ['Rajasthan revenue law', 'Board of Revenue Ajmer', 'Rajasthan Land Revenue Act 1956', 'Rajasthan Tenancy Act 1955', '90-A land conversion', 'revenue judgments'],
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   alternates: {
@@ -20,7 +20,7 @@ export const metadata = {
   },
   openGraph: {
     title: 'Rajasthan Revenue Law Knowledge Platform',
-    description: 'Enterprise research portal for Rajasthan Land Revenue Acts, Board of Revenue judgments, and government circulars.',
+    description: 'Revenue Law Raj is a dedicated Rajasthan Revenue Law Knowledge Platform designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The platform offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.',
     url: '/',
     siteName: 'RRLKP',
     locale: 'en_IN',

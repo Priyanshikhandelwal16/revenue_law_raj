@@ -23,21 +23,21 @@ export default function DisclaimerPage() {
     <div>
       {/* Hero Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, #0A192F 0%, #0d233e 100%)',
+        background: 'linear-gradient(135deg, #FAF8F5 0%, #EFECE6 100%)',
         borderBottom: '4px solid var(--accent-gold)',
         padding: '4rem 0 3rem 0',
         textAlign: 'center',
-        color: 'white'
+        color: 'var(--text-dark)'
       }}>
         <div className="layout-container">
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255, 255, 255, 0.25)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1rem' }}>
-            <ShieldAlert size={14} style={{ color: 'var(--accent-gold)' }} />
-            <span style={{ fontSize: '0.8rem', color: '#FFFFFF', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Important Notification</span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(30, 27, 24, 0.05)', border: '1px solid rgba(30, 27, 24, 0.15)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1rem' }}>
+            <ShieldAlert size={14} style={{ color: 'var(--accent-gold-hover)' }} />
+            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Important Notification</span>
           </div>
-          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 0.75rem auto', maxWidth: '800px', color: '#FFFFFF' }}>
+          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 0.75rem auto', maxWidth: '800px', color: 'var(--primary-blue)' }}>
             Legal Disclaimer
           </h1>
-          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '0.95rem', color: '#E2E8F0', lineHeight: 1.6 }}>
+          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
             Last updated: July 2, 2026
           </p>
         </div>
