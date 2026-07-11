@@ -34,6 +34,7 @@ html, body {
   line-height: 1.6;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -61,6 +62,12 @@ a {
   max-width: var(--max-width-content);
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+@media (max-width: 580px) {
+  .layout-container {
+    padding: 0 1rem !important;
+  }
 }
 
 .layout-with-sidebar {
@@ -463,6 +470,24 @@ a {
 
 .hero-image:hover {
   transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+  .hero-image-container {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    min-width: 0; /* Prevents CSS grid auto-fit expansion */
+  }
+  .hero-image {
+    max-height: 240px !important;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  .sidebar-widget {
+    padding: 1.25rem !important;
+  }
 }
 
 /* News Sticky Sidebar */
@@ -1889,17 +1914,17 @@ main {
     height: 50px !important;
   }
   .pyramid-tier span {
-    font-size: 0.68rem !important;
-    padding: 0 0.5rem !important;
-    gap: 0.3rem !important;
+    font-size: 0.65rem !important;
+    padding: 0 0.4rem !important;
+    gap: 0.25rem !important;
     white-space: nowrap !important;
   }
   .pyramid-tier-icon {
     display: none !important;
   }
-  .pyramid-tier:nth-of-type(1) { width: 70% !important; }
-  .pyramid-tier:nth-of-type(2) { width: 78% !important; }
-  .pyramid-tier:nth-of-type(3) { width: 85% !important; }
+  .pyramid-tier:nth-of-type(1) { width: 74% !important; }
+  .pyramid-tier:nth-of-type(2) { width: 80% !important; }
+  .pyramid-tier:nth-of-type(3) { width: 86% !important; }
   .pyramid-tier:nth-of-type(4) { width: 92% !important; }
   .pyramid-tier:nth-of-type(5) { width: 98% !important; }
 }

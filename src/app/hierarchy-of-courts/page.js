@@ -135,7 +135,7 @@ export default function HierarchyOfCourtsPage() {
               {/* Desktop Pyramid */}
               <div className="pyramid-container-desktop" style={{ width: '100%', maxWidth: '650px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', margin: '0 auto', position: 'relative', minHeight: '380px' }}>
                 
-                {/* Level 5 */}
+                 {/* Level 5 */}
                 <div 
                   onClick={() => scrollToSection('level-5')}
                   onMouseEnter={() => setHoveredLevel(5)}
@@ -146,7 +146,7 @@ export default function HierarchyOfCourtsPage() {
                     height: '60px',
                     backgroundColor: hoveredLevel === 5 ? 'var(--accent-gold)' : 'var(--primary-blue)',
                     color: hoveredLevel === 5 ? 'white' : 'var(--bg-offwhite)',
-                    clipPath: 'polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)',
+                    clipPath: 'polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%)',
                     zIndex: 5
                   }}
                 >
@@ -166,7 +166,7 @@ export default function HierarchyOfCourtsPage() {
                     height: '60px',
                     backgroundColor: hoveredLevel === 4 ? 'var(--accent-gold)' : 'var(--secondary-blue)',
                     color: 'white',
-                    clipPath: 'polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%)',
+                    clipPath: 'polygon(3.5% 0%, 96.5% 0%, 100% 100%, 0% 100%)',
                     zIndex: 4
                   }}
                 >
@@ -186,7 +186,7 @@ export default function HierarchyOfCourtsPage() {
                     height: '60px',
                     backgroundColor: hoveredLevel === 3 ? 'var(--accent-gold)' : '#4E463E',
                     color: 'white',
-                    clipPath: 'polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%)',
+                    clipPath: 'polygon(3% 0%, 97% 0%, 100% 100%, 0% 100%)',
                     zIndex: 3
                   }}
                 >
@@ -206,7 +206,7 @@ export default function HierarchyOfCourtsPage() {
                     height: '60px',
                     backgroundColor: hoveredLevel === 2 ? 'var(--accent-gold)' : '#6E645A',
                     color: 'white',
-                    clipPath: 'polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%)',
+                    clipPath: 'polygon(2.5% 0%, 97.5% 0%, 100% 100%, 0% 100%)',
                     zIndex: 2
                   }}
                 >
@@ -226,7 +226,7 @@ export default function HierarchyOfCourtsPage() {
                     height: '60px',
                     backgroundColor: hoveredLevel === 1 ? 'var(--accent-gold)' : '#8E8275',
                     color: 'white',
-                    clipPath: 'polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%)',
+                    clipPath: 'polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%)',
                     zIndex: 1
                   }}
                 >

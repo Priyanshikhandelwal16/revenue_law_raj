@@ -122,7 +122,7 @@ export default function Footer() {
             </p>
             
             {/* Policy links at the bottom with underlines removed */}
-            <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.85rem' }}>
+            <div style={{ display: 'flex', gap: '0.5rem 1.5rem', flexWrap: 'wrap', fontSize: '0.85rem' }}>
               <Link href="/terms" style={{ color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-gold)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>Terms of Service</Link>
               <span style={{ color: 'var(--border-color)' }}>|</span>
               <Link href="/privacy" style={{ color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-gold)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>Privacy Policy</Link>
