@@ -117,7 +117,7 @@ export default async function HomePage() {
 
   const heroTitle = config?.heroTitle || "Rajasthan Revenue Law";
   const heroSubtitle = config?.heroSubtitle || "Knowledge Platform";
-  const heroDesc = config?.heroDesc || "Revenue Law Raj is a dedicated Rajasthan Revenue Law Knowledge Platform designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The platform offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.";
+  const heroDesc = config?.heroDesc || "Empowering legal professionals, landholders, and officers with instant access to Rajasthan's land revenue database. Explore Board of Revenue precedents, tenancy statutes, notification circulars, and comprehensive step-by-step litigation guides on a unified platform.";
   const heroButtonText = config?.heroButtonText || "Search Judgments";
   const heroButtonUrl = config?.heroButtonUrl || "/judgments";
   const heroSecButtonText = config?.heroSecButtonText || "Acts & Statutes";

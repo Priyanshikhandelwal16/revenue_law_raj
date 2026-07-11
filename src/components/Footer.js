@@ -29,13 +29,10 @@ export default function Footer() {
                 <span className="logo-subtitle-text" style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 700, color: 'var(--accent-gold)', letterSpacing: '-0.5px' }}>
                   Rajasthan
                 </span>
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.65rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '1px', marginTop: '0.2rem' }}>
-                  RAJASTHAN REVENUE PORTAL
-                </span>
               </div>
             </div>
             <p style={{ fontSize: '0.9rem', lineHeight: '1.65', color: 'var(--text-dark)' }}>
-              Revenue Law Raj is a dedicated Rajasthan Revenue Law Knowledge Platform designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The platform offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.
+              Revenue Law Raj is Rajasthan's leading knowledge platform for agricultural and land administration laws. We provide a structured database of judgments, statutes, glossary definitions, and official gazettes to support legal research and administrative clarity across the state.
             </p>
             
             {/* Social Icons Section */}

@@ -206,7 +206,20 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <button type="submit" disabled={submitting} className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '1rem 2rem' }}>
+                <button 
+                  type="submit" 
+                  disabled={submitting} 
+                  className="btn-gold" 
+                  style={{ 
+                    display: 'inline-flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    gap: '0.5rem', 
+                    padding: '1rem 2rem',
+                    color: 'var(--bg-white)',
+                    fontWeight: 700
+                  }}
+                >
                   <Send size={16} /> {submitting ? 'Submitting query...' : 'Submit Query'}
                 </button>
               </form>

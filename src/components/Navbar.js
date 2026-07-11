@@ -63,7 +63,7 @@ export default function Navbar() {
           
           {/* Dropdown 1: Revenue Law */}
           <div className="nav-item-dropdown">
-            <span className={`nav-link ${['/laws', '/working-of-revenue-law', '/hierarchy-of-courts', '/types-of-cases'].includes(pathname) ? 'active' : ''}`}>
+            <span className={`nav-link ${['/laws', '/working-of-revenue-law', '/hierarchy-of-courts', '/types-of-cases', '/case-stages'].includes(pathname) ? 'active' : ''}`}>
               Revenue Law <ChevronDown size={12} />
             </span>
             <div className="dropdown-menu">
@@ -71,6 +71,7 @@ export default function Navbar() {
               <Link href="/working-of-revenue-law" className="dropdown-item">Working of Revenue Law</Link>
               <Link href="/hierarchy-of-courts" className="dropdown-item">Hierarchy of Revenue Courts</Link>
               <Link href="/types-of-cases" className="dropdown-item">Types of Cases in Revenue Law</Link>
+              <Link href="/case-stages" className="dropdown-item">Case Stages</Link>
             </div>
           </div>
 
@@ -188,6 +189,7 @@ export default function Navbar() {
           <Link href="/working-of-revenue-law" className={`nav-link ${pathname === '/working-of-revenue-law' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Working of Revenue Law</Link>
           <Link href="/hierarchy-of-courts" className={`nav-link ${pathname === '/hierarchy-of-courts' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Hierarchy of Revenue Courts</Link>
           <Link href="/types-of-cases" className={`nav-link ${pathname === '/types-of-cases' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Types of Cases in Revenue Law</Link>
+          <Link href="/case-stages" className={`nav-link ${pathname === '/case-stages' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Case Stages</Link>
           <Link href="/judgments" className={`nav-link ${pathname === '/judgments' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>All Judgments</Link>
           <Link href="/judgments/supreme-court" className={`nav-link ${pathname === '/judgments/supreme-court' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Supreme Court Judgments</Link>
           <Link href="/judgments/high-court" className={`nav-link ${pathname === '/judgments/high-court' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Rajasthan High Court Judgments</Link>
