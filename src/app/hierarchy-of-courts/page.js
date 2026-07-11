@@ -151,7 +151,7 @@ export default function HierarchyOfCourtsPage() {
                   }}
                 >
                   <span style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }}>
-                    <Award size={15} /> Level 5: Board of Revenue (BOR)
+                    <Award size={15} className="pyramid-tier-icon" /> Level 5: Board of Revenue (BOR)
                   </span>
                 </div>
 
@@ -171,7 +171,7 @@ export default function HierarchyOfCourtsPage() {
                   }}
                 >
                   <span style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }}>
-                    <Gavel size={15} /> Level 4: Divisional Commissioner
+                    <Gavel size={15} className="pyramid-tier-icon" /> Level 4: Divisional Commissioner
                   </span>
                 </div>
 
@@ -191,7 +191,7 @@ export default function HierarchyOfCourtsPage() {
                   }}
                 >
                   <span style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }}>
-                    <FileText size={15} /> Level 3: District Collector
+                    <FileText size={15} className="pyramid-tier-icon" /> Level 3: District Collector
                   </span>
                 </div>
 
@@ -211,7 +211,7 @@ export default function HierarchyOfCourtsPage() {
                   }}
                 >
                   <span style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }}>
-                    <Scale size={15} /> Level 2: Sub Divisional Officer (SDO)
+                    <Scale size={15} className="pyramid-tier-icon" /> Level 2: Sub Divisional Officer (SDO)
                   </span>
                 </div>
 
@@ -231,7 +231,7 @@ export default function HierarchyOfCourtsPage() {
                   }}
                 >
                   <span style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }}>
-                    <Landmark size={15} /> Level 1: Tehsildar Court
+                    <Landmark size={15} className="pyramid-tier-icon" /> Level 1: Tehsildar Court
                   </span>
                 </div>
 
