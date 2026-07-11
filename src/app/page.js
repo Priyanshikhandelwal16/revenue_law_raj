@@ -262,26 +262,76 @@ export default async function HomePage() {
                   </div>
                   
                   {/* Simplified Pyramid Preview */}
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', margin: '2.5rem auto 2rem auto', maxWidth: '500px' }}>
-                    <div style={{ width: '45%', padding: '0.65rem', backgroundColor: 'var(--primary-blue)', color: 'white', textAlign: 'center', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '4px solid var(--accent-gold)', boxShadow: 'var(--shadow-sm)' }}>
-                      Board of Revenue (Highest Court)
-                    </div>
-                    <div style={{ width: '15px', height: '10px', borderLeft: '2px dashed var(--accent-gold)' }}></div>
-                    <div style={{ width: '58%', padding: '0.65rem', backgroundColor: 'var(--secondary-blue)', color: 'white', textAlign: 'center', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '4px solid var(--accent-gold)', boxShadow: 'var(--shadow-sm)' }}>
-                      Divisional Commissioner
-                    </div>
-                    <div style={{ width: '15px', height: '10px', borderLeft: '2px dashed var(--accent-gold)' }}></div>
-                    <div style={{ width: '72%', padding: '0.65rem', backgroundColor: '#4E463E', color: 'white', textAlign: 'center', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '4px solid var(--accent-gold)', boxShadow: 'var(--shadow-sm)' }}>
-                      District Collector / Additional Collector
-                    </div>
-                    <div style={{ width: '15px', height: '10px', borderLeft: '2px dashed var(--accent-gold)' }}></div>
-                    <div style={{ width: '85%', padding: '0.65rem', backgroundColor: '#6E645A', color: 'white', textAlign: 'center', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '4px solid var(--accent-gold)', boxShadow: 'var(--shadow-sm)' }}>
-                      Sub Divisional Officer (SDO Court)
-                    </div>
-                    <div style={{ width: '15px', height: '10px', borderLeft: '2px dashed var(--accent-gold)' }}></div>
-                    <div style={{ width: '100%', padding: '0.65rem', backgroundColor: '#8E8275', color: 'white', textAlign: 'center', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 600, borderLeft: '4px solid var(--accent-gold)', boxShadow: 'var(--shadow-sm)' }}>
-                      Tehsildar / Naib Tehsildar Court (Base Level)
-                    </div>
+                  <div className="pyramid-container-desktop" style={{ width: '100%', maxWidth: '500px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', margin: '2.5rem auto 2rem auto', position: 'relative' }}>
+                    <Link href="/hierarchy-of-courts" className="pyramid-tier" style={{
+                      width: '46%',
+                      height: '50px',
+                      backgroundColor: 'var(--primary-blue)',
+                      color: 'var(--bg-offwhite)',
+                      clipPath: 'polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textDecoration: 'none'
+                    }}>
+                      <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>Board of Revenue</span>
+                    </Link>
+                    
+                    <Link href="/hierarchy-of-courts" className="pyramid-tier" style={{
+                      width: '59%',
+                      height: '50px',
+                      backgroundColor: 'var(--secondary-blue)',
+                      color: 'var(--bg-offwhite)',
+                      clipPath: 'polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textDecoration: 'none'
+                    }}>
+                      <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>Divisional Commissioner</span>
+                    </Link>
+
+                    <Link href="/hierarchy-of-courts" className="pyramid-tier" style={{
+                      width: '72%',
+                      height: '50px',
+                      backgroundColor: '#4E463E',
+                      color: 'var(--bg-offwhite)',
+                      clipPath: 'polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textDecoration: 'none'
+                    }}>
+                      <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>District Collector</span>
+                    </Link>
+
+                    <Link href="/hierarchy-of-courts" className="pyramid-tier" style={{
+                      width: '85%',
+                      height: '50px',
+                      backgroundColor: '#6E645A',
+                      color: 'var(--bg-offwhite)',
+                      clipPath: 'polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textDecoration: 'none'
+                    }}>
+                      <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>Sub Divisional Officer (SDO)</span>
+                    </Link>
+
+                    <Link href="/hierarchy-of-courts" className="pyramid-tier" style={{
+                      width: '98%',
+                      height: '50px',
+                      backgroundColor: '#8E8275',
+                      color: 'var(--bg-offwhite)',
+                      clipPath: 'polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textDecoration: 'none'
+                    }}>
+                      <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>Tehsildar Court</span>
+                    </Link>
                   </div>
                   
                   <div style={{ textAlign: 'center', marginTop: '2rem' }}>

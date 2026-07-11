@@ -1879,20 +1879,25 @@ main {
   .pyramid-container-desktop {
     display: flex !important;
     flex-direction: column !important;
-    gap: 0.4rem !important;
+    gap: 0.45rem !important;
     min-height: auto !important;
   }
   .pyramid-container-mobile {
     display: none !important;
   }
   .pyramid-tier {
-    height: 48px !important;
+    height: 52px !important;
   }
   .pyramid-tier span {
-    font-size: 0.65rem !important;
-    padding: 0 0.25rem !important;
-    gap: 0.25rem !important;
+    font-size: 0.72rem !important;
+    padding: 0 0.4rem !important;
+    gap: 0.3rem !important;
   }
+  .pyramid-tier:nth-of-type(1) { width: 56% !important; }
+  .pyramid-tier:nth-of-type(2) { width: 66% !important; }
+  .pyramid-tier:nth-of-type(3) { width: 76% !important; }
+  .pyramid-tier:nth-of-type(4) { width: 86% !important; }
+  .pyramid-tier:nth-of-type(5) { width: 96% !important; }
 }
 
 /* Mobile Timeline Steps */
