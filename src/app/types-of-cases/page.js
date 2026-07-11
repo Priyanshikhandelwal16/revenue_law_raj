@@ -77,7 +77,7 @@ export default function TypesOfCasesPage() {
         <div className="layout-with-sidebar">
           <div>
             {/* Case Types Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem', marginBottom: '4rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem', marginBottom: '4rem' }}>
               {caseTypes.map((c, i) => (
                 <div key={i} style={{
                   background: 'white',

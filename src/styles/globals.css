@@ -321,10 +321,15 @@ a {
 .hero-section {
   background: linear-gradient(135deg, #FAF8F5 0%, #EFECE6 100%);
   color: var(--text-dark);
-  padding: 6rem 0;
+  padding: 3rem 0;
   position: relative;
   overflow: hidden;
   border-bottom: 4px solid var(--accent-gold);
+}
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 1.5rem 0 !important;
+  }
 }
 
 .btn-hero-quick-access {
@@ -1872,15 +1877,22 @@ main {
 
 @media (max-width: 768px) {
   .pyramid-container-desktop {
-    display: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    min-height: auto !important;
   }
   .pyramid-container-mobile {
-    display: flex !important;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 550px;
-    margin: 0 auto;
+    display: none !important;
+  }
+  .pyramid-tier {
+    width: 100% !important;
+    clip-path: none !important;
+    border-radius: 6px !important;
+    height: 48px !important;
+  }
+  .pyramid-tier span {
+    font-size: 0.75rem !important;
   }
 }
 

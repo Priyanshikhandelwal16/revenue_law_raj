@@ -267,7 +267,7 @@ export default function AdminDashboard() {
       <div className="layout-container" style={{ padding: '6rem 0', maxWidth: '420px' }}>
         <div style={{ backgroundColor: 'white', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '2.5rem', boxShadow: 'var(--shadow-lg)' }}>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <img src="/images/new logo.png" alt="Revenue Law Raj Logo" className="brand-logo-img-large" style={{ margin: '0 auto 0.5rem auto', display: 'block', height: '90px', width: 'auto', borderRadius: '6px' }} />
+            <img src="/images/logo_main.jpg" alt="Revenue Law Raj Logo" className="brand-logo-img-large" style={{ margin: '0 auto 0.5rem auto', display: 'block', height: '90px', width: 'auto', borderRadius: '6px' }} />
             <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.5rem', fontWeight: 500 }}>Admin Credentials Required</p>
           </div>
 
@@ -302,11 +302,6 @@ export default function AdminDashboard() {
               <Key size={16} /> Authenticate Session
             </button>
           </form>
-          
-          <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border-color)', paddingTop: '1rem', fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center' }}>
-            Default Admin Seed credentials:<br />
-            <code>admin@rajasthanrevenue.law</code> / <code>Admin@Rajasthan2026</code>
-          </div>
         </div>
       </div>
     );
@@ -318,7 +313,7 @@ export default function AdminDashboard() {
       {/* Sidebar Navigation */}
       <aside className="admin-sidebar">
         <div className="admin-logo" style={{ padding: '0.5rem 0', marginBottom: '2rem', textAlign: 'center' }}>
-          <img src="/images/new logo.png" alt="Revenue Law Raj" className="brand-logo-img" style={{ display: 'block', margin: '0 auto', height: '60px', width: 'auto', borderRadius: '4px' }} />
+          <img src="/images/logo_main.jpg" alt="Revenue Law Raj" className="brand-logo-img" style={{ display: 'block', margin: '0 auto', height: '60px', width: 'auto', borderRadius: '4px' }} />
           <div style={{ fontSize: '0.65rem', color: 'var(--accent-gold)', marginTop: '0.5rem', letterSpacing: '1.5px', fontWeight: 600 }}>ADMIN CONSOLE</div>
         </div>
         <ul className="admin-nav">

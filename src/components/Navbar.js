@@ -9,6 +9,8 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [navSearchQuery, setNavSearchQuery] = useState('');
   const router = useRouter();
   const pathname = usePathname();
 
@@ -114,10 +116,52 @@ export default function Navbar() {
           <Link href="/contact" className={`nav-link nav-btn-cta ${pathname === '/contact' ? 'active' : ''}`}>Contact Us</Link>
         </div>
 
-        <div className="nav-actions no-print">
-          <Link href="/search" className="search-icon-btn" title="Search Database">
-            <Search size={18} />
-          </Link>
+        <div className="nav-actions no-print" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          {isSearchOpen ? (
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              if (navSearchQuery.trim()) {
+                router.push(`/search?q=${encodeURIComponent(navSearchQuery.trim())}`);
+                setIsSearchOpen(false);
+                setNavSearchQuery('');
+              }
+            }} style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              backgroundColor: 'var(--bg-offwhite)', 
+              borderRadius: '50px', 
+              padding: '0.2rem 0.75rem', 
+              border: '1px solid var(--border-color)', 
+              gap: '0.25rem'
+            }}>
+              <input 
+                type="text" 
+                value={navSearchQuery}
+                onChange={(e) => setNavSearchQuery(e.target.value)}
+                placeholder="Search..."
+                autoFocus
+                style={{ 
+                  border: 'none', 
+                  background: 'none', 
+                  outline: 'none', 
+                  fontSize: '0.825rem', 
+                  width: '100px', 
+                  padding: '0.1rem 0',
+                  color: 'var(--text-dark)'
+                }}
+              />
+              <button type="submit" style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0.1rem', color: 'var(--text-muted)' }}>
+                <Search size={14} />
+              </button>
+              <button type="button" onClick={() => { setIsSearchOpen(false); setNavSearchQuery(''); }} style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0.1rem', color: 'var(--text-muted)' }}>
+                <X size={14} />
+              </button>
+            </form>
+          ) : (
+            <button onClick={() => setIsSearchOpen(true)} className="search-icon-btn" title="Search Database" style={{ border: 'none', background: 'transparent', cursor: 'pointer', padding: '0.5rem', display: 'flex', alignItems: 'center', color: 'var(--primary-blue)' }}>
+              <Search size={18} />
+            </button>
+          )}
           
           {/* Hamburger Menu Icon (Mobile Only) */}
           <span 

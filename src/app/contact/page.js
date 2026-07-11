@@ -216,7 +216,7 @@ export default function ContactPage() {
                     justifyContent: 'center', 
                     gap: '0.5rem', 
                     padding: '1rem 2rem',
-                    color: 'var(--bg-white)',
+                    color: '#FFFFFF',
                     fontWeight: 700
                   }}
                 >

@@ -157,7 +157,7 @@ export default async function HomePage() {
   return (
     <div>
       {/* 1. Hero Section */}
-      <section className="hero-section" style={{ position: 'relative', padding: '6.5rem 0' }}>
+      <section className="hero-section" style={{ position: 'relative' }}>
         <div className="hero-bg-graphic"></div>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'radial-gradient(rgba(10, 25, 47, 0.08) 1px, transparent 1px)', backgroundSize: '24px 24px', opacity: 0.5, pointerEvents: 'none' }}></div>
         
