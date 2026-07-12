@@ -1029,6 +1029,7 @@ a {
   background-color: var(--primary-blue);
   color: var(--bg-white);
   padding: 2rem 1rem;
+  position: relative;
 }
 
 .admin-logo {
@@ -1109,6 +1110,228 @@ a {
 
 .admin-table tr:hover td {
   background-color: var(--bg-offwhite);
+}
+
+/* Responsive Table Wrapper */
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.table-responsive .admin-table {
+  margin-top: 0;
+}
+
+/* Responsive Grid Helpers */
+.grid-2col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.grid-2to1 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+.grid-1to3 {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 1rem;
+}
+
+/* Drawer UI Controls */
+.admin-toggle-btn {
+  display: none;
+  background-color: var(--primary-blue);
+  color: var(--bg-white);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-toggle-btn:hover {
+  background-color: var(--accent-gold);
+  color: var(--primary-blue);
+}
+
+.sidebar-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: color var(--transition-fast);
+}
+
+.sidebar-close-btn:hover {
+  color: var(--bg-white);
+}
+
+/* Responsive Overrides */
+@media (max-width: 991px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 260px;
+    height: 100vh;
+    z-index: 1000;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+    overflow-y: auto;
+  }
+
+  .admin-sidebar.open {
+    left: 0;
+  }
+
+  .admin-content {
+    padding: 1.5rem 1rem !important;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .admin-header h1 {
+    font-size: 1.5rem !important;
+  }
+
+  .admin-toggle-btn {
+    display: inline-flex;
+  }
+
+  .sidebar-close-btn {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-2col, .grid-3col, .grid-2to1, .grid-1to3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .admin-card {
+    padding: 1rem !important;
+  }
+}
+
+/* Card Header layout helper */
+.admin-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Upload asset form helper */
+.admin-upload-form {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background-color: var(--bg-offwhite);
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px dashed var(--border-color);
+  margin: 1rem 0;
+}
+
+/* Actions footer row helper */
+.form-actions-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.form-actions-row .btn-primary,
+.form-actions-row .btn-outline {
+  padding: 0.75rem 2rem;
+}
+
+@media (max-width: 768px) {
+  .admin-card-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .admin-card-header h2 {
+    font-size: 1.3rem !important;
+    text-align: center;
+  }
+
+  .admin-card-header button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .admin-upload-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .admin-upload-form button {
+    align-self: stretch !important;
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-actions-row {
+    flex-direction: column;
+  }
+
+  .form-actions-row .btn-primary,
+  .form-actions-row .btn-outline {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1.5rem !important;
+  }
+  
+  /* Make standard buttons block level on tiny mobile views to avoid container breakouts */
+  .admin-content .btn-primary, 
+  .admin-content .btn-gold, 
+  .admin-content .btn-outline {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0.75rem 1.5rem !important;
+  }
 }
 
 /* Rich Editor UI */

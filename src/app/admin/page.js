@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Scale, Key, LogOut, LayoutDashboard, Newspaper, Gavel, BookOpen, 
-  Bell, Download, MessageSquare, HelpCircle, User, Plus, Edit, Trash, Check, CheckSquare, Eye, FileText, Image, RefreshCw, Shield, Database 
+  Bell, Download, MessageSquare, HelpCircle, User, Plus, Edit, Trash, Check, CheckSquare, Eye, FileText, Image, RefreshCw, Shield, Database,
+  Menu, X
 } from 'lucide-react';
 import RichTextEditor from '@/components/RichTextEditor';
 
@@ -14,6 +15,7 @@ export default function AdminDashboard() {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   
   // Dashboard Navigation State
   const [activeTab, setActiveTab] = useState('overview'); // overview, articles, judgments, laws, notifications, downloads, comments, queries
@@ -310,95 +312,115 @@ export default function AdminDashboard() {
   // Render CMS Dashboard Layout
   return (
     <div className="admin-layout">
+      {/* Sidebar Overlay Backdrop */}
+      {sidebarOpen && (
+        <div 
+          className="sidebar-backdrop" 
+          onClick={() => setSidebarOpen(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            zIndex: 999
+          }}
+        />
+      )}
+
       {/* Sidebar Navigation */}
-      <aside className="admin-sidebar">
+      <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <button className="sidebar-close-btn" onClick={() => setSidebarOpen(false)} title="Close Menu">
+          <X size={20} />
+        </button>
         <div className="admin-logo" style={{ padding: '0.5rem 0', marginBottom: '2rem', textAlign: 'center' }}>
           <img src="/images/logo_main.jpg" alt="Revenue Law Raj" className="brand-logo-img" style={{ display: 'block', margin: '0 auto', height: '60px', width: 'auto', borderRadius: '4px' }} />
           <div style={{ fontSize: '0.65rem', color: 'var(--accent-gold)', marginTop: '0.5rem', letterSpacing: '1.5px', fontWeight: 600 }}>ADMIN CONSOLE</div>
         </div>
         <ul className="admin-nav">
           <li className={`admin-nav-item ${activeTab === 'overview' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('overview'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('overview'); setEditingItem(null); setSidebarOpen(false); }}>
               <LayoutDashboard size={16} /> Overview
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'articles' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('articles'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('articles'); setEditingItem(null); setSidebarOpen(false); }}>
               <Newspaper size={16} /> Commentaries
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'judgments' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('judgments'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('judgments'); setEditingItem(null); setSidebarOpen(false); }}>
               <Gavel size={16} /> Court Judgments
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'laws' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('laws'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('laws'); setEditingItem(null); setSidebarOpen(false); }}>
               <BookOpen size={16} /> Acts & Statutes
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'notifications' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('notifications'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('notifications'); setEditingItem(null); setSidebarOpen(false); }}>
               <Bell size={16} /> Circulars
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'downloads' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('downloads'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('downloads'); setEditingItem(null); setSidebarOpen(false); }}>
               <Download size={16} /> Templates
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'comments' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('comments'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('comments'); setEditingItem(null); setSidebarOpen(false); }}>
               <MessageSquare size={16} /> Comments
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'queries' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('queries'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('queries'); setEditingItem(null); setSidebarOpen(false); }}>
               <HelpCircle size={16} /> Queries
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'glossary' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('glossary'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('glossary'); setEditingItem(null); setSidebarOpen(false); }}>
               <Scale size={16} /> Legal Glossary
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('settings'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('settings'); setEditingItem(null); setSidebarOpen(false); }}>
               <Scale size={16} /> App Settings
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'homepage_cms' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('homepage_cms'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('homepage_cms'); setEditingItem(null); setSidebarOpen(false); }}>
               <FileText size={16} style={{ color: 'var(--accent-gold)' }} /> Homepage CMS
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'pages_cms' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('pages_cms'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('pages_cms'); setEditingItem(null); setSidebarOpen(false); }}>
               <FileText size={16} /> Pages Copy CMS
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'policies_cms' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('policies_cms'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('policies_cms'); setEditingItem(null); setSidebarOpen(false); }}>
               <Shield size={16} /> Legal Policies
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'media_library' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('media_library'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('media_library'); setEditingItem(null); setSidebarOpen(false); }}>
               <Image size={16} /> Media Library
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'backup_restore' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('backup_restore'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('backup_restore'); setEditingItem(null); setSidebarOpen(false); }}>
               <RefreshCw size={16} /> Backup & Restore
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'users' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('users'); setEditingItem(null); }}>
+            <a href="#" onClick={() => { setActiveTab('users'); setEditingItem(null); setSidebarOpen(false); }}>
               <User size={16} /> CMS Users
             </a>
           </li>
           <li className="admin-nav-item" style={{ marginTop: '3rem' }}>
-            <a href="#" onClick={handleLogout} style={{ color: '#EF4444' }}>
+            <a href="#" onClick={() => { handleLogout(); setSidebarOpen(false); }} style={{ color: '#EF4444' }}>
               <LogOut size={16} /> Sign Out
             </a>
           </li>
@@ -408,9 +430,14 @@ export default function AdminDashboard() {
       {/* Main Workspace */}
       <main className="admin-content">
         <header className="admin-header">
-          <h1 style={{ fontSize: '1.75rem', textTransform: 'capitalize' }}>
-            {editingItem ? `${editingItem.isNew ? 'Create New' : 'Edit'} ${editingItem.type}` : activeTab + ' workspace'}
-          </h1>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <button className="admin-toggle-btn" onClick={() => setSidebarOpen(true)} title="Open Menu">
+              <Menu size={20} />
+            </button>
+            <h1 style={{ fontSize: '1.75rem', textTransform: 'capitalize', margin: 0 }}>
+              {editingItem ? `${editingItem.isNew ? 'Create New' : 'Edit'} ${editingItem.type}` : activeTab.replace('_', ' ') + ' workspace'}
+            </h1>
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem' }}>
             <User size={16} style={{ color: 'var(--accent-gold)' }} />
             <span>Welcome, <strong>{session.name}</strong></span>
@@ -444,7 +471,7 @@ export default function AdminDashboard() {
                       className="form-control" 
                     />
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="grid-2col">
                     <div className="form-group">
                       <label>Category *</label>
                       <select 
@@ -487,7 +514,7 @@ export default function AdminDashboard() {
                       onChange={(content) => setFormData({ ...formData, content })} 
                     />
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="grid-2col">
                     <div className="form-group">
                       <label>Tags (Comma separated)</label>
                       <input 
@@ -515,7 +542,7 @@ export default function AdminDashboard() {
               {/* Judgments form */}
               {editingItem.type === 'judgments' && (
                 <>
-                  <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem' }}>
+                  <div className="grid-2to1">
                     <div className="form-group">
                       <label>Case / Parties Title * (e.g., 'Ram Lal vs. State of Rajasthan')</label>
                       <input 
@@ -538,7 +565,7 @@ export default function AdminDashboard() {
                     </div>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+                  <div className="grid-3col">
                     <div className="form-group">
                       <label>Case Number *</label>
                       <input 
@@ -576,7 +603,7 @@ export default function AdminDashboard() {
                     </div>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="grid-2col">
                     <div className="form-group">
                       <label>Bench Coram Member (e.g. 'Honble Shri K.S. Yadav')</label>
                       <input 
@@ -624,7 +651,7 @@ export default function AdminDashboard() {
                     />
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="grid-2col">
                     <div className="form-group">
                       <label>Acts / Laws Cited (Comma separated)</label>
                       <input 
@@ -652,7 +679,7 @@ export default function AdminDashboard() {
               {/* Revenue Laws form */}
               {editingItem.type === 'laws' && (
                 <>
-                  <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem' }}>
+                  <div className="grid-2to1">
                     <div className="form-group">
                       <label>Law / Act Title *</label>
                       <input 
@@ -715,7 +742,7 @@ export default function AdminDashboard() {
                             >
                               <Trash size={16} />
                             </button>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: '1rem', marginBottom: '0.5rem', maxWidth: '90%' }}>
+                            <div className="grid-1to3" style={{ marginBottom: '0.5rem', maxWidth: '90%' }}>
                               <div>
                                 <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>Sec Number</label>
                                 <input 
@@ -798,7 +825,7 @@ export default function AdminDashboard() {
                       required 
                     />
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+                  <div className="grid-3col">
                     <div className="form-group">
                       <label>Reference Number *</label>
                       <input 
@@ -830,7 +857,7 @@ export default function AdminDashboard() {
                       />
                     </div>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="grid-2col">
                     <div className="form-group">
                       <label>Upload Circular PDF</label>
                       <input 
@@ -877,7 +904,7 @@ export default function AdminDashboard() {
                       required 
                     />
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="grid-2col">
                     <div className="form-group">
                       <label>File Type (e.g. PDF, DOCX, XLSX) *</label>
                       <input 
@@ -935,7 +962,7 @@ export default function AdminDashboard() {
               {/* Settings form */}
               {editingItem.type === 'settings' && (
                 <>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="grid-2col">
                     <div className="form-group">
                       <label>Setting Key * (e.g. 'site_title')</label>
                       <input 
@@ -964,7 +991,7 @@ export default function AdminDashboard() {
               {/* Users form */}
               {editingItem.type === 'users' && (
                 <>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="grid-2col">
                     <div className="form-group">
                       <label>Full Name *</label>
                       <input 
@@ -986,7 +1013,7 @@ export default function AdminDashboard() {
                       />
                     </div>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="grid-2col">
                     <div className="form-group">
                       <label>Password {editingItem.isNew ? '*' : '(Leave blank to keep unchanged)'}</label>
                       <input 
@@ -1014,9 +1041,9 @@ export default function AdminDashboard() {
               )}
 
               {/* Buttons */}
-              <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-                <button type="submit" className="btn-primary" style={{ padding: '0.75rem 2rem' }}>Save Record</button>
-                <button type="button" onClick={cancelEdit} className="btn-outline" style={{ padding: '0.75rem 2rem' }}>Cancel</button>
+              <div className="form-actions-row">
+                <button type="submit" className="btn-primary">Save Record</button>
+                <button type="button" onClick={cancelEdit} className="btn-outline">Cancel</button>
               </div>
 
             </form>
@@ -1078,197 +1105,207 @@ export default function AdminDashboard() {
             {/* Tab: Articles / Commentaries */}
             {activeTab === 'articles' && (
               <div className="admin-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <div className="admin-card-header">
                   <h2>Commentary Logs ({articles.length})</h2>
                   <button onClick={() => startCreate('articles')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Create Article
                   </button>
                 </div>
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Category</th>
-                      <th>Status</th>
-                      <th>Views</th>
-                      <th>Date</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {articles.map(art => (
-                      <tr key={art._id}>
-                        <td><strong>{art.title}</strong></td>
-                        <td>{art.category}</td>
-                        <td>
-                          <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: art.status === 'published' ? '#DCFCE7' : '#FEF3C7', color: art.status === 'published' ? '#15803D' : '#D97706' }}>
-                            {art.status}
-                          </span>
-                        </td>
-                        <td>{art.views || 0}</td>
-                        <td>{new Date(art.createdAt).toLocaleDateString()}</td>
-                        <td style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button onClick={() => startEdit('articles', art)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                          <button onClick={() => handleDelete('articles', art._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
-                        </td>
+                <div className="table-responsive">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Views</th>
+                        <th>Date</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {articles.map(art => (
+                        <tr key={art._id}>
+                          <td><strong>{art.title}</strong></td>
+                          <td>{art.category}</td>
+                          <td>
+                            <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: art.status === 'published' ? '#DCFCE7' : '#FEF3C7', color: art.status === 'published' ? '#15803D' : '#D97706' }}>
+                              {art.status}
+                            </span>
+                          </td>
+                          <td>{art.views || 0}</td>
+                          <td>{new Date(art.createdAt).toLocaleDateString()}</td>
+                          <td style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button onClick={() => startEdit('articles', art)} className="editor-btn" title="Edit"><Edit size={14} /></button>
+                            <button onClick={() => handleDelete('articles', art._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
             {/* Tab: Judgments */}
             {activeTab === 'judgments' && (
               <div className="admin-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <div className="admin-card-header">
                   <h2>Judgments Archive ({judgments.length})</h2>
                   <button onClick={() => startCreate('judgments')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Create Judgment
                   </button>
                 </div>
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Citation</th>
-                      <th>Court</th>
-                      <th>Date</th>
-                      <th>Views</th>
-                      <th>PDF Uploaded</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {judgments.map(j => (
-                      <tr key={j._id}>
-                        <td><strong>{j.title}</strong></td>
-                        <td style={{ color: 'var(--accent-gold)', fontWeight: 600 }}>{j.citation}</td>
-                        <td>{j.courtName.split(',')[0]}</td>
-                        <td>{new Date(j.judgmentDate).toLocaleDateString()}</td>
-                        <td>{j.views || 0}</td>
-                        <td>
-                          {j.pdfData || j.pdfUrl ? (
-                            <span style={{ color: 'green', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.85rem' }}><Check size={14} /> Yes</span>
-                          ) : 'No'}
-                        </td>
-                        <td style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button onClick={() => startEdit('judgments', j)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                          <button onClick={() => handleDelete('judgments', j._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
-                        </td>
+                <div className="table-responsive">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Citation</th>
+                        <th>Court</th>
+                        <th>Date</th>
+                        <th>Views</th>
+                        <th>PDF Uploaded</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {judgments.map(j => (
+                        <tr key={j._id}>
+                          <td><strong>{j.title}</strong></td>
+                          <td style={{ color: 'var(--accent-gold)', fontWeight: 600 }}>{j.citation}</td>
+                          <td>{j.courtName.split(',')[0]}</td>
+                          <td>{new Date(j.judgmentDate).toLocaleDateString()}</td>
+                          <td>{j.views || 0}</td>
+                          <td>
+                            {j.pdfData || j.pdfUrl ? (
+                              <span style={{ color: 'green', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.85rem' }}><Check size={14} /> Yes</span>
+                            ) : 'No'}
+                          </td>
+                          <td style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button onClick={() => startEdit('judgments', j)} className="editor-btn" title="Edit"><Edit size={14} /></button>
+                            <button onClick={() => handleDelete('judgments', j._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
             {/* Tab: Laws */}
             {activeTab === 'laws' && (
               <div className="admin-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <div className="admin-card-header">
                   <h2>Revenue Acts ({laws.length})</h2>
                   <button onClick={() => startCreate('laws')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Create Act
                   </button>
                 </div>
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Category</th>
-                      <th>Sections Count</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {laws.map(l => (
-                      <tr key={l._id}>
-                        <td><strong>{l.title}</strong></td>
-                        <td>{l.category}</td>
-                        <td>{l.sections ? l.sections.length : 0} sections</td>
-                        <td style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button onClick={() => startEdit('laws', l)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                          <button onClick={() => handleDelete('laws', l._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
-                        </td>
+                <div className="table-responsive">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Sections Count</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {laws.map(l => (
+                        <tr key={l._id}>
+                          <td><strong>{l.title}</strong></td>
+                          <td>{l.category}</td>
+                          <td>{l.sections ? l.sections.length : 0} sections</td>
+                          <td style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button onClick={() => startEdit('laws', l)} className="editor-btn" title="Edit"><Edit size={14} /></button>
+                            <button onClick={() => handleDelete('laws', l._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
             {/* Tab: Circulars & Notifications */}
             {activeTab === 'notifications' && (
               <div className="admin-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <div className="admin-card-header">
                   <h2>Gazettes & Circulars ({notifications.length})</h2>
                   <button onClick={() => startCreate('notifications')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Add Circular
                   </button>
                 </div>
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Ref Number</th>
-                      <th>Title</th>
-                      <th>Department</th>
-                      <th>Publish Date</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {notifications.map(n => (
-                      <tr key={n._id}>
-                        <td><strong>{n.refNumber}</strong></td>
-                        <td>{n.title.slice(0, 50)}...</td>
-                        <td>{n.department.split(',')[0]}</td>
-                        <td>{new Date(n.publishDate).toLocaleDateString()}</td>
-                        <td style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button onClick={() => startEdit('notifications', n)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                          <button onClick={() => handleDelete('notifications', n._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
-                        </td>
+                <div className="table-responsive">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Ref Number</th>
+                        <th>Title</th>
+                        <th>Department</th>
+                        <th>Publish Date</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {notifications.map(n => (
+                        <tr key={n._id}>
+                          <td><strong>{n.refNumber}</strong></td>
+                          <td>{n.title.slice(0, 50)}...</td>
+                          <td>{n.department.split(',')[0]}</td>
+                          <td>{new Date(n.publishDate).toLocaleDateString()}</td>
+                          <td style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button onClick={() => startEdit('notifications', n)} className="editor-btn" title="Edit"><Edit size={14} /></button>
+                            <button onClick={() => handleDelete('notifications', n._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
             {/* Tab: Downloads */}
             {activeTab === 'downloads' && (
               <div className="admin-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <div className="admin-card-header">
                   <h2>Downloadable Templates ({downloads.length})</h2>
                   <button onClick={() => startCreate('downloads')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Create Template
                   </button>
                 </div>
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>File Name</th>
-                      <th>Type</th>
-                      <th>Size</th>
-                      <th>Downloads Count</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {downloads.map(d => (
-                      <tr key={d._id}>
-                        <td><strong>{d.title}</strong></td>
-                        <td>{d.fileType}</td>
-                        <td>{d.fileSize}</td>
-                        <td>{d.downloadCount || 0}</td>
-                        <td style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button onClick={() => startEdit('downloads', d)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                          <button onClick={() => handleDelete('downloads', d._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
-                        </td>
+                <div className="table-responsive">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>File Name</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Downloads Count</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {downloads.map(d => (
+                        <tr key={d._id}>
+                          <td><strong>{d.title}</strong></td>
+                          <td>{d.fileType}</td>
+                          <td>{d.fileSize}</td>
+                          <td>{d.downloadCount || 0}</td>
+                          <td style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button onClick={() => startEdit('downloads', d)} className="editor-btn" title="Edit"><Edit size={14} /></button>
+                            <button onClick={() => handleDelete('downloads', d._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
@@ -1276,44 +1313,46 @@ export default function AdminDashboard() {
             {activeTab === 'comments' && (
               <div className="admin-card">
                 <h2>Discussion Comments Moderation Queue ({comments.length})</h2>
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Author</th>
-                      <th>Content</th>
-                      <th>Entity Type</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {comments.map(c => (
-                      <tr key={c._id}>
-                        <td>
-                          <strong>{c.authorName}</strong>
-                          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{c.authorEmail}</div>
-                        </td>
-                        <td>{c.content.slice(0, 80)}...</td>
-                        <td>{c.entityType}</td>
-                        <td>{new Date(c.createdAt).toLocaleDateString()}</td>
-                        <td>
-                          <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: c.isApproved ? '#DCFCE7' : '#FFE4E6', color: c.isApproved ? '#15803D' : '#9F1239' }}>
-                            {c.isApproved ? 'Approved' : 'Pending'}
-                          </span>
-                        </td>
-                        <td style={{ display: 'flex', gap: '0.5rem' }}>
-                          {!c.isApproved ? (
-                            <button onClick={() => handleCommentApproval(c._id, true)} className="editor-btn" style={{ color: 'green' }} title="Approve Comment"><CheckSquare size={14} /></button>
-                          ) : (
-                            <button onClick={() => handleCommentApproval(c._id, false)} className="editor-btn" style={{ color: 'orange' }} title="Unapprove / Send back"><Trash size={14} /></button>
-                          )}
-                          <button onClick={() => handleDelete('comments', c._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
-                        </td>
+                <div className="table-responsive">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Author</th>
+                        <th>Content</th>
+                        <th>Entity Type</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {comments.map(c => (
+                        <tr key={c._id}>
+                          <td>
+                            <strong>{c.authorName}</strong>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{c.authorEmail}</div>
+                          </td>
+                          <td>{c.content.slice(0, 80)}...</td>
+                          <td>{c.entityType}</td>
+                          <td>{new Date(c.createdAt).toLocaleDateString()}</td>
+                          <td>
+                            <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: c.isApproved ? '#DCFCE7' : '#FFE4E6', color: c.isApproved ? '#15803D' : '#9F1239' }}>
+                              {c.isApproved ? 'Approved' : 'Pending'}
+                            </span>
+                          </td>
+                          <td style={{ display: 'flex', gap: '0.5rem' }}>
+                            {!c.isApproved ? (
+                              <button onClick={() => handleCommentApproval(c._id, true)} className="editor-btn" style={{ color: 'green' }} title="Approve Comment"><CheckSquare size={14} /></button>
+                            ) : (
+                              <button onClick={() => handleCommentApproval(c._id, false)} className="editor-btn" style={{ color: 'orange' }} title="Unapprove / Send back"><Trash size={14} /></button>
+                            )}
+                            <button onClick={() => handleDelete('comments', c._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
@@ -1321,110 +1360,116 @@ export default function AdminDashboard() {
             {activeTab === 'queries' && (
               <div className="admin-card">
                 <h2>Consultation Queries & Support Tickets ({queries.length})</h2>
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Client Info</th>
-                      <th>Subject</th>
-                      <th>Message</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {queries.map(q => (
-                      <tr key={q._id}>
-                        <td>
-                          <strong>{q.name}</strong>
-                          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{q.email} | {q.phone || 'No Tel'}</div>
-                        </td>
-                        <td>{q.subject}</td>
-                        <td>{q.message.slice(0, 100)}...</td>
-                        <td>{new Date(q.createdAt).toLocaleDateString()}</td>
-                        <td>
-                          <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: q.isResolved ? '#DCFCE7' : '#FEF3C7', color: q.isResolved ? '#15803D' : '#D97706' }}>
-                            {q.isResolved ? 'Resolved' : 'Active Ticket'}
-                          </span>
-                        </td>
-                        <td style={{ display: 'flex', gap: '0.5rem' }}>
-                          {!q.isResolved ? (
-                            <button onClick={() => handleQueryResolution(q._id, true)} className="editor-btn" style={{ color: 'green' }} title="Mark Resolved"><Check size={14} /></button>
-                          ) : (
-                            <button onClick={() => handleQueryResolution(q._id, false)} className="editor-btn" style={{ color: 'orange' }} title="Reopen Ticket"><Edit size={14} /></button>
-                          )}
-                          <button onClick={() => handleDelete('queries', q._id)} className="editor-btn" style={{ color: 'red' }} title="Delete query"><Trash size={14} /></button>
-                        </td>
+                <div className="table-responsive">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Client Info</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {queries.map(q => (
+                        <tr key={q._id}>
+                          <td>
+                            <strong>{q.name}</strong>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{q.email} | {q.phone || 'No Tel'}</div>
+                          </td>
+                          <td>{q.subject}</td>
+                          <td>{q.message.slice(0, 100)}...</td>
+                          <td>{new Date(q.createdAt).toLocaleDateString()}</td>
+                          <td>
+                            <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: q.isResolved ? '#DCFCE7' : '#FEF3C7', color: q.isResolved ? '#15803D' : '#D97706' }}>
+                              {q.isResolved ? 'Resolved' : 'Active Ticket'}
+                            </span>
+                          </td>
+                          <td style={{ display: 'flex', gap: '0.5rem' }}>
+                            {!q.isResolved ? (
+                              <button onClick={() => handleQueryResolution(q._id, true)} className="editor-btn" style={{ color: 'green' }} title="Mark Resolved"><Check size={14} /></button>
+                            ) : (
+                              <button onClick={() => handleQueryResolution(q._id, false)} className="editor-btn" style={{ color: 'orange' }} title="Reopen Ticket"><Edit size={14} /></button>
+                            )}
+                            <button onClick={() => handleDelete('queries', q._id)} className="editor-btn" style={{ color: 'red' }} title="Delete query"><Trash size={14} /></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
             {/* Tab: Glossary */}
             {activeTab === 'glossary' && (
               <div className="admin-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <div className="admin-card-header">
                   <h2>Revenue Law Glossary Terms ({glossary.length})</h2>
                   <button onClick={() => startCreate('glossary')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Add Glossary Term
                   </button>
                 </div>
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Term</th>
-                      <th>Definition Summary</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {glossary.map(g => (
-                      <tr key={g._id}>
-                        <td><strong>{g.term}</strong></td>
-                        <td><div dangerouslySetInnerHTML={{ __html: g.definition ? g.definition.slice(0, 100) + '...' : '' }} /></td>
-                        <td style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button onClick={() => startEdit('glossary', g)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                          <button onClick={() => handleDelete('glossary', g._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
-                        </td>
+                <div className="table-responsive">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Term</th>
+                        <th>Definition Summary</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {glossary.map(g => (
+                        <tr key={g._id}>
+                          <td><strong>{g.term}</strong></td>
+                          <td><div dangerouslySetInnerHTML={{ __html: g.definition ? g.definition.slice(0, 100) + '...' : '' }} /></td>
+                          <td style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button onClick={() => startEdit('glossary', g)} className="editor-btn" title="Edit"><Edit size={14} /></button>
+                            <button onClick={() => handleDelete('glossary', g._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
             {/* Tab: Settings */}
             {activeTab === 'settings' && (
               <div className="admin-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <div className="admin-card-header">
                   <h2>Global Configurations ({settings.length})</h2>
                   <button onClick={() => startCreate('settings')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Add Setting
                   </button>
                 </div>
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Key</th>
-                      <th>Value</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {settings.map(s => (
-                      <tr key={s._id}>
-                        <td><strong>{s.key}</strong></td>
-                        <td>{typeof s.value === 'object' ? JSON.stringify(s.value) : String(s.value)}</td>
-                        <td style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button onClick={() => startEdit('settings', s)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                          <button onClick={() => handleDelete('settings', s._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
-                        </td>
+                <div className="table-responsive">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Key</th>
+                        <th>Value</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {settings.map(s => (
+                        <tr key={s._id}>
+                          <td><strong>{s.key}</strong></td>
+                          <td>{typeof s.value === 'object' ? JSON.stringify(s.value) : String(s.value)}</td>
+                          <td style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button onClick={() => startEdit('settings', s)} className="editor-btn" title="Edit"><Edit size={14} /></button>
+                            <button onClick={() => handleDelete('settings', s._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
@@ -1477,7 +1522,7 @@ export default function AdminDashboard() {
                       <label>Hero Description</label>
                       <textarea name="heroDesc" defaultValue={val.heroDesc || ''} className="form-control" rows={3} required />
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div className="grid-2col">
                       <div className="form-group">
                         <label>Primary Button Text</label>
                         <input type="text" name="heroButtonText" defaultValue={val.heroButtonText || ''} className="form-control" />
@@ -1487,7 +1532,7 @@ export default function AdminDashboard() {
                         <input type="text" name="heroButtonUrl" defaultValue={val.heroButtonUrl || ''} className="form-control" />
                       </div>
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div className="grid-2col">
                       <div className="form-group">
                         <label>Secondary Button Text</label>
                         <input type="text" name="heroSecButtonText" defaultValue={val.heroSecButtonText || ''} className="form-control" />
@@ -1614,7 +1659,7 @@ export default function AdminDashboard() {
 
                     <div>
                       <h3 style={{ color: 'var(--primary-blue)', marginBottom: '1rem' }}>Contact Details & Help Desk</h3>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                      <div className="grid-2col">
                         <div className="form-group">
                           <label>Secretary Helpline</label>
                           <input type="text" name="phone" defaultValue={contactVal.phone || ''} className="form-control" required />
@@ -1728,7 +1773,7 @@ export default function AdminDashboard() {
                 <div className="admin-card">
                   <h2>Media Asset & PDF Library Manager</h2>
                   
-                  <form onSubmit={handleMediaUploadSubmit} style={{ display: 'flex', gap: '1rem', alignItems: 'center', backgroundColor: 'var(--bg-offwhite)', padding: '1rem', borderRadius: '6px', border: '1px dashed var(--border-color)', margin: '1rem 0' }}>
+                  <form onSubmit={handleMediaUploadSubmit} className="admin-upload-form">
                     <div style={{ flexGrow: 1 }}>
                       <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.8rem', fontWeight: 600 }}>Select Image or PDF Document:</label>
                       <input type="file" name="mediaFile" className="form-control" accept="image/*,application/pdf" required style={{ padding: '0.35rem 0.75rem' }} />
@@ -1815,7 +1860,7 @@ export default function AdminDashboard() {
                     Export your entire legal dataset (articles, judgments, bare acts, templates, circulars, media, and site configurations) to a single portable JSON file, or restore from an existing JSON dump.
                   </p>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                  <div className="grid-2col" style={{ gap: '2rem' }}>
                     <div style={{ border: '1px solid var(--border-color)', borderRadius: '6px', padding: '1.5rem', backgroundColor: 'var(--bg-offwhite)' }}>
                       <h3>Export & Backup Data</h3>
                       <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', margin: '0.5rem 0 1.5rem 0' }}>Download a complete snapshot of all collections and files in the database.</p>
@@ -1842,41 +1887,43 @@ export default function AdminDashboard() {
             {/* Tab: Users */}
             {activeTab === 'users' && (
               <div className="admin-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <div className="admin-card-header">
                   <h2>Administrative Users ({users.length})</h2>
                   <button onClick={() => startCreate('users')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Create User
                   </button>
                 </div>
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Role</th>
-                      <th>Created At</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {users.map(u => (
-                      <tr key={u._id}>
-                        <td><strong>{u.name}</strong></td>
-                        <td>{u.email}</td>
-                        <td>
-                          <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: u.role === 'admin' ? '#EBF3FC' : '#F1F5F9', color: u.role === 'admin' ? 'var(--primary-blue)' : 'var(--text-muted)' }}>
-                            {u.role}
-                          </span>
-                        </td>
-                        <td>{new Date(u.createdAt).toLocaleDateString()}</td>
-                        <td style={{ display: 'flex', gap: '0.5rem' }}>
-                          <button onClick={() => startEdit('users', u)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                          <button onClick={() => handleDelete('users', u._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
-                        </td>
+                <div className="table-responsive">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {users.map(u => (
+                        <tr key={u._id}>
+                          <td><strong>{u.name}</strong></td>
+                          <td>{u.email}</td>
+                          <td>
+                            <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: u.role === 'admin' ? '#EBF3FC' : '#F1F5F9', color: u.role === 'admin' ? 'var(--primary-blue)' : 'var(--text-muted)' }}>
+                              {u.role}
+                            </span>
+                          </td>
+                          <td>{new Date(u.createdAt).toLocaleDateString()}</td>
+                          <td style={{ display: 'flex', gap: '0.5rem' }}>
+                            <button onClick={() => startEdit('users', u)} className="editor-btn" title="Edit"><Edit size={14} /></button>
+                            <button onClick={() => handleDelete('users', u._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
