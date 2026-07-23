@@ -70,6 +70,13 @@ export async function POST(req) {
     return NextResponse.json({ success: true, judgment });
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: 'Server error or duplicate citation' }, { status: 500 });
+    if (err.code === 11000) {
+      return NextResponse.json({ error: 'Duplicate citation — a judgment with this citation already exists. Use a different citation number.' }, { status: 400 });
+    }
+    if (err.name === 'ValidationError') {
+      const messages = Object.values(err.errors).map(e => e.message).join(', ');
+      return NextResponse.json({ error: 'Validation failed: ' + messages }, { status: 400 });
+    }
+    return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
   }
 }

@@ -47,13 +47,20 @@ export async function POST(req) {
     const body = await req.json();
 
     if (!body.slug && body.title) {
-      body.slug = body.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now().toString().slice(-4);
+      body.slug = body.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4);
     }
 
     const article = await Article.create(body);
     return NextResponse.json({ success: true, article });
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: 'Server error or duplicate slug' }, { status: 500 });
+    if (err.code === 11000) {
+      return NextResponse.json({ error: 'Duplicate slug — an article with this title already exists. Please change the title slightly.' }, { status: 400 });
+    }
+    if (err.name === 'ValidationError') {
+      const messages = Object.values(err.errors).map(e => e.message).join(', ');
+      return NextResponse.json({ error: 'Validation failed: ' + messages }, { status: 400 });
+    }
+    return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
   }
 }
