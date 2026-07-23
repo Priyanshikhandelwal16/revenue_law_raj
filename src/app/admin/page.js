@@ -415,87 +415,87 @@ export default function AdminDashboard() {
         <ul className="admin-nav">
           <li className={`admin-nav-item ${activeTab === 'overview' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('overview'); setEditingItem(null); setSidebarOpen(false); }}>
-              <LayoutDashboard size={16} /> Overview / डेशबोर्ड
+              <LayoutDashboard size={16} /> Dashboard Overview
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'articles' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('articles'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Newspaper size={16} /> Commentaries / कानूनी लेख
+              <Newspaper size={16} /> Articles & News
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'judgments' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('judgments'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Gavel size={16} /> Court Judgments / कोर्ट फैसले
+              <Gavel size={16} /> Court Judgments
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'laws' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('laws'); setEditingItem(null); setSidebarOpen(false); }}>
-              <BookOpen size={16} /> Acts & Statutes / अधिनियम व कानून
+              <BookOpen size={16} /> Acts & Statutes
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'notifications' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('notifications'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Bell size={16} /> Circulars / सरकारी सर्कुलर
+              <Bell size={16} /> Circulars & Gazettes
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'downloads' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('downloads'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Download size={16} /> Templates / डाउनलोड फॉर्म्स
+              <Download size={16} /> Document Templates
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'comments' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('comments'); setEditingItem(null); setSidebarOpen(false); }}>
-              <MessageSquare size={16} /> Comments / टिप्पणियां
+              <MessageSquare size={16} /> Comments Approval
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'queries' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('queries'); setEditingItem(null); setSidebarOpen(false); }}>
-              <HelpCircle size={16} /> Queries / लोगों के सवाल
+              <HelpCircle size={16} /> Support Queries
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'glossary' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('glossary'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Scale size={16} /> Glossary / कानूनी शब्दकोश
+              <Scale size={16} /> Legal Glossary
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('settings'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Scale size={16} /> App Settings / मुख्य सेटिंग्स
+              <Scale size={16} /> Configurations
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'homepage_cms' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('homepage_cms'); setEditingItem(null); setSidebarOpen(false); }}>
-              <FileText size={16} style={{ color: 'var(--accent-gold)' }} /> Homepage CMS / मुख्य पेज संपादन
+              <FileText size={16} style={{ color: 'var(--accent-gold)' }} /> Homepage Config
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'pages_cms' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('pages_cms'); setEditingItem(null); setSidebarOpen(false); }}>
-              <FileText size={16} /> About & Contact / संपर्क जानकारी
+              <FileText size={16} /> About & Contact Page
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'policies_cms' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('policies_cms'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Shield size={16} /> Legal Policies / कानूनी नीतियां
+              <Shield size={16} /> Legal Policies
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'media_library' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('media_library'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Image size={16} /> Media Assets / फोटो व फाइलें
+              <Image size={16} /> Photo & File Library
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'backup_restore' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('backup_restore'); setEditingItem(null); setSidebarOpen(false); }}>
-              <RefreshCw size={16} /> Backup & Restore / डेटा बैकअप
+              <RefreshCw size={16} /> Database Backup
             </a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'users' ? 'active' : ''}`}>
             <a href="#" onClick={() => { setActiveTab('users'); setEditingItem(null); setSidebarOpen(false); }}>
-              <User size={16} /> Admin Users / एडमिन सूची
+              <User size={16} /> Admin User Access
             </a>
           </li>
           <li className="admin-nav-item" style={{ marginTop: '3rem' }}>
             <a href="#" onClick={() => { handleLogout(); setSidebarOpen(false); }} style={{ color: '#EF4444' }}>
-              <LogOut size={16} /> Sign Out / लॉगआउट
+              <LogOut size={16} /> Sign Out / Log Out
             </a>
           </li>
         </ul>
@@ -527,21 +527,21 @@ export default function AdminDashboard() {
               {editingItem.type === 'articles' && (
                 <>
                   <div className="form-group">
-                    <label>Title / शीर्षक (वेबसाइट पर दिखने वाला मुख्य नाम) *</label>
+                    <label>Title *</label>
                     <input 
                       type="text" 
                       value={formData.title || ''} 
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })} 
                       className="form-control" 
-                      placeholder="e.g. नामांतरण (Mutation) की पूरी प्रक्रिया और नियम"
+                      placeholder="e.g. Complete Process and Rules of Mutation"
                       required 
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      लेख का मुख्य नाम डालें।
+                      Enter the main heading or title for this commentary article.
                     </small>
                   </div>
                   <div className="form-group">
-                    <label>URL Link / स्लग (वेबसाइट का लिंक - खाली छोड़ सकते हैं)</label>
+                    <label>URL Slug (Optional - Leave blank to auto-generate)</label>
                     <input 
                       type="text" 
                       value={formData.slug || ''} 
@@ -550,27 +550,27 @@ export default function AdminDashboard() {
                       placeholder="e.g. mutation-process-rajasthan"
                       />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      इसे खाली छोड़ दें (यह अपने आप नाम से बन जाएगा)। केवल अंग्रेजी अक्षरों और हाइफन (-) का प्रयोग करें।
+                      Use lowercase letters, numbers, and hyphens (-) only.
                     </small>
                   </div>
                   <div className="grid-2col">
                     <div className="form-group">
-                      <label>Category / केटेगरी (किस विषय का है) *</label>
+                      <label>Category *</label>
                       <select 
                         value={formData.category || ''} 
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })} 
                         className="form-control" 
                         required
                       >
-                        <option value="">-- केटेगरी चुनें --</option>
-                        <option value="Land Conversion">Land Conversion (भूमि रूपांतरण)</option>
-                        <option value="Judgments Analysis">Judgments Analysis (अदालती फैसलों का विश्लेषण)</option>
-                        <option value="Legal Commentary">Legal Commentary (कानूनी समीक्षा)</option>
-                        <option value="News & Updates">News & Updates (ताजा समाचार व बदलाव)</option>
+                        <option value="">-- Select Category --</option>
+                        <option value="Land Conversion">Land Conversion</option>
+                        <option value="Judgments Analysis">Judgments Analysis</option>
+                        <option value="Legal Commentary">Legal Commentary</option>
+                        <option value="News & Updates">News & Updates</option>
                       </select>
                     </div>
                     <div className="form-group">
-                      <label>Featured Image / मुख्य फोटो का लिंक</label>
+                      <label>Featured Thumbnail Image URL</label>
                       <input 
                         type="text" 
                         value={formData.featuredImage || ''} 
@@ -579,37 +579,37 @@ export default function AdminDashboard() {
                         placeholder="https://images.unsplash.com/... or paste link"
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        इस लेख के लिए मुख्य फोटो का लिंक डालें (आप बाएं हाथ पर "Photo & Files" से कॉपी करके पेस्ट कर सकते हैं)।
+                        Paste a photo URL (or copy one from the Photo & File Library in the sidebar).
                       </small>
                     </div>
                   </div>
                   <div className="form-group">
-                    <label>Brief Summary / छोटा विवरण (कार्ड्स पर दिखने वाला विवरण) *</label>
+                    <label>Brief Summary *</label>
                     <textarea 
                       rows={3} 
                       value={formData.summary || ''} 
                       onChange={(e) => setFormData({ ...formData, summary: e.target.value })} 
                       className="form-control" 
-                      placeholder="इस लेख के बारे में 2 पंक्तियों का संक्षिप्त विवरण..."
+                      placeholder="Provide a 1-2 sentence preview description for this article..."
                       required 
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      यह संक्षिप्त विवरण होमपेज और ब्लॉग लिस्ट के कार्ड्स में दिखाई देगा।
+                      This short excerpt will show up on cards across the homepage and listing pages.
                     </small>
                   </div>
                   <div className="form-group">
-                    <label>Article Content / लेख की विस्तृत जानकारी (नीचे लिखें) *</label>
+                    <label>Article Content *</label>
                     <RichTextEditor 
                       value={formData.content || ''} 
                       onChange={(content) => setFormData({ ...formData, content })} 
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      नीचे दिए गए विज़ुअल एडिटर में पूरा लेख विस्तार से लिखें (आप शब्दों को बोल्ड, इटैलिक या हेडिंग दे सकते हैं)।
+                      Write the complete body content of your article in the rich text editor above.
                     </small>
                   </div>
                   <div className="grid-2col">
                     <div className="form-group">
-                      <label>Tags / टैग्स (कोमा `,` लगाकर लिखें)</label>
+                      <label>Tags (Comma separated)</label>
                       <input 
                         type="text" 
                         value={formData.tags ? formData.tags.join(', ') : ''} 
@@ -618,21 +618,21 @@ export default function AdminDashboard() {
                         placeholder="e.g. mutation, land, rajasthan"
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        सर्च करने में मदद करने वाले कीवर्ड्स, कोमा `,` लगाकर लिखें।
+                        Search keywords to help users find this article. Separate with commas.
                       </small>
                     </div>
                     <div className="form-group">
-                      <label>Publish Status / पब्लिश स्थिति</label>
+                      <label>Publish Status</label>
                       <select 
                         value={formData.status || 'published'} 
                         onChange={(e) => setFormData({ ...formData, status: e.target.value })} 
                         className="form-control"
                       >
-                        <option value="draft">Draft (अभी छुपा कर रखें)</option>
-                        <option value="published">Published (तुरंत लाइव वेबसाइट पर दिखाएं)</option>
+                        <option value="draft">Draft (Keep Hidden)</option>
+                        <option value="published">Published (Show on Website)</option>
                       </select>
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        क्या इसे वेबसाइट पर तुरंत दिखाना है (Published) या अभी ड्राफ्ट में छुपा कर रखना है (Draft)।
+                        Set to Published to make it immediately visible to the public.
                       </small>
                     </div>
                   </div>
@@ -644,7 +644,7 @@ export default function AdminDashboard() {
                 <>
                   <div className="grid-2to1">
                     <div className="form-group">
-                      <label>Case / Parties Title / केस का नाम (जैसे: 'राम लाल बनाम राजस्थान राज्य') *</label>
+                      <label>Case / Parties Title (e.g. 'Ram Lal vs. State of Rajasthan & Ors') *</label>
                       <input 
                         type="text" 
                         value={formData.title || ''} 
@@ -654,11 +654,11 @@ export default function AdminDashboard() {
                         required 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        अपीलकर्ता बनाम विपक्षी का नाम लिखें।
+                        Enter the names of the petitioner and respondent.
                       </small>
                     </div>
                     <div className="form-group">
-                      <label>Citation / साइटेशन (जैसे: '2026 RRD 120') *</label>
+                      <label>Citation (e.g. '2026 RRD 120') *</label>
                       <input 
                         type="text" 
                         value={formData.citation || ''} 
@@ -668,14 +668,14 @@ export default function AdminDashboard() {
                         required 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        कानूनी पत्रिका या जर्नल का संदर्भ नंबर (यूनिक होना चाहिए)।
+                        Reference citation from RRD, RLW, or other journals. Must be unique.
                       </small>
                     </div>
                   </div>
 
                   <div className="grid-3col">
                     <div className="form-group">
-                      <label>Case Number / केस नंबर *</label>
+                      <label>Case Number *</label>
                       <input 
                         type="text" 
                         value={formData.caseNumber || ''} 
@@ -685,31 +685,31 @@ export default function AdminDashboard() {
                         required 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        अदालत का आधिकारिक मुक़दमा नंबर।
+                        Official suit/appeal filing number in court.
                       </small>
                     </div>
                     <div className="form-group">
-                      <label>Court Name / अदालत का नाम *</label>
+                      <label>Court Name *</label>
                       <select 
                         value={formData.courtName || ''} 
                         onChange={(e) => setFormData({ ...formData, courtName: e.target.value })} 
                         className="form-control" 
                         required
                       >
-                        <option value="">-- कोर्ट चुनें --</option>
-                        <option value="Board of Revenue for Rajasthan, Ajmer">Board of Revenue (राजस्व मंडल अजमेर)</option>
-                        <option value="Revenue Appeals Commissioner">Revenue Appeals Commissioner (राजस्व अपील अधिकारी)</option>
-                        <option value="Collector Court">Collector Court (कलेक्टर कोर्ट)</option>
-                        <option value="SDO & Tehsildar Court">SDO & Tehsildar Court (एसडीओ / तहसीलदार कोर्ट)</option>
-                        <option value="Supreme Court of India">Supreme Court of India (सुप्रीम कोर्ट)</option>
-                        <option value="High Court of Judicature for Rajasthan">High Court of Rajasthan (राजस्थान हाईकोर्ट)</option>
+                        <option value="">-- Select Court --</option>
+                        <option value="Board of Revenue for Rajasthan, Ajmer">Board of Revenue, Ajmer</option>
+                        <option value="Revenue Appeals Commissioner">Revenue Appeals Commissioner</option>
+                        <option value="Collector Court">Collector Court</option>
+                        <option value="SDO & Tehsildar Court">SDO & Tehsildar Court</option>
+                        <option value="Supreme Court of India">Supreme Court of India</option>
+                        <option value="High Court of Judicature for Rajasthan">High Court of Rajasthan</option>
                       </select>
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        किस कोर्ट ने फैसला सुनाया है।
+                        The court that issued this judgment.
                       </small>
                     </div>
                     <div className="form-group">
-                      <label>Judgment Date / फैसले की तारीख *</label>
+                      <label>Judgment Date *</label>
                       <input 
                         type="date" 
                         value={formData.judgmentDate ? formData.judgmentDate.split('T')[0] : ''} 
@@ -718,14 +718,14 @@ export default function AdminDashboard() {
                         required 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        फैसला किस तारीख को सुनाया गया।
+                        The date the final order was announced.
                       </small>
                     </div>
                   </div>
 
                   <div className="grid-2col">
                     <div className="form-group">
-                      <label>Bench Coram Member / जज का नाम</label>
+                      <label>Bench Coram Member / Judge Name</label>
                       <input 
                         type="text" 
                         value={formData.judgeName || ''} 
@@ -734,11 +734,11 @@ export default function AdminDashboard() {
                         placeholder="e.g. Hon'ble Shri K.S. Yadav"
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        फैसला सुनाने वाले माननीय सदस्य / न्यायाधीश का नाम।
+                        Hon'ble Member or Judge presiding over the case.
                       </small>
                     </div>
                     <div className="form-group">
-                      <label>Upload Certified PDF / फैसले की पीडीएफ फाइल</label>
+                      <label>Upload Certified PDF</label>
                       <input 
                         type="file" 
                         accept="application/pdf"
@@ -746,50 +746,50 @@ export default function AdminDashboard() {
                         className="form-control" 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        कोर्ट आर्डर की पीडीएफ यहाँ अपलोड करें (अधिकतम 4.5 MB)।
+                        Upload the official certified copy of the judgment (Max 4.5 MB).
                       </small>
                     </div>
                   </div>
 
                   <div className="form-group">
-                    <label>Ratio Highlights / मुख्य कानूनी बिंदु (अल्पविराम `,` लगाकर लिखें)</label>
+                    <label>Ratio Highlights (Comma separated keywords)</label>
                     <input 
                       type="text" 
                       value={formData.importantPoints ? formData.importantPoints.join(', ') : ''} 
                       onChange={(e) => setFormData({ ...formData, importantPoints: e.target.value.split(',').map(p => p.trim()) })} 
                       className="form-control" 
-                      placeholder="e.g. सीमा विवाद, नामांतरण निरस्तीकरण, धारा 251-ए"
+                      placeholder="e.g. boundary mutation, limitation act, Charagah land"
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      इस फैसले के मुख्य कानूनी तर्क। कोमा `,` का प्रयोग करके अलग-अलग लिखें।
+                      Key legal points decided in this ruling. Separate entries with commas.
                     </small>
                   </div>
 
                   <div className="form-group">
-                    <label>Executive Case Summary / केस का संक्षिप्त सारांश *</label>
+                    <label>Executive Case Summary *</label>
                     <RichTextEditor 
                       value={formData.summary || ''} 
                       onChange={(sum) => setFormData({ ...formData, summary: sum })} 
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      विज़ुअल एडिटर में केस का सारांश और मुख्य निष्कर्ष लिखें।
+                      Brief summary explaining facts, issues, and final ruling in simple terms.
                     </small>
                   </div>
 
                   <div className="form-group">
-                    <label>Full Written Judgment Text / फैसले की पूरी प्रतिलिपि (Full Text) *</label>
+                    <label>Full Written Judgment Text *</label>
                     <RichTextEditor 
                       value={formData.fullText || ''} 
                       onChange={(text) => setFormData({ ...formData, fullText: text })} 
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      कोर्ट का पूरा आदेश / लिखित फैसला यहाँ कॉपी-पेस्ट करें।
+                      Copy and paste the full written text of the judgment here.
                     </small>
                   </div>
 
                   <div className="grid-2col">
                     <div className="form-group">
-                      <label>Acts / Laws Cited / संदर्भित धाराएं व कानून (कोमा लगाकर लिखें)</label>
+                      <label>Acts / Laws Cited (Comma separated)</label>
                       <input 
                         type="text" 
                         value={formData.lawsCited ? formData.lawsCited.join(', ') : ''} 
@@ -798,21 +798,21 @@ export default function AdminDashboard() {
                         placeholder="e.g. Sec. 53 Tenancy Act, Sec. 90-A Land Revenue Act"
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        इस केस में प्रयुक्त अधिनियम/नियमों के नाम (जैसे: धारा 53)।
+                        Acts, sections, or rules cited in the case. Separate entries with commas.
                       </small>
                     </div>
                     <div className="form-group">
-                      <label>Publish Status / पब्लिश स्थिति</label>
+                      <label>Publish Status</label>
                       <select 
                         value={formData.status || 'published'} 
                         onChange={(e) => setFormData({ ...formData, status: e.target.value })} 
                         className="form-control"
                       >
-                        <option value="draft">Draft (छुपा कर रखें)</option>
-                        <option value="published">Published (वेबसाइट पर दिखाएं)</option>
+                        <option value="draft">Draft (Keep Hidden)</option>
+                        <option value="published">Published (Show on Website)</option>
                       </select>
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        क्या यह निर्णय तुरंत वेबसाइट पर लाइव करना है?
+                        Determine whether this judgment should be live on the site.
                       </small>
                     </div>
                   </div>
@@ -824,7 +824,7 @@ export default function AdminDashboard() {
                 <>
                   <div className="grid-2to1">
                     <div className="form-group">
-                      <label>Law / Act Title / कानून का नाम (जैसे: 'राजस्थान भू-राजस्व अधिनियम, 1956') *</label>
+                      <label>Law / Act Title *</label>
                       <input 
                         type="text" 
                         value={formData.title || ''} 
@@ -834,48 +834,48 @@ export default function AdminDashboard() {
                         required 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        कानून या अधिनियम का पूरा नाम डालें।
+                        Enter the full legal name of the act, regulation, or guideline document.
                       </small>
                     </div>
                     <div className="form-group">
-                      <label>Category / अधिनियम का प्रकार *</label>
+                      <label>Category *</label>
                       <select 
                         value={formData.category || 'Acts'} 
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })} 
                         className="form-control" 
                         required
                       >
-                        <option value="Acts">Acts (मुख्य कानून / अधिनियम)</option>
-                        <option value="Rules">Rules (नियम / नियमावली)</option>
-                        <option value="Guidelines">Guidelines (दिशानिर्देश)</option>
-                        <option value="Amendments">Amendments (संशोधन)</option>
+                        <option value="Acts">Acts (Statutes)</option>
+                        <option value="Rules">Rules (Regulations)</option>
+                        <option value="Guidelines">Guidelines & Circulars</option>
+                        <option value="Amendments">Amendments</option>
                       </select>
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        यह कानून है (Acts), नियम है (Rules) या संशोधन (Amendments)।
+                        Select the type of legislative instrument.
                       </small>
                     </div>
                   </div>
                   <div className="form-group">
-                    <label>Description / कानून का संक्षिप्त विवरण (Summary)</label>
+                    <label>Description</label>
                     <textarea 
                       rows={2} 
                       value={formData.description || ''} 
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })} 
                       className="form-control" 
-                      placeholder="इस कानून का मुख्य उद्देश्य और संक्षिप्त विवरण..."
+                      placeholder="Brief overview of what this law covers..."
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      इस एक्ट के बारे में 1-2 लाइन का संक्षिप्त विवरण जो कार्ड्स पर दिखेगा।
+                      A 1-2 sentence description for listing card displays.
                     </small>
                   </div>
                   <div className="form-group">
-                    <label>Bare Act Wording / कानून की मुख्य प्रस्तावना व नियम (विज़ुअल एडिटर)</label>
+                    <label>Bare Act Wording / Act Preamble (Visual editor)</label>
                     <RichTextEditor 
                       value={formData.fullText || ''} 
                       onChange={(text) => setFormData({ ...formData, fullText: text })} 
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      कानून की मुख्य बातें या प्रस्तावना विस्तार से यहाँ लिखें।
+                      Write the preamble or key overview clauses of this Act.
                     </small>
                   </div>
 
@@ -973,22 +973,22 @@ export default function AdminDashboard() {
               {editingItem.type === 'notifications' && (
                 <>
                   <div className="form-group">
-                    <label>Title / सर्कुलर का शीर्षक *</label>
+                    <label>Title *</label>
                     <input 
                       type="text" 
                       value={formData.title || ''} 
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })} 
                       className="form-control" 
-                      placeholder="e.g. राजस्थान भू-राजस्व (कृषि प्रयोजनों के लिए भूमि का आवंटन) (संशोधन) नियम, 2026"
+                      placeholder="e.g. Amendment in Land Revenue (Allotment of Land for Agricultural Purposes) Rules, 2026"
                       required 
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      सरकारी सर्कुलर या आदेश का मुख्य नाम डालें।
+                      Enter the official title of the government circular, notification, or order.
                     </small>
                   </div>
                   <div className="grid-3col">
                     <div className="form-group">
-                      <label>Reference Number / पत्र क्रमांक (आदेश संख्या) *</label>
+                      <label>Reference Number (Order No.) *</label>
                       <input 
                         type="text" 
                         value={formData.refNumber || ''} 
@@ -998,11 +998,11 @@ export default function AdminDashboard() {
                         required 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        सरकारी आदेश का पत्र क्रमांक नंबर।
+                        The dispatch letter number or reference ID of the order.
                       </small>
                     </div>
                     <div className="form-group">
-                      <label>Department / जारी करने वाला विभाग *</label>
+                      <label>Issuing Department *</label>
                       <input 
                         type="text" 
                         value={formData.department || 'Revenue Department, Government of Rajasthan'} 
@@ -1011,11 +1011,11 @@ export default function AdminDashboard() {
                         required 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        जिस सरकारी विभाग ने आदेश जारी किया (जैसे: राजस्व (ग्रुप 6) विभाग, जयपुर)।
+                        The department that issued this order (e.g. Revenue Group-6 Department).
                       </small>
                     </div>
                     <div className="form-group">
-                      <label>Publish Date / जारी होने की तारीख *</label>
+                      <label>Publish Date *</label>
                       <input 
                         type="date" 
                         value={formData.publishDate ? formData.publishDate.split('T')[0] : ''} 
@@ -1024,13 +1024,13 @@ export default function AdminDashboard() {
                         required 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        आदेश के गैजेट में प्रकाशित होने की तारीख।
+                        Date of gazette notification or official publication.
                       </small>
                     </div>
                   </div>
                   <div className="grid-2col">
                     <div className="form-group">
-                      <label>Upload Circular PDF / सर्कुलर की पीडीएफ फाइल</label>
+                      <label>Upload Circular PDF</label>
                       <input 
                         type="file" 
                         accept="application/pdf"
@@ -1038,35 +1038,35 @@ export default function AdminDashboard() {
                         className="form-control" 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        आधिकारिक सरकारी आदेश की पीडीएफ फाइल अपलोड करें (अधिकतम 4.5 MB)।
+                        Upload the PDF document copy of the circular order (Max 4.5 MB).
                       </small>
                     </div>
                     <div className="form-group">
-                      <label>Publish Status / पब्लिश स्थिति</label>
+                      <label>Publish Status</label>
                       <select 
                         value={formData.status || 'published'} 
                         onChange={(e) => setFormData({ ...formData, status: e.target.value })} 
                         className="form-control"
                       >
-                        <option value="draft">Draft (छुपा कर रखें)</option>
-                        <option value="published">Published (वेबसाइट पर दिखाएं)</option>
+                        <option value="draft">Draft (Keep Hidden)</option>
+                        <option value="published">Published (Show on Website)</option>
                       </select>
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        क्या यह आदेश तुरंत लाइव वेबसाइट पर दिखाना है?
+                        Decide whether to publish this circular on the live website.
                       </small>
                     </div>
                   </div>
                   <div className="form-group">
-                    <label>Summary / Abstract Details / आदेश का संक्षिप्त विवरण</label>
+                    <label>Summary / Abstract Details</label>
                     <textarea 
                       rows={4} 
                       value={formData.summary || ''} 
                       onChange={(e) => setFormData({ ...formData, summary: e.target.value })} 
                       className="form-control" 
-                      placeholder="इस आदेश या सर्कुलर के मुख्य बिंदुओं का संक्षिप्त सारांश जो पाठकों को आसानी से समझ आ सके..."
+                      placeholder="Brief overview summarizing the key points of the circular for readers..."
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      आदेश के नियमों या बदलावों का आसान भाषा में 3-4 लाइन का सारांश लिखें।
+                      A 3-4 sentence explanation of what this notification actually does or modifies.
                     </small>
                   </div>
                 </>
@@ -1076,22 +1076,22 @@ export default function AdminDashboard() {
               {editingItem.type === 'downloads' && (
                 <>
                   <div className="form-group">
-                    <label>Template Document Title / फॉर्म का नाम *</label>
+                    <label>Template Document Title *</label>
                     <input 
                       type="text" 
                       value={formData.title || ''} 
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })} 
                       className="form-control" 
-                      placeholder="e.g. Form-A: भूमि रूपांतरण धारा 90-A हेतु आवेदन पत्र"
+                      placeholder="e.g. Form-A: Application form for land conversion under Section 90-A"
                       required 
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      डाउनलोड होने वाले दस्तावेज या फॉर्म का मुख्य नाम डालें।
+                      Enter the name of the document or form template that users can download.
                     </small>
                   </div>
                   <div className="grid-2col">
                     <div className="form-group">
-                      <label>File Type / फाइल का प्रकार (जैसे: PDF, DOCX, XLSX) *</label>
+                      <label>File Type (e.g. PDF, DOCX, XLSX) *</label>
                       <input 
                         type="text" 
                         value={formData.fileType || ''} 
@@ -1101,32 +1101,32 @@ export default function AdminDashboard() {
                         required 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        फाइल किस प्रकार की है (जैसे: PDF या MS-Word के लिए DOCX)।
+                        Specify file format extension (e.g. PDF for documents, DOCX for templates).
                       </small>
                     </div>
                     <div className="form-group">
-                      <label>Upload File Template / फाइल अपलोड करें</label>
+                      <label>Upload File Template</label>
                       <input 
                         type="file" 
                         onChange={handlePdfUpload} 
                         className="form-control" 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        यहाँ अपना फॉर्म या फाइल अपलोड करें (फोटो कंप्रेस होकर सेव होगी, पीडीएफ अधिकतम 4.5 MB)।
+                        Upload the template document file. Images will be auto-compressed; PDFs are capped at 4.5 MB.
                       </small>
                     </div>
                   </div>
                   <div className="form-group">
-                    <label>Description / फॉर्म का विवरण</label>
+                    <label>Description</label>
                     <textarea 
                       rows={3} 
                       value={formData.description || ''} 
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })} 
                       className="form-control" 
-                      placeholder="यह फॉर्म किस काम आता है और इसे कहाँ जमा करना होता है, इसका विवरण लिखें..."
+                      placeholder="Explain what this form is used for and where it should be submitted..."
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      यह फॉर्म किस काम आता है उसका विवरण ताकि लोग समझ सकें कि उन्हें कौन सा डाउनलोड करना है।
+                      Helpful information describing the purpose of this template document.
                     </small>
                   </div>
                 </>
@@ -1136,27 +1136,27 @@ export default function AdminDashboard() {
               {editingItem.type === 'glossary' && (
                 <>
                   <div className="form-group">
-                    <label>Glossary Term / Phrase / कानूनी शब्द या वाक्यांश *</label>
+                    <label>Glossary Term / Phrase *</label>
                     <input 
                       type="text" 
                       value={formData.term || ''} 
                       onChange={(e) => setFormData({ ...formData, term: e.target.value })} 
                       className="form-control" 
-                      placeholder="e.g. खातेदार काश्तकार (Khatedar Tenant)"
+                      placeholder="e.g. Khatedar Tenant"
                       required 
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      वह कानूनी शब्द (जैसे: Namantaran, Jamabandi) जिसका अर्थ आप समझाना चाहते हैं।
+                      The specific legal word or vernacular revenue term to define.
                     </small>
                   </div>
                   <div className="form-group">
-                    <label>Definition / शब्द का कानूनी अर्थ (विज़ुअल एडिटर) *</label>
+                    <label>Definition *</label>
                     <RichTextEditor 
                       value={formData.definition || ''} 
                       onChange={(text) => setFormData({ ...formData, definition: text })} 
                     />
                     <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                      इस शब्द की सरल व कानूनी परिभाषा लिखें।
+                      Explain the term's meaning and context under local revenue law rules.
                     </small>
                   </div>
                 </>
