@@ -36,6 +36,16 @@ export default function AdminDashboard() {
   const [mediaSearch, setMediaSearch] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null);
+  const [notification, setNotification] = useState(null);
+
+  const showNotification = (message, type = 'success') => {
+    setNotification({ message, type });
+    // Automatically clear after 6 seconds
+    setTimeout(() => {
+      setNotification(prev => prev && prev.message === message ? null : prev);
+    }, 6000);
+  };
+
 
   // Form Editing / Creation State
   const [editingItem, setEditingItem] = useState(null); // { type, data } or { type: 'new' }
@@ -207,7 +217,7 @@ export default function AdminDashboard() {
       setUploadProgress(null);
     } catch (error) {
       console.error("Chunk upload failed:", error);
-      alert(`File upload failed: ${error.message}`);
+      showNotification(`File upload failed: ${error.message}`, 'error');
       setIsUploading(false);
       setUploadProgress(null);
     }
@@ -223,7 +233,7 @@ export default function AdminDashboard() {
 
     // Check size limit (max 12MB)
     if (!isImage && file.size > MAX_SIZE_MB * 1024 * 1024) {
-      alert(`File is too large (${(file.size / 1024 / 1024).toFixed(1)} MB). Please select a file under ${MAX_SIZE_MB} MB.`);
+      showNotification(`File is too large (${(file.size / 1024 / 1024).toFixed(1)} MB). Please select a file under ${MAX_SIZE_MB} MB.`, 'error');
       e.target.value = ''; // clear input
       return;
     }
@@ -313,7 +323,7 @@ export default function AdminDashboard() {
     e.preventDefault();
 
     if (isUploading) {
-      alert("Please wait for the file upload to complete (100%) before saving the record.");
+      showNotification("Please wait for the file upload to complete (100%) before saving the record.", 'error');
       return;
     }
 
@@ -347,6 +357,7 @@ export default function AdminDashboard() {
         setEditingItem(null);
         setFormData({});
         loadDashboardData();
+        showNotification(`${type.slice(0, -1).toUpperCase()} saved successfully!`, 'success');
       } else {
         let errMsg = 'Failed to save item';
         try {
@@ -355,13 +366,13 @@ export default function AdminDashboard() {
         } catch (_) {
           errMsg = `Server returned status ${res.status}: ${res.statusText}`;
           if (res.status === 413 || res.status === 500) {
-            errMsg += " (Note: The uploaded file might be too large. Try a smaller file, preferably under 1MB)";
+            errMsg += " (Note: The uploaded file might be too large.)";
           }
         }
-        alert(errMsg);
+        showNotification(errMsg, 'error');
       }
     } catch (err) {
-      alert('Error saving record: ' + err.message);
+      showNotification('Error saving record: ' + err.message, 'error');
     }
   };
 
@@ -371,9 +382,10 @@ export default function AdminDashboard() {
       const res = await fetch(`/api/${type}/${id}`, { method: 'DELETE' });
       if (res.ok) {
         loadDashboardData();
+        showNotification('Record deleted successfully!', 'success');
       }
     } catch (err) {
-      alert('Delete failed');
+      showNotification('Delete failed: ' + err.message, 'error');
     }
   };
 
@@ -386,7 +398,7 @@ export default function AdminDashboard() {
       });
       if (res.ok) loadDashboardData();
     } catch (err) {
-      alert('Comment action failed');
+      showNotification('Comment action failed', 'error');
     }
   };
 
@@ -399,7 +411,7 @@ export default function AdminDashboard() {
       });
       if (res.ok) loadDashboardData();
     } catch (err) {
-      alert('Query action failed');
+      showNotification('Query action failed', 'error');
     }
   };
 
@@ -1805,10 +1817,10 @@ export default function AdminDashboard() {
                   body: JSON.stringify({ key: 'homepage_config', value: updated })
                 });
                 if (res.ok) {
-                  alert('Homepage CMS updated successfully!');
+                  showNotification('Homepage CMS updated successfully!', 'success');
                   loadDashboardData();
                 } else {
-                  alert('Failed to update homepage CMS');
+                  showNotification('Failed to update homepage CMS', 'error');
                 }
               };
 
@@ -1943,7 +1955,7 @@ export default function AdminDashboard() {
                   })
                 });
 
-                alert('Pages Copy CMS updated successfully!');
+                showNotification('Pages Copy CMS updated successfully!', 'success');
                 loadDashboardData();
               };
 
@@ -2008,10 +2020,10 @@ export default function AdminDashboard() {
                 });
 
                 if (res.ok) {
-                  alert('Legal Policies updated successfully!');
+                  showNotification('Legal Policies updated successfully!', 'success');
                   loadDashboardData();
                 } else {
-                  alert('Failed to save policies');
+                  showNotification('Failed to save policies', 'error');
                 }
               };
 
@@ -2067,8 +2079,9 @@ export default function AdminDashboard() {
                     e.target.reset();
                     const updatedRes = await fetch('/api/media');
                     setMedia(await updatedRes.json());
+                    showNotification('Media asset uploaded successfully!', 'success');
                   } else {
-                    alert('Upload failed');
+                    showNotification('Upload failed', 'error');
                   }
                 };
               };
@@ -2107,7 +2120,7 @@ export default function AdminDashboard() {
                           
                           <button type="button" onClick={() => {
                             navigator.clipboard.writeText(m.url);
-                            alert('File URL copied to clipboard! You can paste this URL directly in the article or judgment editor.');
+                            showNotification('File URL copied to clipboard! You can paste this URL in your editor.', 'success');
                           }} className="btn-primary" style={{ fontSize: '0.7rem', padding: '0.25rem', marginTop: 'auto', display: 'block', textAlign: 'center', width: '100%', textDecoration: 'none' }}>
                             Copy Link URL
                           </button>
@@ -2147,14 +2160,14 @@ export default function AdminDashboard() {
                       body: JSON.stringify(payload)
                     });
                     if (res.ok) {
-                      alert('Database restored successfully from backup!');
+                      showNotification('Database restored successfully from backup!', 'success');
                       loadDashboardData();
                     } else {
                       const data = await res.json();
-                      alert(data.error || 'Failed to restore database');
+                      showNotification(data.error || 'Failed to restore database', 'error');
                     }
                   } catch (err) {
-                    alert('Invalid JSON file format.');
+                    showNotification('Invalid JSON file format.', 'error');
                   }
                 };
               };
@@ -2232,10 +2245,53 @@ export default function AdminDashboard() {
                 </div>
               </div>
             )}
-
           </div>
         )}
       </main>
+
+      {/* Floating Toast Notification */}
+      {notification && (
+        <div style={{
+          position: 'fixed',
+          top: '25px',
+          right: '25px',
+          backgroundColor: notification.type === 'error' ? '#FEE2E2' : '#DCFCE7',
+          color: notification.type === 'error' ? '#991B1B' : '#166534',
+          border: `1px solid ${notification.type === 'error' ? '#FCA5A5' : '#86EFAC'}`,
+          padding: '1rem 1.5rem',
+          borderRadius: '8px',
+          boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
+          zIndex: 99999,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem',
+          fontSize: '0.9rem',
+          fontWeight: 500,
+          animation: 'slideIn 0.3s ease-out'
+        }}>
+          <span style={{ fontSize: '1.15rem' }}>
+            {notification.type === 'error' ? '⚠️' : '✓'}
+          </span>
+          <span>{notification.message}</span>
+          <button 
+            onClick={() => setNotification(null)}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'inherit',
+              cursor: 'pointer',
+              fontWeight: 600,
+              fontSize: '1rem',
+              marginLeft: '1rem',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            ✕
+          </button>
+        </div>
+      )}
     </div>
   );
 }
