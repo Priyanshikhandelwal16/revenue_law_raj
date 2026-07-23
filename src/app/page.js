@@ -398,9 +398,32 @@ export default async function HomePage() {
                           <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary-blue)', fontFamily: 'var(--font-sans)' }}>{notif.title}</h3>
                           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.35rem', lineHeight: 1.6 }}>{notif.summary}</p>
                         </div>
-                        <Link href="/notifications" className="btn-outline" style={{ padding: '0.5rem 1rem', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', border: '1px solid var(--primary-blue)', borderRadius: '4px', fontWeight: 600 }}>
-                          <Download size={12} /> Download PDF
-                        </Link>
+                        {notif.pdfData || notif.pdfUrl ? (
+                          <a 
+                            href={notif.pdfData ? (notif.pdfData.startsWith('data:') ? notif.pdfData : `data:application/pdf;base64,${notif.pdfData}`) : notif.pdfUrl}
+                            download={`notification_${notif.refNumber ? notif.refNumber.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'document'}.pdf`}
+                            className="btn-outline" 
+                            style={{ 
+                              padding: '0.5rem 1rem', 
+                              fontSize: '0.75rem', 
+                              display: 'inline-flex', 
+                              alignItems: 'center', 
+                              gap: '0.4rem', 
+                              border: '1px solid var(--primary-blue)', 
+                              borderRadius: '4px', 
+                              fontWeight: 600,
+                              textDecoration: 'none',
+                              color: 'var(--primary-blue)',
+                              backgroundColor: 'var(--bg-white)'
+                            }}
+                          >
+                            <Download size={12} /> Download PDF
+                          </a>
+                        ) : (
+                          <Link href="/notifications" className="btn-outline" style={{ padding: '0.5rem 1rem', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', border: '1px solid var(--primary-blue)', borderRadius: '4px', fontWeight: 600 }}>
+                            View Details
+                          </Link>
+                        )}
                       </div>
                     ))}
                   </div>

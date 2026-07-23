@@ -154,10 +154,69 @@ export default function AdminDashboard() {
     }
   };
 
-  // Generic file uploader to Base64
+  // Generic file uploader with client-side image compression & size checks
   const handlePdfUpload = (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (!file) return;
+
+    const MAX_SIZE_MB = 4.5;
+    const isImage = file.type.startsWith('image/');
+
+    // Check size limit for PDF / non-image documents (e.g. max 4.5MB for Netlify serverless payloads)
+    if (!isImage && file.size > MAX_SIZE_MB * 1024 * 1024) {
+      alert(`File is too large (${(file.size / 1024 / 1024).toFixed(1)} MB). Please select a file under ${MAX_SIZE_MB} MB.`);
+      e.target.value = ''; // clear input
+      return;
+    }
+
+    if (isImage) {
+      // Compress image client-side using HTML5 Canvas
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          // Downscale extremely high-res camera photos
+          const MAX_WIDTH = 1600;
+          const MAX_HEIGHT = 1600;
+          if (width > MAX_WIDTH || height > MAX_HEIGHT) {
+            if (width > height) {
+              height = Math.round((height * MAX_WIDTH) / width);
+              width = MAX_WIDTH;
+            } else {
+              width = Math.round((width * MAX_HEIGHT) / height);
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Compress to JPEG format with 70% quality (major size reduction with visual clarity)
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.70);
+          
+          // Estimate base64 payload size in KB
+          const base64Len = compressedDataUrl.length - 'data:image/jpeg;base64,'.length;
+          const approxBytes = Math.ceil(base64Len * 0.75);
+          const approxKb = (approxBytes / 1024).toFixed(0);
+
+          setFormData(prev => ({
+            ...prev,
+            pdfData: compressedDataUrl,
+            fileSize: `${approxKb} KB`
+          }));
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      // Direct PDF reader
       const reader = new FileReader();
       reader.onloadend = () => {
         setFormData(prev => ({
@@ -198,21 +257,36 @@ export default function AdminDashboard() {
     }
 
     try {
+      const payload = { ...formData };
+      if (type === 'downloads' && payload.pdfData) {
+        payload.fileData = payload.pdfData;
+        delete payload.pdfData;
+      }
+
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
       if (res.ok) {
         setEditingItem(null);
         setFormData({});
         loadDashboardData();
       } else {
-        const data = await res.json();
-        alert(data.error || 'Failed to save item');
+        let errMsg = 'Failed to save item';
+        try {
+          const data = await res.json();
+          errMsg = data.error || errMsg;
+        } catch (_) {
+          errMsg = `Server returned status ${res.status}: ${res.statusText}`;
+          if (res.status === 413 || res.status === 500) {
+            errMsg += " (Note: The uploaded file might be too large. Try a smaller file, preferably under 1MB)";
+          }
+        }
+        alert(errMsg);
       }
     } catch (err) {
-      alert('Error saving record.');
+      alert('Error saving record: ' + err.message);
     }
   };
 

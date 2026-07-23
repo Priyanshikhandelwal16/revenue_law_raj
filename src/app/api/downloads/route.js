@@ -26,6 +26,7 @@ export async function POST(req) {
     const download = await Download.create(body);
     return NextResponse.json({ success: true, download });
   } catch (err) {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    console.error("Downloads POST error:", err);
+    return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
   }
 }
