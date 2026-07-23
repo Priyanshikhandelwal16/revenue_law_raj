@@ -44,7 +44,6 @@ export async function GET(req) {
     return NextResponse.json(fallbackJudgments);
   }
 }
-
 export async function POST(req) {
   try {
     const decoded = verifyToken(req);
@@ -53,7 +52,10 @@ export async function POST(req) {
     }
 
     await dbConnect();
-    const body = await req.json();
+    let body = await req.json();
+
+    const { resolveUploadSession } = require('@/lib/uploadResolver');
+    body = await resolveUploadSession(body);
 
     const judgment = await Judgment.create(body);
     return NextResponse.json({ success: true, judgment });

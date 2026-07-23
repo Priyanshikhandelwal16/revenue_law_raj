@@ -21,7 +21,6 @@ export async function GET(req) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
-
 export async function POST(req) {
   try {
     const decoded = verifyToken(req);
@@ -30,7 +29,10 @@ export async function POST(req) {
     }
 
     await dbConnect();
-    const body = await req.json();
+    let body = await req.json();
+
+    const { resolveUploadSession } = require('@/lib/uploadResolver');
+    body = await resolveUploadSession(body);
 
     const notification = await Notification.create(body);
     return NextResponse.json({ success: true, notification });

@@ -40,7 +40,10 @@ export async function PUT(req, { params }) {
 
     await dbConnect();
     const { id } = params;
-    const body = await req.json();
+    let body = await req.json();
+
+    const { resolveUploadSession } = require('@/lib/uploadResolver');
+    body = await resolveUploadSession(body);
 
     const judgment = await Judgment.findByIdAndUpdate(id, body, { new: true });
     if (!judgment) {
@@ -52,7 +55,6 @@ export async function PUT(req, { params }) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
-
 export async function DELETE(req, { params }) {
   try {
     const decoded = verifyToken(req);

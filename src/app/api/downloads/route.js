@@ -21,7 +21,10 @@ export async function POST(req) {
     }
 
     await dbConnect();
-    const body = await req.json();
+    let body = await req.json();
+
+    const { resolveUploadSession } = require('@/lib/uploadResolver');
+    body = await resolveUploadSession(body);
 
     const download = await Download.create(body);
     return NextResponse.json({ success: true, download });

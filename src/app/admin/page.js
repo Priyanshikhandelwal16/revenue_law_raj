@@ -34,6 +34,8 @@ export default function AdminDashboard() {
   const [media, setMedia] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [mediaSearch, setMediaSearch] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(null);
 
   // Form Editing / Creation State
   const [editingItem, setEditingItem] = useState(null); // { type, data } or { type: 'new' }
@@ -154,15 +156,72 @@ export default function AdminDashboard() {
     }
   };
 
+  const uploadFileInChunks = async (file, base64Data) => {
+    const uploadId = 'up_' + Math.random().toString(36).substr(2, 9);
+    setIsUploading(true);
+    setUploadProgress(0);
+
+    try {
+      const CHUNK_SIZE = 1.2 * 1024 * 1024; // 1.2MB chunks
+      const base64Content = base64Data.split(',')[1] || base64Data;
+      const totalLength = base64Content.length;
+      const numChunks = Math.ceil(totalLength / CHUNK_SIZE);
+
+      for (let i = 0; i < numChunks; i++) {
+        const start = i * CHUNK_SIZE;
+        const end = Math.min(start + CHUNK_SIZE, totalLength);
+        const chunkData = base64Content.substring(start, end);
+
+        const response = await fetch('/api/upload-chunk', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            uploadId,
+            chunkIndex: i,
+            totalChunks: numChunks,
+            chunkData,
+            fileName: file.name,
+            fileType: file.name.split('.').pop() || 'pdf',
+            fileSize: (file.size / 1024 / 1024).toFixed(2) + ' MB'
+          })
+        });
+
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.error || `Failed to upload chunk ${i + 1}/${numChunks}`);
+        }
+
+        const progress = Math.round(((i + 1) / numChunks) * 100);
+        setUploadProgress(progress);
+      }
+
+      // Success: store upload session token in form state
+      setFormData(prev => ({
+        ...prev,
+        pdfUploadId: uploadId,
+        pdfData: '', // clear raw data so it doesn't get posted directly
+        fileSize: (file.size / 1024 / 1024).toFixed(2) + ' MB'
+      }));
+
+      setIsUploading(false);
+      setUploadProgress(null);
+    } catch (error) {
+      console.error("Chunk upload failed:", error);
+      alert(`File upload failed: ${error.message}`);
+      setIsUploading(false);
+      setUploadProgress(null);
+    }
+  };
+
   // Generic file uploader with client-side image compression & size checks
   const handlePdfUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const MAX_SIZE_MB = 4.5;
+    const MAX_SIZE_MB = 12; // Support up to 12MB
     const isImage = file.type.startsWith('image/');
 
-    // Check size limit for PDF / non-image documents (e.g. max 4.5MB for Netlify serverless payloads)
+    // Check size limit (max 12MB)
     if (!isImage && file.size > MAX_SIZE_MB * 1024 * 1024) {
       alert(`File is too large (${(file.size / 1024 / 1024).toFixed(1)} MB). Please select a file under ${MAX_SIZE_MB} MB.`);
       e.target.value = ''; // clear input
@@ -209,21 +268,27 @@ export default function AdminDashboard() {
           setFormData(prev => ({
             ...prev,
             pdfData: compressedDataUrl,
-            fileSize: `${approxKb} KB`
+            fileSize: `${approxKb} KB`,
+            pdfUploadId: '' // clear any previous chunked upload token
           }));
         };
         img.src = event.target.result;
       };
       reader.readAsDataURL(file);
     } else {
-      // Direct PDF reader
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFormData(prev => ({
-          ...prev,
-          pdfData: reader.result,
-          fileSize: (file.size / 1024).toFixed(0) + ' KB'
-        }));
+        // If file is larger than 4MB, upload it in chunks to bypass server limits
+        if (file.size > 4 * 1024 * 1024) {
+          uploadFileInChunks(file, reader.result);
+        } else {
+          setFormData(prev => ({
+            ...prev,
+            pdfData: reader.result,
+            fileSize: (file.size / 1024).toFixed(0) + ' KB',
+            pdfUploadId: '' // clear any previous chunked upload token
+          }));
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -244,9 +309,14 @@ export default function AdminDashboard() {
     setEditingItem(null);
     setFormData({});
   };
-
   const handleSave = async (e) => {
     e.preventDefault();
+
+    if (isUploading) {
+      alert("Please wait for the file upload to complete (100%) before saving the record.");
+      return;
+    }
+
     const { type, id, isNew } = editingItem;
     let url = `/api/${type}`;
     let method = 'POST';
@@ -258,11 +328,16 @@ export default function AdminDashboard() {
 
     try {
       const payload = { ...formData };
-      if (type === 'downloads' && payload.pdfData) {
-        payload.fileData = payload.pdfData;
-        delete payload.pdfData;
+      if (type === 'downloads') {
+        if (payload.pdfData) {
+          payload.fileData = payload.pdfData;
+          delete payload.pdfData;
+        }
+        if (payload.pdfUploadId) {
+          payload.fileUploadId = payload.pdfUploadId;
+          delete payload.pdfUploadId;
+        }
       }
-
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
@@ -746,12 +821,20 @@ export default function AdminDashboard() {
                         className="form-control" 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        Upload the official certified copy of the judgment (Max 4.5 MB).
+                        Upload the official certified copy of the judgment (Max 12 MB).
                       </small>
+                      {isUploading && (
+                        <div style={{ color: 'var(--accent-gold)', fontSize: '0.85rem', marginTop: '0.5rem', fontWeight: 600 }}>
+                          Uploading file: {uploadProgress}% Completed...
+                        </div>
+                      )}
+                      {!isUploading && formData.pdfUploadId && (
+                        <div style={{ color: '#16A34A', fontSize: '0.85rem', marginTop: '0.5rem', fontWeight: 600 }}>
+                          ✓ Large file uploaded successfully! Ready to save.
+                        </div>
+                      )}
                     </div>
-                  </div>
-
-                  <div className="form-group">
+                  </div>                  <div className="form-group">
                     <label>Ratio Highlights (Comma separated keywords)</label>
                     <input 
                       type="text" 
@@ -1038,8 +1121,18 @@ export default function AdminDashboard() {
                         className="form-control" 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        Upload the PDF document copy of the circular order (Max 4.5 MB).
+                        Upload the PDF document copy of the circular order (Max 12 MB).
                       </small>
+                      {isUploading && (
+                        <div style={{ color: 'var(--accent-gold)', fontSize: '0.85rem', marginTop: '0.5rem', fontWeight: 600 }}>
+                          Uploading file: {uploadProgress}% Completed...
+                        </div>
+                      )}
+                      {!isUploading && formData.pdfUploadId && (
+                        <div style={{ color: '#16A34A', fontSize: '0.85rem', marginTop: '0.5rem', fontWeight: 600 }}>
+                          ✓ Large file uploaded successfully! Ready to save.
+                        </div>
+                      )}
                     </div>
                     <div className="form-group">
                       <label>Publish Status</label>
@@ -1112,8 +1205,18 @@ export default function AdminDashboard() {
                         className="form-control" 
                       />
                       <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>
-                        Upload the template document file. Images will be auto-compressed; PDFs are capped at 4.5 MB.
+                        Upload the template document file (Max 12 MB). Images will be auto-compressed.
                       </small>
+                      {isUploading && (
+                        <div style={{ color: 'var(--accent-gold)', fontSize: '0.85rem', marginTop: '0.5rem', fontWeight: 600 }}>
+                          Uploading file: {uploadProgress}% Completed...
+                        </div>
+                      )}
+                      {!isUploading && formData.pdfUploadId && (
+                        <div style={{ color: '#16A34A', fontSize: '0.85rem', marginTop: '0.5rem', fontWeight: 600 }}>
+                          ✓ Large file uploaded successfully! Ready to save.
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="form-group">
