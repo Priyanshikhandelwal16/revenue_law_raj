@@ -4,6 +4,7 @@ import Judgment from '@/lib/models/Judgment';
 import { verifyToken } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
+
 export async function GET(req) {
   try {
     await dbConnect();
@@ -12,13 +13,14 @@ export async function GET(req) {
 
     const { searchParams } = new URL(req.url);
     const q = searchParams.get('q');
+    const court = searchParams.get('court');
     const adminMode = searchParams.get('adminMode') === 'true';
-    
+
     let query = {};
     if (!adminMode) {
       query.status = 'published';
     }
-    
+
     if (court) {
       if (court === 'board-of-revenue') query.courtName = /Board of Revenue/i;
       else if (court === 'revenue-appeals') query.courtName = /Revenue Appeals/i;
@@ -39,7 +41,10 @@ export async function GET(req) {
       ];
     }
 
-    const judgments = await Judgment.find(query).sort({ isPinned: -1, judgmentDate: -1 }).limit(30);
+    const judgments = await Judgment.find(query)
+      .sort({ isPinned: -1, judgmentDate: -1 })
+      .limit(adminMode ? 500 : 50);
+
     return NextResponse.json(judgments);
   } catch (err) {
     console.error('Judgments API error, serving fallbacks:', err);
@@ -47,6 +52,7 @@ export async function GET(req) {
     return NextResponse.json(fallbackJudgments);
   }
 }
+
 export async function POST(req) {
   try {
     const decoded = verifyToken(req);

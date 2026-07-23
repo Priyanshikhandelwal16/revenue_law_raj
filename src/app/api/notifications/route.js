@@ -12,9 +12,10 @@ export async function GET(req) {
     await checkAndSeedDatabase();
 
     const { searchParams } = new URL(req.url);
-    const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')) : 30;
     const adminMode = searchParams.get('adminMode') === 'true';
-    
+    const limitParam = searchParams.get('limit');
+    const limit = limitParam ? parseInt(limitParam) : (adminMode ? 500 : 30);
+
     let query = {};
     if (!adminMode) {
       query.status = 'published';
@@ -23,9 +24,11 @@ export async function GET(req) {
     const notifications = await Notification.find(query).sort({ publishDate: -1 }).limit(limit);
     return NextResponse.json(notifications);
   } catch (err) {
+    console.error('Notifications API error:', err);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
+
 export async function POST(req) {
   try {
     const decoded = verifyToken(req);
@@ -42,6 +45,7 @@ export async function POST(req) {
     const notification = await Notification.create(body);
     return NextResponse.json({ success: true, notification });
   } catch (err) {
+    console.error('Notifications POST error:', err);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }

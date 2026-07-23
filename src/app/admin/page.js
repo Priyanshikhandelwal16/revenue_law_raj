@@ -1467,7 +1467,7 @@ export default function AdminDashboard() {
                             </span>
                           </td>
                           <td>{art.views || 0}</td>
-                          <td>{new Date(art.createdAt).toLocaleDateString()}</td>
+                          <td>{art.createdAt ? new Date(art.createdAt).toLocaleDateString() : '—'}</td>
                           <td style={{ display: 'flex', gap: '0.5rem' }}>
                             <button onClick={() => startEdit('articles', art)} className="editor-btn" title="Edit"><Edit size={14} /></button>
                             <button onClick={() => handleDelete('articles', art._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
@@ -1506,9 +1506,9 @@ export default function AdminDashboard() {
                       {judgments.map(j => (
                         <tr key={j._id}>
                           <td><strong>{j.title}</strong></td>
-                          <td style={{ color: 'var(--accent-gold)', fontWeight: 600 }}>{j.citation}</td>
-                          <td>{j.courtName.split(',')[0]}</td>
-                          <td>{new Date(j.judgmentDate).toLocaleDateString()}</td>
+                          <td style={{ color: 'var(--accent-gold)', fontWeight: 600 }}>{j.citation || '—'}</td>
+                          <td>{(j.courtName || '').split(',')[0] || '—'}</td>
+                          <td>{j.judgmentDate ? new Date(j.judgmentDate).toLocaleDateString() : '—'}</td>
                           <td>{j.views || 0}</td>
                           <td>
                             {j.pdfData || j.pdfUrl ? (
@@ -1587,10 +1587,10 @@ export default function AdminDashboard() {
                     <tbody>
                       {notifications.map(n => (
                         <tr key={n._id}>
-                          <td><strong>{n.refNumber}</strong></td>
-                          <td>{n.title.slice(0, 50)}...</td>
-                          <td>{n.department.split(',')[0]}</td>
-                          <td>{new Date(n.publishDate).toLocaleDateString()}</td>
+                          <td><strong>{n.refNumber || '—'}</strong></td>
+                          <td>{(n.title || '').slice(0, 50)}{n.title && n.title.length > 50 ? '...' : ''}</td>
+                          <td>{(n.department || '').split(',')[0] || '—'}</td>
+                          <td>{n.publishDate ? new Date(n.publishDate).toLocaleDateString() : '—'}</td>
                           <td style={{ display: 'flex', gap: '0.5rem' }}>
                             <button onClick={() => startEdit('notifications', n)} className="editor-btn" title="Edit"><Edit size={14} /></button>
                             <button onClick={() => handleDelete('notifications', n._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
