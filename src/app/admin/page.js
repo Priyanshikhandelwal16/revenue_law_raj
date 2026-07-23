@@ -1372,35 +1372,50 @@ export default function AdminDashboard() {
             {/* Tab: Overview / Dashboard Metrics */}
             {activeTab === 'overview' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Judgments</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)' }}>{judgments.length}</p>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Judgments</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{judgments.length}</p>
                   </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Commentaries</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)' }}>{articles.length}</p>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Commentaries</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{articles.length}</p>
                   </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Pending Comments</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent-gold)' }}>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Revenue Laws & Acts</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{laws.length}</p>
+                  </div>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Circulars & Gazettes</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{notifications.length}</p>
+                  </div>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Forms & Templates</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{downloads.length}</p>
+                  </div>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Legal Glossary</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{glossary.length}</p>
+                  </div>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Inquiry Tickets</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{queries.length}</p>
+                  </div>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Pending Comments</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent-gold)', marginTop: '0.5rem' }}>
                       {comments.filter(c => !c.isApproved).length}
                     </p>
                   </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Inquiry Tickets</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)' }}>{queries.length}</p>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>App Settings</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{settings.length}</p>
                   </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>App Settings</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)' }}>{settings.length}</p>
-                  </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>CMS Users</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)' }}>{users.length}</p>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>CMS Users</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{users.length}</p>
                   </div>
                 </div>
-
                 <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
                   <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
                     Quick Operations Shortcut

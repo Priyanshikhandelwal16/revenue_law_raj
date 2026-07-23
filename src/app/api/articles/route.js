@@ -2,12 +2,13 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Article from '@/lib/models/Article';
 import { verifyToken } from '@/lib/auth';
-
 export async function GET(req) {
   try {
     await dbConnect();
+    const { checkAndSeedDatabase } = require('@/lib/seeder');
+    await checkAndSeedDatabase();
+
     const { searchParams } = new URL(req.url);
-    const category = searchParams.get('category');
     const featured = searchParams.get('featured');
     const adminMode = searchParams.get('adminMode') === 'true';
     
