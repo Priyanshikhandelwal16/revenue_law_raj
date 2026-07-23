@@ -1,8 +1,8 @@
-import { Download, FileText, FileSpreadsheet, FileArchive, Search, Clock } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import dbConnect from '@/lib/db';
 import DownloadModel from '@/lib/models/Download';
 import NewsSidebar from '@/components/NewsSidebar';
-import Link from 'next/link';
+import DownloadsList from '@/components/DownloadsList';
 
 // Mock baseline files
 const defaultDownloads = [
@@ -58,17 +58,6 @@ async function getDownloads() {
 export default async function DownloadsPage() {
   const downloads = await getDownloads();
 
-  const getFileIcon = (type) => {
-    if (!type) return <FileText size={24} style={{ color: 'var(--primary-blue)' }} />;
-    switch (type.toUpperCase()) {
-      case 'PDF': return <FileText size={24} style={{ color: '#E11D48' }} />;
-      case 'XLS':
-      case 'XLSX': return <FileSpreadsheet size={24} style={{ color: '#16A34A' }} />;
-      case 'ZIP': return <FileArchive size={24} style={{ color: '#D97706' }} />;
-      default: return <FileText size={24} style={{ color: 'var(--primary-blue)' }} />;
-    }
-  };
-
   return (
     <div>
       {/* Hero Banner */}
@@ -99,69 +88,7 @@ export default async function DownloadsPage() {
           <div>
 
           {/* List Display */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            {downloads.map(d => (
-              <div 
-                key={d._id} 
-                style={{
-                  backgroundColor: 'white',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '8px',
-                  padding: '1.5rem',
-                  boxShadow: 'var(--shadow-sm)',
-                  transition: 'var(--transition-normal)'
-                }}
-                className="premium-card downloads-list-card"
-              >
-                <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}>
-                  <div style={{
-                    backgroundColor: 'var(--bg-offwhite)',
-                    width: '56px',
-                    height: '56px',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: '1px solid var(--border-color)',
-                    flexShrink: 0
-                  }}>
-                    {getFileIcon(d.fileType)}
-                  </div>
-                  <div>
-                    <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-blue)', fontWeight: 600 }}>{d.title}</h3>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0.25rem 0' }}>{d.description}</p>
-                    <div style={{ display: 'flex', gap: '1rem', fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
-                      <span style={{ backgroundColor: 'var(--bg-offwhite)', padding: '0.1rem 0.4rem', borderRadius: '4px', border: '1px solid var(--border-color)', fontWeight: 600 }}>
-                        {d.fileType}
-                      </span>
-                      <span>File Size: {d.fileSize || 'N/A'}</span>
-                      <span>Total Downloads: {d.downloadCount || 0}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <a 
-                  href={d.fileData ? (d.fileData.startsWith('data:') ? d.fileData : `data:application/octet-stream;base64,${d.fileData}`) : d.fileUrl}
-                  download={`rrlkp_form_${d.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.${d.fileType.toLowerCase()}`}
-                  style={{
-                    backgroundColor: 'var(--primary-blue)',
-                    color: 'white',
-                    padding: '0.75rem',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'var(--transition-normal)',
-                    cursor: 'pointer'
-                  }}
-                  className="btn-primary downloads-btn"
-                  title="Download File"
-                >
-                  <Download size={18} />
-                </a>
-              </div>
-            ))}
-          </div>
+          <DownloadsList initialDownloads={JSON.parse(JSON.stringify(downloads))} />
         </div>
         <NewsSidebar />
       </div>
