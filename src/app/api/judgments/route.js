@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Judgment from '@/lib/models/Judgment';
 import { verifyToken } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 export async function GET(req) {
   try {
     await dbConnect();

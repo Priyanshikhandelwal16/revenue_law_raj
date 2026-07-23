@@ -3,9 +3,14 @@ import dbConnect from '@/lib/db';
 import Glossary from '@/lib/models/Glossary';
 import { verifyToken } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     await dbConnect();
+    const { checkAndSeedDatabase } = require('@/lib/seeder');
+    await checkAndSeedDatabase();
+
     const items = await Glossary.find({}).sort({ term: 1 });
     return NextResponse.json(items);
   } catch (err) {

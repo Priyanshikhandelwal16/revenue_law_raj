@@ -3,9 +3,14 @@ import dbConnect from '@/lib/db';
 import Download from '@/lib/models/Download';
 import { verifyToken } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     await dbConnect();
+    const { checkAndSeedDatabase } = require('@/lib/seeder');
+    await checkAndSeedDatabase();
+
     const downloads = await Download.find({}).sort({ createdAt: -1 });
     return NextResponse.json(downloads);
   } catch (err) {

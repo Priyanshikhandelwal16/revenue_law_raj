@@ -3,9 +3,14 @@ import dbConnect from '@/lib/db';
 import RevenueLaw from '@/lib/models/RevenueLaw';
 import { verifyToken } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req) {
   try {
     await dbConnect();
+    const { checkAndSeedDatabase } = require('@/lib/seeder');
+    await checkAndSeedDatabase();
+
     const { searchParams } = new URL(req.url);
     const category = searchParams.get('category');
     const q = searchParams.get('q');

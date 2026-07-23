@@ -3,9 +3,14 @@ import dbConnect from '@/lib/db';
 import Notification from '@/lib/models/Notification';
 import { verifyToken } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req) {
   try {
     await dbConnect();
+    const { checkAndSeedDatabase } = require('@/lib/seeder');
+    await checkAndSeedDatabase();
+
     const { searchParams } = new URL(req.url);
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')) : 30;
     const adminMode = searchParams.get('adminMode') === 'true';

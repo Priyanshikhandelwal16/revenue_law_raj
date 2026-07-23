@@ -106,11 +106,11 @@ export default function AdminDashboard() {
       if (activeTab === 'overview') {
         // Fetch counters
         const [rArt, rJud, rLaw, rNot, rDwn, rCom, rQue, rGlo, rSet, rUsr] = await Promise.all([
-          fetch('/api/articles'),
-          fetch('/api/judgments'),
-          fetch('/api/laws'),
-          fetch('/api/notifications'),
-          fetch('/api/downloads'),
+          fetch('/api/articles?adminMode=true'),
+          fetch('/api/judgments?adminMode=true'),
+          fetch('/api/laws?adminMode=true'),
+          fetch('/api/notifications?adminMode=true'),
+          fetch('/api/downloads?adminMode=true'),
           fetch('/api/comments?adminMode=true'),
           fetch('/api/queries'),
           fetch('/api/glossary'),
@@ -128,19 +128,19 @@ export default function AdminDashboard() {
         setSettings(await rSet.json());
         setUsers(await rUsr.json());
       } else if (activeTab === 'articles') {
-        const res = await fetch('/api/articles');
+        const res = await fetch('/api/articles?adminMode=true');
         setArticles(await res.json());
       } else if (activeTab === 'judgments') {
-        const res = await fetch('/api/judgments');
+        const res = await fetch('/api/judgments?adminMode=true');
         setJudgments(await res.json());
       } else if (activeTab === 'laws') {
-        const res = await fetch('/api/laws');
+        const res = await fetch('/api/laws?adminMode=true');
         setLaws(await res.json());
       } else if (activeTab === 'notifications') {
-        const res = await fetch('/api/notifications');
+        const res = await fetch('/api/notifications?adminMode=true');
         setNotifications(await res.json());
       } else if (activeTab === 'downloads') {
-        const res = await fetch('/api/downloads');
+        const res = await fetch('/api/downloads?adminMode=true');
         setDownloads(await res.json());
       } else if (activeTab === 'comments') {
         const res = await fetch('/api/comments?adminMode=true');
