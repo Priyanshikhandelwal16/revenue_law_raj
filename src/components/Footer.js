@@ -32,7 +32,7 @@ export default function Footer() {
               </div>
             </div>
             <p style={{ fontSize: '0.9rem', lineHeight: '1.65', color: 'var(--text-dark)' }}>
-              Revenue Law Raj is Rajasthan's leading knowledge platform for agricultural and land administration laws. We provide a structured database of judgments, statutes, glossary definitions, and official gazettes to support legal research and administrative clarity across the state.
+              Revenue Law Raj is Rajasthan's leading platform for agricultural and land administration laws. We provide a structured database of judgments, statutes, glossary definitions, and official gazettes to support legal research and administrative clarity across the state.
             </p>
             
             {/* Social Icons Section */}
@@ -85,8 +85,8 @@ export default function Footer() {
               Important Concepts
             </h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
-              <li><Link href="/land-conversion-under-sec-90-a" style={{ color: 'var(--text-dark)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-gold)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-dark)'}>Land Conversion (90-A)</Link></li>
-              <li><Link href="/important-concepts" style={{ color: 'var(--text-dark)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-gold)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-dark)'}>Important Concepts</Link></li>
+              <li><Link href="/important-rules" style={{ color: 'var(--text-dark)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-gold)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-dark)'}>Important Rules</Link></li>
+              <li><Link href="/resources/important-concepts" style={{ color: 'var(--text-dark)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-gold)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-dark)'}>Important Concepts</Link></li>
               <li><Link href="/notifications" style={{ color: 'var(--text-dark)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-gold)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-dark)'}>Circulars & Gazettes</Link></li>
               <li><Link href="/glossary" style={{ color: 'var(--text-dark)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-gold)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-dark)'}>Revenue Glossary</Link></li>
             </ul>
@@ -118,7 +118,7 @@ export default function Footer() {
         <div className="footer-bottom" style={{ borderTop: '1px solid var(--border-color)', paddingTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', margin: 0 }}>
-              &copy; {new Date().getFullYear()} Rajasthan Revenue Law Knowledge Platform. All rights reserved.
+              &copy; {new Date().getFullYear()} Rajasthan Revenue Law Platform. All rights reserved.
             </p>
             
             {/* Policy links at the bottom with underlines removed */}

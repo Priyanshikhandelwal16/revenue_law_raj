@@ -65,7 +65,7 @@ export default function Navbar() {
           
           {/* Dropdown 1: Revenue Law */}
           <div className="nav-item-dropdown">
-            <span className={`nav-link ${['/laws', '/working-of-revenue-law', '/hierarchy-of-courts', '/types-of-cases', '/case-stages'].includes(pathname) ? 'active' : ''}`}>
+            <span className={`nav-link ${['/laws', '/working-of-revenue-law', '/hierarchy-of-courts', '/types-of-cases', '/the-stages-in-revenue-cases'].includes(pathname) ? 'active' : ''}`}>
               Revenue Law <ChevronDown size={12} />
             </span>
             <div className="dropdown-menu">
@@ -73,46 +73,38 @@ export default function Navbar() {
               <Link href="/working-of-revenue-law" className="dropdown-item">Working of Revenue Law</Link>
               <Link href="/hierarchy-of-courts" className="dropdown-item">Hierarchy of Revenue Courts</Link>
               <Link href="/types-of-cases" className="dropdown-item">Types of Cases in Revenue Law</Link>
-              <Link href="/case-stages" className="dropdown-item">Case Stages</Link>
+              <Link href="/the-stages-in-revenue-cases" className="dropdown-item">The Stages in Revenue Cases</Link>
             </div>
           </div>
 
-          {/* Dropdown 2: Key Guidelines */}
-          <div className="nav-item-dropdown">
-            <span className={`nav-link ${['/land-conversion-under-sec-90-a', '/important-concepts'].includes(pathname) ? 'active' : ''}`}>
-              Key Guidelines <ChevronDown size={12} />
-            </span>
-            <div className="dropdown-menu">
-              <Link href="/land-conversion-under-sec-90-a" className="dropdown-item">Land Conversion under Section 90-A</Link>
-              <Link href="/important-concepts" className="dropdown-item">Imp Concepts</Link>
-            </div>
-          </div>
+          {/* Flat Link: Important Rules */}
+          <Link href="/important-rules" className={`nav-link ${pathname === '/important-rules' ? 'active' : ''}`}>Important Rules</Link>
 
           {/* Dropdown: Judgments */}
           <div className="nav-item-dropdown">
-            <span className={`nav-link ${['/judgments', '/judgments/supreme-court', '/judgments/high-court', '/judgments/writing-guide'].includes(pathname) ? 'active' : ''}`}>
+            <span className={`nav-link ${['/judgments', '/judgments/supreme-court', '/judgments/high-court'].includes(pathname) ? 'active' : ''}`}>
               Judgments <ChevronDown size={12} />
             </span>
             <div className="dropdown-menu">
               <Link href="/judgments" className="dropdown-item">All Judgments</Link>
               <Link href="/judgments/supreme-court" className="dropdown-item">Supreme Court Judgments</Link>
               <Link href="/judgments/high-court" className="dropdown-item">Rajasthan High Court Judgments</Link>
-              <Link href="/judgments/writing-guide" className="dropdown-item">How to Write a Judgment</Link>
             </div>
           </div>
 
           {/* Dropdown 3: Resources */}
           <div className="nav-item-dropdown">
-            <span className={`nav-link ${['/notifications', '/glossary'].includes(pathname) ? 'active' : ''}`}>
+            <span className={`nav-link ${['/resources/important-concepts', '/resources/how-to-write-judgments', '/notifications'].includes(pathname) ? 'active' : ''}`}>
               Resources <ChevronDown size={12} />
             </span>
             <div className="dropdown-menu">
+              <Link href="/resources/important-concepts" className="dropdown-item">Important Concepts</Link>
+              <Link href="/resources/how-to-write-judgments" className="dropdown-item">How to Write a Judgment</Link>
               <Link href="/notifications" className="dropdown-item">Imp Notifications</Link>
-              <Link href="/glossary" className="dropdown-item">Glossary of Revenue Law</Link>
             </div>
           </div>
 
-          <Link href="/faq" className={`nav-link ${pathname === '/faq' ? 'active' : ''}`}>FAQ</Link>
+          <Link href="/glossary" className={`nav-link ${pathname === '/glossary' ? 'active' : ''}`}>Glossary</Link>
           <Link href="/contact" className={`nav-link nav-btn-cta ${pathname === '/contact' ? 'active' : ''}`}>Contact Us</Link>
         </div>
 
@@ -233,16 +225,15 @@ export default function Navbar() {
           <Link href="/working-of-revenue-law" className={`nav-link ${pathname === '/working-of-revenue-law' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Working of Revenue Law</Link>
           <Link href="/hierarchy-of-courts" className={`nav-link ${pathname === '/hierarchy-of-courts' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Hierarchy of Revenue Courts</Link>
           <Link href="/types-of-cases" className={`nav-link ${pathname === '/types-of-cases' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Types of Cases in Revenue Law</Link>
-          <Link href="/case-stages" className={`nav-link ${pathname === '/case-stages' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Case Stages</Link>
+          <Link href="/the-stages-in-revenue-cases" className={`nav-link ${pathname === '/the-stages-in-revenue-cases' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>The Stages in Revenue Cases</Link>
           <Link href="/judgments" className={`nav-link ${pathname === '/judgments' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>All Judgments</Link>
           <Link href="/judgments/supreme-court" className={`nav-link ${pathname === '/judgments/supreme-court' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Supreme Court Judgments</Link>
           <Link href="/judgments/high-court" className={`nav-link ${pathname === '/judgments/high-court' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Rajasthan High Court Judgments</Link>
-          <Link href="/judgments/writing-guide" className={`nav-link ${pathname === '/judgments/writing-guide' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>How to Write a Judgment</Link>
+          <Link href="/resources/how-to-write-judgments" className={`nav-link ${pathname === '/resources/how-to-write-judgments' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>How to Write a Judgment</Link>
           <Link href="/glossary" className={`nav-link ${pathname === '/glossary' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Glossary of Revenue Law</Link>
           <Link href="/notifications" className={`nav-link ${pathname === '/notifications' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Imp Notifications</Link>
-          <Link href="/important-concepts" className={`nav-link ${pathname === '/important-concepts' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Imp Concepts</Link>
-          <Link href="/land-conversion-under-sec-90-a" className={`nav-link ${pathname === '/land-conversion-under-sec-90-a' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Land Conversion under Section 90-A</Link>
-          <Link href="/faq" className={`nav-link ${pathname === '/faq' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>FAQ</Link>
+          <Link href="/resources/important-concepts" className={`nav-link ${pathname === '/resources/important-concepts' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Important Concepts</Link>
+          <Link href="/important-rules" className={`nav-link ${pathname === '/important-rules' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Important Rules</Link>
           <Link href="/contact" className={`nav-link nav-btn-cta ${pathname === '/contact' ? 'active' : ''}`} style={{ width: '100%', justifyContent: 'center', marginTop: '1rem' }} onClick={() => setIsMobileMenuOpen(false)}>Contact Us</Link>
           
 

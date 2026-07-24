@@ -1,4 +1,4 @@
-// Fallback Mock Datasets for Rajasthan Revenue Law Knowledge Platform (RRLKP)
+// Fallback Mock Datasets for Rajasthan Revenue Law Platform (RRLKP)
 // Programmatically populates 25 Judgments, 10 Articles, and other lists.
 
 // 1. DUMMY ARTICLES (10 items)

@@ -241,7 +241,7 @@ function JudgmentsContent() {
               <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: '1.5', margin: 0, flexGrow: 1 }}>
                 A detailed educational guide on the structure, writing format, sample layout, and best practices for draft judgment writing in revenue matters.
               </p>
-              <Link href="/judgments/writing-guide" className="btn-outline" style={{ alignSelf: 'flex-start', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', padding: '0.5rem 1rem', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.5rem' }}>
+              <Link href="/resources/how-to-write-judgments" className="btn-outline" style={{ alignSelf: 'flex-start', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', padding: '0.5rem 1rem', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.5rem' }}>
                 Read More <ArrowRight size={12} />
               </Link>
             </div>

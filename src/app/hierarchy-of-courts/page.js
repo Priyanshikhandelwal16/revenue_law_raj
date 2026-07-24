@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Landmark, ChevronDown, Scale, Award, FileText, ArrowRight, Gavel } from 'lucide-react';
 import NewsSidebar from '@/components/NewsSidebar';
+import ThirdScheduleTable from '@/components/ThirdScheduleTable';
 
 const courtsDetail = [
   {
@@ -112,179 +113,298 @@ export default function HierarchyOfCourtsPage() {
         <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.9rem', color: 'var(--accent-gold)', fontWeight: 600, marginBottom: '2rem' }}>
           <ArrowLeft size={16} /> Back to Home
         </Link>
+        {/* Interactive Tree Diagram Container (Outside sidebar for wide layout) */}
+        <div style={{ 
+          margin: '2rem 0 4rem 0',
+          padding: '2.5rem 2rem',
+          background: 'white',
+          borderRadius: '12px',
+          border: '1px solid var(--border-color)',
+          boxShadow: 'var(--shadow-sm)'
+        }}>
+          <div className="section-header" style={{ marginBottom: '3rem', textAlign: 'center' }}>
+            <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.4rem' }}>Judicial Structure</div>
+            <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem', fontWeight: 700 }}>Interactive Court Hierarchy</h2>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', maxWidth: '600px', margin: '0.25rem auto 0 auto' }}>
+              Hover over each tier to see its role. Click on any level to navigate smoothly to its detailed jurisdiction, powers, and escalation guide below.
+            </p>
+          </div>
 
-        <div className="layout-with-sidebar">
-          <div>
-            {/* Interactive Pyramid Diagram Container */}
-            <div style={{ 
-              margin: '3rem 0 4rem 0',
-              padding: '2rem 1.5rem',
-              background: 'white',
-              borderRadius: '12px',
-              border: '1px solid var(--border-color)',
-              boxShadow: 'var(--shadow-sm)'
-            }}>
-              <div className="section-header" style={{ marginBottom: '2.5rem', textAlign: 'center' }}>
-                <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.4rem' }}>Judicial Structure</div>
-                <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem', fontWeight: 700 }}>Interactive Court Hierarchy</h2>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', maxWidth: '600px', margin: '0.25rem auto 0 auto' }}>
-                  Hover over each tier to see its role. Click on any level to navigate smoothly to its detailed jurisdiction, powers, and escalation guide below.
-                </p>
+          {/* Desktop Tree View (Wide screens) */}
+          <div className="pyramid-container-desktop" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0', margin: '0 auto', position: 'relative' }}>
+            
+            {/* Level 5 */}
+            <div 
+              onClick={() => scrollToSection('level-5')}
+              onMouseEnter={() => setHoveredLevel(5)}
+              onMouseLeave={() => setHoveredLevel(null)}
+              style={{
+                width: '100%',
+                maxWidth: '420px',
+                padding: '1.25rem',
+                borderRadius: '10px',
+                backgroundColor: hoveredLevel === 5 ? 'var(--accent-gold)' : 'var(--primary-blue)',
+                color: hoveredLevel === 5 ? 'white' : 'var(--bg-offwhite)',
+                textAlign: 'center',
+                cursor: 'pointer',
+                boxShadow: hoveredLevel === 5 ? '0 10px 20px rgba(197, 168, 128, 0.35)' : 'var(--shadow-md)',
+                transition: 'all 0.3s ease',
+                fontWeight: 700,
+                border: '2px solid var(--accent-gold)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 5,
+                transform: hoveredLevel === 5 ? 'translateY(-3px)' : 'none'
+              }}
+            >
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1.2px', opacity: 0.9, marginBottom: '0.35rem' }}>
+                <Award size={14} style={{ color: 'var(--accent-gold)' }} /> Level 5: Apex Revenue Court
+              </span>
+              <span style={{ fontSize: '1.2rem', fontFamily: 'var(--font-serif)' }}>Board of Revenue (BOR), Ajmer</span>
+            </div>
+
+            {/* SVG Connector: Level 5 to Levels 4 & 3 with downward arrows */}
+            <svg width="100%" height="60" viewBox="0 0 600 60" style={{ maxWidth: '650px', display: 'block', overflow: 'visible' }}>
+              {/* Vertical line down from Level 5 */}
+              <line x1="300" y1="0" x2="300" y2="20" stroke="var(--accent-gold)" strokeWidth="3" />
+              {/* Horizontal line splitting left and right */}
+              <line x1="150" y1="20" x2="450" y2="20" stroke="var(--accent-gold)" strokeWidth="3" />
+              {/* Left vertical line down to Level 4 */}
+              <line x1="150" y1="20" x2="150" y2="52" stroke="var(--accent-gold)" strokeWidth="3" />
+              {/* Right vertical line down to Level 3 */}
+              <line x1="450" y1="20" x2="450" y2="52" stroke="var(--accent-gold)" strokeWidth="3" />
+              {/* Arrowhead pointing down to Level 4 */}
+              <polygon points="150,58 144,48 156,48" fill="var(--accent-gold)" />
+              {/* Arrowhead pointing down to Level 3 */}
+              <polygon points="450,58 444,48 456,48" fill="var(--accent-gold)" />
+            </svg>
+
+            {/* Level 4 & Level 3 (Appellate Courts Row) */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', width: '100%', maxWidth: '750px', position: 'relative' }}>
+              {/* Level 4 (RAC) */}
+              <div 
+                onClick={() => scrollToSection('level-4')}
+                onMouseEnter={() => setHoveredLevel(4)}
+                onMouseLeave={() => setHoveredLevel(null)}
+                style={{
+                  padding: '1.25rem',
+                  borderRadius: '10px',
+                  backgroundColor: hoveredLevel === 4 ? 'var(--accent-gold)' : 'var(--secondary-blue)',
+                  color: 'white',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  boxShadow: hoveredLevel === 4 ? '0 10px 20px rgba(197, 168, 128, 0.35)' : 'var(--shadow-md)',
+                  transition: 'all 0.3s ease',
+                  fontWeight: 700,
+                  border: '2px solid var(--accent-gold)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transform: hoveredLevel === 4 ? 'translateY(-3px)' : 'none'
+                }}
+              >
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '1.2px', opacity: 0.9, marginBottom: '0.35rem' }}>
+                  <Gavel size={14} /> Level 4: Appellate Authority
+                </span>
+                <span style={{ fontSize: '1.05rem', fontFamily: 'var(--font-serif)' }}>Divisional Commissioner / RAC</span>
               </div>
 
-              {/* Desktop Pyramid */}
-              <div className="pyramid-container-desktop" style={{ width: '100%', maxWidth: '650px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', margin: '0 auto', position: 'relative', minHeight: '380px' }}>
-                
-                 {/* Level 5 */}
-                <div 
-                  onClick={() => scrollToSection('level-5')}
-                  onMouseEnter={() => setHoveredLevel(5)}
-                  onMouseLeave={() => setHoveredLevel(null)}
-                  className="pyramid-tier"
-                  style={{
-                    width: '46%',
-                    height: '60px',
-                    backgroundColor: hoveredLevel === 5 ? 'var(--accent-gold)' : 'var(--primary-blue)',
-                    color: hoveredLevel === 5 ? 'white' : 'var(--bg-offwhite)',
-                    clipPath: 'polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%)',
-                    zIndex: 5
-                  }}
-                >
-                  <span style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }}>
-                    <Award size={15} className="pyramid-tier-icon" /> Level 5: Board of Revenue (BOR)
-                  </span>
-                </div>
-
-                {/* Level 4 */}
-                <div 
-                  onClick={() => scrollToSection('level-4')}
-                  onMouseEnter={() => setHoveredLevel(4)}
-                  onMouseLeave={() => setHoveredLevel(null)}
-                  className="pyramid-tier"
-                  style={{
-                    width: '59%',
-                    height: '60px',
-                    backgroundColor: hoveredLevel === 4 ? 'var(--accent-gold)' : 'var(--secondary-blue)',
-                    color: 'white',
-                    clipPath: 'polygon(3.5% 0%, 96.5% 0%, 100% 100%, 0% 100%)',
-                    zIndex: 4
-                  }}
-                >
-                  <span style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }}>
-                    <Gavel size={15} className="pyramid-tier-icon" /> Level 4: Divisional Commissioner
-                  </span>
-                </div>
-
-                {/* Level 3 */}
-                <div 
-                  onClick={() => scrollToSection('level-3')}
-                  onMouseEnter={() => setHoveredLevel(3)}
-                  onMouseLeave={() => setHoveredLevel(null)}
-                  className="pyramid-tier"
-                  style={{
-                    width: '72%',
-                    height: '60px',
-                    backgroundColor: hoveredLevel === 3 ? 'var(--accent-gold)' : '#4E463E',
-                    color: 'white',
-                    clipPath: 'polygon(3% 0%, 97% 0%, 100% 100%, 0% 100%)',
-                    zIndex: 3
-                  }}
-                >
-                  <span style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }}>
-                    <FileText size={15} className="pyramid-tier-icon" /> Level 3: District Collector
-                  </span>
-                </div>
-
-                {/* Level 2 */}
-                <div 
-                  onClick={() => scrollToSection('level-2')}
-                  onMouseEnter={() => setHoveredLevel(2)}
-                  onMouseLeave={() => setHoveredLevel(null)}
-                  className="pyramid-tier"
-                  style={{
-                    width: '85%',
-                    height: '60px',
-                    backgroundColor: hoveredLevel === 2 ? 'var(--accent-gold)' : '#6E645A',
-                    color: 'white',
-                    clipPath: 'polygon(2.5% 0%, 97.5% 0%, 100% 100%, 0% 100%)',
-                    zIndex: 2
-                  }}
-                >
-                  <span style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }}>
-                    <Scale size={15} className="pyramid-tier-icon" /> Level 2: Sub Divisional Officer (SDO)
-                  </span>
-                </div>
-
-                {/* Level 1 */}
-                <div 
-                  onClick={() => scrollToSection('level-1')}
-                  onMouseEnter={() => setHoveredLevel(1)}
-                  onMouseLeave={() => setHoveredLevel(null)}
-                  className="pyramid-tier"
-                  style={{
-                    width: '98%',
-                    height: '60px',
-                    backgroundColor: hoveredLevel === 1 ? 'var(--accent-gold)' : '#8E8275',
-                    color: 'white',
-                    clipPath: 'polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%)',
-                    zIndex: 1
-                  }}
-                >
-                  <span style={{ fontWeight: 700, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0 1rem' }}>
-                    <Landmark size={15} className="pyramid-tier-icon" /> Level 1: Tehsildar Court
-                  </span>
-                </div>
-
-                {/* Hover Info Tooltip Box */}
-                {hoveredLevel !== null && (
-                  <div className="pyramid-tooltip">
-                    <strong style={{ color: 'var(--accent-gold)' }}>
-                      {courtsDetail.find(c => c.id === hoveredLevel).name}
-                    </strong>
-                    <p style={{ margin: '0.25rem 0 0 0', color: '#EAE6DF', fontSize: '0.82rem' }}>
-                      {courtsDetail.find(c => c.id === hoveredLevel).shortDesc}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Mobile Step Layout */}
-              <div className="pyramid-container-mobile">
-                {[5, 4, 3, 2, 1].map((lvl, index) => {
-                  const c = courtsDetail.find(item => item.id === lvl);
-                  return (
-                    <div key={lvl} style={{ width: '100%' }}>
-                      <div 
-                        onClick={() => scrollToSection(`level-${lvl}`)}
-                        className="mobile-step-card"
-                        style={{ borderLeftColor: lvl === 5 ? 'var(--accent-gold)' : undefined }}
-                      >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--accent-gold)', textTransform: 'uppercase' }}>
-                            Level {lvl}
-                          </span>
-                          <span style={{ fontSize: '0.7rem', backgroundColor: 'var(--bg-navbar-blue)', color: 'var(--primary-blue)', padding: '0.15rem 0.5rem', borderRadius: '50px', fontWeight: 600 }}>
-                            {c.role}
-                          </span>
-                        </div>
-                        <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary-blue)', margin: '0.25rem 0' }}>
-                          {c.name}
-                        </h4>
-                        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', margin: 0 }}>
-                          {c.shortDesc}
-                        </p>
-                      </div>
-                      {index < 4 && (
-                        <div className="mobile-step-arrow" style={{ margin: '0.75rem 0' }}>
-                          <ChevronDown size={20} />
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+              {/* Level 3 (District Collector) */}
+              <div 
+                onClick={() => scrollToSection('level-3')}
+                onMouseEnter={() => setHoveredLevel(3)}
+                onMouseLeave={() => setHoveredLevel(null)}
+                style={{
+                  padding: '1.25rem',
+                  borderRadius: '10px',
+                  backgroundColor: hoveredLevel === 3 ? 'var(--accent-gold)' : '#4E463E',
+                  color: 'white',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  boxShadow: hoveredLevel === 3 ? '0 10px 20px rgba(197, 168, 128, 0.35)' : 'var(--shadow-md)',
+                  transition: 'all 0.3s ease',
+                  fontWeight: 700,
+                  border: '2px solid var(--accent-gold)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transform: hoveredLevel === 3 ? 'translateY(-3px)' : 'none'
+                }}
+              >
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '1.2px', opacity: 0.9, marginBottom: '0.35rem' }}>
+                  <FileText size={14} /> Level 3: District Authority
+                </span>
+                <span style={{ fontSize: '1.05rem', fontFamily: 'var(--font-serif)' }}>District Collector / Add. Collectors</span>
               </div>
             </div>
 
+            {/* SVG Connector: Levels 4 & 3 merging to Level 2 */}
+            <svg width="100%" height="60" viewBox="0 0 600 60" style={{ maxWidth: '650px', display: 'block', overflow: 'visible' }}>
+              {/* Left vertical line down from Level 4 */}
+              <line x1="150" y1="0" x2="150" y2="25" stroke="var(--accent-gold)" strokeWidth="3" />
+              {/* Right vertical line down from Level 3 */}
+              <line x1="450" y1="0" x2="450" y2="25" stroke="var(--accent-gold)" strokeWidth="3" />
+              {/* Horizontal line joining them */}
+              <line x1="150" y1="25" x2="450" y2="25" stroke="var(--accent-gold)" strokeWidth="3" />
+              {/* Vertical line down from center to Level 2 */}
+              <line x1="300" y1="25" x2="300" y2="52" stroke="var(--accent-gold)" strokeWidth="3" />
+              {/* Arrowhead pointing down to Level 2 */}
+              <polygon points="300,58 294,48 306,48" fill="var(--accent-gold)" />
+            </svg>
+
+            {/* Level 2 (SDO) */}
+            <div 
+              onClick={() => scrollToSection('level-2')}
+              onMouseEnter={() => setHoveredLevel(2)}
+              onMouseLeave={() => setHoveredLevel(null)}
+              style={{
+                width: '100%',
+                maxWidth: '420px',
+                padding: '1.25rem',
+                borderRadius: '10px',
+                backgroundColor: hoveredLevel === 2 ? 'var(--accent-gold)' : '#6E645A',
+                color: 'white',
+                textAlign: 'center',
+                cursor: 'pointer',
+                boxShadow: hoveredLevel === 2 ? '0 10px 20px rgba(197, 168, 128, 0.35)' : 'var(--shadow-md)',
+                transition: 'all 0.3s ease',
+                fontWeight: 700,
+                border: '2px solid var(--accent-gold)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 2,
+                transform: hoveredLevel === 2 ? 'translateY(-3px)' : 'none'
+              }}
+            >
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1.2px', opacity: 0.9, marginBottom: '0.35rem' }}>
+                <Scale size={14} /> Level 2: Sub-Division Court
+              </span>
+              <span style={{ fontSize: '1.1rem', fontFamily: 'var(--font-serif)' }}>Sub-Divisional Officer (SDO) / Assistant Collector</span>
+            </div>
+
+            {/* SVG Connector: Level 2 to Level 1 */}
+            <svg width="100%" height="60" viewBox="0 0 600 60" style={{ maxWidth: '650px', display: 'block', overflow: 'visible' }}>
+              {/* Straight vertical line down */}
+              <line x1="300" y1="0" x2="300" y2="52" stroke="var(--accent-gold)" strokeWidth="3" />
+              {/* Arrowhead pointing down to Level 1 */}
+              <polygon points="300,58 294,48 306,48" fill="var(--accent-gold)" />
+            </svg>
+
+            {/* Level 1 (Tehsildar) */}
+            <div 
+              onClick={() => scrollToSection('level-1')}
+              onMouseEnter={() => setHoveredLevel(1)}
+              onMouseLeave={() => setHoveredLevel(null)}
+              style={{
+                width: '100%',
+                maxWidth: '420px',
+                padding: '1.25rem',
+                borderRadius: '10px',
+                backgroundColor: hoveredLevel === 1 ? 'var(--accent-gold)' : '#8E8275',
+                color: 'white',
+                textAlign: 'center',
+                cursor: 'pointer',
+                boxShadow: hoveredLevel === 1 ? '0 10px 20px rgba(197, 168, 128, 0.35)' : 'var(--shadow-md)',
+                transition: 'all 0.3s ease',
+                fontWeight: 700,
+                border: '2px solid var(--accent-gold)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1,
+                transform: hoveredLevel === 1 ? 'translateY(-3px)' : 'none'
+              }}
+            >
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1.2px', opacity: 0.9, marginBottom: '0.35rem' }}>
+                <Landmark size={14} /> Level 1: Local Revenue Officer
+              </span>
+              <span style={{ fontSize: '1.1rem', fontFamily: 'var(--font-serif)' }}>Tehsildar / Naib Tehsildar Courts</span>
+            </div>
+
+            {/* Tooltip detail block */}
+            {hoveredLevel !== null && (
+              <div className="pyramid-tooltip" style={{
+                position: 'absolute',
+                top: hoveredLevel === 5 ? '95px' : hoveredLevel === 4 || hoveredLevel === 3 ? '185px' : hoveredLevel === 2 ? '275px' : '365px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                backgroundColor: 'rgba(10, 25, 47, 0.98)',
+                color: 'white',
+                padding: '1rem 1.5rem',
+                borderRadius: '8px',
+                border: '1px solid var(--accent-gold)',
+                boxShadow: 'var(--shadow-lg)',
+                zIndex: 10,
+                textAlign: 'center',
+                width: '300px',
+                transition: 'all 0.2s ease',
+                pointerEvents: 'none'
+              }}>
+                <strong style={{ color: 'var(--accent-gold)', display: 'block', marginBottom: '0.35rem', fontSize: '0.9rem' }}>
+                  {courtsDetail.find(c => c.id === hoveredLevel).name}
+                </strong>
+                <span style={{ fontSize: '0.8rem', opacity: 0.9, lineHeight: 1.5 }}>
+                  {courtsDetail.find(c => c.id === hoveredLevel).shortDesc}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile Linear Step View with Arrows */}
+          <div className="pyramid-container-mobile" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
+            {[5, 4, 3, 2, 1].map((lvl, index) => {
+              const c = courtsDetail.find(item => item.id === lvl);
+              return (
+                <div key={lvl} style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div 
+                    onClick={() => scrollToSection(`level-${lvl}`)}
+                    className="mobile-step-card"
+                    style={{ 
+                      width: '100%',
+                      padding: '1.25rem',
+                      background: 'var(--bg-offwhite)',
+                      borderLeft: '4px solid var(--accent-gold)',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      border: '1px solid var(--border-color)',
+                      borderLeftWidth: '5px'
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--accent-gold)', textTransform: 'uppercase' }}>
+                        Level {lvl}
+                      </span>
+                      <span style={{ fontSize: '0.7rem', backgroundColor: 'var(--bg-navbar-blue)', color: 'var(--primary-blue)', padding: '0.15rem 0.5rem', borderRadius: '50px', fontWeight: 600 }}>
+                        {c.role}
+                      </span>
+                    </div>
+                    <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary-blue)', margin: '0.25rem 0' }}>
+                      {c.name}
+                    </h4>
+                    <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', margin: 0 }}>
+                      {c.shortDesc}
+                    </p>
+                  </div>
+                  {index < 4 && (
+                    <div style={{ margin: '0.5rem 0', color: 'var(--accent-gold)', display: 'flex', justifyContent: 'center' }}>
+                      <ChevronDown size={24} />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="layout-with-sidebar">
+          <div>
             {/* Detailed Description Cards */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '2rem' }}>
               <h3 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontWeight: 700, marginBottom: '0.5rem', borderBottom: '2px solid var(--accent-gold)', paddingBottom: '0.5rem' }}>
@@ -362,22 +482,123 @@ export default function HierarchyOfCourtsPage() {
               ))}
             </div>
 
-            {/* Informative Summary */}
-            <div style={{
-              background: 'white',
-              border: '1px solid var(--border-color)',
-              borderRadius: '10px',
-              padding: '2.5rem',
-              boxShadow: 'var(--shadow-sm)',
-              marginTop: '3rem'
-            }}>
-              <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)', marginTop: 0 }}>Appeal Escalation Process</h3>
-              <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--text-dark)', marginBottom: '1rem', margin: 0 }}>
-                In revenue law, matters generally flow upwards from the local executive to the apex judicial body. If a petitioner is unsatisfied with a Tehsildar's mutation decision, they file an appeal with the District Collector. For suits regarding tenant ownership or partitions decided by SDO courts, the appeal lies with the Revenue Appeals Commissioner (RAC).
-              </p>
-              <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--text-dark)', margin: 0, marginTop: '1rem' }}>
-                The Board of Revenue in Ajmer acts as the final supreme court for all revenue disputes. Further appeals against the Board of Revenue are presented before the Hon'ble High Court of Rajasthan (Jaipur/Jodhpur benches) under Writ Jurisdiction.
-              </p>
+            {/* Informative Summary & Statutory Subordination Sections */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '3rem' }}>
+              
+              {/* General Reference Disclaimer & Section 24 */}
+              <div style={{
+                background: 'white',
+                border: '1px solid var(--border-color)',
+                borderRadius: '10px',
+                padding: '2.5rem',
+                boxShadow: 'var(--shadow-sm)'
+              }}>
+                <div style={{ borderLeft: '4px solid var(--accent-gold)', paddingLeft: '1rem', marginBottom: '1.5rem' }}>
+                  <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>Statutory Disclaimer</span>
+                  <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-blue)', margin: '0.25rem 0 0 0', fontFamily: 'var(--font-serif)' }}>General Reference & Subordination of Revenue Courts</h3>
+                </div>
+                
+                <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--text-dark)', marginBottom: '1.5rem' }}>
+                  <strong>Important Notice:</strong> This court hierarchy chart is provided for general reference and educational purposes only. The administrative control and judicial subordination of revenue courts and officers in Rajasthan are strictly governed by statutory provisions.
+                </p>
+
+                <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--text-dark)', marginBottom: '1.5rem' }}>
+                  Specifically, <strong>Section 24 of the Rajasthan Land Revenue Act, 1956</strong> clearly establishes the subordination rules:
+                </p>
+
+                {/* Section 24 Reproduce */}
+                <div style={{
+                  backgroundColor: 'var(--bg-offwhite)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '8px',
+                  padding: '1.5rem 2rem',
+                  fontFamily: 'var(--font-serif)',
+                  fontSize: '0.92rem',
+                  lineHeight: 1.7,
+                  color: 'var(--text-dark)',
+                  boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.02)'
+                }}>
+                  <strong style={{ display: 'block', color: 'var(--primary-blue)', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem', fontSize: '1rem' }}>
+                    THE RAJASTHAN LAND REVENUE ACT, 1956<br />
+                    <span style={{ color: 'var(--accent-gold)' }}>Section 24 - Subordination of Revenue Courts and Officers</span>
+                  </strong>
+                  <p style={{ margin: '0 0 1rem 0' }}>
+                    (1) All Revenue Courts and Revenue Officers in a district shall be subordinate to the Collector of the district.
+                  </p>
+                  <p style={{ margin: '0 0 1rem 0' }}>
+                    (2) All Revenue Courts and Revenue Officers in a division shall be subordinate to the Divisional Commissioner.
+                  </p>
+                  <p style={{ margin: 0 }}>
+                    (3) All Revenue Courts, Divisional Commissioners, Collectors and other Revenue Officers shall be subordinate to the Board.
+                  </p>
+                </div>
+              </div>
+
+              {/* Section 221 of Tenancy Act */}
+              <div style={{
+                background: 'white',
+                border: '1px solid var(--border-color)',
+                borderRadius: '10px',
+                padding: '2.5rem',
+                boxShadow: 'var(--shadow-sm)'
+              }}>
+                <div style={{ borderLeft: '4px solid var(--accent-gold)', paddingLeft: '1rem', marginBottom: '1.5rem' }}>
+                  <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>Tenancy Rules Control</span>
+                  <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-blue)', margin: '0.25rem 0 0 0', fontFamily: 'var(--font-serif)' }}>Subordination under the Rajasthan Tenancy Act</h3>
+                </div>
+
+                <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--text-dark)', marginBottom: '1.5rem' }}>
+                  Similarly, the judicial proceedings, suits, and execution rules are also bound by the administrative structure outlined in the Tenancy Act. <strong>Section 221 of the Rajasthan Tenancy Act, 1955</strong> clearly dictates the subordination of revenue officers and courts:
+                </p>
+
+                {/* Section 221 Reproduce */}
+                <div style={{
+                  backgroundColor: 'var(--bg-offwhite)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '8px',
+                  padding: '1.5rem 2rem',
+                  fontFamily: 'var(--font-serif)',
+                  fontSize: '0.92rem',
+                  lineHeight: 1.7,
+                  color: 'var(--text-dark)',
+                  boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.02)'
+                }}>
+                  <strong style={{ display: 'block', color: 'var(--primary-blue)', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem', fontSize: '1rem' }}>
+                    THE RAJASTHAN TENANCY ACT, 1955<br />
+                    <span style={{ color: 'var(--accent-gold)' }}>Section 221 - Subordination of Revenue Courts</span>
+                  </strong>
+                  <p style={{ margin: '0 0 1rem 0' }}>
+                    (1) All Revenue Courts and Revenue Officers in a district shall be subordinate to the Collector.
+                  </p>
+                  <p style={{ margin: '0 0 1rem 0' }}>
+                    (2) All Revenue Courts and Revenue Officers in a division shall be subordinate to the Revenue Appeals Commissioner / Divisional Commissioner.
+                  </p>
+                  <p style={{ margin: 0 }}>
+                    (3) All Revenue Courts, Divisional Commissioners, Revenue Appeals Commissioners, Collectors and other Revenue Officers shall be subordinate to the Board.
+                  </p>
+                </div>
+              </div>
+
+              {/* Appeal Escalation Summary */}
+              <div style={{
+                background: 'white',
+                border: '1px solid var(--border-color)',
+                borderRadius: '10px',
+                padding: '2.5rem',
+                boxShadow: 'var(--shadow-sm)'
+              }}>
+                <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)', marginTop: 0 }}>Appeal Escalation Process</h3>
+                <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--text-dark)', marginBottom: '1rem', margin: 0 }}>
+                  In revenue law, matters generally flow upwards from the local executive to the apex judicial body. If a petitioner is unsatisfied with a Tehsildar's mutation decision, they file an appeal with the District Collector. For suits regarding tenant ownership or partitions decided by SDO courts, the appeal lies with the Revenue Appeals Commissioner (RAC).
+                </p>
+                <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--text-dark)', margin: 0, marginTop: '1rem' }}>
+                  The Board of Revenue in Ajmer acts as the final supreme court for all revenue disputes. Further appeals against the Board of Revenue are presented before the Hon'ble High Court of Rajasthan (Jaipur/Jodhpur benches) under Writ Jurisdiction.
+                </p>
+              </div>
+
+              {/* Third Schedule Table */}
+              <ThirdScheduleTable />
+
             </div>
           </div>
           <NewsSidebar />

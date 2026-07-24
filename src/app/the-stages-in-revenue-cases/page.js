@@ -227,7 +227,7 @@ export default function CaseStagesPage() {
             lineHeight: 1.2, 
             color: 'var(--primary-blue)' 
           }}>
-            Stages of a Revenue Case<br />
+            The Stages in Revenue Cases<br />
             <span style={{ color: '#B38F4F' }}>Complete Legal Workflow</span>
           </h1>
           <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
@@ -378,9 +378,20 @@ export default function CaseStagesPage() {
                 top: '20px',
                 bottom: '20px',
                 width: '3px',
-                backgroundColor: 'var(--border-color)',
+                background: 'linear-gradient(to bottom, var(--border-color), var(--accent-gold) 90%, var(--accent-gold))',
                 zIndex: 1
-              }}></div>
+              }}>
+                <div style={{
+                  position: 'absolute',
+                  bottom: '-8px',
+                  left: '-4px',
+                  width: 0,
+                  height: 0,
+                  borderLeft: '5px solid transparent',
+                  borderRight: '5px solid transparent',
+                  borderTop: '8px solid var(--accent-gold)'
+                }}></div>
+              </div>
 
               {filteredStages.length > 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
@@ -465,13 +476,13 @@ export default function CaseStagesPage() {
                           {/* Expanded Guidelines */}
                           {isOpen && (
                             <div 
-                              style={{ 
-                                marginTop: '1.5rem', 
-                                borderTop: '1px solid var(--border-color)', 
-                                paddingTop: '1.25rem',
-                                animation: 'fadeIn 0.3s ease-out'
-                              }}
-                              onClick={(e) => e.stopPropagation()} // Prevent clicking child from toggling accordion
+                               style={{ 
+                                 marginTop: '1.5rem', 
+                                 borderTop: '1px solid var(--border-color)', 
+                                 paddingTop: '1.25rem',
+                                 animation: 'fadeIn 0.3s ease-out'
+                               }}
+                               onClick={(e) => e.stopPropagation()} // Prevent clicking child from toggling accordion
                             >
                               {/* Key Points */}
                               <h5 style={{ fontSize: '0.88rem', color: 'var(--primary-blue)', fontWeight: 700, marginBottom: '0.5rem' }}>

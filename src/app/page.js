@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { 
   Scale, ShieldAlert, Award, FileText, ArrowRight, Gavel, BookOpen, 
-  Clock, Download, ChevronRight, HelpCircle, CheckCircle, Search, 
+  Clock, Download, ChevronRight, ChevronDown, HelpCircle, CheckCircle, Search, 
   Mail, Landmark, FileCheck, Layers, Eye, MessagesSquare, Compass, Send 
 } from 'lucide-react';
 import dbConnect from '@/lib/db';
@@ -116,7 +116,7 @@ export default async function HomePage() {
   const { articles, judgments, notifications, popularArticles, config } = await getHomepageData();
 
   const heroTitle = config?.heroTitle || "Rajasthan Revenue Law";
-  const heroSubtitle = config?.heroSubtitle || "Knowledge Platform";
+  const heroSubtitle = config?.heroSubtitle || "Overview of Revenue Law";
   const heroDesc = config?.heroDesc || "Empowering legal professionals, landholders, and officers with instant access to Rajasthan's land revenue database. Explore Board of Revenue precedents, tenancy statutes, notification circulars, and comprehensive step-by-step litigation guides on a unified platform.";
   const heroButtonText = config?.heroButtonText || "Search Judgments";
   const heroButtonUrl = config?.heroButtonUrl || "/judgments";
@@ -180,8 +180,8 @@ export default async function HomePage() {
               <Link href="/hierarchy-of-courts" className="btn-hero-quick-access">
                 <Landmark size={18} style={{ color: 'var(--accent-gold-hover)' }} /> Hierarchy of Revenue Courts
               </Link>
-              <Link href="/glossary" className="btn-hero-quick-access">
-                <BookOpen size={18} style={{ color: 'var(--accent-gold-hover)' }} /> Revenue Law Glossary
+              <Link href="/the-stages-in-revenue-cases" className="btn-hero-quick-access">
+                <Layers size={18} style={{ color: 'var(--accent-gold-hover)' }} /> Stages in Revenue Cases
               </Link>
               <Link href="/types-of-cases" className="btn-hero-quick-access">
                 <Scale size={18} style={{ color: 'var(--accent-gold-hover)' }} /> Types of Cases
@@ -261,76 +261,49 @@ export default async function HomePage() {
                     </p>
                   </div>
                   
-                  {/* Simplified Pyramid Preview */}
-                  <div className="pyramid-container-desktop" style={{ width: '100%', maxWidth: '500px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', margin: '2.5rem auto 2rem auto', position: 'relative' }}>
-                    <Link href="/hierarchy-of-courts" className="pyramid-tier" style={{
-                      width: '46%',
-                      height: '50px',
-                      backgroundColor: 'var(--primary-blue)',
-                      color: 'var(--bg-offwhite)',
-                      clipPath: 'polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      textDecoration: 'none'
-                    }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>Board of Revenue</span>
+                  {/* Simplified Tree Preview */}
+                  <div style={{ width: '100%', maxWidth: '600px', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '2rem auto', position: 'relative', gap: '0' }}>
+                    <Link href="/hierarchy-of-courts" style={{ width: '100%', maxWidth: '320px', padding: '0.65rem', backgroundColor: 'var(--primary-blue)', color: 'white', borderRadius: '6px', textAlign: 'center', textDecoration: 'none', fontWeight: 700, fontSize: '0.82rem', border: '1px solid var(--accent-gold)' }} className="search-tag-hover">
+                      Board of Revenue (Ajmer)
                     </Link>
                     
-                    <Link href="/hierarchy-of-courts" className="pyramid-tier" style={{
-                      width: '59%',
-                      height: '50px',
-                      backgroundColor: 'var(--secondary-blue)',
-                      color: 'var(--bg-offwhite)',
-                      clipPath: 'polygon(3.5% 0%, 96.5% 0%, 100% 100%, 0% 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      textDecoration: 'none'
-                    }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>Divisional Commissioner</span>
+                    <svg width="100%" height="40" viewBox="0 0 400 40" style={{ maxWidth: '450px', display: 'block', overflow: 'visible' }}>
+                      <line x1="200" y1="0" x2="200" y2="15" stroke="var(--accent-gold)" strokeWidth="2" />
+                      <line x1="100" y1="15" x2="300" y2="15" stroke="var(--accent-gold)" strokeWidth="2" />
+                      <line x1="100" y1="15" x2="100" y2="35" stroke="var(--accent-gold)" strokeWidth="2" />
+                      <line x1="300" y1="15" x2="300" y2="35" stroke="var(--accent-gold)" strokeWidth="2" />
+                      <polygon points="100,40 96,32 104,32" fill="var(--accent-gold)" />
+                      <polygon points="300,40 296,32 304,32" fill="var(--accent-gold)" />
+                    </svg>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.5rem', width: '100%', maxWidth: '500px' }}>
+                      <Link href="/hierarchy-of-courts" style={{ padding: '0.65rem 0.25rem', backgroundColor: 'var(--secondary-blue)', color: 'white', borderRadius: '6px', textAlign: 'center', textDecoration: 'none', fontWeight: 700, fontSize: '0.78rem', border: '1px solid var(--accent-gold)' }} className="search-tag-hover">
+                        Divisional Comm.
+                      </Link>
+                      <Link href="/hierarchy-of-courts" style={{ padding: '0.65rem 0.25rem', backgroundColor: '#4E463E', color: 'white', borderRadius: '6px', textAlign: 'center', textDecoration: 'none', fontWeight: 700, fontSize: '0.78rem', border: '1px solid var(--accent-gold)' }} className="search-tag-hover">
+                        District Collector
+                      </Link>
+                    </div>
+
+                    <svg width="100%" height="40" viewBox="0 0 400 40" style={{ maxWidth: '450px', display: 'block', overflow: 'visible' }}>
+                      <line x1="100" y1="0" x2="100" y2="15" stroke="var(--accent-gold)" strokeWidth="2" />
+                      <line x1="300" y1="0" x2="300" y2="15" stroke="var(--accent-gold)" strokeWidth="2" />
+                      <line x1="100" y1="15" x2="300" y2="15" stroke="var(--accent-gold)" strokeWidth="2" />
+                      <line x1="200" y1="15" x2="200" y2="35" stroke="var(--accent-gold)" strokeWidth="2" />
+                      <polygon points="200,40 196,32 204,32" fill="var(--accent-gold)" />
+                    </svg>
+
+                    <Link href="/hierarchy-of-courts" style={{ width: '100%', maxWidth: '320px', padding: '0.65rem', backgroundColor: '#6E645A', color: 'white', borderRadius: '6px', textAlign: 'center', textDecoration: 'none', fontWeight: 700, fontSize: '0.82rem', border: '1px solid var(--accent-gold)' }} className="search-tag-hover">
+                      Sub-Divisional Officer (SDO)
                     </Link>
 
-                    <Link href="/hierarchy-of-courts" className="pyramid-tier" style={{
-                      width: '72%',
-                      height: '50px',
-                      backgroundColor: '#4E463E',
-                      color: 'var(--bg-offwhite)',
-                      clipPath: 'polygon(3% 0%, 97% 0%, 100% 100%, 0% 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      textDecoration: 'none'
-                    }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>District Collector</span>
-                    </Link>
+                    <svg width="100%" height="40" viewBox="0 0 400 40" style={{ maxWidth: '450px', display: 'block', overflow: 'visible' }}>
+                      <line x1="200" y1="0" x2="200" y2="35" stroke="var(--accent-gold)" strokeWidth="2" />
+                      <polygon points="200,40 196,32 204,32" fill="var(--accent-gold)" />
+                    </svg>
 
-                    <Link href="/hierarchy-of-courts" className="pyramid-tier" style={{
-                      width: '85%',
-                      height: '50px',
-                      backgroundColor: '#6E645A',
-                      color: 'var(--bg-offwhite)',
-                      clipPath: 'polygon(2.5% 0%, 97.5% 0%, 100% 100%, 0% 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      textDecoration: 'none'
-                    }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>Sub Divisional Officer (SDO)</span>
-                    </Link>
-
-                    <Link href="/hierarchy-of-courts" className="pyramid-tier" style={{
-                      width: '98%',
-                      height: '50px',
-                      backgroundColor: '#8E8275',
-                      color: 'var(--bg-offwhite)',
-                      clipPath: 'polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      textDecoration: 'none'
-                    }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>Tehsildar Court</span>
+                    <Link href="/hierarchy-of-courts" style={{ width: '100%', maxWidth: '320px', padding: '0.65rem', backgroundColor: '#8E8275', color: 'white', borderRadius: '6px', textAlign: 'center', textDecoration: 'none', fontWeight: 700, fontSize: '0.82rem', border: '1px solid var(--accent-gold)' }} className="search-tag-hover">
+                      Tehsildar Court
                     </Link>
                   </div>
                   
