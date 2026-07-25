@@ -4,10 +4,10 @@ import '@/styles/globals.css';
 
 export const metadata = {
   title: {
-    default: 'Rajasthan Revenue Law Platform | RRLKP',
+    default: 'Overview of Rajasthan Revenue Law | RRLKP',
     template: '%s | RRLKP'
   },
-  description: 'Revenue Law Raj is a dedicated Rajasthan Revenue Law Platform designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The platform offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.',
+  description: 'Revenue Law Raj is dedicated to Rajasthan Revenue Law, designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The system offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.',
   keywords: ['Rajasthan revenue law', 'Board of Revenue Ajmer', 'Rajasthan Land Revenue Act 1956', 'Rajasthan Tenancy Act 1955', '90-A land conversion', 'revenue judgments'],
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   alternates: {
@@ -19,8 +19,8 @@ export const metadata = {
     apple: '/icon.png',
   },
   openGraph: {
-    title: 'Rajasthan Revenue Law Platform',
-    description: 'Revenue Law Raj is a dedicated Rajasthan Revenue Law Platform designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The platform offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.',
+    title: 'Overview of Rajasthan Revenue Law',
+    description: 'Revenue Law Raj is dedicated to Rajasthan Revenue Law, designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The system offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.',
     url: '/',
     siteName: 'RRLKP',
     locale: 'en_IN',

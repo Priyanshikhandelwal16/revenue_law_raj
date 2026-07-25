@@ -11,6 +11,7 @@ import Notification from '@/lib/models/Notification';
 import Setting from '@/lib/models/Setting';
 import NewsSidebar from '@/components/NewsSidebar';
 import ScrollReveal from '@/components/ScrollReveal';
+import HomeHierarchyPreview from '@/components/HomeHierarchyPreview';
 
 // Mock data fallbacks for a premium editorial presentation if database is empty
 const defaultNews = [
@@ -221,7 +222,7 @@ export default async function HomePage() {
         <div className="layout-container">
           <div className="layout-with-sidebar" style={{ marginTop: 0 }}>
             {/* Left Content Column */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem', position: 'relative', zIndex: 5 }}>
               
               {/* 3. Revenue Law Categories */}
               <ScrollReveal>
@@ -252,7 +253,7 @@ export default async function HomePage() {
               
               {/* 4. Hierarchy of Revenue Courts Preview */}
               <ScrollReveal>
-                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)', position: 'relative', zIndex: 10 }}>
                   <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
                     <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>Judicial Structure</div>
                     <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>Hierarchy of Revenue Courts in Rajasthan</h2>
@@ -261,51 +262,8 @@ export default async function HomePage() {
                     </p>
                   </div>
                   
-                  {/* Simplified Tree Preview */}
-                  <div style={{ width: '100%', maxWidth: '600px', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '2rem auto', position: 'relative', gap: '0' }}>
-                    <Link href="/hierarchy-of-courts" style={{ width: '100%', maxWidth: '320px', padding: '0.65rem', backgroundColor: 'var(--primary-blue)', color: 'white', borderRadius: '6px', textAlign: 'center', textDecoration: 'none', fontWeight: 700, fontSize: '0.82rem', border: '1px solid var(--accent-gold)' }} className="search-tag-hover">
-                      Board of Revenue (Ajmer)
-                    </Link>
-                    
-                    <svg width="100%" height="40" viewBox="0 0 400 40" style={{ maxWidth: '450px', display: 'block', overflow: 'visible' }}>
-                      <line x1="200" y1="0" x2="200" y2="15" stroke="var(--accent-gold)" strokeWidth="2" />
-                      <line x1="100" y1="15" x2="300" y2="15" stroke="var(--accent-gold)" strokeWidth="2" />
-                      <line x1="100" y1="15" x2="100" y2="35" stroke="var(--accent-gold)" strokeWidth="2" />
-                      <line x1="300" y1="15" x2="300" y2="35" stroke="var(--accent-gold)" strokeWidth="2" />
-                      <polygon points="100,40 96,32 104,32" fill="var(--accent-gold)" />
-                      <polygon points="300,40 296,32 304,32" fill="var(--accent-gold)" />
-                    </svg>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.5rem', width: '100%', maxWidth: '500px' }}>
-                      <Link href="/hierarchy-of-courts" style={{ padding: '0.65rem 0.25rem', backgroundColor: 'var(--secondary-blue)', color: 'white', borderRadius: '6px', textAlign: 'center', textDecoration: 'none', fontWeight: 700, fontSize: '0.78rem', border: '1px solid var(--accent-gold)' }} className="search-tag-hover">
-                        Divisional Comm.
-                      </Link>
-                      <Link href="/hierarchy-of-courts" style={{ padding: '0.65rem 0.25rem', backgroundColor: '#4E463E', color: 'white', borderRadius: '6px', textAlign: 'center', textDecoration: 'none', fontWeight: 700, fontSize: '0.78rem', border: '1px solid var(--accent-gold)' }} className="search-tag-hover">
-                        District Collector
-                      </Link>
-                    </div>
-
-                    <svg width="100%" height="40" viewBox="0 0 400 40" style={{ maxWidth: '450px', display: 'block', overflow: 'visible' }}>
-                      <line x1="100" y1="0" x2="100" y2="15" stroke="var(--accent-gold)" strokeWidth="2" />
-                      <line x1="300" y1="0" x2="300" y2="15" stroke="var(--accent-gold)" strokeWidth="2" />
-                      <line x1="100" y1="15" x2="300" y2="15" stroke="var(--accent-gold)" strokeWidth="2" />
-                      <line x1="200" y1="15" x2="200" y2="35" stroke="var(--accent-gold)" strokeWidth="2" />
-                      <polygon points="200,40 196,32 204,32" fill="var(--accent-gold)" />
-                    </svg>
-
-                    <Link href="/hierarchy-of-courts" style={{ width: '100%', maxWidth: '320px', padding: '0.65rem', backgroundColor: '#6E645A', color: 'white', borderRadius: '6px', textAlign: 'center', textDecoration: 'none', fontWeight: 700, fontSize: '0.82rem', border: '1px solid var(--accent-gold)' }} className="search-tag-hover">
-                      Sub-Divisional Officer (SDO)
-                    </Link>
-
-                    <svg width="100%" height="40" viewBox="0 0 400 40" style={{ maxWidth: '450px', display: 'block', overflow: 'visible' }}>
-                      <line x1="200" y1="0" x2="200" y2="35" stroke="var(--accent-gold)" strokeWidth="2" />
-                      <polygon points="200,40 196,32 204,32" fill="var(--accent-gold)" />
-                    </svg>
-
-                    <Link href="/hierarchy-of-courts" style={{ width: '100%', maxWidth: '320px', padding: '0.65rem', backgroundColor: '#8E8275', color: 'white', borderRadius: '6px', textAlign: 'center', textDecoration: 'none', fontWeight: 700, fontSize: '0.82rem', border: '1px solid var(--accent-gold)' }} className="search-tag-hover">
-                      Tehsildar Court
-                    </Link>
-                  </div>
+                  {/* Interactive Pyramid Preview */}
+                  <HomeHierarchyPreview />
                   
                   <div style={{ textAlign: 'center', marginTop: '2rem' }}>
                     <Link href="/hierarchy-of-courts" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontSize: '0.8rem', fontWeight: 700, padding: '0.75rem 2rem' }}>

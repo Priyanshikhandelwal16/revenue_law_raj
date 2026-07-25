@@ -406,30 +406,30 @@
   },
   {
     "sNo": "36",
-    "section": "Section 19-",
-    "description": "2A)(iv) Application for restitution of possession. Six months Date on which declaration is made under section 19(2A)(i) or 19(2A)(ii) Fifty Paise Assistant Collector",
-    "limitation": "None",
-    "limitationStart": "None",
-    "courtFee": "As in Court Fees Act",
+    "section": "Section 19(2A)(iv)",
+    "description": "Application for restitution of possession.",
+    "limitation": "Six months",
+    "limitationStart": "Date on which declaration is made under section 19(2A)(i) or 19(2A)(ii)",
+    "courtFee": "Fifty Paise",
     "court": "Assistant Collector"
   },
   {
     "sNo": "36-A",
     "section": "Section 19(4)",
-    "description": "Application by tenant of Khudkasht or sub-tenant that he does not wish to acquire Khatedari rights. Three years Date of commencement of the Rajasthan Tenancy (Amend.) Act. 1959. Fifty Paisa. Assistant Collector",
-    "limitation": "None",
-    "limitationStart": "None",
-    "courtFee": "As in Court Fees Act",
+    "description": "Application by tenant of Khudkasht or sub-tenant that he does not wish to acquire Khatedari rights.",
+    "limitation": "Three years",
+    "limitationStart": "Date of commencement of the Rajasthan Tenancy (Amend.) Act, 1959.",
+    "courtFee": "Fifty Paise",
     "court": "Assistant Collector"
   },
   {
     "sNo": "37",
     "section": "Section 30-E(2)",
-    "description": "Surrender of land in excess of ceiling area. Six months under sec. 30E(i) Date Notified None Tehsildar",
-    "limitation": "None",
-    "limitationStart": "None",
-    "courtFee": "As in Court Fees Act",
-    "court": "Assistant Collector"
+    "description": "Surrender of land in excess of ceiling area.",
+    "limitation": "Six months under sec. 30E(1)",
+    "limitationStart": "Date Notified",
+    "courtFee": "None",
+    "court": "Tehsildar"
   },
   {
     "sNo": "38",
@@ -783,40 +783,58 @@
     "court": "Assistant Collector"
   },
   {
-    "sNo": "68",
+    "sNo": "68(i)(a)",
     "section": "Section 180",
-    "description": "Application for ejectment of a Gair Khatedar tenant, tenant of Khudkhasht or Sub-tenant- (i) under clause (a) or (d) (a) by any of the Persons enumerated in section 46. Three years commencement of Act or three years from cessation of which ever may be latter. From date of Fifty Paise Assistant Collector (b) in any other case. Three years of Act. Date of commencement Fifty Paise Assistant Collector. (ii) Under clause (b) and (c) One year action arises. When that cause of Fifty Paise Assistant Collector",
-    "limitation": "None",
-    "limitationStart": "None",
-    "courtFee": "As in Court Fees Act",
+    "description": "Application for ejectment of a Gair Khatedar tenant, tenant of Khudkhasht or Sub-tenant under clause (a) or (d) by any of the persons enumerated in section 46.",
+    "limitation": "Three years",
+    "limitationStart": "Date of commencement of Act or three years from cessation of tenancy, whichever is later.",
+    "courtFee": "Fifty Paise",
+    "court": "Assistant Collector"
+  },
+  {
+    "sNo": "68(i)(b)",
+    "section": "Section 180",
+    "description": "Application for ejectment of a Gair Khatedar tenant, tenant of Khudkhasht or Sub-tenant under clause (a) or (d) in any other case.",
+    "limitation": "Three years",
+    "limitationStart": "Date of commencement of Act.",
+    "courtFee": "Fifty Paise",
+    "court": "Assistant Collector"
+  },
+  {
+    "sNo": "68(ii)",
+    "section": "Section 180",
+    "description": "Application for ejectment of a Gair Khatedar tenant, tenant of Khudkhasht or Sub-tenant under clause (b) and (c).",
+    "limitation": "One year",
+    "limitationStart": "When the cause of action arises.",
+    "courtFee": "Fifty Paise",
     "court": "Assistant Collector"
   },
   {
     "sNo": "68-A",
     "section": "Section 182-B",
-    "description": "Application for restoration of land from which ejected or acquisition of Three years Date of actual ejectment One Rupee Sub- Divisional Officer. Khatedari rights therein",
-    "limitation": "None",
-    "limitationStart": "None",
-    "courtFee": "As in Court Fees Act",
-    "court": "Assistant Collector"
+    "description": "Application for restoration of land from which ejected or acquisition of Khatedari rights therein.",
+    "limitation": "Three years",
+    "limitationStart": "Date of actual ejectment.",
+    "courtFee": "One Rupee",
+    "court": "Sub-Divisional Officer"
   },
   {
     "sNo": "68-B",
     "section": "Section 183-A",
-    "description": "Application for the summary eviction of the mortgagee on non-delivery of possession of land after expiry of the period of mortgage. Twelve years Date of expiry of the period of montage and where such periods deem to have expired under sub- section (4A) of sec.43 before the date of the commencement of the Rajasthan Tenancy (Amend.) Ordinance 1978, the date of such commencement. Fifty Paise Assistant Collector",
-    "limitation": "None",
-    "limitationStart": "None",
-    "courtFee": "As in Court Fees Act",
+    "description": "Application for the summary eviction of the mortgagee on non-delivery of possession of land after expiry of the period of mortgage.",
+    "limitation": "Twelve years",
+    "limitationStart": "Date of expiry of the period of mortgage or when such period is deemed to have expired under sub-section (4A) of section 43 before the date of the commencement of the Rajasthan Tenancy (Amend.) Ordinance, 1978, the date of such commencement.",
+    "courtFee": "Fifty Paise",
     "court": "Assistant Collector"
   },
   {
     "sNo": "68-C",
     "section": "Section 183-B",
-    "description": "Application for summary ejectment of trespasser of the land held by a member of scheduled caste or scheduled tribe. Twelve years When the cause of action accrued. Fifty Paise Tehsildar [w.e.f. 26.05.1989.",
-    "limitation": "None",
-    "limitationStart": "None",
-    "courtFee": "As in Court Fees Act",
-    "court": "Assistant Collector"
+    "description": "Application for summary ejectment of trespasser of the land held by a member of scheduled caste or scheduled tribe.",
+    "limitation": "Twelve years",
+    "limitationStart": "When the cause of action accrued.",
+    "courtFee": "Fifty Paise",
+    "court": "Tehsildar"
   },
   {
     "sNo": "69",
@@ -927,13 +945,40 @@
     "court": ""
   },
   {
-    "sNo": "80",
-    "section": "Section Application",
-    "description": "for transfer presented to:- (i) a Sub- Divisional Officer, None None Fifty Paise (ii) a Collector, None None Fifty Rupees (iii) (HHH) (iv) the Board, or None None One Rupees As in the Court Fees Act (v) the High Court",
+    "sNo": "80(i)",
+    "section": "General",
+    "description": "Application for transfer presented to a Sub-Divisional Officer.",
     "limitation": "None",
     "limitationStart": "None",
-    "courtFee": "As in Court Fees Act",
-    "court": "Assistant Collector"
+    "courtFee": "Fifty Paise",
+    "court": "Sub-Divisional Officer"
+  },
+  {
+    "sNo": "80(ii)",
+    "section": "General",
+    "description": "Application for transfer presented to a Collector.",
+    "limitation": "None",
+    "limitationStart": "None",
+    "courtFee": "Fifty Rupees",
+    "court": "Collector"
+  },
+  {
+    "sNo": "80(iv)",
+    "section": "General",
+    "description": "Application for transfer presented to the Board.",
+    "limitation": "None",
+    "limitationStart": "None",
+    "courtFee": "One Rupee",
+    "court": "Board of Revenue"
+  },
+  {
+    "sNo": "80(v)",
+    "section": "General",
+    "description": "Application for transfer presented to the High Court.",
+    "limitation": "None",
+    "limitationStart": "None",
+    "courtFee": "As in the Court Fees Act",
+    "court": "High Court"
   },
   {
     "sNo": "81",
@@ -963,13 +1008,31 @@
     "court": "Court which passed the decree"
   },
   {
-    "sNo": "84",
-    "section": "Section General",
-    "description": "Application in a pending suit, appeal or other proceedings when presented:- (I) to the High Court None None As in the Court (ii) to the Board None None One Rupee (iii) to the Courts",
+    "sNo": "84(i)",
+    "section": "General",
+    "description": "Application in a pending suit, appeal or other proceedings when presented to the High Court.",
+    "limitation": "None",
+    "limitationStart": "None",
+    "courtFee": "As in the Court Fees Act",
+    "court": "High Court"
+  },
+  {
+    "sNo": "84(ii)",
+    "section": "General",
+    "description": "Application in a pending suit, appeal or other proceedings when presented to the Board.",
+    "limitation": "None",
+    "limitationStart": "None",
+    "courtFee": "One Rupee",
+    "court": "Board of Revenue"
+  },
+  {
+    "sNo": "84(iii)",
+    "section": "General",
+    "description": "Application in a pending suit, appeal or other proceedings when presented to the Courts.",
     "limitation": "None",
     "limitationStart": "None",
     "courtFee": "Fifty Paise",
-    "court": ""
+    "court": "Court in which pending"
   },
   {
     "sNo": "85",
@@ -990,30 +1053,66 @@
     "court": "Assistant Collector"
   },
   {
-    "sNo": "88",
+    "sNo": "88(i)",
     "section": "General",
-    "description": "I) to the Collector Thirty days Date of decree Same as on plaint …...... (ii) to the revenue appellate authority",
+    "description": "Appeal from original decrees to the Collector.",
+    "limitation": "Thirty days",
+    "limitationStart": "Date of decree",
+    "courtFee": "Same as on plaint",
+    "court": "Collector"
+  },
+  {
+    "sNo": "88(ii)",
+    "section": "General",
+    "description": "Appeal from original decrees to the Revenue Appellate Authority.",
     "limitation": "Sixty days",
     "limitationStart": "Date of decree",
     "courtFee": "Same as on plaint",
-    "court": "…"
+    "court": "Revenue Appellate Authority"
   },
   {
-    "sNo": "89",
+    "sNo": "89(i)",
     "section": "General",
-    "description": "Appeals from appellate decrees:- (i) to the revenue appellate authority Sixty days Date of decree Same as on plaint …..... (ii) to the Board",
+    "description": "Appeals from appellate decrees to the Revenue Appellate Authority.",
+    "limitation": "Sixty days",
+    "limitationStart": "Date of decree",
+    "courtFee": "Same as on plaint",
+    "court": "Revenue Appellate Authority"
+  },
+  {
+    "sNo": "89(ii)",
+    "section": "General",
+    "description": "Appeals from appellate decrees to the Board.",
     "limitation": "Ninety days",
     "limitationStart": "Date of decree",
     "courtFee": "Same as on plaint",
-    "court": "…"
+    "court": "Board of Revenue"
   },
   {
-    "sNo": "90",
+    "sNo": "90(i)",
     "section": "General",
-    "description": "Appeals:- (I) to the Collector Thirty days Date or Order One Rupee …..... (ii) to the revenue appellate authority Sixty days Date of Order One Rupee …..... (iii) to the Board",
+    "description": "Appeals from orders to the Collector.",
+    "limitation": "Thirty days",
+    "limitationStart": "Date of Order",
+    "courtFee": "One Rupee",
+    "court": "Collector"
+  },
+  {
+    "sNo": "90(ii)",
+    "section": "General",
+    "description": "Appeals from orders to the Revenue Appellate Authority.",
+    "limitation": "Sixty days",
+    "limitationStart": "Date of Order",
+    "courtFee": "One Rupee",
+    "court": "Revenue Appellate Authority"
+  },
+  {
+    "sNo": "90(iii)",
+    "section": "General",
+    "description": "Appeals from orders to the Board.",
     "limitation": "Ninety days",
     "limitationStart": "Date of Order",
     "courtFee": "One Rupee",
-    "court": "…"
+    "court": "Board of Revenue"
   }
 ]

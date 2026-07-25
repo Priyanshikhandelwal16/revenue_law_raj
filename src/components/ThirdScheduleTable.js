@@ -16,11 +16,9 @@ export default function ThirdScheduleTable() {
     const sNoNum = parseFloat(item.sNo);
     let matchesTab = true;
     if (activeTab === 'SUITS') {
-      matchesTab = !isNaN(sNoNum) && sNoNum <= 35 && !item.sNo.includes('A') && !item.sNo.includes('B') && !item.sNo.includes('C');
+      matchesTab = !isNaN(sNoNum) && sNoNum <= 35 && !item.sNo.startsWith('35-');
     } else if (activeTab === 'APPLICATIONS') {
-      matchesTab = (item.sNo.includes('-') && parseFloat(item.sNo) <= 85) || 
-                   (!isNaN(sNoNum) && sNoNum >= 36 && sNoNum <= 85) ||
-                   item.sNo === '35-CC';
+      matchesTab = item.sNo.startsWith('35-') || (!isNaN(sNoNum) && sNoNum >= 36 && sNoNum <= 85);
     } else if (activeTab === 'APPEALS') {
       matchesTab = !isNaN(sNoNum) && sNoNum >= 86;
     }
