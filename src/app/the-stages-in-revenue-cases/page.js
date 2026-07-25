@@ -518,6 +518,34 @@ export default function CaseStagesPage() {
                             </div>
                           )}
                         </div>
+
+                        {stage !== filteredStages[filteredStages.length - 1] && (
+                          <span style={{
+                            position: 'absolute',
+                            left: 'calc(50% + 33px)',
+                            bottom: '-2.1rem',
+                            transform: 'translateX(-50%)',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '0.35rem',
+                            minWidth: '68px',
+                            padding: '0.25rem 0.6rem',
+                            background: 'white',
+                            border: '1px solid var(--border-color)',
+                            borderRadius: '999px',
+                            color: 'var(--accent-gold)',
+                            fontSize: '0.72rem',
+                            fontWeight: 700,
+                            lineHeight: 1,
+                            whiteSpace: 'nowrap',
+                            pointerEvents: 'none',
+                            zIndex: 3
+                          }}>
+                            <span aria-hidden="true" style={{ fontSize: '1.15rem', lineHeight: 1 }}>↓</span>
+                            <span>Next</span>
+                          </span>
+                        )}
                       </div>
                     );
                   })}

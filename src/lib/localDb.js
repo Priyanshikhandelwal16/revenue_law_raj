@@ -38,8 +38,8 @@ function initializeDb() {
         { 
           key: "homepage_config", 
           value: {
-            heroTitle: "Rajasthan Revenue Law",
-            heroSubtitle: "Overview of Revenue Law",
+            heroTitle: "Overview of",
+            heroSubtitle: "Revenue Law",
             heroDesc: "Revenue Law Raj is a dedicated Rajasthan Revenue Law Platform designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The platform offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.",
             heroButtonText: "Search Judgments",
             heroButtonUrl: "/judgments",

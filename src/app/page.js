@@ -116,8 +116,8 @@ async function getHomepageData() {
 export default async function HomePage() {
   const { articles, judgments, notifications, popularArticles, config } = await getHomepageData();
 
-  const heroTitle = config?.heroTitle || "Rajasthan Revenue Law";
-  const heroSubtitle = config?.heroSubtitle || "Overview of Revenue Law";
+  const heroTitle = config?.heroTitle || "Overview of";
+  const heroSubtitle = config?.heroSubtitle || "Revenue Law";
   const heroDesc = config?.heroDesc || "Empowering legal professionals, landholders, and officers with instant access to Rajasthan's land revenue database. Explore Board of Revenue precedents, tenancy statutes, notification circulars, and comprehensive step-by-step litigation guides on a unified platform.";
   const heroButtonText = config?.heroButtonText || "Search Judgments";
   const heroButtonUrl = config?.heroButtonUrl || "/judgments";
