@@ -36,6 +36,7 @@ const defaultLaws = [
 function LawsContent() {
   const searchParams = useSearchParams();
   const actSlug = searchParams.get('act');
+  const sectionParam = searchParams.get('section');
   
   const [laws, setLaws] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,7 +61,10 @@ function LawsContent() {
             }
             setActiveActId(matched._id);
             if (matched.sections && matched.sections.length > 0) {
-              setActiveSection(matched.sections[0]);
+              const requestedSection = sectionParam
+                ? matched.sections.find((section) => section.sectionNumber?.toLowerCase() === sectionParam.toLowerCase())
+                : null;
+              setActiveSection(requestedSection || matched.sections[0]);
             }
           }
         }
@@ -73,13 +77,16 @@ function LawsContent() {
           if (found) matched = found;
         }
         setActiveActId(matched._id);
-        setActiveSection(matched.sections[0]);
+        const requestedSection = sectionParam
+          ? matched.sections.find((section) => section.sectionNumber?.toLowerCase() === sectionParam.toLowerCase())
+          : null;
+        setActiveSection(requestedSection || matched.sections[0]);
       } finally {
         setLoading(false);
       }
     }
     loadLaws();
-  }, [actSlug]);
+  }, [actSlug, sectionParam]);
 
   const activeAct = laws.find(l => l._id === activeActId);
 

@@ -1,50 +1,20 @@
 "use client";
 
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, BookOpen, Layers, ShieldAlert, Compass, Gavel, HelpCircle, FileCheck, Landmark } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Layers, ShieldAlert, Compass, Gavel, FileCheck, Landmark } from 'lucide-react';
 import NewsSidebar from '@/components/NewsSidebar';
 import ThirdScheduleTable from '@/components/ThirdScheduleTable';
+import usePublicSetting from '@/hooks/usePublicSetting';
 
-const caseTypes = [
-  {
-    icon: Layers,
-    title: "Mutation & Record Corrections (Namantaran)",
-    desc: "Disputes relating to inheritance (Fauti), sale transfers, or gift deeds where the Patwari records or mutation entries are challenged or delayed.",
-    statute: "Section 135, Rajasthan Land Revenue Act 1956"
-  },
-  {
-    icon: Compass,
-    title: "Partition of Agricultural Holdings (Bantwara)",
-    desc: "Suits filed by co-sharers (joint khatedars) to split their agricultural holdings into specific demarcated shares with independent land maps.",
-    statute: "Section 53, Rajasthan Tenancy Act 1955"
-  },
-  {
-    icon: ShieldAlert,
-    title: "Eviction of Encroachments (Kabza / Trespass)",
-    desc: "Proceedings initiated by the state or landowners against unauthorized trespassers occupying public/private agricultural pasture land (Charagah).",
-    statute: "Section 91 (State Land) & Section 188 (Tenant Protection)"
-  },
-  {
-    icon: FileCheck,
-    title: "Land Conversion Cases (Section 90-A)",
-    desc: "Applications or regularisation cases regarding changing agricultural land use for residential development, commercial layouts, or industrial units.",
-    statute: "Section 90-A, Rajasthan Land Revenue Act 1956"
-  },
-  {
-    icon: Gavel,
-    title: "Right of Way & Easements (Rasta Nikaas)",
-    desc: "Suits filed before the Tehsildar to seek a new pathway, widen existing pathways, or clear blockages in paths leading to agricultural fields.",
-    statute: "Section 251 & 251-A, Rajasthan Tenancy Act 1955"
-  },
-  {
-    icon: Landmark,
-    title: "Declaration of Tenancy Rights (Khatedari Suit)",
-    desc: "Suits seeking declaration that a tenant has acquired permanent, inheritable, and transferable Khatedari rights over specific revenue lands.",
-    statute: "Section 88 & 183, Rajasthan Tenancy Act 1955"
-  }
-];
+const CASE_TYPE_ICONS = Object.freeze({ Layers, ShieldAlert, Compass, Gavel, FileCheck, Landmark, BookOpen });
 
 export default function TypesOfCasesPage() {
+  const config = usePublicSetting('case_types_config');
+  const caseTypes = Array.isArray(config?.caseTypes)
+    ? config.caseTypes.map(caseType => ({ ...caseType, desc: caseType.description }))
+    : [];
+  const firstScheduleItems = Array.isArray(config?.firstSchedule?.items) ? config.firstSchedule.items : [];
+
   return (
     <div>
       {/* Hero Banner */}
@@ -58,14 +28,14 @@ export default function TypesOfCasesPage() {
         <div className="layout-container">
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(30, 27, 24, 0.05)', border: '1px solid rgba(30, 27, 24, 0.15)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
             <BookOpen size={14} style={{ color: 'var(--accent-gold-hover)' }} />
-            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Legal Categories</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>{config.hero.eyebrow}</span>
           </div>
           <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: 'var(--primary-blue)' }}>
-            Types of Cases<br />
-            <span style={{ color: '#B38F4F' }}>in Rajasthan Revenue Law</span>
+            {config.hero.title}<br />
+            <span style={{ color: '#B38F4F' }}>{config.hero.highlight}</span>
           </h1>
           <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-            A guide to the most common legal disputes, applications, and suits handled under the jurisdiction of state revenue officers.
+            {config.hero.description}
           </p>
         </div>
       </div>
@@ -79,44 +49,47 @@ export default function TypesOfCasesPage() {
           <div>
             {/* Case Types Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem', marginBottom: '4rem' }}>
-              {caseTypes.map((c, i) => (
-                <div key={i} style={{
-                  background: 'white',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '10px',
-                  padding: '2rem',
-                  boxShadow: 'var(--shadow-sm)',
-                  transition: 'var(--transition-normal)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1rem'
-                }}
-                onMouseEnter={e => { e.currentTarget.style.boxShadow = 'var(--shadow-md)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = 'var(--shadow-sm)'; e.currentTarget.style.transform = 'none'; }}
-                >
-                  <div style={{ width: '46px', height: '46px', background: 'rgba(197,168,128,0.12)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <c.icon size={22} style={{ color: 'var(--accent-gold)' }} />
-                  </div>
-                  <div>
-                    <h3 style={{ fontSize: '1.1rem', color: 'var(--primary-blue)', fontWeight: 700, marginBottom: '0.5rem' }}>{c.title}</h3>
-                    <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6, margin: 0 }}>{c.desc}</p>
-                  </div>
-                  <div style={{
-                    marginTop: 'auto',
-                    paddingTop: '0.75rem',
-                    borderTop: '1px solid var(--border-color)',
-                    fontSize: '0.8rem',
-                    fontWeight: 600,
-                    color: 'var(--primary-blue)',
+              {caseTypes.map((c, i) => {
+                const CaseIcon = CASE_TYPE_ICONS[c.icon] || Gavel;
+                return (
+                  <div key={i} style={{
+                    background: 'white',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '10px',
+                    padding: '2rem',
+                    boxShadow: 'var(--shadow-sm)',
+                    transition: 'var(--transition-normal)',
                     display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.25rem'
-                  }}>
-                    <Gavel size={14} style={{ color: 'var(--accent-gold)' }} />
-                    <span>Statutory Source: {c.statute}</span>
+                    flexDirection: 'column',
+                    gap: '1rem'
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.boxShadow = 'var(--shadow-md)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.boxShadow = 'var(--shadow-sm)'; e.currentTarget.style.transform = 'none'; }}
+                  >
+                    <div style={{ width: '46px', height: '46px', background: 'rgba(197,168,128,0.12)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <CaseIcon size={22} style={{ color: 'var(--accent-gold)' }} />
+                    </div>
+                    <div>
+                      <h3 style={{ fontSize: '1.1rem', color: 'var(--primary-blue)', fontWeight: 700, marginBottom: '0.5rem' }}>{c.title}</h3>
+                      <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6, margin: 0 }}>{c.desc}</p>
+                    </div>
+                    <div style={{
+                      marginTop: 'auto',
+                      paddingTop: '0.75rem',
+                      borderTop: '1px solid var(--border-color)',
+                      fontSize: '0.8rem',
+                      fontWeight: 600,
+                      color: 'var(--primary-blue)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.25rem'
+                    }}>
+                      <Gavel size={14} style={{ color: 'var(--accent-gold)' }} />
+                      <span>Statutory Source: {c.statute}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Section 23 and the First Schedule List of Judicial Matters */}
@@ -129,12 +102,12 @@ export default function TypesOfCasesPage() {
               marginBottom: '4rem'
             }}>
               <div style={{ borderLeft: '4px solid var(--accent-gold)', paddingLeft: '1rem', marginBottom: '1.5rem' }}>
-                <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>Judicial Jurisdiction</span>
-                <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-blue)', margin: '0.25rem 0 0 0', fontFamily: 'var(--font-serif)' }}>Section 23 & The First Schedule of RLRA 1956</h3>
+                <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>{config.firstSchedule.eyebrow}</span>
+                <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-blue)', margin: '0.25rem 0 0 0', fontFamily: 'var(--font-serif)' }}>{config.firstSchedule.title}</h3>
               </div>
 
               <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--text-dark)', marginBottom: '1.5rem' }}>
-                Under the Rajasthan Land Revenue Act, 1956, judicial matters are categorized separately to determine the correct jurisdiction and escalation. <strong>Section 23 of the Rajasthan Land Revenue Act, 1956</strong> governs the list of these judicial proceedings, reproduced below:
+                {config.firstSchedule.introduction}
               </p>
 
               <div style={{
@@ -148,10 +121,10 @@ export default function TypesOfCasesPage() {
                 marginBottom: '2rem'
               }}>
                 <strong style={{ color: 'var(--primary-blue)', fontFamily: 'var(--font-serif)', display: 'block', marginBottom: '0.75rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
-                  Section 23 - Rules defining what matters are judicial or otherwise
+                  {config.firstSchedule.sectionTitle}
                 </strong>
                 <p style={{ margin: 0 }}>
-                  The Board may, with the previous sanction of the State Government, make rules declaring what matters shall be deemed to be judicial matters and what matters shall be deemed to be non-judicial matters under this Act. The list of such judicial matters is detailed under the First Schedule of the Act.
+                  {config.firstSchedule.sectionText}
                 </p>
               </div>
 
@@ -163,9 +136,7 @@ export default function TypesOfCasesPage() {
                 boxShadow: 'var(--shadow-sm)'
               }}>
                 <h4 style={{ color: 'var(--primary-blue)', margin: '0 0 1rem 0', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid rgba(197, 168, 128, 0.3)', paddingBottom: '0.5rem', fontSize: '1rem', textAlign: 'center' }}>
-                  The First Schedule <br />
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>(See Section 23)</span> <br />
-                  List of Judicial Matters
+                  {config.firstSchedule.listTitle}
                 </h4>
 
                 <ol style={{ 
@@ -178,21 +149,7 @@ export default function TypesOfCasesPage() {
                   lineHeight: '1.5',
                   color: 'var(--text-dark)'
                 }}>
-                  <li>Claims under sub-section (2) of section 88.</li>
-                  <li>Disputes with respect to the right of grazing cattle on pasturage land.</li>
-                  <li>Disputes as to the right of user over forest growth and exclusion from forest land.</li>
-                  <li>Settlement of boundary disputes.</li>
-                  <li>Disputes as to entries in the record of rights and annual registers.</li>
-                  <li>Disputes respecting the class or tenure of tenants.</li>
-                  <li>Mutation upon succession, transfer or otherwise.</li>
-                  <li>Disputes regarding the rent or revenue payable.</li>
-                  <li>Disputes concerning Waj-ul-arz or Dastoor Ganwai.</li>
-                  <li>Inquiry into and assessment of lands held free of revenue or rent.</li>
-                  <li>Partition and consolidation of estates.</li>
-                  <li>Imposition of fines, penalties, forfeitures and confiscations under this Act.</li>
-                  <li>Determination of compensation.</li>
-                  <li>Sales and auctions under this Act.</li>
-                  <li>Such other matters as may be prescribed by the State Government.</li>
+                  {firstScheduleItems.map((item, index) => <li key={index}>{item}</li>)}
                 </ol>
               </div>
             </div>
@@ -210,12 +167,12 @@ export default function TypesOfCasesPage() {
               margin: '0 auto',
               border: '1px solid var(--border-color)'
             }}>
-              <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>Looking for Judicial Precedents?</h2>
+              <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>{config.cta.title}</h2>
               <p style={{ color: 'var(--text-dark)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem auto', fontSize: '0.95rem', lineHeight: 1.7 }}>
-                Search through our database of judgments filtered by specific case categories like partition, mutation rights, and land conversions.
+                {config.cta.description}
               </p>
-              <Link href="/judgments" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span>Explore Board of Revenue Judgments</span>
+              <Link href={config.cta.href} className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span>{config.cta.label}</span>
                 <ArrowRight size={16} />
               </Link>
             </div>

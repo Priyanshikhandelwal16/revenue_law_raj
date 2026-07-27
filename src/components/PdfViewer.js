@@ -63,16 +63,13 @@ export default function PdfViewer({ pdfData, pdfUrl, title = "document" }) {
     <div 
       style={isFullscreen ? {
         position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+        inset: 0,
         zIndex: 10000,
         backgroundColor: '#0A192F',
         display: 'flex',
         flexDirection: 'column',
-        height: '100vh',
-        width: '100vw'
+        height: '100dvh',
+        width: 'auto'
       } : {
         marginTop: '1.5rem',
         borderRadius: '8px',
@@ -115,7 +112,7 @@ export default function PdfViewer({ pdfData, pdfUrl, title = "document" }) {
         </div>
       </div>
       
-      <div style={{ flexGrow: 1, backgroundColor: '#525659', height: isFullscreen ? 'calc(100vh - 48px)' : 'clamp(350px, 60vh, 550px)' }}>
+      <div style={{ flexGrow: 1, backgroundColor: '#525659', height: isFullscreen ? 'calc(100dvh - 48px)' : 'clamp(350px, 60dvh, 550px)' }}>
         <iframe 
           id="pdf-iframe-element"
           src={pdfSource}

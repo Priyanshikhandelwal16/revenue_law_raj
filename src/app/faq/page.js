@@ -4,39 +4,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, HelpCircle, Search, ChevronDown } from 'lucide-react';
 import NewsSidebar from '@/components/NewsSidebar';
-
-const faqData = [
-  {
-    question: "Who can convert agricultural land under Sec 90-A?",
-    answer: "Only the recorded Khatedar tenant of the agricultural land, or an authorized developer holding a valid registered development agreement with the tenant, can apply for land conversion to the competent revenue authority (SDO or Collector)."
-  },
-  {
-    question: "What is the limitation period for filing a revenue appeal?",
-    answer: "Generally, first appeals against Tehsildar orders must be filed within 30 days. Appeals against SDO decrees on partitions/declarations must be filed within 90 days before the Revenue Appeals Commissioner (RAC). Revision petitions and second appeals to the Board of Revenue Ajmer typically carry a 90-day limitation period."
-  },
-  {
-    question: "What is a Khatedari right?",
-    answer: "Khatedari rights are permanent, inheritable, and transferable occupancy rights in agricultural land granted to tenants under the Rajasthan Tenancy Act, 1955. Khatedars have full rights of land usage subject to statutory land revenue rules."
-  },
-  {
-    question: "How is a land mutation (Namantran) registered?",
-    answer: "Following a land sale, gift, or succession, an application is submitted to the Tehsildar or local Patwari. The Patwari enters the transfer in the mutation register (P-21) and issues a 15-day public notice. If no dispute is raised, the mutation is certified by the Revenue Officer and registered in the Jamabandi (records of rights)."
-  },
-  {
-    question: "What powers do Tehsildars hold under Section 91 of the Land Revenue Act?",
-    answer: "Section 91 empowers Tehsildars to evict unauthorized trespassers from government or communal land. The Tehsildar can impose fines, order immediate eviction, and confiscate crops or structures raised on the encroached land."
-  },
-  {
-    question: "Can agricultural land of SC/ST tenants be sold to non-SC/ST persons?",
-    answer: "No. Section 42 of the Rajasthan Tenancy Act, 1955 strictly prohibits the sale, gift, bequest, or mortgage of SC/ST agricultural holdings to individuals who do not belong to the same category. Any such transactions are declared null and void from inception."
-  },
-  {
-    question: "What is Section 251 of the Rajasthan Land Revenue Act?",
-    answer: "Section 251 grants Tehsildars the authority to adjudicate right-of-way disputes. If a tenant's passage to their field is blocked by a neighboring landowner, the Tehsildar can hear the petition and order the immediate clearance or creation of a pathway."
-  }
-];
+import usePublicSetting from '@/hooks/usePublicSetting';
 
 export default function FAQPage() {
+  const config = usePublicSetting('faq_config');
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedFaq, setExpandedFaq] = useState(null);
 
@@ -48,7 +19,7 @@ export default function FAQPage() {
     }
   };
 
-  const filteredFaqs = faqData.filter(faq => 
+  const filteredFaqs = config.entries.filter(faq =>
     faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
     faq.answer.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -66,14 +37,14 @@ export default function FAQPage() {
         <div className="layout-container">
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(30, 27, 24, 0.05)', border: '1px solid rgba(30, 27, 24, 0.15)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
             <HelpCircle size={14} style={{ color: 'var(--accent-gold-hover)' }} />
-            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>FAQ Database</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>{config.hero.eyebrow}</span>
           </div>
           <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: 'var(--primary-blue)' }}>
-            Frequently Asked Questions<br />
-            <span style={{ color: '#B38F4F' }}>Rajasthan Revenue Law</span>
+            {config.hero.title}<br />
+            <span style={{ color: '#B38F4F' }}>{config.hero.highlight}</span>
           </h1>
           <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-            Find answers to common questions about land conversions, tenancy rules, mutations, and appellate timelines.
+            {config.hero.description}
           </p>
         </div>
       </div>
@@ -100,7 +71,7 @@ export default function FAQPage() {
               </span>
               <input 
                 type="text" 
-                placeholder="Search FAQs by keywords (e.g. 90-A, Mutation, SC/ST, Appeal)..." 
+                placeholder={config.searchPlaceholder}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 style={{
@@ -203,7 +174,7 @@ export default function FAQPage() {
                   border: '1px solid var(--border-color)',
                   color: 'var(--text-muted)'
                 }}>
-                  No matching FAQs found for "{searchTerm}". Try checking your spelling or search for general keywords.
+                  {config.noResults}
                 </div>
               )}
             </div>
@@ -217,9 +188,9 @@ export default function FAQPage() {
               boxShadow: 'var(--shadow-sm)',
               marginTop: '3rem'
             }}>
-              <h3 style={{ fontSize: '1.3rem', color: 'var(--primary-blue)', marginBottom: '0.85rem', fontFamily: 'var(--font-serif)', marginTop: 0 }}>Statutory Notice</h3>
+              <h3 style={{ fontSize: '1.3rem', color: 'var(--primary-blue)', marginBottom: '0.85rem', fontFamily: 'var(--font-serif)', marginTop: 0 }}>{config.notice.title}</h3>
               <p style={{ fontSize: '0.92rem', lineHeight: 1.7, color: 'var(--text-dark)', margin: 0 }}>
-                This FAQ database is created for general guidance and legal research references under the Rajasthan Land Revenue Act, 1956 and the Rajasthan Tenancy Act, 1955. While we strive to maintain absolute accuracy corresponding to the latest Government gazettes, local modifications and case-specific situations should be consulted with an advocate or certified revenue administrator.
+                {config.notice.description}
               </p>
             </div>
           </div>

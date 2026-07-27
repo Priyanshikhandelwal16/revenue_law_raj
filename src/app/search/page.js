@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search, Gavel, BookOpen, Newspaper, Bell, Download, ChevronRight, Scale } from 'lucide-react';
 import NewsSidebar from '@/components/NewsSidebar';
+import { getDirectPageMatch } from '@/lib/searchCatalog';
 
 function SearchResultsContent() {
   const searchParams = useSearchParams();
@@ -12,6 +13,7 @@ function SearchResultsContent() {
   const router = useRouter();
   const [localQuery, setLocalQuery] = useState(query);
   const [results, setResults] = useState({
+    pages: [],
     articles: [],
     judgments: [],
     laws: [],
@@ -26,51 +28,50 @@ function SearchResultsContent() {
   }, [query]);
 
   useEffect(() => {
+    const directPage = getDirectPageMatch(query);
+    if (directPage) {
+      router.replace(directPage.href);
+      return;
+    }
+
+    const controller = new AbortController();
     async function performSearch() {
-      if (!query) {
+      if (!query.trim()) {
+        setResults({ pages: [], articles: [], judgments: [], laws: [], notifications: [], downloads: [], glossary: [] });
         setLoading(false);
         return;
       }
       setLoading(true);
       try {
-        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+        const res = await fetch(`/api/search?q=${encodeURIComponent(query.trim())}`, { signal: controller.signal });
         if (res.ok) {
           const json = await res.json();
+          if (json.directHit?.href) {
+            router.replace(json.directHit.href);
+            return;
+          }
           setResults(json);
         }
       } catch (err) {
-        console.error("Search failed", err);
+        if (err.name !== 'AbortError') console.error('Search failed', err);
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       }
     }
     performSearch();
-  }, [query]);
+    return () => controller.abort();
+  }, [query, router]);
 
-  const handleSearchSubmit = async (e) => {
-    if (e) e.preventDefault();
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
     const trimmed = localQuery.trim();
     if (!trimmed) return;
-    
-    // Update URL query parameters
-    router.push(`/search?q=${encodeURIComponent(trimmed)}`);
-    
-    // Immediately fetch from API so content loads right here
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(trimmed)}`);
-      if (res.ok) {
-        const json = await res.json();
-        setResults(json);
-      }
-    } catch (err) {
-      console.error("Search failed", err);
-    } finally {
-      setLoading(false);
-    }
+    const directPage = getDirectPageMatch(trimmed);
+    router.push(directPage?.href || `/search?q=${encodeURIComponent(trimmed)}`);
   };
 
   const hasResults = 
+    (results.pages && results.pages.length > 0) ||
     results.articles.length > 0 ||
     results.judgments.length > 0 ||
     results.laws.length > 0 ||
@@ -125,6 +126,27 @@ function SearchResultsContent() {
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+              {/* Matching website pages */}
+              {results.pages && results.pages.length > 0 && (
+                <div>
+                  <h2 style={{ fontSize: '1.25rem', borderBottom: '2px solid var(--primary-blue)', paddingBottom: '0.5rem', marginBottom: '1rem', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <BookOpen size={18} style={{ color: 'var(--accent-gold)' }} />
+                    Website Pages ({results.pages.length})
+                  </h2>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '1rem' }}>
+                    {results.pages.map((page) => (
+                      <Link key={page.href} href={page.href} className="premium-card" style={{ backgroundColor: 'white', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '1.25rem', display: 'flex', justifyContent: 'space-between', gap: '1rem', alignItems: 'center' }}>
+                        <span>
+                          <strong style={{ display: 'block', color: 'var(--primary-blue)', marginBottom: '0.25rem' }}>{page.title}</strong>
+                          <span style={{ display: 'block', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{page.description}</span>
+                        </span>
+                        <ChevronRight size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Judgments Section */}
               {results.judgments.length > 0 && (
                 <div>
@@ -162,7 +184,12 @@ function SearchResultsContent() {
                       <div key={l._id} style={{ backgroundColor: 'white', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '1.5rem' }}>
                         <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', color: 'var(--accent-gold)' }}>{l.category}</span>
                         <h3 style={{ fontSize: '1.15rem', fontWeight: 600, marginTop: '0.25rem', marginBottom: '0.5rem' }}>
-                          <Link href={`/laws/${l.slug}`} style={{ color: 'var(--primary-blue)' }}>{l.title}</Link>
+                          <Link href={`/laws?act=${encodeURIComponent(l.slug)}${l.matchedSection?.sectionNumber ? `&section=${encodeURIComponent(l.matchedSection.sectionNumber)}` : ''}`} style={{ color: 'var(--primary-blue)' }}>{l.title}</Link>
+                          {l.matchedSection?.sectionNumber && (
+                            <span style={{ display: 'block', color: 'var(--accent-gold)', fontSize: '0.8rem', marginTop: '0.25rem' }}>
+                              Matching Section {l.matchedSection.sectionNumber}: {l.matchedSection.title}
+                            </span>
+                          )}
                         </h3>
                         <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{l.description}</p>
                       </div>
@@ -207,7 +234,7 @@ function SearchResultsContent() {
                           <span>{new Date(n.publishDate).toLocaleDateString('en-IN')}</span>
                         </div>
                         <h3 style={{ fontSize: '1.05rem', fontWeight: 500 }}>
-                          <Link href="/notifications" style={{ color: 'var(--primary-blue)' }}>{n.title}</Link>
+                          <Link href={`/notifications#notification-${n._id}`} style={{ color: 'var(--primary-blue)' }}>{n.title}</Link>
                         </h3>
                         {n.summary && <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>{n.summary}</p>}
                       </div>
@@ -230,7 +257,7 @@ function SearchResultsContent() {
                           <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--primary-blue)' }}>{d.title}</h3>
                           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Type: {d.fileType} | Size: {d.fileSize || 'N/A'}</p>
                         </div>
-                        <Link href="/downloads" className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }}>
+                        <Link href={`/downloads#download-${d._id}`} className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }}>
                           View Downloads
                         </Link>
                       </div>
@@ -249,7 +276,9 @@ function SearchResultsContent() {
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
                     {results.glossary.map((g, idx) => (
                       <div key={idx} style={{ backgroundColor: 'white', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '1.5rem', borderLeft: '3px solid var(--accent-gold)' }}>
-                        <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--primary-blue)', marginBottom: '0.5rem' }}>{g.term}</h3>
+                        <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--primary-blue)', marginBottom: '0.5rem' }}>
+                          <Link href={`/glossary?term=${encodeURIComponent(g.term)}`}>{g.term}</Link>
+                        </h3>
                         <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', lineHeight: '1.5' }} dangerouslySetInnerHTML={{ __html: g.definition }} />
                       </div>
                     ))}

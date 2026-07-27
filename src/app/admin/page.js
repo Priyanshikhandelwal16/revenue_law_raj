@@ -8,6 +8,30 @@ import {
   Menu, X
 } from 'lucide-react';
 import RichTextEditor from '@/components/RichTextEditor';
+import SiteSettingsEditor from '@/components/admin/SiteSettingsEditor';
+import HomepageSettingsEditor from '@/components/admin/HomepageSettingsEditor';
+import PageSettingsEditor from '@/components/admin/PageSettingsEditor';
+import LegalSettingsEditor from '@/components/admin/LegalSettingsEditor';
+
+const ADMIN_TAB_TITLES = {
+  overview: 'Dashboard',
+  articles: 'Articles & News',
+  judgments: 'Court Judgments',
+  laws: 'Laws & Acts',
+  notifications: 'Notifications & Circulars',
+  downloads: 'Forms & Downloads',
+  comments: 'Comments',
+  queries: 'Contact Queries',
+  glossary: 'Legal Dictionary',
+  settings: 'Website & Contact Settings',
+  homepage_cms: 'Home Page Editor',
+  pages_cms: 'Website Pages Editor',
+  important_rules_cms: 'Important Rules Editor',
+  policies_cms: 'Terms, Privacy & Disclaimer',
+  media_library: 'Photos & Files',
+  backup_restore: 'Backup & Restore',
+  users: 'Admin Users',
+};
 
 export default function AdminDashboard() {
   const [session, setSession] = useState(null);
@@ -151,7 +175,7 @@ export default function AdminDashboard() {
       } else if (activeTab === 'glossary') {
         const res = await fetch('/api/glossary');
         setGlossary(await res.json());
-      } else if (activeTab === 'settings' || activeTab === 'homepage_cms' || activeTab === 'pages_cms' || activeTab === 'policies_cms') {
+      } else if (activeTab === 'settings' || activeTab === 'homepage_cms' || activeTab === 'pages_cms' || activeTab === 'important_rules_cms' || activeTab === 'policies_cms') {
         const res = await fetch('/api/settings');
         setSettings(await res.json());
       } else if (activeTab === 'media_library') {
@@ -500,90 +524,68 @@ export default function AdminDashboard() {
           <div style={{ fontSize: '0.65rem', color: 'var(--accent-gold)', marginTop: '0.5rem', letterSpacing: '1.5px', fontWeight: 600 }}>ADMIN CONSOLE</div>
         </div>
         <ul className="admin-nav">
+          <li className="admin-nav-section">Start Here</li>
           <li className={`admin-nav-item ${activeTab === 'overview' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('overview'); setEditingItem(null); setSidebarOpen(false); }}>
-              <LayoutDashboard size={16} /> Dashboard Overview
-            </a>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('overview'); setEditingItem(null); setSidebarOpen(false); }}><LayoutDashboard size={16} /> Dashboard</a>
           </li>
-          <li className={`admin-nav-item ${activeTab === 'articles' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('articles'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Newspaper size={16} /> Articles & News
-            </a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'judgments' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('judgments'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Gavel size={16} /> Court Judgments
-            </a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'laws' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('laws'); setEditingItem(null); setSidebarOpen(false); }}>
-              <BookOpen size={16} /> Acts & Statutes
-            </a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'notifications' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('notifications'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Bell size={16} /> Circulars & Gazettes
-            </a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'downloads' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('downloads'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Download size={16} /> Document Templates
-            </a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'comments' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('comments'); setEditingItem(null); setSidebarOpen(false); }}>
-              <MessageSquare size={16} /> Comments Approval
-            </a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'queries' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('queries'); setEditingItem(null); setSidebarOpen(false); }}>
-              <HelpCircle size={16} /> Support Queries
-            </a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'glossary' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('glossary'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Scale size={16} /> Legal Glossary
-            </a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('settings'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Scale size={16} /> Configurations
-            </a>
-          </li>
+
+          <li className="admin-nav-section">Website Pages</li>
           <li className={`admin-nav-item ${activeTab === 'homepage_cms' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('homepage_cms'); setEditingItem(null); setSidebarOpen(false); }}>
-              <FileText size={16} style={{ color: 'var(--accent-gold)' }} /> Homepage Config
-            </a>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('homepage_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Edit Home Page</a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'important_rules_cms' ? 'active' : ''}`}>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('important_rules_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Edit Important Rules</a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'pages_cms' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('pages_cms'); setEditingItem(null); setSidebarOpen(false); }}>
-              <FileText size={16} /> About & Contact Page
-            </a>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('pages_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Other Website Pages</a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`}>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('settings'); setEditingItem(null); setSidebarOpen(false); }}><Scale size={16} /> Website & Contact Details</a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'policies_cms' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('policies_cms'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Shield size={16} /> Legal Policies
-            </a>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('policies_cms'); setEditingItem(null); setSidebarOpen(false); }}><Shield size={16} /> Terms, Privacy & Disclaimer</a>
           </li>
+
+          <li className="admin-nav-section">Add & Manage Content</li>
+          <li className={`admin-nav-item ${activeTab === 'articles' ? 'active' : ''}`}>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('articles'); setEditingItem(null); setSidebarOpen(false); }}><Newspaper size={16} /> Articles & News</a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'judgments' ? 'active' : ''}`}>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('judgments'); setEditingItem(null); setSidebarOpen(false); }}><Gavel size={16} /> Court Judgments</a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'laws' ? 'active' : ''}`}>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('laws'); setEditingItem(null); setSidebarOpen(false); }}><BookOpen size={16} /> Laws & Acts</a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'notifications' ? 'active' : ''}`}>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('notifications'); setEditingItem(null); setSidebarOpen(false); }}><Bell size={16} /> Notifications & Circulars</a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'downloads' ? 'active' : ''}`}>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('downloads'); setEditingItem(null); setSidebarOpen(false); }}><Download size={16} /> Forms & Downloads</a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'glossary' ? 'active' : ''}`}>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('glossary'); setEditingItem(null); setSidebarOpen(false); }}><Scale size={16} /> Legal Dictionary</a>
+          </li>
+
+          <li className="admin-nav-section">Messages</li>
+          <li className={`admin-nav-item ${activeTab === 'comments' ? 'active' : ''}`}>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('comments'); setEditingItem(null); setSidebarOpen(false); }}><MessageSquare size={16} /> Comments</a>
+          </li>
+          <li className={`admin-nav-item ${activeTab === 'queries' ? 'active' : ''}`}>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('queries'); setEditingItem(null); setSidebarOpen(false); }}><HelpCircle size={16} /> Contact Queries</a>
+          </li>
+
+          <li className="admin-nav-section">System</li>
           <li className={`admin-nav-item ${activeTab === 'media_library' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('media_library'); setEditingItem(null); setSidebarOpen(false); }}>
-              <Image size={16} /> Photo & File Library
-            </a>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('media_library'); setEditingItem(null); setSidebarOpen(false); }}><Image size={16} /> Photos & Files</a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'backup_restore' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('backup_restore'); setEditingItem(null); setSidebarOpen(false); }}>
-              <RefreshCw size={16} /> Database Backup
-            </a>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('backup_restore'); setEditingItem(null); setSidebarOpen(false); }}><RefreshCw size={16} /> Backup & Restore</a>
           </li>
           <li className={`admin-nav-item ${activeTab === 'users' ? 'active' : ''}`}>
-            <a href="#" onClick={() => { setActiveTab('users'); setEditingItem(null); setSidebarOpen(false); }}>
-              <User size={16} /> Admin User Access
-            </a>
+            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('users'); setEditingItem(null); setSidebarOpen(false); }}><User size={16} /> Admin Users</a>
           </li>
-          <li className="admin-nav-item" style={{ marginTop: '3rem' }}>
-            <a href="#" onClick={() => { handleLogout(); setSidebarOpen(false); }} style={{ color: '#EF4444' }}>
-              <LogOut size={16} /> Sign Out / Log Out
-            </a>
+          <li className="admin-nav-item" style={{ marginTop: '1.5rem' }}>
+            <a href="#" onClick={(event) => { event.preventDefault(); handleLogout(); setSidebarOpen(false); }} style={{ color: '#FCA5A5' }}><LogOut size={16} /> Log Out</a>
           </li>
         </ul>
       </aside>
@@ -595,8 +597,8 @@ export default function AdminDashboard() {
             <button className="admin-toggle-btn" onClick={() => setSidebarOpen(true)} title="Open Menu">
               <Menu size={20} />
             </button>
-            <h1 style={{ fontSize: '1.75rem', textTransform: 'capitalize', margin: 0 }}>
-              {editingItem ? `${editingItem.isNew ? 'Create New' : 'Edit'} ${editingItem.type}` : activeTab.replace('_', ' ') + ' workspace'}
+            <h1 style={{ fontSize: '1.75rem', margin: 0 }}>
+              {editingItem ? `${editingItem.isNew ? 'Add New' : 'Edit'} ${ADMIN_TAB_TITLES[editingItem.type] || editingItem.type}` : ADMIN_TAB_TITLES[activeTab] || 'Admin Panel'}
             </h1>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem' }}>
@@ -1372,13 +1374,36 @@ export default function AdminDashboard() {
             {/* Tab: Overview / Dashboard Metrics */}
             {activeTab === 'overview' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                <section className="admin-start-guide">
+                  <div className="admin-start-guide-heading">
+                    <div>
+                      <span className="admin-start-guide-kicker">Quick Start</span>
+                      <h2>What would you like to update?</h2>
+                      <p>Select an option below to open the correct section. You do not need to remember any technical CMS names.</p>
+                    </div>
+                  </div>
+                  <div className="admin-guide-grid">
+                    <button type="button" onClick={() => setActiveTab('important_rules_cms')} className="admin-guide-card">
+                      <FileText size={22} /><span><strong>Important Rules</strong><small>Add, edit, delete, or reorder rules and update land-conversion details.</small></span>
+                    </button>
+                    <button type="button" onClick={() => setActiveTab('homepage_cms')} className="admin-guide-card">
+                      <LayoutDashboard size={22} /><span><strong>Home Page</strong><small>Update the homepage heading, image, and FAQs.</small></span>
+                    </button>
+                    <button type="button" onClick={() => setActiveTab('pages_cms')} className="admin-guide-card">
+                      <BookOpen size={22} /><span><strong>Other Website Pages</strong><small>Edit About, FAQ, court hierarchy, and guide pages.</small></span>
+                    </button>
+                    <button type="button" onClick={() => setActiveTab('settings')} className="admin-guide-card">
+                      <Scale size={22} /><span><strong>Contact & Website Details</strong><small>Update the phone number, email, address, and website settings.</small></span>
+                    </button>
+                  </div>
+                </section>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
                   <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
                     <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Judgments</h3>
                     <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{judgments.length}</p>
                   </div>
                   <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Commentaries</h3>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Articles & News</h3>
                     <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{articles.length}</p>
                   </div>
                   <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
@@ -1408,11 +1433,17 @@ export default function AdminDashboard() {
                     </p>
                   </div>
                   <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>App Settings</h3>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Important Rules</h3>
+                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent-gold)', marginTop: '0.5rem' }}>
+                      {settings.find(setting => setting.key === 'important_rules_config')?.value?.rules?.length || 0}
+                    </p>
+                  </div>
+                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Editable Website Sections</h3>
                     <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{settings.length}</p>
                   </div>
                   <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>CMS Users</h3>
+                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Admin Users</h3>
                     <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{users.length}</p>
                   </div>
                 </div>
@@ -1425,7 +1456,7 @@ export default function AdminDashboard() {
                       <Plus size={16} /> Create Judgment
                     </button>
                     <button onClick={() => { setActiveTab('articles'); startCreate('articles'); }} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <Plus size={16} /> Publish Commentary
+                      <Plus size={16} /> Add Article
                     </button>
                     <button onClick={() => { setActiveTab('notifications'); startCreate('notifications'); }} className="btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <Plus size={16} /> Add Circular
@@ -1771,298 +1802,30 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* Tab: Settings */}
+            {/* Tab: Site & Contact Settings */}
             {activeTab === 'settings' && (
-              <div className="admin-card">
-                <div className="admin-card-header">
-                  <h2>Global Configurations ({settings.length})</h2>
-                  <button onClick={() => startCreate('settings')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <Plus size={16} /> Add Setting
-                  </button>
-                </div>
-                <div className="table-responsive">
-                  <table className="admin-table">
-                    <thead>
-                      <tr>
-                        <th>Key</th>
-                        <th>Value</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {settings.map(s => (
-                        <tr key={s._id}>
-                          <td><strong>{s.key}</strong></td>
-                          <td>{typeof s.value === 'object' ? JSON.stringify(s.value) : String(s.value)}</td>
-                          <td style={{ display: 'flex', gap: '0.5rem' }}>
-                            <button onClick={() => startEdit('settings', s)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                            <button onClick={() => handleDelete('settings', s._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <SiteSettingsEditor settings={settings} onSaved={loadDashboardData} />
             )}
 
             {/* Tab: Homepage CMS */}
-            {activeTab === 'homepage_cms' && (() => {
-              const settingItem = settings.find(s => s.key === 'homepage_config') || { value: {} };
-              const val = settingItem.value || {};
-              
-              const saveHomepageConfig = async (e) => {
-                e.preventDefault();
-                const form = e.target;
-                const updated = {
-                  heroTitle: form.heroTitle.value,
-                  heroSubtitle: form.heroSubtitle.value,
-                  heroDesc: form.heroDesc.value,
-                  heroButtonText: form.heroButtonText.value,
-                  heroButtonUrl: form.heroButtonUrl.value,
-                  heroSecButtonText: form.heroSecButtonText.value,
-                  heroSecButtonUrl: form.heroSecButtonUrl.value,
-                  heroImage: form.heroImage.value,
-                  faqs: val.faqs || []
-                };
-                
-                const res = await fetch('/api/settings', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ key: 'homepage_config', value: updated })
-                });
-                if (res.ok) {
-                  showNotification('Homepage CMS updated successfully!', 'success');
-                  loadDashboardData();
-                } else {
-                  showNotification('Failed to update homepage CMS', 'error');
-                }
-              };
+            {activeTab === 'homepage_cms' && (
+              <HomepageSettingsEditor settings={settings} onSaved={loadDashboardData} />
+            )}
 
-              return (
-                <div className="admin-card">
-                  <h2>Homepage Hero & Configurations</h2>
-                  <form onSubmit={saveHomepageConfig} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
-                    <div className="form-group">
-                      <label>Hero Title</label>
-                      <input type="text" name="heroTitle" defaultValue={val.heroTitle || ''} className="form-control" required />
-                    </div>
-                    <div className="form-group">
-                      <label>Hero Subtitle</label>
-                      <input type="text" name="heroSubtitle" defaultValue={val.heroSubtitle || ''} className="form-control" required />
-                    </div>
-                    <div className="form-group">
-                      <label>Hero Description</label>
-                      <textarea name="heroDesc" defaultValue={val.heroDesc || ''} className="form-control" rows={3} required />
-                    </div>
-                    <div className="grid-2col">
-                      <div className="form-group">
-                        <label>Primary Button Text</label>
-                        <input type="text" name="heroButtonText" defaultValue={val.heroButtonText || ''} className="form-control" />
-                      </div>
-                      <div className="form-group">
-                        <label>Primary Button URL</label>
-                        <input type="text" name="heroButtonUrl" defaultValue={val.heroButtonUrl || ''} className="form-control" />
-                      </div>
-                    </div>
-                    <div className="grid-2col">
-                      <div className="form-group">
-                        <label>Secondary Button Text</label>
-                        <input type="text" name="heroSecButtonText" defaultValue={val.heroSecButtonText || ''} className="form-control" />
-                      </div>
-                      <div className="form-group">
-                        <label>Secondary Button URL</label>
-                        <input type="text" name="heroSecButtonUrl" defaultValue={val.heroSecButtonUrl || ''} className="form-control" />
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label>Hero Graphic Image URL</label>
-                      <input type="text" name="heroImage" defaultValue={val.heroImage || ''} className="form-control" />
-                    </div>
-                    <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start', padding: '0.6rem 2rem' }}>Save Homepage CMS</button>
-                  </form>
+            {/* Tab: Important Rules */}
+            {activeTab === 'important_rules_cms' && (
+              <PageSettingsEditor settings={settings} onSaved={loadDashboardData} initialSelectedKey="important_rules_config" />
+            )}
 
-                  <div style={{ marginTop: '2.5rem', borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem' }}>
-                    <h3>Manage Homepage FAQs ({val.faqs?.length || 0})</h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem' }}>
-                      {(val.faqs || []).map((faq, idx) => (
-                        <div key={idx} style={{ padding: '1rem', border: '1px solid var(--border-color)', borderRadius: '6px', backgroundColor: 'var(--bg-offwhite)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <div>
-                            <strong>Q: {faq.question}</strong>
-                            <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>A: {faq.answer}</p>
-                          </div>
-                          <button onClick={async () => {
-                            if (confirm('Delete this FAQ?')) {
-                              const updatedFaqs = val.faqs.filter((_, i) => i !== idx);
-                              await fetch('/api/settings', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ key: 'homepage_config', value: { ...val, faqs: updatedFaqs } })
-                              });
-                              loadDashboardData();
-                            }
-                          }} className="editor-btn" style={{ color: 'red' }}><Trash size={14} /></button>
-                        </div>
-                      ))}
-                    </div>
-
-                    <form onSubmit={async (e) => {
-                      e.preventDefault();
-                      const form = e.target;
-                      const newFaq = { question: form.question.value, answer: form.answer.value };
-                      const updatedFaqs = [...(val.faqs || []), newFaq];
-                      
-                      const res = await fetch('/api/settings', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ key: 'homepage_config', value: { ...val, faqs: updatedFaqs } })
-                      });
-                      if (res.ok) {
-                        form.reset();
-                        loadDashboardData();
-                      }
-                    }} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1.5rem', padding: '1rem', border: '1px solid var(--border-color)', borderRadius: '6px' }}>
-                      <h4>Add New FAQ</h4>
-                      <input type="text" name="question" placeholder="Question Text" className="form-control" required />
-                      <textarea name="answer" placeholder="Answer Text" className="form-control" rows={2} required />
-                      <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>Add FAQ</button>
-                    </form>
-                  </div>
-                </div>
-              );
-            })()}
-
-            {/* Tab: Pages Copy CMS */}
-            {activeTab === 'pages_cms' && (() => {
-              const aboutConfigSetting = settings.find(s => s.key === 'about_config') || { value: {} };
-              const contactConfigSetting = settings.find(s => s.key === 'contact_config') || { value: {} };
-              
-              const aboutVal = aboutConfigSetting.value || {};
-              const contactVal = contactConfigSetting.value || {};
-
-              const savePagesCMS = async (e) => {
-                e.preventDefault();
-                const form = e.target;
-
-                await fetch('/api/settings', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    key: 'about_config',
-                    value: {
-                      missionTitle: form.missionTitle.value,
-                      missionText: form.missionText.value
-                    }
-                  })
-                });
-
-                await fetch('/api/settings', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    key: 'contact_config',
-                    value: {
-                      phone: form.phone.value,
-                      email: form.email.value,
-                      address: form.address.value,
-                      socials: contactVal.socials || {}
-                    }
-                  })
-                });
-
-                showNotification('Pages Copy CMS updated successfully!', 'success');
-                loadDashboardData();
-              };
-
-              return (
-                <div className="admin-card">
-                  <h2>Pages & Copy Content Manager</h2>
-                  <form onSubmit={savePagesCMS} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '1rem' }}>
-                    <div style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
-                      <h3 style={{ color: 'var(--primary-blue)', marginBottom: '1rem' }}>About Us Page Copy</h3>
-                      <div className="form-group">
-                        <label>Mission Title</label>
-                        <input type="text" name="missionTitle" defaultValue={aboutVal.missionTitle || ''} className="form-control" required />
-                      </div>
-                      <div className="form-group" style={{ marginTop: '0.75rem' }}>
-                        <label>Mission Statement Text</label>
-                        <textarea name="missionText" defaultValue={aboutVal.missionText || ''} className="form-control" rows={4} required />
-                      </div>
-                    </div>
-
-                    <div>
-                      <h3 style={{ color: 'var(--primary-blue)', marginBottom: '1rem' }}>Contact Details & Help Desk</h3>
-                      <div className="grid-2col">
-                        <div className="form-group">
-                          <label>Secretary Helpline</label>
-                          <input type="text" name="phone" defaultValue={contactVal.phone || ''} className="form-control" required />
-                        </div>
-                        <div className="form-group">
-                          <label>Support Email Address</label>
-                          <input type="email" name="email" defaultValue={contactVal.email || ''} className="form-control" required />
-                        </div>
-                      </div>
-                      <div className="form-group" style={{ marginTop: '0.75rem' }}>
-                        <label>Physical Office Address</label>
-                        <input type="text" name="address" defaultValue={contactVal.address || ''} className="form-control" required />
-                      </div>
-                    </div>
-
-                    <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start', padding: '0.6rem 2rem' }}>Save Pages Copy CMS</button>
-                  </form>
-                </div>
-              );
-            })()}
+            {/* Tab: Content Pages */}
+            {activeTab === 'pages_cms' && (
+              <PageSettingsEditor settings={settings} onSaved={loadDashboardData} />
+            )}
 
             {/* Tab: Legal Policies */}
-            {activeTab === 'policies_cms' && (() => {
-              const legalConfigSetting = settings.find(s => s.key === 'legal_config') || { value: {} };
-              const legalVal = legalConfigSetting.value || {};
-
-              const savePolicies = async (e) => {
-                e.preventDefault();
-                const form = e.target;
-                const updated = {
-                  terms: form.terms.value,
-                  privacy: form.privacy.value,
-                  disclaimer: form.disclaimer.value
-                };
-
-                const res = await fetch('/api/settings', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ key: 'legal_config', value: updated })
-                });
-
-                if (res.ok) {
-                  showNotification('Legal Policies updated successfully!', 'success');
-                  loadDashboardData();
-                } else {
-                  showNotification('Failed to save policies', 'error');
-                }
-              };
-
-              return (
-                <div className="admin-card">
-                  <h2>Legal Copy & Disclaimer Editor</h2>
-                  <form onSubmit={savePolicies} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '1rem' }}>
-                    <div className="form-group">
-                      <label>Terms of Service (HTML format supported)</label>
-                      <textarea name="terms" defaultValue={legalVal.terms || ''} className="form-control" rows={6} required />
-                    </div>
-                    <div className="form-group">
-                      <label>Privacy Policy (HTML format supported)</label>
-                      <textarea name="privacy" defaultValue={legalVal.privacy || ''} className="form-control" rows={6} required />
-                    </div>
-                    <div className="form-group">
-                      <label>Platform Disclaimer (HTML format supported)</label>
-                      <textarea name="disclaimer" defaultValue={legalVal.disclaimer || ''} className="form-control" rows={6} required />
-                    </div>
-                    <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start', padding: '0.6rem 2rem' }}>Save Legal Policies</button>
-                  </form>
-                </div>
-              );
-            })()}
+            {activeTab === 'policies_cms' && (
+              <LegalSettingsEditor settings={settings} onSaved={loadDashboardData} />
+            )}
 
             {/* Tab: Media Library */}
             {activeTab === 'media_library' && (() => {

@@ -19,6 +19,12 @@ export default function GlossaryPage() {
   const [activeLetter, setActiveLetter] = useState('ALL');
 
   useEffect(() => {
+    const requestedTerm = new URLSearchParams(window.location.search).get('term');
+    if (requestedTerm) {
+      setSearchTerm(requestedTerm);
+      setActiveLetter('ALL');
+    }
+
     async function fetchGlossary() {
       try {
         const res = await fetch('/api/glossary');

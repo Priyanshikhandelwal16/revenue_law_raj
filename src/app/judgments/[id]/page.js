@@ -158,7 +158,7 @@ export default function JudgmentDetailPage({ params }) {
             <span style={{ fontSize: '0.85rem', fontWeight: 700, backgroundColor: 'rgba(197, 168, 128, 0.15)', color: 'var(--primary-blue)', padding: '0.35rem 0.75rem', borderRadius: '4px' }}>
               Citation: {judgment.citation}
             </span>
-            <div className="no-print" style={{ display: 'flex', gap: '0.75rem' }}>
+            <div className="action-row" style={{ display: 'flex', gap: '0.75rem' }}>
               <button onClick={handleBookmark} className="btn-outline" style={{ padding: '0.5rem', display: 'flex', gap: '0.25rem', alignItems: 'center', fontSize: '0.8rem' }} title="Bookmark Judgment">
                 <Bookmark size={16} fill={isBookmarked ? 'var(--primary-blue)' : 'none'} />
                 <span>{isBookmarked ? 'Bookmarked' : 'Bookmark'}</span>

@@ -448,10 +448,10 @@ export default function HomeHierarchyPreview() {
       <style jsx global>{`
         @media (max-width: 1024px) {
           .pyramid-container-desktop {
-            display: none !important;
+            display: flex !important;
           }
           .pyramid-container-mobile {
-            display: flex !important;
+            display: none !important;
           }
         }
       `}</style>

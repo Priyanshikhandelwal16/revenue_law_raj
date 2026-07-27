@@ -97,6 +97,7 @@ export default function DownloadsList({ initialDownloads }) {
         {filteredDownloads.length > 0 ? (
           filteredDownloads.map(d => (
             <div 
+              id={`download-${d._id}`}
               key={d._id} 
               style={{
                 backgroundColor: 'white',

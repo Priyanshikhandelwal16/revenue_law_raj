@@ -59,7 +59,7 @@ export default function ThirdScheduleTable() {
   };
 
   return (
-    <div style={{
+    <div className="third-schedule" style={{
       background: 'white',
       border: '1px solid var(--border-color)',
       borderRadius: '12px',
@@ -166,7 +166,7 @@ export default function ThirdScheduleTable() {
       </div>
 
       {/* Table Content Container */}
-      <div style={{ width: '100%', overflowX: 'auto', border: '1px solid var(--border-color)', borderRadius: '8px', marginBottom: '1.5rem' }}>
+      <div className="schedule-table-scroll" role="region" aria-label="Third Schedule table; scroll horizontally to view all columns" tabIndex={0} style={{ width: '100%', overflowX: 'auto', border: '1px solid var(--border-color)', borderRadius: '8px', marginBottom: '1.5rem' }}>
         <table style={{
           width: '100%',
           borderCollapse: 'collapse',

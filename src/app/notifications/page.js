@@ -78,7 +78,7 @@ export default async function NotificationsPage() {
           {/* List */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             {notifications.map(n => (
-              <div key={n._id} className="premium-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div id={`notification-${n._id}`} key={n._id} className="premium-card search-target" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center' }}>
                   <span style={{ fontSize: '0.8rem', fontWeight: 700, backgroundColor: 'rgba(10, 25, 47, 0.05)', color: 'var(--primary-blue)', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>
                     Ref No: {n.refNumber || 'Circular'}

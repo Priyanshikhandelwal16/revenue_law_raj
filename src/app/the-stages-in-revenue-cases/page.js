@@ -2,145 +2,26 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { 
-  ArrowLeft, Search, FileText, Scale, FileCheck, Layers, Gavel, 
-  Clock, Award, BookOpen, AlertCircle, ChevronDown, ChevronUp, X 
+import {
+  ArrowLeft, Search, FileText, Scale, FileCheck, Layers, Gavel,
+  Clock, Award, BookOpen, AlertCircle, ChevronDown, ChevronUp, X
 } from 'lucide-react';
 import NewsSidebar from '@/components/NewsSidebar';
 import { fallbackArticles } from '@/lib/fallbacks';
+import usePublicSetting from '@/hooks/usePublicSetting';
 
-// 9 stages of the Revenue Case Process
-const stagesData = [
-  {
-    step: 1,
-    id: "filing",
-    title: "Filing of Case / Petition (वाद दायर करना)",
-    icon: FileText,
-    desc: "The legal journey begins with the filing of a formal petition or lawsuit (Plaint) in the competent Revenue Court. This document contains details of the parties, description of the land in dispute, facts of the dispute, and the relief sought.",
-    keyPoints: [
-      "Drafting of the plaint under relevant provisions of the Rajasthan Tenancy Act, 1955 or Land Revenue Act, 1956.",
-      "Attaching vital documents: latest Record of Rights (Jamabandi), Trace Map (Aks Shajra), and copy of mutations.",
-      "Checking and verification of the suit value and affixing proper Court Fee stamps.",
-      "Registration of the case in the Court Registry under the supervision of the Munsarim (Reader)."
-    ],
-    authority: "Sub-Divisional Officer (SDO), Tehsildar, or Assistant Collector having local jurisdiction over the land."
-  },
-  {
-    step: 2,
-    id: "notice",
-    title: "Notice & Summons to Parties (समन/नोटिस जारी करना)",
-    icon: Scale,
-    desc: "Principles of natural justice require that the other party must be informed. Once the case is admitted, the court issues official summons to the defendants/respondents instructing them to appear and present their defense.",
-    keyPoints: [
-      "Preparation of notices listing the next date of hearing and description of the claim.",
-      "Service of notice by Nazarat process servers, registered post with acknowledgment due, or digital methods.",
-      "If the party avoids service, alternative measures like publication in local newspapers (Dhandora or Gazette) are initiated.",
-      "Service of summons must be officially verified before proceeding to further hearings."
-    ],
-    authority: "Court's process server section (Nazarat Branch) under the authority of the Presiding Judge."
-  },
-  {
-    step: 3,
-    id: "reply",
-    title: "Submission of Written Reply (जवाब दावा)",
-    icon: FileCheck,
-    desc: "The defendant/respondent submits their paragraph-by-paragraph response to the plaint. They can also file preliminary objections on legal grounds or raise a counter-claim.",
-    keyPoints: [
-      "Denial or admission of allegations with corresponding legal and factual evidence.",
-      "Raising preliminary issues such as limitation period expired, lack of court jurisdiction, or non-joinder of necessary parties.",
-      "Filing within the mandated timeline, generally 30 days from the service of summons, with discretionary extensions.",
-      "Must be accompanied by documents the defendant relies upon for their defense."
-    ],
-    authority: "Filed directly before the adjudicating Revenue Court."
-  },
-  {
-    step: 4,
-    id: "evidence",
-    title: "Evidence & Document Production (साक्ष्य एवं दस्तावेज)",
-    icon: Layers,
-    desc: "The court lists out the points of dispute (Framing of Issues) and calls upon both sides to present oral testimonies and submit certified public documents to establish their rights.",
-    keyPoints: [
-      "Framing of Issues (विवादक): Defining clear questions of fact and law that the court must decide.",
-      "Plaintiff's Evidence (PE): Production of primary certified records (Jamabandi, Girdawari, mutation papers) and chief examination of witnesses.",
-      "Defendant's Evidence (DE): Production of defense witnesses and cross-examination of plaintiff's witnesses by opposite counsel.",
-      "Submission of expert reports (e.g. handwriting experts) if applicable."
-    ],
-    authority: "Presiding Officer of the Revenue Court (Tehsildar/SDO/Collector)."
-  },
-  {
-    step: 5,
-    id: "hearing",
-    title: "Hearing Process & Local Inspection (सुनवाई एवं मौका मुआयना)",
-    icon: Gavel,
-    desc: "Ongoing hearings take place for arguments on interim applications (like stays under Section 212). The court often orders local spot inspections to verify the actual physical state and possession of the disputed land.",
-    keyPoints: [
-      "Arguments on temporary injunctions to protect the land from being sold or modified during the trial.",
-      "Appointment of a commissioner (usually Tehsildar, Inspector Land Records, or Patwari) for field inspection (Mauka Muayana).",
-      "Drafting of the spot inspection report (Mauka Report) alongside maps and signatures of local witnesses.",
-      "The Spot Report is treated as a highly reliable piece of evidence by the courts."
-    ],
-    authority: "Circle Patwari / Revenue Inspector (RI) / Tehsildar acting as Court Commissioner."
-  },
-  {
-    step: 6,
-    id: "arguments",
-    title: "Final Arguments (अंतिम बहस)",
-    icon: Clock,
-    desc: "After the closure of evidence for both sides, the advocates present their structured final oral arguments, referencing the framed issues, recorded testimonies, and state judicial precedents.",
-    keyPoints: [
-      "Summarizing the evidence and proving how the framed issues favor their client.",
-      "Rebutting the opponent's evidence and highlighting flaws or contradictions in testimonies.",
-      "Citing relevant judgments from the Board of Revenue Ajmer (RRD), Rajasthan High Court, or Supreme Court.",
-      "Filing of written arguments/synopsis for the court's reference."
-    ],
-    authority: "Presented by the legal counsels representing the parties before the Presiding Judge."
-  },
-  {
-    step: 7,
-    id: "judgment",
-    title: "Order / Judgment (आदेश/निर्णय)",
-    icon: Award,
-    desc: "The presiding officer evaluates the pleadings, evidence, and arguments, and pronounces a reasoned judgment resolving each issue, followed by a formal Decree.",
-    keyPoints: [
-      "The judgment must detail the facts, the issues framed, findings on each issue, and final relief.",
-      "A formal Decree (डिग्री) is prepared within 15 days, reflecting the operational part of the judgment.",
-      "The court sends a copy of the order to the Land Records division to implement mutations or corrections if required."
-    ],
-    authority: "The Presiding Officer of the Court (e.g. SDO, Tehsildar, or Collector)."
-  },
-  {
-    step: 8,
-    id: "appeal",
-    title: "Appeal & Revision Process (अपील एवं निगरानी)",
-    icon: Scale,
-    desc: "Any party aggrieved by the final order or decree has the right to challenge it before higher appellate courts within the prescribed limitation period.",
-    keyPoints: [
-      "First Appeal: Lies from Tehsildar to Collector, or from SDO to Revenue Appeals Commissioner (RAC) / Collector, within 30-60 days.",
-      "Second Appeal: Lies to the Board of Revenue (BOR) Ajmer, on specific questions of law, within 90 days.",
-      "Revision: Can be filed before the Board of Revenue Ajmer at any time to correct material irregularities or jurisdictional errors.",
-      "Writ Petition: Challenging BOR orders before the Rajasthan High Court (Jodhpur/Jaipur Benches) under Articles 226/227."
-    ],
-    authority: "District Collector, Revenue Appeals Commissioner (RAC), Board of Revenue Ajmer, Rajasthan High Court."
-  },
-  {
-    step: 9,
-    id: "execution",
-    title: "Execution of Order (आदेश का निष्पादन)",
-    icon: FileCheck,
-    desc: "Winning the lawsuit is only half the battle. The successful party must file an execution application to physically enforce the decree, such as ejecting a trespasser, dividing holdings, or updating land records.",
-    keyPoints: [
-      "Filing of an Execution Petition (Muddai Ijra) in the original trial court within the limitation period.",
-      "Issuance of warrants of possession, demolition of unauthorized structures, or boundary demarcation.",
-      "Physical execution on the spot with the help of local administration and police if necessary.",
-      "Circle Patwari recording the final mutation entries in the Jamabandi to complete the legal cycle."
-    ],
-    authority: "The Court of First Instance (e.g., SDO or Tehsildar) through the field revenue staff (Patwari/Kanungo)."
-  }
-];
+const STAGE_ICONS = Object.freeze({ Award, Clock, FileCheck, FileText, Gavel, Layers, Scale });
+const getStageIcon = (name) => STAGE_ICONS[name] || FileText;
 
 export default function CaseStagesPage() {
+  const config = usePublicSetting('case_stages_config');
+  const stagesData = Array.isArray(config?.stages)
+    ? config.stages.map(stage => ({ ...stage, desc: stage.description }))
+    : [];
   const [searchQuery, setSearchQuery] = useState('');
-  const [expandedSteps, setExpandedSteps] = useState({ 1: true }); // Step 1 open by default
+  const [expandedSteps, setExpandedSteps] = useState(() => (
+    stagesData[0] ? { [stagesData[0].id || stagesData[0].step]: true } : {}
+  ));
   const [relatedArticles, setRelatedArticles] = useState([]);
   const [loadingArticles, setLoadingArticles] = useState(true);
 
@@ -167,16 +48,18 @@ export default function CaseStagesPage() {
     loadArticles();
   }, []);
 
-  const toggleStep = (step) => {
+  const toggleStep = (stageKey) => {
     setExpandedSteps(prev => ({
       ...prev,
-      [step]: !prev[step]
+      [stageKey]: !prev[stageKey]
     }));
   };
 
   const expandAll = () => {
     const all = {};
-    stagesData.forEach(s => { all[s.step] = true; });
+    stagesData.forEach((stage, index) => {
+      all[stage.id || `${stage.step}-${index}`] = true;
+    });
     setExpandedSteps(all);
   };
 
@@ -187,10 +70,10 @@ export default function CaseStagesPage() {
   const filteredStages = stagesData.filter(stage => {
     const q = searchQuery.toLowerCase();
     return (
-      stage.title.toLowerCase().includes(q) ||
-      stage.desc.toLowerCase().includes(q) ||
-      stage.keyPoints.some(pt => pt.toLowerCase().includes(q)) ||
-      (stage.authority && stage.authority.toLowerCase().includes(q))
+      String(stage.title || '').toLowerCase().includes(q) ||
+      String(stage.desc || '').toLowerCase().includes(q) ||
+      (Array.isArray(stage.keyPoints) && stage.keyPoints.some(point => String(point).toLowerCase().includes(q))) ||
+      String(stage.authority || '').toLowerCase().includes(q)
     );
   });
 
@@ -216,7 +99,7 @@ export default function CaseStagesPage() {
             marginBottom: '1.5rem' 
           }}>
             <BookOpen size={14} style={{ color: 'var(--accent-gold-hover)' }} />
-            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Litigation Journey</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>{config.hero.eyebrow}</span>
           </div>
           <h1 style={{ 
             fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', 
@@ -227,11 +110,11 @@ export default function CaseStagesPage() {
             lineHeight: 1.2, 
             color: 'var(--primary-blue)' 
           }}>
-            The Stages in Revenue Cases<br />
-            <span style={{ color: '#B38F4F' }}>Complete Legal Workflow</span>
+            {config.hero.title}<br />
+            <span style={{ color: '#B38F4F' }}>{config.hero.highlight}</span>
           </h1>
           <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-            A comprehensive, step-by-step roadmap detailing the legal phases of a revenue dispute in Rajasthan—from the original filing of the suit to the final execution.
+            {config.hero.description}
           </p>
         </div>
       </div>
@@ -253,14 +136,13 @@ export default function CaseStagesPage() {
               marginBottom: '3rem'
             }}>
               <h2 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', marginBottom: '1rem', marginTop: 0 }}>
-                Understanding the Revenue Litigation Lifecycle
+                {config.introduction.title}
               </h2>
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-dark)', lineHeight: 1.7, marginBottom: '1rem' }}>
-                Under the <strong>Rajasthan Tenancy Act, 1955</strong> and the <strong>Rajasthan Land Revenue Act, 1956</strong>, disputes related to agricultural land, partition, boundaries, encroachments, and mutations are handled by specialized revenue courts. These courts function under a distinct procedural code designed to adjudicate land ownership, possession, and administration rights.
-              </p>
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-dark)', lineHeight: 1.7, margin: 0 }}>
-                While revenue trials share similarities with regular civil proceedings, they heavily rely on official land records kept by local officers (Patwari, Tehsildar) and local spot inspections (Mauka Muayana). Understanding each phase of a revenue suit empowers advocates, revenue officials, and landholders to steer the litigation effectively.
-              </p>
+              {config.introduction.paragraphs.map((paragraph, index) => (
+                <p key={index} style={{ fontSize: '0.95rem', color: 'var(--text-dark)', lineHeight: 1.7, marginBottom: index === config.introduction.paragraphs.length - 1 ? 0 : '1rem' }}>
+                  {paragraph}
+                </p>
+              ))}
             </div>
 
             {/* Step-by-step Revenue Case Process Header & Interactive Controls */}
@@ -274,10 +156,10 @@ export default function CaseStagesPage() {
             }}>
               <div>
                 <h3 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', fontWeight: 700, margin: 0, fontFamily: 'var(--font-serif)' }}>
-                  Step-by-Step Workflow
+                  {config.workflow.title}
                 </h3>
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: '0.25rem 0 0 0' }}>
-                  Showing the timeline of progress stages. Click on cards to expand or collapse detailed guidelines.
+                  {config.workflow.description}
                 </p>
               </div>
 
@@ -298,7 +180,7 @@ export default function CaseStagesPage() {
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-gold)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-color)'}
                 >
-                  Expand All
+                  {config.workflow.expandLabel}
                 </button>
                 <button 
                   onClick={collapseAll}
@@ -316,7 +198,7 @@ export default function CaseStagesPage() {
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-gold)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-color)'}
                 >
-                  Collapse All
+                  {config.workflow.collapseLabel}
                 </button>
               </div>
             </div>
@@ -338,7 +220,7 @@ export default function CaseStagesPage() {
                 type="text" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search stages by keyword (e.g., 'Appeal', 'Evidence', 'Patwari', 'Summons')..."
+                placeholder={config.workflow.searchPlaceholder}
                 style={{
                   border: 'none',
                   outline: 'none',
@@ -395,12 +277,13 @@ export default function CaseStagesPage() {
 
               {filteredStages.length > 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-                  {filteredStages.map((stage) => {
-                    const isOpen = !!expandedSteps[stage.step];
-                    const StepIcon = stage.icon;
+                  {filteredStages.map((stage, index) => {
+                    const stageKey = stage.id || `${stage.step}-${index}`;
+                    const isOpen = !!expandedSteps[stageKey];
+                    const StepIcon = getStageIcon(stage.icon);
                     return (
                       <div 
-                        key={stage.step}
+                        key={stageKey}
                         style={{
                           display: 'flex',
                           position: 'relative',
@@ -411,7 +294,7 @@ export default function CaseStagesPage() {
                       >
                         {/* Step Number Circle */}
                         <div 
-                          onClick={() => toggleStep(stage.step)}
+                          onClick={() => toggleStep(stageKey)}
                           style={{
                             width: '42px',
                             height: '42px',
@@ -447,7 +330,7 @@ export default function CaseStagesPage() {
                             cursor: 'pointer'
                           }}
                           className="timeline-card"
-                          onClick={() => toggleStep(stage.step)}
+                          onClick={() => toggleStep(stageKey)}
                           onMouseEnter={e => { 
                             e.currentTarget.style.boxShadow = 'var(--shadow-md)'; 
                             e.currentTarget.style.transform = 'translateY(-2px)';
@@ -489,7 +372,7 @@ export default function CaseStagesPage() {
                                 Key Points & Procedural Directives:
                               </h5>
                               <ul style={{ paddingLeft: '1.25rem', marginBottom: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                {stage.keyPoints.map((pt, i) => (
+                                {(Array.isArray(stage.keyPoints) ? stage.keyPoints : []).map((pt, i) => (
                                   <li key={i} style={{ fontSize: '0.85rem', color: 'var(--text-dark)', lineHeight: 1.5 }}>
                                     {pt}
                                   </li>
@@ -579,16 +462,16 @@ export default function CaseStagesPage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                 <BookOpen size={20} style={{ color: 'var(--accent-gold)' }} />
                 <h3 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', fontWeight: 700, margin: 0, fontFamily: 'var(--font-serif)' }}>
-                  Related Articles & Guides
+                  {config.related.title}
                 </h3>
               </div>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '2rem' }}>
-                Expand your knowledge on litigation pathways and rules under Rajasthan Land Codes.
+                {config.related.description}
               </p>
 
               {loadingArticles ? (
                 <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem 0' }}>
-                  <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Loading relevant articles...</div>
+                  <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{config.related.loadingText}</div>
                 </div>
               ) : (
                 <div style={{ 

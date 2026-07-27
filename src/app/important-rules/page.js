@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, FileCheck, CheckCircle2, AlertCircle, HelpCircle, FileText, ArrowRight, ShieldAlert, Gavel, ChevronDown } from 'lucide-react';
+import { ArrowLeft, FileCheck, CheckCircle2, AlertCircle, FileText, ArrowRight } from 'lucide-react';
 import NewsSidebar from '@/components/NewsSidebar';
+import usePublicSetting from '@/hooks/usePublicSetting';
 
 const steps = [
   {
@@ -92,6 +93,13 @@ const importantRules = [
 
 export default function ImportantRulesPage() {
   const [activeTab, setActiveTab] = useState('rules'); // 'rules' or 'conversion'
+  const config = usePublicSetting('important_rules_config');
+  const displayedRules = config.rules?.map(rule => ({ ...rule, num: rule.number, desc: rule.description })) ?? importantRules;
+  const displayedSteps = config.conversionSteps?.map(step => ({ ...step, desc: step.description })) ?? steps;
+  const displayedDocuments = config.documents ?? documents;
+  const actName = 'Rajasthan Land Revenue Act, 1956';
+  const conversionDescription = config.conversion.description;
+  const actNameIndex = conversionDescription.indexOf(actName);
 
   return (
     <div>
@@ -106,14 +114,14 @@ export default function ImportantRulesPage() {
         <div className="layout-container">
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(30, 27, 24, 0.05)', border: '1px solid rgba(30, 27, 24, 0.15)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
             <FileCheck size={14} style={{ color: 'var(--accent-gold-hover)' }} />
-            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Statutory Rules & Guidelines</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>{config.hero.eyebrow}</span>
           </div>
           <h1 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: 'var(--primary-blue)' }}>
-            Important Rules &<br />
-            <span style={{ color: '#B38F4F' }}>Land Conversion Guidelines</span>
+            {config.hero.title}<br />
+            <span style={{ color: '#B38F4F' }}>{config.hero.highlight}</span>
           </h1>
           <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-            Access the 10 critical rules of Rajasthan Revenue Law alongside the complete statutory process for agricultural land conversion under Section 90-A.
+            {config.hero.description}
           </p>
         </div>
       </div>
@@ -124,7 +132,7 @@ export default function ImportantRulesPage() {
         </Link>
 
         {/* Tab Selection buttons */}
-        <div style={{
+        <div className="segmented-tabs" style={{
           display: 'flex',
           justifyContent: 'center',
           gap: '1rem',
@@ -147,7 +155,7 @@ export default function ImportantRulesPage() {
               border: activeTab === 'rules' ? 'none' : '1px solid var(--border-color)'
             }}
           >
-            10 Important Rules
+            {config.tabs.rules}
           </button>
           <button 
             onClick={() => setActiveTab('conversion')}
@@ -164,7 +172,7 @@ export default function ImportantRulesPage() {
               border: activeTab === 'conversion' ? 'none' : '1px solid var(--border-color)'
             }}
           >
-            Land Conversion (Section 90-A)
+            {config.tabs.conversion}
           </button>
         </div>
 
@@ -174,10 +182,10 @@ export default function ImportantRulesPage() {
               /* TAB 1: 10 Important Rules */
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
                 <h2 style={{ fontSize: '1.75rem', fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', marginBottom: '1.5rem' }}>
-                  10 Critical Rules of Rajasthan Land Revenue
+                  {config.rulesTitle}
                 </h2>
-                {importantRules.map((rule) => (
-                  <div key={rule.num} style={{
+                {displayedRules.map((rule, index) => (
+                  <div key={`${rule.num}-${index}`} style={{
                     background: 'white',
                     border: '1px solid var(--border-color)',
                     borderRadius: '8px',
@@ -218,18 +226,20 @@ export default function ImportantRulesPage() {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', marginBottom: '4rem' }}>
                   <div style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '2.5rem', boxShadow: 'var(--shadow-sm)' }}>
                     <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1.25rem', fontFamily: 'var(--font-serif)' }}>
-                      What is Section 90-A?
+                      {config.conversion.title}
                     </h2>
                     <p style={{ color: 'var(--text-dark)', fontSize: '1rem', lineHeight: 1.8, marginBottom: '1.25rem' }}>
-                      Under the <strong>Rajasthan Land Revenue Act, 1956</strong>, Section 90-A mandates that agricultural holdings cannot be utilized for non-agricultural purposes (like residential houses, commercial buildings, institutional campuses, or manufacturing industries) without explicit written permission from the state government or designated revenue officers (SDOs).
+                      {actNameIndex >= 0 ? (
+                        <>{conversionDescription.slice(0, actNameIndex)}<strong>{actName}</strong>{conversionDescription.slice(actNameIndex + actName.length)}</>
+                      ) : conversionDescription}
                     </p>
                     
                     <div style={{ display: 'flex', gap: '1rem', background: '#fffbeb', border: '1px solid #fef3c7', borderRadius: '8px', padding: '1.25rem', marginBottom: '1.25rem' }}>
                       <AlertCircle size={24} style={{ color: '#d97706', flexShrink: 0, marginTop: '0.15rem' }} />
                       <div>
-                        <h4 style={{ color: '#92400e', fontWeight: 700, margin: '0 0 0.25rem 0', fontSize: '0.92rem' }}>Consequences of Unauthorized Use</h4>
+                        <h4 style={{ color: '#92400e', fontWeight: 700, margin: '0 0 0.25rem 0', fontSize: '0.92rem' }}>{config.conversion.warningTitle}</h4>
                         <p style={{ color: '#b45309', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
-                          Using agricultural land for non-agricultural purposes without obtaining a Section 90-A conversion order is an offense. It leads to the forfeiture of tenancy rights, demolition of unauthorized structures, and penalty assessments up to 30 times the land revenue rate.
+                          {config.conversion.warning}
                         </p>
                       </div>
                     </div>
@@ -239,14 +249,14 @@ export default function ImportantRulesPage() {
                 {/* Step by Step Procedure */}
                 <div style={{ marginBottom: '4rem' }}>
                   <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)', textAlign: 'center' }}>
-                    The Conversion Process Workflow
+                    {config.conversion.workflowTitle}
                   </h2>
                   <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '3rem', fontSize: '0.95rem' }}>
-                    Standard administrative path for securing a land conversion order in Rajasthan.
+                    {config.conversion.workflowDescription}
                   </p>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.5rem', maxWidth: '800px', margin: '0 auto' }}>
-                    {steps.map((s, idx) => (
+                    {displayedSteps.map((s, idx) => (
                       <div key={idx} style={{
                         display: 'flex',
                         gap: '1.5rem',
@@ -283,10 +293,10 @@ export default function ImportantRulesPage() {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', marginBottom: '4rem' }}>
                   <div style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '2.5rem', boxShadow: 'var(--shadow-sm)' }}>
                     <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', marginBottom: '1.5rem', fontFamily: 'var(--font-serif)' }}>
-                      Documents Checklist
+                      {config.documentsTitle}
                     </h2>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
-                      {documents.map((d, i) => (
+                      {displayedDocuments.map((d, i) => (
                         <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
                           <CheckCircle2 size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.15rem' }} />
                           <span style={{ fontSize: '0.9rem', color: 'var(--text-dark)', lineHeight: 1.5 }}>{d}</span>
@@ -307,12 +317,12 @@ export default function ImportantRulesPage() {
                   border: '1px solid var(--border-color)'
                 }}>
                   <FileText size={36} style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }} />
-                  <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>Need the Official Form-A Application Template?</h2>
+                  <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>{config.cta.title}</h2>
                   <p style={{ color: 'var(--text-dark)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem auto', fontSize: '0.95rem', lineHeight: 1.7 }}>
-                    Download the official print-ready Form-A PDF required for submitting your land conversion file to the SDO/Local Authority.
+                    {config.cta.description}
                   </p>
-                  <Link href="/downloads" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span>Download Form-A PDF</span>
+                  <Link href={config.cta.href} className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span>{config.cta.label}</span>
                     <ArrowRight size={16} />
                   </Link>
                 </div>

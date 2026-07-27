@@ -37,8 +37,9 @@ export async function POST(req) {
 
         // 1. Confirmation email to the user who submitted the form
         await resend.emails.send({
-          from: 'Revenue Law Rajasthan <onboarding@resend.dev>',
+         from: "Revenue Law Rajasthan <noreply@revenuelawraj.com>",
           to: body.email,
+           replyTo: 'revenuelawraj@gmail.com',
           subject: `Query Received: ${body.subject}`,
           html: `
             <div style="font-family: sans-serif; line-height: 1.6; color: #1E293B; max-width: 600px; margin: 0 auto; border: 1px solid #E2E8F0; border-radius: 8px; padding: 2rem;">
@@ -59,8 +60,9 @@ export async function POST(req) {
 
         // 2. Admin notification email to your inbox
         await resend.emails.send({
-          from: 'Revenue Law Rajasthan <onboarding@resend.dev>',
+         from: "Revenue Law Rajasthan <noreply@revenuelawraj.com>",
           to: 'revenuelawraj@gmail.com',
+           replyTo: body.email,
           subject: `📩 New Contact Form: ${body.subject}`,
           html: `
             <div style="font-family: sans-serif; line-height: 1.6; color: #1E293B; max-width: 600px; margin: 0 auto; border: 1px solid #E2E8F0; border-radius: 8px; padding: 2rem;">

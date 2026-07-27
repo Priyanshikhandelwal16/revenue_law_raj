@@ -1,22 +1,17 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
-import { Search, Menu, X, ChevronDown, BookOpen, Scale, FileText, Download, Gavel, HelpCircle } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [navSearchQuery, setNavSearchQuery] = useState('');
-  const router = useRouter();
-  const pathname = usePathname();
+  const [pathname, setPathname] = useState('');
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [pathname]);
+    setPathname(window.location.pathname);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -109,52 +104,6 @@ export default function Navbar() {
         </div>
 
         <div className="nav-actions no-print" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          {isSearchOpen ? (
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              if (navSearchQuery.trim()) {
-                router.push(`/search?q=${encodeURIComponent(navSearchQuery.trim())}`);
-                setIsSearchOpen(false);
-                setNavSearchQuery('');
-              }
-            }} style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              backgroundColor: 'var(--bg-offwhite)', 
-              borderRadius: '50px', 
-              padding: '0.2rem 0.75rem', 
-              border: '1px solid var(--border-color)', 
-              gap: '0.25rem'
-            }}>
-              <input 
-                type="text" 
-                value={navSearchQuery}
-                onChange={(e) => setNavSearchQuery(e.target.value)}
-                placeholder="Search..."
-                autoFocus
-                style={{ 
-                  border: 'none', 
-                  background: 'none', 
-                  outline: 'none', 
-                  fontSize: '0.825rem', 
-                  width: '100px', 
-                  padding: '0.1rem 0',
-                  color: 'var(--text-dark)'
-                }}
-              />
-              <button type="submit" style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0.1rem', color: 'var(--text-muted)' }}>
-                <Search size={14} />
-              </button>
-              <button type="button" onClick={() => { setIsSearchOpen(false); setNavSearchQuery(''); }} style={{ border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0.1rem', color: 'var(--text-muted)' }}>
-                <X size={14} />
-              </button>
-            </form>
-          ) : (
-            <button onClick={() => setIsSearchOpen(true)} className="search-icon-btn" title="Search Database" style={{ border: 'none', background: 'transparent', cursor: 'pointer', padding: '0.5rem', display: 'flex', alignItems: 'center', color: 'var(--primary-blue)' }}>
-              <Search size={18} />
-            </button>
-          )}
-          
           {/* Hamburger Menu Icon (Mobile Only) */}
           <span 
             className="mobile-toggle-btn-holder" 
@@ -172,7 +121,7 @@ export default function Navbar() {
 
       {/* Styled Responsive Overlay CSS */}
       <style jsx global>{`
-        @media (max-width: 1023px) {
+        @media (max-width: 1200px) {
           .nav-links {
             display: none !important;
           }
@@ -193,7 +142,7 @@ export default function Navbar() {
         .mobile-toggle-btn-holder {
           display: none !important;
         }
-        @media (max-width: 1023px) {
+        @media (max-width: 1200px) {
           .mobile-toggle-btn-holder {
             display: flex !important;
             align-items: center;

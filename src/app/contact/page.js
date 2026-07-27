@@ -1,9 +1,13 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Send, Scale, Landmark, ShieldCheck } from 'lucide-react';
+import { useState } from 'react';
+import { Mail, Phone, MapPin, Send, Scale, ShieldCheck, Facebook, Twitter, Youtube, Instagram } from 'lucide-react';
+import usePublicSetting from '@/hooks/usePublicSetting';
+
+const SOCIAL_ICONS = { facebook: Facebook, twitter: Twitter, youtube: Youtube, instagram: Instagram };
 
 export default function ContactPage() {
+  const config = usePublicSetting('contact_config');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,22 +17,7 @@ export default function ContactPage() {
   });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [config, setConfig] = useState({
-    phone: "+91 99820 57461",
-    email: "revenuelawraj@gmail.com",
-    address: "B-30, Jamuna Nagar, Sodala, Jaipur, Rajasthan – 302006"
-  });
-
-  useEffect(() => {
-    fetch('/api/settings?key=contact_config')
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.value) {
-          setConfig(data.value);
-        }
-      })
-      .catch(err => console.error(err));
-  }, []);
+  const fields = Object.fromEntries(config.form.fields.map(field => [field.name, field]));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,14 +55,14 @@ export default function ContactPage() {
         <div className="layout-container">
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(30, 27, 24, 0.05)', border: '1px solid rgba(30, 27, 24, 0.15)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
             <Scale size={14} style={{ color: 'var(--accent-gold-hover)' }} />
-            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>RRLKP Consultation</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>{config.hero.eyebrow}</span>
           </div>
           <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: 'var(--primary-blue)' }}>
-            Contact Our Editorial Board<br />
-            <span style={{ color: '#B38F4F' }}>Submit Legal Query</span>
+            {config.hero.title}<br />
+            <span style={{ color: '#B38F4F' }}>{config.hero.highlight}</span>
           </h1>
           <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-            Have questions regarding a publication, need technical help, or want to contribute articles to the platform? Fill out the query form.
+            {config.hero.description}
           </p>
         </div>
       </div>
@@ -83,9 +72,9 @@ export default function ContactPage() {
           {/* Info Card */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <div>
-              <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>Get in Touch</h2>
+              <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>{config.intro.title}</h2>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6' }}>
-                You can reach us through any of the channels below or submit the form on the right.
+                {config.intro.description}
               </p>
             </div>
 
@@ -95,8 +84,8 @@ export default function ContactPage() {
                   <MapPin size={20} />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-blue)' }}>Mailing Address</h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{config.address}</p>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-blue)' }}>{config.contact.addressLabel}</h3>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{config.contact.address}</p>
                 </div>
               </div>
 
@@ -105,8 +94,8 @@ export default function ContactPage() {
                   <Phone size={20} />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-blue)' }}>Secretary Helpline</h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{config.phone}</p>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-blue)' }}>{config.contact.phoneLabel}</h3>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{config.contact.phone}</p>
                 </div>
               </div>
 
@@ -115,16 +104,27 @@ export default function ContactPage() {
                   <Mail size={20} />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-blue)' }}>Email Support</h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{config.email}</p>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-blue)' }}>{config.contact.emailLabel}</h3>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{config.contact.email}</p>
                 </div>
               </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              {Object.entries(config.socials).map(([name, href]) => {
+                const SocialIcon = SOCIAL_ICONS[name];
+                return href && SocialIcon ? (
+                  <a key={name} href={href} target="_blank" rel="noopener noreferrer" aria-label={name} style={{ color: 'var(--primary-blue)', padding: '0.5rem', backgroundColor: 'rgba(197, 168, 128, 0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <SocialIcon size={16} />
+                  </a>
+                ) : null;
+              })}
             </div>
 
             <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem', marginTop: '1rem' }}>
               <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                 <ShieldCheck size={16} style={{ color: 'green' }} />
-                <span>GDPR & Information Protection Secure</span>
+                <span>{config.contact.securityNote}</span>
               </h4>
             </div>
           </div>
@@ -136,73 +136,77 @@ export default function ContactPage() {
                 <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'rgba(22, 163, 74, 0.1)', color: '#16A34A', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem auto' }}>
                   <ShieldCheck size={32} />
                 </div>
-                <h2 style={{ fontSize: '1.75rem', color: 'var(--primary-blue)', marginBottom: '0.5rem' }}>Query Submitted</h2>
+                <h2 style={{ fontSize: '1.75rem', color: 'var(--primary-blue)', marginBottom: '0.5rem' }}>{config.success.title}</h2>
                 <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
-                  Thank you for writing to RRLKP. Your query has been logged and assigned case reference #{Math.floor(Math.random() * 900000 + 100000)}. Our support desk will reach out within 48 business hours.
+                  {config.success.description}
                 </p>
-                <button onClick={() => setSuccess(false)} className="btn-outline">Send another message</button>
+                <button onClick={() => setSuccess(false)} className="btn-outline">{config.success.resetLabel}</button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <h2 style={{ fontSize: '1.5rem', borderBottom: '2px solid var(--accent-gold)', paddingBottom: '0.5rem', color: 'var(--primary-blue)' }}>
-                  Submit Legal Query
+                  {config.form.title}
                 </h2>
 
                 <div className="form-row-grid">
                   <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label>Full Name *</label>
-                    <input 
-                      type="text" 
+                    <label>{fields.name.label}</label>
+                    <input
+                      type={fields.name.type}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="form-control" 
-                      required
+                      className="form-control"
+                      placeholder={fields.name.placeholder}
+                      required={fields.name.required}
                     />
                   </div>
                   <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label>Email Address *</label>
-                    <input 
-                      type="email" 
+                    <label>{fields.email.label}</label>
+                    <input
+                      type={fields.email.type}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="form-control" 
-                      required
+                      className="form-control"
+                      placeholder={fields.email.placeholder}
+                      required={fields.email.required}
                     />
                   </div>
                 </div>
 
                 <div className="form-row-grid">
                   <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label>Contact Number (Optional)</label>
-                    <input 
-                      type="tel" 
+                    <label>{fields.phone.label}</label>
+                    <input
+                      type={fields.phone.type}
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="form-control" 
+                      className="form-control"
+                      placeholder={fields.phone.placeholder}
+                      required={fields.phone.required}
                     />
                   </div>
                   <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label>Subject *</label>
-                    <input 
-                      type="text" 
+                    <label>{fields.subject.label}</label>
+                    <input
+                      type={fields.subject.type}
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="form-control" 
-                      placeholder="e.g., 'Article Submission', '90-A Query'"
-                      required
+                      className="form-control"
+                      placeholder={fields.subject.placeholder}
+                      required={fields.subject.required}
                     />
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label>Message Content *</label>
-                  <textarea 
+                  <label>{fields.message.label}</label>
+                  <textarea
                     rows={6}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="form-control" 
-                    placeholder="Enter detailed message contents here..."
-                    required
+                    className="form-control"
+                    placeholder={fields.message.placeholder}
+                    required={fields.message.required}
                   />
                 </div>
 
@@ -220,7 +224,7 @@ export default function ContactPage() {
                     fontWeight: 700
                   }}
                 >
-                  <Send size={16} /> {submitting ? 'Submitting query...' : 'Submit Query'}
+                  <Send size={16} /> {submitting ? config.form.submittingLabel : config.form.submitLabel}
                 </button>
               </form>
             )}
