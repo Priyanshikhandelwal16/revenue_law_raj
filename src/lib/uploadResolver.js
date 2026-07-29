@@ -1,9 +1,13 @@
 import UploadSession from '@/lib/models/UploadSession';
+import { uploadToCloudinary } from './cloudinary';
 
 export async function resolveUploadSession(body) {
   const target = { ...body };
   
-  // Resolve pdfUploadId -> pdfData
+  // 1. Resolve pdfUploadId (chunked upload) if present
+  let base64Pdf = null;
+  let filename = 'document.pdf';
+  
   if (target.pdfUploadId) {
     const session = await UploadSession.findOne({ uploadId: target.pdfUploadId });
     if (session) {
@@ -11,15 +15,31 @@ export async function resolveUploadSession(body) {
       for (let i = 0; i < session.totalChunks; i++) {
         chunksArray.push(session.chunks.get(i.toString()) || '');
       }
-      target.pdfData = chunksArray.join('');
+      base64Pdf = chunksArray.join('');
+      filename = session.fileName || 'document.pdf';
       delete target.pdfUploadId;
       
-      // Auto-clean the session document to save database space
+      // Auto-clean the session document
       await UploadSession.deleteOne({ uploadId: session.uploadId });
     }
+  } else if (target.pdfData) {
+    // Direct base64 upload
+    base64Pdf = target.pdfData;
+    delete target.pdfData;
   }
 
-  // Resolve fileUploadId -> fileData
+  // If we have base64 PDF content, upload it to Cloudinary and set the pdfUrl
+  if (base64Pdf) {
+    console.log('Uploading PDF document to Cloudinary...');
+    const secureUrl = await uploadToCloudinary(base64Pdf, filename);
+    target.pdfUrl = secureUrl;
+    target.pdfData = ''; // Ensure raw data is cleared
+  }
+
+  // 2. Resolve general fileUploadId (chunked upload) if present
+  let base64File = null;
+  let fileDocName = 'file.bin';
+
   if (target.fileUploadId) {
     const session = await UploadSession.findOne({ uploadId: target.fileUploadId });
     if (session) {
@@ -27,12 +47,25 @@ export async function resolveUploadSession(body) {
       for (let i = 0; i < session.totalChunks; i++) {
         chunksArray.push(session.chunks.get(i.toString()) || '');
       }
-      target.fileData = chunksArray.join('');
+      base64File = chunksArray.join('');
+      fileDocName = session.fileName || 'file.bin';
       delete target.fileUploadId;
       
       // Auto-clean the session document
       await UploadSession.deleteOne({ uploadId: session.uploadId });
     }
+  } else if (target.fileData) {
+    base64File = target.fileData;
+    delete target.fileData;
+  }
+
+  // If we have general base64 file content, upload it to Cloudinary and set the fileUrl / url
+  if (base64File) {
+    console.log('Uploading asset file to Cloudinary...');
+    const secureUrl = await uploadToCloudinary(base64File, fileDocName);
+    target.fileUrl = secureUrl;
+    target.url = secureUrl; // Map general URL (e.g. for Media list)
+    target.fileData = ''; // Ensure raw data is cleared
   }
 
   return target;

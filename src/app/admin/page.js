@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { 
   Scale, Key, LogOut, LayoutDashboard, Newspaper, Gavel, BookOpen, 
   Bell, Download, MessageSquare, HelpCircle, User, Plus, Edit, Trash, Check, CheckSquare, Eye, FileText, Image, RefreshCw, Shield, Database,
-  Menu, X
+  Menu, X, Search
 } from 'lucide-react';
 import RichTextEditor from '@/components/RichTextEditor';
 import SiteSettingsEditor from '@/components/admin/SiteSettingsEditor';
@@ -43,6 +43,11 @@ export default function AdminDashboard() {
   
   // Dashboard Navigation State
   const [activeTab, setActiveTab] = useState('overview'); // overview, articles, judgments, laws, notifications, downloads, comments, queries
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    setSearchTerm('');
+  }, [activeTab]);
 
   // CRUD / Data States
   const [articles, setArticles] = useState([]);
@@ -439,6 +444,57 @@ export default function AdminDashboard() {
     }
   };
 
+  // Filtered lists for client-side search
+  const filteredArticles = articles.filter(art => 
+    (art.title || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (art.category || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  const filteredJudgments = judgments.filter(j => 
+    (j.title || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (j.citation || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (j.caseNumber || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  const filteredLaws = laws.filter(l => 
+    (l.title || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (l.category || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  const filteredNotifications = notifications.filter(n => 
+    (n.title || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (n.refNumber || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (n.department || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  const filteredDownloads = downloads.filter(d => 
+    (d.title || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (d.fileType || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  const filteredComments = comments.filter(c => 
+    (c.authorName || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (c.authorEmail || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (c.content || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  const filteredQueries = queries.filter(q => 
+    (q.name || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (q.email || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (q.subject || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (q.message || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  const filteredGlossary = glossary.filter(g => 
+    (g.term || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (g.definition || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  const filteredUsers = users.filter(u => 
+    (u.name || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (u.email || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   // Render Login state
   if (loading) {
     return (
@@ -451,41 +507,71 @@ export default function AdminDashboard() {
 
   if (!session) {
     return (
-      <div className="layout-container" style={{ padding: '6rem 0', maxWidth: '420px' }}>
-        <div style={{ backgroundColor: 'white', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '2.5rem', boxShadow: 'var(--shadow-lg)' }}>
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <img src="/images/logo_main.jpg" alt="Revenue Law Raj Logo" className="brand-logo-img-large" style={{ margin: '0 auto 0.5rem auto', display: 'block', height: '90px', width: 'auto', borderRadius: '6px' }} />
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.5rem', fontWeight: 500 }}>Admin Credentials Required</p>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '85vh',
+        padding: '2rem 1rem'
+      }}>
+        <div style={{
+          backgroundColor: 'white',
+          border: '1px solid var(--border-color)',
+          borderRadius: '16px',
+          padding: '3rem 2.5rem',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.03)',
+          maxWidth: '430px',
+          width: '100%',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '4px',
+            background: 'linear-gradient(90deg, var(--accent-gold) 0%, var(--accent-gold-hover) 100%)'
+          }} />
+          <div style={{ textAlign: 'center', marginBottom: '2.25rem' }}>
+            <img src="/images/logo_main.jpg" alt="Revenue Law Raj Logo" className="brand-logo-img-large" style={{ margin: '0 auto 0.75rem auto', display: 'block', height: '90px', width: 'auto', borderRadius: '8px' }} />
+            <h2 style={{ fontSize: '1.35rem', color: 'var(--primary-blue)', margin: '0.5rem 0 0.25rem 0', fontWeight: 700 }}>Admin Console</h2>
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 500 }}>Secure Management Access</p>
           </div>
 
           {loginError && (
-            <div style={{ padding: '0.75rem', backgroundColor: '#FEE2E2', border: '1px solid #EF4444', borderRadius: '4px', color: '#B91C1C', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
-              {loginError}
+            <div style={{ padding: '0.8rem 1rem', backgroundColor: '#FEE2E2', border: '1px solid #FCA5A5', borderRadius: '8px', color: '#B91C1C', fontSize: '0.85rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span>⚠️</span>
+              <span>{loginError}</span>
             </div>
           )}
 
           <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div className="form-group" style={{ marginBottom: 0 }}>
-              <label>Email Address</label>
+              <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-dark)', marginBottom: '0.4rem', display: 'block' }}>Email Address</label>
               <input 
                 type="email" 
                 value={loginEmail} 
                 onChange={(e) => setLoginEmail(e.target.value)} 
                 className="form-control" 
+                style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', fontSize: '0.92rem' }}
+                placeholder="admin@rajasthanrevenue.law"
                 required 
               />
             </div>
             <div className="form-group" style={{ marginBottom: 0 }}>
-              <label>Password</label>
+              <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-dark)', marginBottom: '0.4rem', display: 'block' }}>Password</label>
               <input 
                 type="password" 
                 value={loginPassword} 
                 onChange={(e) => setLoginPassword(e.target.value)} 
                 className="form-control" 
+                style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', fontSize: '0.92rem' }}
+                placeholder="••••••••"
                 required 
               />
             </div>
-            <button type="submit" className="btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem' }}>
+            <button type="submit" className="btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.75rem 1rem', borderRadius: '8px', fontWeight: 600, border: 'none', transition: 'all 0.2s', marginTop: '0.5rem' }}>
               <Key size={16} /> Authenticate Session
             </button>
           </form>
@@ -519,75 +605,88 @@ export default function AdminDashboard() {
         <button className="sidebar-close-btn" onClick={() => setSidebarOpen(false)} title="Close Menu">
           <X size={20} />
         </button>
-        <div className="admin-logo" style={{ padding: '0.5rem 0', marginBottom: '2rem', textAlign: 'center' }}>
+        <div className="admin-logo" style={{ padding: '0.5rem 0', marginBottom: '1.5rem', textAlign: 'center' }}>
           <img src="/images/logo_main.jpg" alt="Revenue Law Raj" className="brand-logo-img" style={{ display: 'block', margin: '0 auto', height: '60px', width: 'auto', borderRadius: '4px' }} />
           <div style={{ fontSize: '0.65rem', color: 'var(--accent-gold)', marginTop: '0.5rem', letterSpacing: '1.5px', fontWeight: 600 }}>ADMIN CONSOLE</div>
         </div>
-        <ul className="admin-nav">
-          <li className="admin-nav-section">Start Here</li>
-          <li className={`admin-nav-item ${activeTab === 'overview' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('overview'); setEditingItem(null); setSidebarOpen(false); }}><LayoutDashboard size={16} /> Dashboard</a>
-          </li>
 
-          <li className="admin-nav-section">Website Pages</li>
-          <li className={`admin-nav-item ${activeTab === 'homepage_cms' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('homepage_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Edit Home Page</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'important_rules_cms' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('important_rules_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Edit Important Rules</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'pages_cms' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('pages_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Other Website Pages</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('settings'); setEditingItem(null); setSidebarOpen(false); }}><Scale size={16} /> Website & Contact Details</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'policies_cms' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('policies_cms'); setEditingItem(null); setSidebarOpen(false); }}><Shield size={16} /> Terms, Privacy & Disclaimer</a>
-          </li>
+        <div className="admin-sidebar-menu-wrapper">
+          <ul className="admin-nav">
+            <li className="admin-nav-section">Start Here</li>
+            <li className={`admin-nav-item ${activeTab === 'overview' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('overview'); setEditingItem(null); setSidebarOpen(false); }}><LayoutDashboard size={16} /> Dashboard</a>
+            </li>
 
-          <li className="admin-nav-section">Add & Manage Content</li>
-          <li className={`admin-nav-item ${activeTab === 'articles' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('articles'); setEditingItem(null); setSidebarOpen(false); }}><Newspaper size={16} /> Articles & News</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'judgments' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('judgments'); setEditingItem(null); setSidebarOpen(false); }}><Gavel size={16} /> Court Judgments</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'laws' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('laws'); setEditingItem(null); setSidebarOpen(false); }}><BookOpen size={16} /> Laws & Acts</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'notifications' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('notifications'); setEditingItem(null); setSidebarOpen(false); }}><Bell size={16} /> Notifications & Circulars</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'downloads' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('downloads'); setEditingItem(null); setSidebarOpen(false); }}><Download size={16} /> Forms & Downloads</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'glossary' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('glossary'); setEditingItem(null); setSidebarOpen(false); }}><Scale size={16} /> Legal Dictionary</a>
-          </li>
+            <li className="admin-nav-section">Website Pages</li>
+            <li className={`admin-nav-item ${activeTab === 'homepage_cms' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('homepage_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Edit Home Page</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'important_rules_cms' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('important_rules_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Edit Important Rules</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'pages_cms' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('pages_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Other Website Pages</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('settings'); setEditingItem(null); setSidebarOpen(false); }}><Scale size={16} /> Website & Contact Details</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'policies_cms' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('policies_cms'); setEditingItem(null); setSidebarOpen(false); }}><Shield size={16} /> Terms, Privacy & Disclaimer</a>
+            </li>
 
-          <li className="admin-nav-section">Messages</li>
-          <li className={`admin-nav-item ${activeTab === 'comments' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('comments'); setEditingItem(null); setSidebarOpen(false); }}><MessageSquare size={16} /> Comments</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'queries' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('queries'); setEditingItem(null); setSidebarOpen(false); }}><HelpCircle size={16} /> Contact Queries</a>
-          </li>
+            <li className="admin-nav-section">Add & Manage Content</li>
+            <li className={`admin-nav-item ${activeTab === 'articles' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('articles'); setEditingItem(null); setSidebarOpen(false); }}><Newspaper size={16} /> Articles & News</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'judgments' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('judgments'); setEditingItem(null); setSidebarOpen(false); }}><Gavel size={16} /> Court Judgments</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'laws' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('laws'); setEditingItem(null); setSidebarOpen(false); }}><BookOpen size={16} /> Laws & Acts</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'notifications' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('notifications'); setEditingItem(null); setSidebarOpen(false); }}><Bell size={16} /> Notifications & Circulars</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'downloads' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('downloads'); setEditingItem(null); setSidebarOpen(false); }}><Download size={16} /> Forms & Downloads</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'glossary' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('glossary'); setEditingItem(null); setSidebarOpen(false); }}><Scale size={16} /> Legal Dictionary</a>
+            </li>
 
-          <li className="admin-nav-section">System</li>
-          <li className={`admin-nav-item ${activeTab === 'media_library' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('media_library'); setEditingItem(null); setSidebarOpen(false); }}><Image size={16} /> Photos & Files</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'backup_restore' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('backup_restore'); setEditingItem(null); setSidebarOpen(false); }}><RefreshCw size={16} /> Backup & Restore</a>
-          </li>
-          <li className={`admin-nav-item ${activeTab === 'users' ? 'active' : ''}`}>
-            <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('users'); setEditingItem(null); setSidebarOpen(false); }}><User size={16} /> Admin Users</a>
-          </li>
-          <li className="admin-nav-item" style={{ marginTop: '1.5rem' }}>
-            <a href="#" onClick={(event) => { event.preventDefault(); handleLogout(); setSidebarOpen(false); }} style={{ color: '#FCA5A5' }}><LogOut size={16} /> Log Out</a>
-          </li>
-        </ul>
+            <li className="admin-nav-section">Messages</li>
+            <li className={`admin-nav-item ${activeTab === 'comments' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('comments'); setEditingItem(null); setSidebarOpen(false); }}><MessageSquare size={16} /> Comments</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'queries' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('queries'); setEditingItem(null); setSidebarOpen(false); }}><HelpCircle size={16} /> Contact Queries</a>
+            </li>
+
+            <li className="admin-nav-section">System</li>
+            <li className={`admin-nav-item ${activeTab === 'media_library' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('media_library'); setEditingItem(null); setSidebarOpen(false); }}><Image size={16} /> Photos & Files</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'backup_restore' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('backup_restore'); setEditingItem(null); setSidebarOpen(false); }}><RefreshCw size={16} /> Backup & Restore</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'users' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('users'); setEditingItem(null); setSidebarOpen(false); }}><User size={16} /> Admin Users</a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="admin-profile-card">
+          <div className="admin-avatar">
+            {session.name ? session.name[0].toUpperCase() : 'A'}
+          </div>
+          <div className="admin-profile-info">
+            <span className="admin-profile-name">{session.name}</span>
+            <span className="admin-profile-role">{session.role || 'Admin'}</span>
+          </div>
+          <button type="button" onClick={handleLogout} className="admin-logout-btn" title="Log Out">
+            <LogOut size={16} />
+          </button>
+        </div>
       </aside>
 
       {/* Main Workspace */}
@@ -1374,6 +1473,125 @@ export default function AdminDashboard() {
             {/* Tab: Overview / Dashboard Metrics */}
             {activeTab === 'overview' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                {/* Welcome Hero Banner */}
+                <div className="admin-welcome-banner">
+                  <div className="admin-welcome-text">
+                    <span className="admin-welcome-badge">Console Overview</span>
+                    <h2>Welcome back, {session.name}!</h2>
+                    <p>You have full administrative privileges to publish commentaries, upload judgments, release notifications, manage downloadable templates, moderate comments, and configure general site settings.</p>
+                  </div>
+                  <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Shield size={64} style={{ color: 'var(--accent-gold)', opacity: 0.85 }} />
+                  </div>
+                </div>
+
+                {/* Stat Cards Grid */}
+                <div className="admin-stat-grid">
+                  <div className="admin-stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('judgments')}>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Judgments</span>
+                      <span className="admin-stat-number">{judgments.length}</span>
+                    </div>
+                    <div className="admin-stat-icon-wrapper">
+                      <Gavel size={22} />
+                    </div>
+                  </div>
+
+                  <div className="admin-stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('articles')}>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Commentaries & News</span>
+                      <span className="admin-stat-number">{articles.length}</span>
+                    </div>
+                    <div className="admin-stat-icon-wrapper">
+                      <Newspaper size={22} />
+                    </div>
+                  </div>
+
+                  <div className="admin-stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('laws')}>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Laws & Acts</span>
+                      <span className="admin-stat-number">{laws.length}</span>
+                    </div>
+                    <div className="admin-stat-icon-wrapper">
+                      <BookOpen size={22} />
+                    </div>
+                  </div>
+
+                  <div className="admin-stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('notifications')}>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Circulars & Gazettes</span>
+                      <span className="admin-stat-number">{notifications.length}</span>
+                    </div>
+                    <div className="admin-stat-icon-wrapper">
+                      <Bell size={22} />
+                    </div>
+                  </div>
+
+                  <div className="admin-stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('downloads')}>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Forms & Templates</span>
+                      <span className="admin-stat-number">{downloads.length}</span>
+                    </div>
+                    <div className="admin-stat-icon-wrapper">
+                      <Download size={22} />
+                    </div>
+                  </div>
+
+                  <div className="admin-stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('glossary')}>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Legal Dictionary</span>
+                      <span className="admin-stat-number">{glossary.length}</span>
+                    </div>
+                    <div className="admin-stat-icon-wrapper">
+                      <Scale size={22} />
+                    </div>
+                  </div>
+
+                  <div className="admin-stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('queries')}>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Inquiry Tickets</span>
+                      <span className="admin-stat-number">{queries.length}</span>
+                    </div>
+                    <div className="admin-stat-icon-wrapper">
+                      <HelpCircle size={22} />
+                    </div>
+                  </div>
+
+                  <div className="admin-stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('comments')}>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Pending Comments</span>
+                      <span className="admin-stat-number" style={{ color: 'var(--accent-gold)' }}>
+                        {comments.filter(c => !c.isApproved).length}
+                      </span>
+                    </div>
+                    <div className="admin-stat-icon-wrapper">
+                      <MessageSquare size={22} />
+                    </div>
+                  </div>
+
+                  <div className="admin-stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('important_rules_cms')}>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Important Rules</span>
+                      <span className="admin-stat-number">
+                        {settings.find(setting => setting.key === 'important_rules_config')?.value?.rules?.length || 0}
+                      </span>
+                    </div>
+                    <div className="admin-stat-icon-wrapper">
+                      <FileText size={22} />
+                    </div>
+                  </div>
+
+                  <div className="admin-stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('users')}>
+                    <div className="admin-stat-info">
+                      <span className="admin-stat-label">Admin Users</span>
+                      <span className="admin-stat-number">{users.length}</span>
+                    </div>
+                    <div className="admin-stat-icon-wrapper">
+                      <User size={22} />
+                    </div>
+                  </div>
+                </div>
+
                 <section className="admin-start-guide">
                   <div className="admin-start-guide-heading">
                     <div>
@@ -1397,68 +1615,19 @@ export default function AdminDashboard() {
                     </button>
                   </div>
                 </section>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Judgments</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{judgments.length}</p>
-                  </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Articles & News</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{articles.length}</p>
-                  </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Revenue Laws & Acts</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{laws.length}</p>
-                  </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Circulars & Gazettes</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{notifications.length}</p>
-                  </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Forms & Templates</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{downloads.length}</p>
-                  </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Legal Glossary</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{glossary.length}</p>
-                  </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Inquiry Tickets</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{queries.length}</p>
-                  </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Pending Comments</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent-gold)', marginTop: '0.5rem' }}>
-                      {comments.filter(c => !c.isApproved).length}
-                    </p>
-                  </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Important Rules</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent-gold)', marginTop: '0.5rem' }}>
-                      {settings.find(setting => setting.key === 'important_rules_config')?.value?.rules?.length || 0}
-                    </p>
-                  </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Editable Website Sections</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{settings.length}</p>
-                  </div>
-                  <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                    <h3 style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Admin Users</h3>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-blue)', marginTop: '0.5rem' }}>{users.length}</p>
-                  </div>
-                </div>
-                <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-                  <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
+
+                <div className="admin-card" style={{ padding: '2rem' }}>
+                  <h2 style={{ fontSize: '1.25rem', marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem', fontWeight: 700 }}>
                     Quick Operations Shortcut
                   </h2>
                   <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                    <button onClick={() => { setActiveTab('judgments'); startCreate('judgments'); }} className="btn-gold" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <button onClick={() => { setActiveTab('judgments'); startCreate('judgments'); }} className="btn-gold" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.25rem' }}>
                       <Plus size={16} /> Create Judgment
                     </button>
-                    <button onClick={() => { setActiveTab('articles'); startCreate('articles'); }} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <button onClick={() => { setActiveTab('articles'); startCreate('articles'); }} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.25rem' }}>
                       <Plus size={16} /> Add Article
                     </button>
-                    <button onClick={() => { setActiveTab('notifications'); startCreate('notifications'); }} className="btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <button onClick={() => { setActiveTab('notifications'); startCreate('notifications'); }} className="btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.25rem' }}>
                       <Plus size={16} /> Add Circular
                     </button>
                   </div>
@@ -1470,11 +1639,23 @@ export default function AdminDashboard() {
             {activeTab === 'articles' && (
               <div className="admin-card">
                 <div className="admin-card-header">
-                  <h2>Commentary Logs ({articles.length})</h2>
+                  <h2>Commentary Logs ({filteredArticles.length})</h2>
                   <button onClick={() => startCreate('articles')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Create Article
                   </button>
                 </div>
+
+                <div className="admin-search-container" style={{ marginBottom: '1.25rem' }}>
+                  <Search size={18} style={{ color: 'var(--text-muted)' }} />
+                  <input 
+                    type="text" 
+                    placeholder="Search articles by title or category..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    className="admin-search-input" 
+                  />
+                </div>
+
                 <div className="table-responsive">
                   <table className="admin-table">
                     <thead>
@@ -1488,12 +1669,12 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {articles.map(art => (
+                      {filteredArticles.map(art => (
                         <tr key={art._id}>
                           <td><strong>{art.title}</strong></td>
                           <td>{art.category}</td>
                           <td>
-                            <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: art.status === 'published' ? '#DCFCE7' : '#FEF3C7', color: art.status === 'published' ? '#15803D' : '#D97706' }}>
+                            <span className={`admin-status-badge ${art.status === 'published' ? 'published' : 'draft'}`}>
                               {art.status}
                             </span>
                           </td>
@@ -1515,11 +1696,23 @@ export default function AdminDashboard() {
             {activeTab === 'judgments' && (
               <div className="admin-card">
                 <div className="admin-card-header">
-                  <h2>Judgments Archive ({judgments.length})</h2>
+                  <h2>Judgments Archive ({filteredJudgments.length})</h2>
                   <button onClick={() => startCreate('judgments')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Create Judgment
                   </button>
                 </div>
+
+                <div className="admin-search-container" style={{ marginBottom: '1.25rem' }}>
+                  <Search size={18} style={{ color: 'var(--text-muted)' }} />
+                  <input 
+                    type="text" 
+                    placeholder="Search by citation, case number, parties..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    className="admin-search-input" 
+                  />
+                </div>
+
                 <div className="table-responsive">
                   <table className="admin-table">
                     <thead>
@@ -1534,7 +1727,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {judgments.map(j => (
+                      {filteredJudgments.map(j => (
                         <tr key={j._id}>
                           <td><strong>{j.title}</strong></td>
                           <td style={{ color: 'var(--accent-gold)', fontWeight: 600 }}>{j.citation || '—'}</td>
@@ -1543,8 +1736,12 @@ export default function AdminDashboard() {
                           <td>{j.views || 0}</td>
                           <td>
                             {j.pdfData || j.pdfUrl ? (
-                              <span style={{ color: 'green', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.85rem' }}><Check size={14} /> Yes</span>
-                            ) : 'No'}
+                              <span className="admin-status-badge published" style={{ gap: '0.2rem' }}>
+                                <Check size={12} /> Yes
+                              </span>
+                            ) : (
+                              <span className="admin-status-badge critical">No</span>
+                            )}
                           </td>
                           <td style={{ display: 'flex', gap: '0.5rem' }}>
                             <button onClick={() => startEdit('judgments', j)} className="editor-btn" title="Edit"><Edit size={14} /></button>
@@ -1562,11 +1759,23 @@ export default function AdminDashboard() {
             {activeTab === 'laws' && (
               <div className="admin-card">
                 <div className="admin-card-header">
-                  <h2>Revenue Acts ({laws.length})</h2>
+                  <h2>Revenue Acts ({filteredLaws.length})</h2>
                   <button onClick={() => startCreate('laws')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Create Act
                   </button>
                 </div>
+
+                <div className="admin-search-container" style={{ marginBottom: '1.25rem' }}>
+                  <Search size={18} style={{ color: 'var(--text-muted)' }} />
+                  <input 
+                    type="text" 
+                    placeholder="Search acts by name or category..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    className="admin-search-input" 
+                  />
+                </div>
+
                 <div className="table-responsive">
                   <table className="admin-table">
                     <thead>
@@ -1578,7 +1787,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {laws.map(l => (
+                      {filteredLaws.map(l => (
                         <tr key={l._id}>
                           <td><strong>{l.title}</strong></td>
                           <td>{l.category}</td>
@@ -1599,11 +1808,23 @@ export default function AdminDashboard() {
             {activeTab === 'notifications' && (
               <div className="admin-card">
                 <div className="admin-card-header">
-                  <h2>Gazettes & Circulars ({notifications.length})</h2>
+                  <h2>Gazettes & Circulars ({filteredNotifications.length})</h2>
                   <button onClick={() => startCreate('notifications')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Add Circular
                   </button>
                 </div>
+
+                <div className="admin-search-container" style={{ marginBottom: '1.25rem' }}>
+                  <Search size={18} style={{ color: 'var(--text-muted)' }} />
+                  <input 
+                    type="text" 
+                    placeholder="Search by ref number, title, department..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    className="admin-search-input" 
+                  />
+                </div>
+
                 <div className="table-responsive">
                   <table className="admin-table">
                     <thead>
@@ -1616,7 +1837,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {notifications.map(n => (
+                      {filteredNotifications.map(n => (
                         <tr key={n._id}>
                           <td><strong>{n.refNumber || '—'}</strong></td>
                           <td>{(n.title || '').slice(0, 50)}{n.title && n.title.length > 50 ? '...' : ''}</td>
@@ -1638,11 +1859,23 @@ export default function AdminDashboard() {
             {activeTab === 'downloads' && (
               <div className="admin-card">
                 <div className="admin-card-header">
-                  <h2>Downloadable Templates ({downloads.length})</h2>
+                  <h2>Downloadable Templates ({filteredDownloads.length})</h2>
                   <button onClick={() => startCreate('downloads')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Create Template
                   </button>
                 </div>
+
+                <div className="admin-search-container" style={{ marginBottom: '1.25rem' }}>
+                  <Search size={18} style={{ color: 'var(--text-muted)' }} />
+                  <input 
+                    type="text" 
+                    placeholder="Search forms by title or file extension..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    className="admin-search-input" 
+                  />
+                </div>
+
                 <div className="table-responsive">
                   <table className="admin-table">
                     <thead>
@@ -1655,7 +1888,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {downloads.map(d => (
+                      {filteredDownloads.map(d => (
                         <tr key={d._id}>
                           <td><strong>{d.title}</strong></td>
                           <td>{d.fileType}</td>
@@ -1676,7 +1909,21 @@ export default function AdminDashboard() {
             {/* Tab: Comments Moderation */}
             {activeTab === 'comments' && (
               <div className="admin-card">
-                <h2>Discussion Comments Moderation Queue ({comments.length})</h2>
+                <div className="admin-card-header">
+                  <h2>Discussion Comments Moderation Queue ({filteredComments.length})</h2>
+                </div>
+
+                <div className="admin-search-container" style={{ marginBottom: '1.25rem' }}>
+                  <Search size={18} style={{ color: 'var(--text-muted)' }} />
+                  <input 
+                    type="text" 
+                    placeholder="Search by author, email or content keyword..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    className="admin-search-input" 
+                  />
+                </div>
+
                 <div className="table-responsive">
                   <table className="admin-table">
                     <thead>
@@ -1690,7 +1937,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {comments.map(c => (
+                      {filteredComments.map(c => (
                         <tr key={c._id}>
                           <td>
                             <strong>{c.authorName}</strong>
@@ -1700,7 +1947,7 @@ export default function AdminDashboard() {
                           <td>{c.entityType}</td>
                           <td>{new Date(c.createdAt).toLocaleDateString()}</td>
                           <td>
-                            <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: c.isApproved ? '#DCFCE7' : '#FFE4E6', color: c.isApproved ? '#15803D' : '#9F1239' }}>
+                            <span className={`admin-status-badge ${c.isApproved ? 'approved' : 'pending'}`}>
                               {c.isApproved ? 'Approved' : 'Pending'}
                             </span>
                           </td>
@@ -1723,7 +1970,21 @@ export default function AdminDashboard() {
             {/* Tab: Inquiries & Consultations */}
             {activeTab === 'queries' && (
               <div className="admin-card">
-                <h2>Consultation Queries & Support Tickets ({queries.length})</h2>
+                <div className="admin-card-header">
+                  <h2>Consultation Queries & Support Tickets ({filteredQueries.length})</h2>
+                </div>
+
+                <div className="admin-search-container" style={{ marginBottom: '1.25rem' }}>
+                  <Search size={18} style={{ color: 'var(--text-muted)' }} />
+                  <input 
+                    type="text" 
+                    placeholder="Search by name, subject, email, query..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    className="admin-search-input" 
+                  />
+                </div>
+
                 <div className="table-responsive">
                   <table className="admin-table">
                     <thead>
@@ -1737,7 +1998,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {queries.map(q => (
+                      {filteredQueries.map(q => (
                         <tr key={q._id}>
                           <td>
                             <strong>{q.name}</strong>
@@ -1747,7 +2008,7 @@ export default function AdminDashboard() {
                           <td>{q.message.slice(0, 100)}...</td>
                           <td>{new Date(q.createdAt).toLocaleDateString()}</td>
                           <td>
-                            <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: q.isResolved ? '#DCFCE7' : '#FEF3C7', color: q.isResolved ? '#15803D' : '#D97706' }}>
+                            <span className={`admin-status-badge ${q.isResolved ? 'resolved' : 'pending'}`}>
                               {q.isResolved ? 'Resolved' : 'Active Ticket'}
                             </span>
                           </td>
@@ -1771,11 +2032,23 @@ export default function AdminDashboard() {
             {activeTab === 'glossary' && (
               <div className="admin-card">
                 <div className="admin-card-header">
-                  <h2>Revenue Law Glossary Terms ({glossary.length})</h2>
+                  <h2>Revenue Law Glossary Terms ({filteredGlossary.length})</h2>
                   <button onClick={() => startCreate('glossary')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Add Glossary Term
                   </button>
                 </div>
+
+                <div className="admin-search-container" style={{ marginBottom: '1.25rem' }}>
+                  <Search size={18} style={{ color: 'var(--text-muted)' }} />
+                  <input 
+                    type="text" 
+                    placeholder="Search glossary by term or definition..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    className="admin-search-input" 
+                  />
+                </div>
+
                 <div className="table-responsive">
                   <table className="admin-table">
                     <thead>
@@ -1786,7 +2059,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {glossary.map(g => (
+                      {filteredGlossary.map(g => (
                         <tr key={g._id}>
                           <td><strong>{g.term}</strong></td>
                           <td><div dangerouslySetInnerHTML={{ __html: g.definition ? g.definition.slice(0, 100) + '...' : '' }} /></td>
@@ -1985,11 +2258,23 @@ export default function AdminDashboard() {
             {activeTab === 'users' && (
               <div className="admin-card">
                 <div className="admin-card-header">
-                  <h2>Administrative Users ({users.length})</h2>
+                  <h2>Administrative Users ({filteredUsers.length})</h2>
                   <button onClick={() => startCreate('users')} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Plus size={16} /> Create User
                   </button>
                 </div>
+
+                <div className="admin-search-container" style={{ marginBottom: '1.25rem' }}>
+                  <Search size={18} style={{ color: 'var(--text-muted)' }} />
+                  <input 
+                    type="text" 
+                    placeholder="Search users by name or email..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    className="admin-search-input" 
+                  />
+                </div>
+
                 <div className="table-responsive">
                   <table className="admin-table">
                     <thead>
@@ -2002,12 +2287,12 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {users.map(u => (
+                      {filteredUsers.map(u => (
                         <tr key={u._id}>
                           <td><strong>{u.name}</strong></td>
                           <td>{u.email}</td>
                           <td>
-                            <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', backgroundColor: u.role === 'admin' ? '#EBF3FC' : '#F1F5F9', color: u.role === 'admin' ? 'var(--primary-blue)' : 'var(--text-muted)' }}>
+                            <span className={`admin-status-badge ${u.role === 'admin' ? 'published' : 'pending'}`}>
                               {u.role}
                             </span>
                           </td>

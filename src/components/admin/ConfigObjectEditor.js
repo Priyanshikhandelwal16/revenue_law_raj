@@ -69,36 +69,22 @@ function newArrayItem(value, defaultValue) {
   return template === undefined ? '' : clone(template);
 }
 
-const styles = {
-  editor: { display: 'grid', gap: '1rem' },
-  group: { border: '1px solid var(--border-color, #d8dee9)', borderRadius: 8, padding: '1rem', minWidth: 0 },
-  legend: { fontWeight: 700, color: 'var(--primary-blue, #16375b)', padding: '0 0.4rem' },
-  field: { display: 'grid', gap: '0.4rem', marginBottom: '0.9rem' },
-  label: { fontWeight: 600, color: 'var(--text-dark, #1f2937)' },
-  input: { width: '100%', border: '1px solid #cbd5e1', borderRadius: 6, padding: '0.65rem', font: 'inherit' },
-  textarea: { width: '100%', minHeight: 120, border: '1px solid #cbd5e1', borderRadius: 6, padding: '0.65rem', font: 'inherit', resize: 'vertical' },
-  arrayItem: { borderLeft: '3px solid var(--accent-gold, #c79a32)', paddingLeft: '0.8rem', marginBottom: '1rem' },
-  actions: { display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.7rem' },
-  smallButton: { border: '1px solid #cbd5e1', background: '#fff', borderRadius: 5, padding: '0.35rem 0.55rem', cursor: 'pointer' },
-  status: { margin: 0, fontWeight: 600 },
-};
-
 function ScalarField({ fieldKey, value, onChange, readOnly }) {
   const label = labelFor(fieldKey);
   if (typeof value === 'boolean') {
     return (
-      <label style={{ ...styles.field, gridTemplateColumns: 'auto 1fr', alignItems: 'center' }}>
+      <label className="config-editor-field" style={{ gridTemplateColumns: 'auto 1fr', alignItems: 'center' }}>
         <input type="checkbox" checked={value} disabled={readOnly} onChange={event => onChange(event.target.checked)} />
-        <span style={styles.label}>{label}</span>
+        <span className="config-editor-label">{label}</span>
       </label>
     );
   }
 
   if (typeof value === 'number') {
     return (
-      <label style={styles.field}>
-        <span style={styles.label}>{label}{readOnly ? ' (display only)' : ''}</span>
-        <input style={styles.input} type="number" value={Number.isFinite(value) ? value : 0} disabled={readOnly}
+      <label className="config-editor-field">
+        <span className="config-editor-label">{label}{readOnly ? ' (display only)' : ''}</span>
+        <input className="config-editor-input" type="number" value={Number.isFinite(value) ? value : 0} disabled={readOnly}
           onChange={event => onChange(event.target.value === '' ? 0 : Number(event.target.value))} />
       </label>
     );
@@ -106,16 +92,16 @@ function ScalarField({ fieldKey, value, onChange, readOnly }) {
 
   const stringValue = value == null ? '' : String(value);
   const control = shouldUseTextarea(stringValue) ? (
-    <textarea style={styles.textarea} value={stringValue} readOnly={readOnly}
+    <textarea className="config-editor-textarea" value={stringValue} readOnly={readOnly}
       onChange={event => onChange(event.target.value)} />
   ) : (
-    <input style={styles.input} type="text" value={stringValue} readOnly={readOnly}
+    <input className="config-editor-input" type="text" value={stringValue} readOnly={readOnly}
       onChange={event => onChange(event.target.value)} />
   );
 
   return (
-    <label style={styles.field}>
-      <span style={styles.label}>{label}</span>
+    <label className="config-editor-field">
+      <span className="config-editor-label">{label}</span>
       {control}
     </label>
   );
@@ -131,15 +117,15 @@ function ArrayField({ fieldKey, value, defaultValue, onChange }) {
   };
 
   return (
-    <fieldset style={styles.group}>
-      <legend style={styles.legend}>{labelFor(fieldKey)} ({value.length})</legend>
+    <fieldset className="config-editor-fieldset">
+      <legend className="config-editor-legend">{labelFor(fieldKey)} ({value.length})</legend>
       {value.map((item, index) => (
-        <div key={index} style={styles.arrayItem}>
-          <div style={styles.actions}>
+        <div key={index} className="config-editor-array-item">
+          <div className="config-editor-actions">
             <strong style={{ marginRight: 'auto' }}>{labelFor(index)}</strong>
-            <button type="button" style={styles.smallButton} disabled={index === 0} onClick={() => move(index, -1)}>Move up</button>
-            <button type="button" style={styles.smallButton} disabled={index === value.length - 1} onClick={() => move(index, 1)}>Move down</button>
-            <button type="button" style={styles.smallButton} onClick={() => onChange(value.filter((_, itemIndex) => itemIndex !== index))}>Delete</button>
+            <button type="button" className="config-editor-btn-small" disabled={index === 0} onClick={() => move(index, -1)}>Move up</button>
+            <button type="button" className="config-editor-btn-small" disabled={index === value.length - 1} onClick={() => move(index, 1)}>Move down</button>
+            <button type="button" className="config-editor-btn-small" style={{ color: '#EF4444', borderColor: '#FCA5A5' }} onClick={() => onChange(value.filter((_, itemIndex) => itemIndex !== index))}>Delete</button>
           </div>
           <ConfigField fieldKey={index} value={item}
             defaultValue={Array.isArray(defaultValue) ? defaultValue[index] ?? defaultValue[0] : undefined}
@@ -147,7 +133,7 @@ function ArrayField({ fieldKey, value, defaultValue, onChange }) {
         </div>
       ))}
 
-      <button type="button" className="btn-outline" style={styles.smallButton}
+      <button type="button" className="btn-outline config-editor-btn-small" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', padding: '0.5rem 1rem' }}
         onClick={() => onChange([...value, newArrayItem(value, defaultValue)])}>
         + Add new item
       </button>
@@ -157,8 +143,8 @@ function ArrayField({ fieldKey, value, defaultValue, onChange }) {
 
 function ObjectField({ fieldKey, value, defaultValue, onChange }) {
   return (
-    <fieldset style={styles.group}>
-      <legend style={styles.legend}>{labelFor(fieldKey)}</legend>
+    <fieldset className="config-editor-fieldset">
+      <legend className="config-editor-legend">{labelFor(fieldKey)}</legend>
       {Object.entries(value)
         .filter(([key]) => !blockedKeys.has(key) && key !== 'schemaVersion')
         .map(([key, item]) => (
@@ -216,14 +202,14 @@ export default function ConfigObjectEditor({ settingKey, value, defaultValue, on
   };
 
   return (
-    <form onSubmit={handleSubmit} style={styles.editor}>
+    <form onSubmit={handleSubmit} className="config-editor-form">
       <ConfigField fieldKey={settingKey} value={draft} defaultValue={defaultValue} onChange={setDraft} />
       <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.8rem' }}>
         <button type="submit" className="btn-primary" disabled={status === 'saving'}>
           {status === 'saving' ? 'Saving…' : 'Save Changes'}
         </button>
         {message && (
-          <p role="status" style={{ ...styles.status, color: status === 'error' ? '#b91c1c' : status === 'success' ? '#15803d' : '#475569' }}>
+          <p role="status" className="config-editor-status" style={{ color: status === 'error' ? '#b91c1c' : status === 'success' ? '#15803d' : '#475569' }}>
             {message}
           </p>
         )}

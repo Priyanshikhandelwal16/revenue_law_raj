@@ -40,43 +40,38 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    let item = null;
+    // 1. Create user in Firebase Authentication
+    const { getAuth, createUserWithEmailAndPassword } = require('firebase/auth');
+    const { app: firebaseApp } = require('@/lib/firebase');
+    const firebaseAuth = getAuth(firebaseApp);
+
+    let firebaseUser = null;
     try {
-      await dbConnect();
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        return NextResponse.json({ error: 'Email already registered' }, { status: 400 });
+      const userCredential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
+      firebaseUser = userCredential.user;
+    } catch (authErr) {
+      console.error("Firebase Auth user registration failed:", authErr);
+      if (authErr.code === 'auth/email-already-in-use') {
+        return NextResponse.json({ error: 'Email already registered in Firebase' }, { status: 400 });
       }
-
-      const hashedPassword = await bcrypt.hash(password, 10);
-      item = await User.create({
-        email,
-        password: hashedPassword,
-        name,
-        role: role || 'admin'
-      });
-      item = item.toObject();
-      delete item.password;
-    } catch (dbErr) {
-      console.warn("DB offline, creating user in local file DB:", dbErr.message);
-      const { readLocalDb, createLocalItem } = require('@/lib/localDb');
-      const localUsers = readLocalDb('users');
-      if (localUsers.some(u => u.email === email)) {
-        return NextResponse.json({ error: 'Email already registered' }, { status: 400 });
-      }
-
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const created = createLocalItem('users', {
-        email,
-        password: hashedPassword,
-        name,
-        role: role || 'admin'
-      });
-      const { password: pw, ...rest } = created;
-      item = rest;
+      return NextResponse.json({ error: 'Firebase Auth creation failed: ' + authErr.message }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true, item });
+    // 2. Create user profile in Firestore
+    await dbConnect();
+    const hashedPassword = await require('bcryptjs').hash(password, 10);
+    let item = await User.create({
+      _id: firebaseUser.uid, // Map doc ID to Firebase UID!
+      email,
+      password: hashedPassword,
+      name,
+      role: role || 'admin'
+    });
+
+    const responseItem = item.toObject();
+    delete responseItem.password;
+
+    return NextResponse.json({ success: true, item: responseItem });
   } catch (err) {
     console.error('User create error:', err);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });

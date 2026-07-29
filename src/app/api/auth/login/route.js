@@ -12,45 +12,47 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
-    let user = null;
+    // 1. Authenticate against Firebase Auth
+    const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } = require('firebase/auth');
+    const { app: firebaseApp } = require('@/lib/firebase');
+    const firebaseAuth = getAuth(firebaseApp);
+
+    let firebaseUser = null;
     try {
-      await dbConnect();
-      user = await User.findOne({ email });
-
-      // Seed default admin if none exists in MongoDB
-      if (!user && email === 'admin@rajasthanrevenue.law') {
-        const hashedPassword = await bcrypt.hash('Admin@Rajasthan2026', 10);
-        user = await User.create({
-          email: 'admin@rajasthanrevenue.law',
-          password: hashedPassword,
-          name: 'Super Admin',
-          role: 'admin',
-        });
+      const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
+      firebaseUser = userCredential.user;
+    } catch (authErr) {
+      console.warn("Firebase Auth sign-in failed, checking for auto-seeding:", authErr.code);
+      
+      // Auto-register superadmin in Firebase Auth if it doesn't exist yet
+      if (email === 'admin@rajasthanrevenue.law' && password === 'Admin@Rajasthan2026') {
+        try {
+          console.log("Auto-registering super administrator in Firebase Auth...");
+          const userCredential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
+          firebaseUser = userCredential.user;
+        } catch (regErr) {
+          console.error("Auto-registration in Firebase Auth failed:", regErr);
+        }
       }
-    } catch (dbErr) {
-      console.warn("DB offline, checking local file DB for login:", dbErr.message);
-      const { readLocalDb, createLocalItem } = require('@/lib/localDb');
-      const localUsers = readLocalDb('users');
-      user = localUsers.find(u => u.email === email);
-
-      if (!user && email === 'admin@rajasthanrevenue.law') {
-        const hashedPassword = await bcrypt.hash('Admin@Rajasthan2026', 10);
-        user = createLocalItem('users', {
-          email: 'admin@rajasthanrevenue.law',
-          password: hashedPassword,
-          name: 'Super Admin',
-          role: 'admin'
-        });
+      
+      if (!firebaseUser) {
+        return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
       }
     }
+
+    // 2. Fetch or create user profile in Firestore
+    await dbConnect();
+    let user = await User.findOne({ email });
 
     if (!user) {
-      return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
+      // Auto-create admin profile in Firestore
+      const hashedPassword = await require('bcryptjs').hash(password, 10);
+      user = await User.create({
+        email: email,
+        password: hashedPassword,
+        name: email === 'admin@rajasthanrevenue.law' ? 'Super Admin' : email.split('@')[0],
+        role: 'admin',
+      });
     }
 
     const token = signToken(user);

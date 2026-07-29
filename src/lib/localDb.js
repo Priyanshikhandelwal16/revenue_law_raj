@@ -1,5 +1,13 @@
-import fs from 'fs';
-import path from 'path';
+import { db } from './firebase';
+import { 
+  collection, 
+  doc, 
+  getDoc, 
+  getDocs, 
+  setDoc, 
+  updateDoc, 
+  deleteDoc 
+} from 'firebase/firestore';
 import { DEFAULT_SETTINGS } from './defaultSettings';
 import {
   fallbackArticles,
@@ -10,8 +18,6 @@ import {
   fallbackGlossary
 } from './fallbacks';
 
-const DB_FILE_PATH = path.join(process.cwd(), 'src', 'lib', 'local_db.json');
-
 function canonicalSetting(key, value) {
   return {
     _id: `set_${key}`,
@@ -21,139 +27,143 @@ function canonicalSetting(key, value) {
 }
 
 function createCanonicalSettings() {
-  return Object.entries(DEFAULT_SETTINGS).map(([key, value]) => canonicalSetting(key, value));
-}
-
-function readRawDb() {
-  return JSON.parse(fs.readFileSync(DB_FILE_PATH, 'utf8'));
-}
-
-function writeRawDb(db) {
-  fs.writeFileSync(DB_FILE_PATH, JSON.stringify(db, null, 2), 'utf8');
-  return true;
-}
-
-function appendMissingCanonicalSettings(db) {
-  if (!Array.isArray(db.settings)) {
-    db.settings = [];
-  }
-
-  const existingKeys = new Set(db.settings.map(setting => setting?.key));
-  let changed = false;
-
+  const settings = [];
   for (const [key, value] of Object.entries(DEFAULT_SETTINGS)) {
-    if (!existingKeys.has(key)) {
-      db.settings.push(canonicalSetting(key, value));
-      existingKeys.add(key);
-      changed = true;
-    }
+    settings.push(canonicalSetting(key, value));
   }
-
-  return changed;
+  return settings;
 }
 
-
-// Ensure database file exists with initial fallbacks.
-function initializeDb() {
-  if (!fs.existsSync(DB_FILE_PATH)) {
-    const initialData = {
-      articles: fallbackArticles,
-      judgments: fallbackJudgments,
-      laws: fallbackLaws,
-      notifications: fallbackNotifications,
-      downloads: fallbackDownloads,
-      glossary: fallbackGlossary,
-      comments: [
-        {
-          _id: "com_mock_1",
-          entityId: "jud_mock_1",
-          name: "Advocate Rajesh Sharma",
-          email: "rajesh.sharma@example.com",
-          content: "Excellent judgment clarifying the application of partition maps under Section 53.",
-          isApproved: true,
-          createdAt: new Date("2026-06-01T12:00:00Z").toISOString()
-        }
-      ],
-      queries: [],
-      settings: createCanonicalSettings(),
-      media: [],
-      users: [
-        {
-          _id: "usr_mock_admin",
-          email: "admin@rajasthanrevenue.law",
-          password: "$2a$10$feMKRu3Hr4mc3bl2JNA4oeagjKHIrCSVClIJSjci6hCQ1gq6IYffa", // Admin@Rajasthan2026
-          name: "Super Admin",
-          role: "admin"
-        }
-      ]
-    };
-    writeRawDb(initialData);
-  }
-}
-
-export function readLocalDb(type) {
+// Read all items from Firestore
+export async function readLocalDb(type) {
   try {
-    initializeDb();
-    const db = readRawDb();
-    if (appendMissingCanonicalSettings(db)) {
-      writeRawDb(db);
+    const colRef = collection(db, type);
+    const snapshot = await getDocs(colRef);
+    let items = snapshot.docs.map(doc => ({ ...doc.data(), _id: doc.id }));
+
+    // If empty, auto-seed with fallbacks
+    if (items.length === 0) {
+      console.log(`Auto-seeding empty Firestore collection: ${type}...`);
+      let seedData = [];
+      if (type === 'articles') seedData = fallbackArticles;
+      else if (type === 'judgments') seedData = fallbackJudgments;
+      else if (type === 'laws') seedData = fallbackLaws;
+      else if (type === 'notifications') seedData = fallbackNotifications;
+      else if (type === 'downloads') seedData = fallbackDownloads;
+      else if (type === 'glossary') seedData = fallbackGlossary;
+      else if (type === 'settings') seedData = createCanonicalSettings();
+      else if (type === 'users') {
+        seedData = [
+          {
+            _id: "usr_mock_admin",
+            email: "admin@rajasthanrevenue.law",
+            password: "$2a$10$feMKRu3Hr4mc3bl2JNA4oeagjKHIrCSVClIJSjci6hCQ1gq6IYffa", // Admin@Rajasthan2026
+            name: "Super Admin",
+            role: "admin"
+          }
+        ];
+      }
+
+      for (const item of seedData) {
+        const id = item._id || `${type.slice(0, 3)}_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`;
+        const cleanedItem = { ...item };
+        delete cleanedItem._id;
+        await setDoc(doc(db, type, id), { _id: id, ...cleanedItem });
+      }
+
+      // Query again after seeding
+      const newSnapshot = await getDocs(colRef);
+      items = newSnapshot.docs.map(doc => ({ ...doc.data(), _id: doc.id }));
     }
-    return db[type] || [];
+
+    // Special logic for settings: append any missing default settings
+    if (type === 'settings') {
+      const existingKeys = new Set(items.map(item => item.key));
+      for (const [key, value] of Object.entries(DEFAULT_SETTINGS)) {
+        if (!existingKeys.has(key)) {
+          const id = `set_${key}`;
+          const newSetting = canonicalSetting(key, value);
+          const cleaned = { ...newSetting };
+          delete cleaned._id;
+          await setDoc(doc(db, type, id), { _id: id, ...cleaned });
+          items.push(newSetting);
+        }
+      }
+    }
+
+    return items;
   } catch (err) {
-    console.error(`Error reading local db for ${type}:`, err);
+    console.error(`Error reading Firestore collection ${type}:`, err);
     return [];
   }
 }
 
-export function writeLocalDb(type, data) {
+// Find item helper
+export async function getLocalItem(type, lookupVal, key = '_id') {
   try {
-    initializeDb();
-    const db = readRawDb();
-    db[type] = data;
-    appendMissingCanonicalSettings(db);
-    return writeRawDb(db);
+    if (key === '_id') {
+      const docRef = doc(db, type, lookupVal);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        return { ...docSnap.data(), _id: docSnap.id };
+      }
+    }
+    const items = await readLocalDb(type);
+    return items.find(item => item[key] === lookupVal) || null;
   } catch (err) {
-    console.error(`Error writing local db for ${type}:`, err);
-    return false;
+    console.error(`Error getting item from Firestore:`, err);
+    return null;
   }
 }
 
-// Find item helper
-export function getLocalItem(type, lookupVal, key = '_id') {
-  const items = readLocalDb(type);
-  return items.find(item => item[key] === lookupVal) || null;
-}
-
 // Create item
-export function createLocalItem(type, itemData) {
-  const items = readLocalDb(type);
-  const newItem = {
-    _id: `${type.slice(0, 3)}_${Date.now()}`,
-    createdAt: new Date().toISOString(),
-    status: 'published',
-    ...itemData
-  };
-  items.unshift(newItem);
-  return writeLocalDb(type, items) ? newItem : null;
+export async function createLocalItem(type, itemData) {
+  try {
+    const id = itemData._id || `${type.slice(0, 3)}_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`;
+    const newItem = {
+      _id: id,
+      createdAt: new Date().toISOString(),
+      status: 'published',
+      ...itemData
+    };
+    
+    const cleaned = { ...newItem };
+    delete cleaned._id;
+
+    await setDoc(doc(db, type, id), cleaned);
+    return newItem;
+  } catch (err) {
+    console.error(`Error creating document in Firestore:`, err);
+    return null;
+  }
 }
 
 // Update item
-export function updateLocalItem(type, id, updates) {
-  const items = readLocalDb(type);
-  const index = items.findIndex(item => item._id === id);
-  if (index === -1) return null;
+export async function updateLocalItem(type, id, updates) {
+  try {
+    const cleaned = { ...updates };
+    delete cleaned._id;
+    cleaned.updatedAt = new Date().toISOString();
 
-  items[index] = {
-    ...items[index],
-    ...updates,
-    updatedAt: new Date().toISOString()
-  };
-  return writeLocalDb(type, items) ? items[index] : null;
+    const docRef = doc(db, type, id);
+    await setDoc(docRef, cleaned, { merge: true });
+
+    // Fetch the updated document
+    const docSnap = await getDoc(docRef);
+    return { ...docSnap.data(), _id: id };
+  } catch (err) {
+    console.error(`Error updating document in Firestore:`, err);
+    return null;
+  }
 }
 
 // Delete item
-export function deleteLocalItem(type, id) {
-  const items = readLocalDb(type);
-  const filtered = items.filter(item => item._id !== id);
-  return writeLocalDb(type, filtered);
+export async function deleteLocalItem(type, id) {
+  try {
+    await deleteDoc(doc(db, type, id));
+    return true;
+  } catch (err) {
+    console.error(`Error deleting document in Firestore:`, err);
+    return false;
+  }
 }

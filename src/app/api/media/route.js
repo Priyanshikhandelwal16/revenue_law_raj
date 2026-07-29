@@ -28,7 +28,14 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Missing parameters' }, { status: 400 });
     }
 
-    const newItem = await Media.create({ filename, fileType, fileSize, url });
+    let finalUrl = url;
+    if (url.startsWith('data:')) {
+      const { uploadToCloudinary } = require('@/lib/cloudinary');
+      console.log('Uploading media library asset to Cloudinary...');
+      finalUrl = await uploadToCloudinary(url, filename);
+    }
+
+    const newItem = await Media.create({ filename, fileType, fileSize, url: finalUrl });
     return NextResponse.json({ success: true, item: newItem });
   } catch (err) {
     console.error("POST media error:", err);
