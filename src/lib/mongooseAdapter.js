@@ -16,6 +16,7 @@ export function patchMongooseModels() {
   const originalFindByIdAndUpdate = mongoose.Model.findByIdAndUpdate;
   const originalFindByIdAndDelete = mongoose.Model.findByIdAndDelete;
   const originalFindOneAndDelete = mongoose.Model.findOneAndDelete;
+  const originalFindOneAndUpdate = mongoose.Model.findOneAndUpdate;
   const originalSave = mongoose.Model.prototype.save;
 
   const isOffline = () => {
@@ -53,7 +54,9 @@ export function patchMongooseModels() {
                 const matchesOr = val.some(condition => {
                   for (let k in condition) {
                     let v = condition[k];
-                    if (v && typeof v === 'object' && v instanceof RegExp) {
+                    if (v && typeof v === 'object' && Array.isArray(v.$in)) {
+                      if (v.$in.includes(item[k])) return true;
+                    } else if (v && typeof v === 'object' && v instanceof RegExp) {
                       if (v.test(item[k] || '')) return true;
                     } else if (v && typeof v === 'object' && v.$regex) {
                       const opts = v.$options || '';
@@ -69,7 +72,9 @@ export function patchMongooseModels() {
                 continue;
               }
               if (key.startsWith('$')) continue; // Skip other operators for simple list responses
-              if (val && typeof val === 'object' && val instanceof RegExp) {
+              if (val && typeof val === 'object' && Array.isArray(val.$in)) {
+                if (!val.$in.includes(item[key])) return false;
+              } else if (val && typeof val === 'object' && val instanceof RegExp) {
                 if (!val.test(item[key] || '')) return false;
               } else if (val && typeof val === 'object' && val.$regex) {
                 const opts = val.$options || '';
@@ -215,6 +220,35 @@ export function patchMongooseModels() {
       return doc;
     }
     return originalFindByIdAndUpdate.apply(this, [id, update, options, ...args]);
+  };
+
+  mongoose.Model.findOneAndUpdate = async function(query, update, options, ...args) {
+    if (isOffline()) {
+      console.warn(`[FirestoreAdapter] Intercepting Model.findOneAndUpdate for ${this.modelName}`);
+      const type = getCollectionName(this.modelName);
+      const items = await readLocalDb(type);
+      
+      let found = items.find(item => {
+        for (let k in query) {
+          if (item[k] !== query[k]) return false;
+        }
+        return true;
+      });
+
+      const updates = update && update.$set ? update.$set : update;
+      let item;
+      if (found) {
+        item = await updateLocalItem(type, found._id, updates);
+      } else {
+        const insertData = { ...query, ...updates };
+        item = await createLocalItem(type, insertData);
+      }
+
+      const doc = item ? new this(item) : null;
+      if (doc) doc._id = item._id;
+      return doc;
+    }
+    return originalFindOneAndUpdate.apply(this, [query, update, options, ...args]);
   };
 
   mongoose.Model.findByIdAndDelete = async function(id, ...args) {

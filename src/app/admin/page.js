@@ -555,7 +555,7 @@ export default function AdminDashboard() {
                 onChange={(e) => setLoginEmail(e.target.value)} 
                 className="form-control" 
                 style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', fontSize: '0.92rem' }}
-                placeholder="admin@rajasthanrevenue.law"
+                placeholder="Enter your email address"
                 required 
               />
             </div>
@@ -567,7 +567,7 @@ export default function AdminDashboard() {
                 onChange={(e) => setLoginPassword(e.target.value)} 
                 className="form-control" 
                 style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', fontSize: '0.92rem' }}
-                placeholder="••••••••"
+                placeholder="Enter your password"
                 required 
               />
             </div>
