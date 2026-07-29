@@ -30,6 +30,16 @@ export async function resolveUploadSession(body) {
 
   // If we have base64 PDF content, upload it to Cloudinary and set the pdfUrl
   if (base64Pdf) {
+    if (!base64Pdf.startsWith('data:')) {
+      let mimeType = 'application/pdf';
+      if (filename.endsWith('.pdf')) mimeType = 'application/pdf';
+      else if (filename.endsWith('.docx')) mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      else if (filename.endsWith('.xlsx')) mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      else if (filename.endsWith('.png')) mimeType = 'image/png';
+      else if (filename.endsWith('.jpg') || filename.endsWith('.jpeg')) mimeType = 'image/jpeg';
+      
+      base64Pdf = `data:${mimeType};base64,${base64Pdf}`;
+    }
     console.log('Uploading PDF document to Cloudinary...');
     const secureUrl = await uploadToCloudinary(base64Pdf, filename);
     target.pdfUrl = secureUrl;
@@ -61,6 +71,16 @@ export async function resolveUploadSession(body) {
 
   // If we have general base64 file content, upload it to Cloudinary and set the fileUrl / url
   if (base64File) {
+    if (!base64File.startsWith('data:')) {
+      let mimeType = 'application/octet-stream';
+      if (fileDocName.endsWith('.pdf')) mimeType = 'application/pdf';
+      else if (fileDocName.endsWith('.docx')) mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      else if (fileDocName.endsWith('.xlsx')) mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      else if (fileDocName.endsWith('.png')) mimeType = 'image/png';
+      else if (fileDocName.endsWith('.jpg') || fileDocName.endsWith('.jpeg')) mimeType = 'image/jpeg';
+      
+      base64File = `data:${mimeType};base64,${base64File}`;
+    }
     console.log('Uploading asset file to Cloudinary...');
     const secureUrl = await uploadToCloudinary(base64File, fileDocName);
     target.fileUrl = secureUrl;

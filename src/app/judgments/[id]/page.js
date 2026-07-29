@@ -171,6 +171,27 @@ export default function JudgmentDetailPage({ params }) {
                 <Printer size={16} />
                 <span>Print page</span>
               </button>
+              {judgment.pdfUrl && (
+                <a 
+                  href={judgment.pdfUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn-outline" 
+                  style={{ 
+                    padding: '0.5rem', 
+                    display: 'flex', 
+                    gap: '0.25rem', 
+                    alignItems: 'center', 
+                    fontSize: '0.8rem', 
+                    textDecoration: 'none', 
+                    color: 'inherit' 
+                  }} 
+                  title="Download Certified PDF"
+                >
+                  <Download size={16} />
+                  <span>Download PDF</span>
+                </a>
+              )}
             </div>
           </div>
 
