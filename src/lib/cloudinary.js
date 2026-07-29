@@ -40,10 +40,23 @@ export async function uploadToCloudinary(base64Data, filename = '') {
       }
     }
 
-    const uploadResponse = await cloudinary.uploader.upload(base64Data, {
-      folder: folder,
-      public_id: publicId,
-      resource_type: isRaw ? 'raw' : 'auto' // Raw keeps PDFs and documents intact, auto detects images
+    // Convert base64 data to a Buffer to ensure raw documents (like PDFs) are stored as binary, not base64 text
+    const cleanBase64 = base64Data.split(',')[1] || base64Data;
+    const buffer = Buffer.from(cleanBase64, 'base64');
+
+    const uploadResponse = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: folder,
+          public_id: publicId,
+          resource_type: isRaw ? 'raw' : 'auto' // Raw keeps PDFs and documents intact, auto detects images
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      stream.end(buffer);
     });
 
     return uploadResponse.secure_url;

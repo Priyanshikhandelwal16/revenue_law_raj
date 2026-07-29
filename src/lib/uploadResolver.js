@@ -13,7 +13,16 @@ export async function resolveUploadSession(body) {
     if (session) {
       const chunksArray = [];
       for (let i = 0; i < session.totalChunks; i++) {
-        chunksArray.push(session.chunks.get(i.toString()) || '');
+        const key = i.toString();
+        let chunk = '';
+        if (session.chunks) {
+          if (typeof session.chunks.get === 'function') {
+            chunk = session.chunks.get(key) || '';
+          } else {
+            chunk = session.chunks[key] || '';
+          }
+        }
+        chunksArray.push(chunk);
       }
       base64Pdf = chunksArray.join('');
       filename = session.fileName || 'document.pdf';
@@ -55,7 +64,16 @@ export async function resolveUploadSession(body) {
     if (session) {
       const chunksArray = [];
       for (let i = 0; i < session.totalChunks; i++) {
-        chunksArray.push(session.chunks.get(i.toString()) || '');
+        const key = i.toString();
+        let chunk = '';
+        if (session.chunks) {
+          if (typeof session.chunks.get === 'function') {
+            chunk = session.chunks.get(key) || '';
+          } else {
+            chunk = session.chunks[key] || '';
+          }
+        }
+        chunksArray.push(chunk);
       }
       base64File = chunksArray.join('');
       fileDocName = session.fileName || 'file.bin';

@@ -277,7 +277,7 @@ export function patchMongooseModels() {
     if (isOffline()) {
       console.warn(`[FirestoreAdapter] Intercepting Model.prototype.save for ${this.constructor.modelName}`);
       const type = getCollectionName(this.constructor.modelName);
-      const data = this.toObject();
+      const data = this.toObject({ flattenMaps: true });
       
       if (data._id) {
         await updateLocalItem(type, data._id, data);
