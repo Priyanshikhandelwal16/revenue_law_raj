@@ -10,10 +10,10 @@ export default function JudgmentsClient({ initialJudgments = [], initialCourt = 
   const router = useRouter();
   const [court, setCourt] = useState(initialCourt);
   const [q, setQ] = useState(initialQ);
-  const [judgments, setJudgments] = useState(initialJudgments);
+  const [judgments, setJudgments] = useState(Array.isArray(initialJudgments) ? initialJudgments : []);
 
   useEffect(() => {
-    setJudgments(initialJudgments);
+    setJudgments(Array.isArray(initialJudgments) ? initialJudgments : []);
   }, [initialJudgments]);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ export default function JudgmentsClient({ initialJudgments = [], initialCourt = 
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                {judgments.map(j => (
+                {Array.isArray(judgments) && judgments.map(j => (
                   <div key={j._id} className="premium-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center' }}>
                       <span style={{ fontSize: '0.8rem', fontWeight: 700, backgroundColor: 'rgba(197, 168, 128, 0.15)', color: 'var(--primary-blue)', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>

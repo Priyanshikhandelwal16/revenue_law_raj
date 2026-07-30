@@ -12,13 +12,13 @@ export default function LawsClient({ laws = [], initialActSlug = '', initialSect
 
   // Initial selection logic
   useEffect(() => {
-    if (laws.length > 0) {
+    if (Array.isArray(laws) && laws.length > 0) {
       let matched = laws[0];
       if (initialActSlug) {
         const found = laws.find(l => l.slug === initialActSlug || l._id === initialActSlug);
         if (found) matched = found;
       }
-      setActiveActId(matched._id);
+      setActiveActId(matched?._id || '');
 
       if (matched.sections && matched.sections.length > 0) {
         const requestedSection = initialSectionNumber
@@ -31,7 +31,7 @@ export default function LawsClient({ laws = [], initialActSlug = '', initialSect
     }
   }, [laws, initialActSlug, initialSectionNumber]);
 
-  const activeAct = laws.find(l => l._id === activeActId);
+  const activeAct = Array.isArray(laws) ? laws.find(l => l._id === activeActId) : undefined;
 
   // Filter sections if searching
   const filteredSections = activeAct?.sections?.filter(sec => {
@@ -78,7 +78,7 @@ export default function LawsClient({ laws = [], initialActSlug = '', initialSect
             <div>
               {/* Acts Selector Tabs */}
               <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
-                {laws.map(law => (
+                {Array.isArray(laws) && laws.map(law => (
                   <button
                     key={law._id}
                     onClick={() => {
