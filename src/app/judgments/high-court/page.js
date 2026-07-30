@@ -229,7 +229,7 @@ function HighCourtJudgmentsContent() {
 
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem', borderTop: '1px solid var(--border-color)', paddingTop: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
                       <span style={{ fontSize: '0.8rem', color: 'var(--accent-gold)', fontWeight: 600 }}>
-                        Laws Cited: {j.lawsCited && j.lawsCited.length > 0 ? j.lawsCited.join(', ') : 'High Court Writ Review'}
+                        Laws Cited: {Array.isArray(j.lawsCited) && j.lawsCited.length > 0 ? j.lawsCited.join(', ') : (typeof j.lawsCited === 'string' ? j.lawsCited : 'High Court Writ Review')}
                       </span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         {j.pdfUrl && (
