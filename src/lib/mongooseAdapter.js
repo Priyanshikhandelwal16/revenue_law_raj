@@ -18,6 +18,8 @@ export function patchMongooseModels() {
   const originalFindOneAndDelete = mongoose.Model.findOneAndDelete;
   const originalFindOneAndUpdate = mongoose.Model.findOneAndUpdate;
   const originalSave = mongoose.Model.prototype.save;
+  const originalDeleteOne = mongoose.Model.deleteOne;
+  const originalDeleteMany = mongoose.Model.deleteMany;
 
   const isOffline = () => {
     return global.mongoose && global.mongoose.isOffline;
@@ -283,6 +285,66 @@ export function patchMongooseModels() {
       return {};
     }
     return originalFindOneAndDelete.apply(this, [query, ...args]);
+  };
+
+  mongoose.Model.deleteOne = async function(query, ...args) {
+    if (isOffline()) {
+      console.warn(`[FirestoreAdapter] Intercepting Model.deleteOne for ${this.modelName}`);
+      const type = getCollectionName(this.modelName);
+      if (query && query.uploadId) {
+        const items = await readLocalDb(type);
+        const found = items.find(i => i.uploadId === query.uploadId);
+        if (found) {
+          await deleteLocalItem(type, found._id);
+        }
+      } else if (query && query._id) {
+        await deleteLocalItem(type, query._id);
+      } else if (query && typeof query === 'object') {
+        const items = await readLocalDb(type);
+        const found = items.find(item => {
+          for (let k in query) {
+            if (item[k] !== query[k]) return false;
+          }
+          return true;
+        });
+        if (found) {
+          await deleteLocalItem(type, found._id);
+        }
+      }
+      return { deletedCount: 1 };
+    }
+    return originalDeleteOne.apply(this, [query, ...args]);
+  };
+
+  mongoose.Model.deleteMany = async function(query, ...args) {
+    if (isOffline()) {
+      console.warn(`[FirestoreAdapter] Intercepting Model.deleteMany for ${this.modelName}`);
+      const type = getCollectionName(this.modelName);
+      if (!query || Object.keys(query).length === 0) {
+        const items = await readLocalDb(type);
+        for (let item of items) {
+          await deleteLocalItem(type, item._id);
+        }
+        return { deletedCount: items.length };
+      }
+      const items = await readLocalDb(type);
+      let count = 0;
+      for (let item of items) {
+        let match = true;
+        for (let k in query) {
+          if (item[k] !== query[k]) {
+            match = false;
+            break;
+          }
+        }
+        if (match) {
+          await deleteLocalItem(type, item._id);
+          count++;
+        }
+      }
+      return { deletedCount: count };
+    }
+    return originalDeleteMany.apply(this, [query, ...args]);
   };
 
   mongoose.Model.prototype.save = async function(...args) {
