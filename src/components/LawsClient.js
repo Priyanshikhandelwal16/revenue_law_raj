@@ -22,7 +22,7 @@ export default function LawsClient({ laws = [], initialActSlug = '', initialSect
 
       if (matched.sections && matched.sections.length > 0) {
         const requestedSection = initialSectionNumber
-          ? matched.sections.find((section) => section.sectionNumber?.toLowerCase() === initialSectionNumber.toLowerCase())
+          ? matched.sections.find((section) => String(section.sectionNumber || '').toLowerCase() === initialSectionNumber.toLowerCase())
           : null;
         setActiveSection(requestedSection || matched.sections[0]);
       } else {
@@ -37,10 +37,13 @@ export default function LawsClient({ laws = [], initialActSlug = '', initialSect
   const filteredSections = activeAct?.sections?.filter(sec => {
     if (!searchTerm) return true;
     const term = searchTerm.toLowerCase();
+    const secNum = String(sec.sectionNumber || '').toLowerCase();
+    const secTitle = String(sec.title || '').toLowerCase();
+    const secContent = String(sec.content || '').toLowerCase();
     return (
-      sec.sectionNumber.toLowerCase().includes(term) ||
-      sec.title.toLowerCase().includes(term) ||
-      sec.content.toLowerCase().includes(term)
+      secNum.includes(term) ||
+      secTitle.includes(term) ||
+      secContent.includes(term)
     );
   }) || [];
 
@@ -98,7 +101,7 @@ export default function LawsClient({ laws = [], initialActSlug = '', initialSect
                       borderRadius: '6px'
                     }}
                   >
-                    {law.title.split(',')[0]} {/* Show short title */}
+                    {law.title ? law.title.split(',')[0] : 'Untitled Act'}
                   </button>
                 ))}
               </div>
@@ -157,7 +160,7 @@ export default function LawsClient({ laws = [], initialActSlug = '', initialSect
                       {activeSection ? (
                         <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                           <span style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>
-                            {activeAct.title}
+                            {activeAct?.title || ''}
                           </span>
                           <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
                             Section {activeSection.sectionNumber}: {activeSection.title}
