@@ -163,7 +163,10 @@ export function patchMongooseModels() {
         }
         
         const doc = found ? new this(found) : null;
-        if (doc) doc._id = found._id;
+        if (doc) {
+          doc._id = found._id;
+          doc.isNew = false;
+        }
         return doc;
       });
 
@@ -183,7 +186,10 @@ export function patchMongooseModels() {
       
       const promise = getLocalItem(type, id).then(found => {
         const doc = found ? new this(found) : null;
-        if (doc) doc._id = found._id;
+        if (doc) {
+          doc._id = found._id;
+          doc.isNew = false;
+        }
         return doc;
       });
 
@@ -216,7 +222,10 @@ export function patchMongooseModels() {
       const updated = await updateLocalItem(type, id, updates);
       
       const doc = updated ? new this(updated) : null;
-      if (doc) doc._id = updated._id;
+      if (doc) {
+        doc._id = updated._id;
+        doc.isNew = false;
+      }
       return doc;
     }
     return originalFindByIdAndUpdate.apply(this, [id, update, options, ...args]);
@@ -245,7 +254,10 @@ export function patchMongooseModels() {
       }
 
       const doc = item ? new this(item) : null;
-      if (doc) doc._id = item._id;
+      if (doc) {
+        doc._id = item._id;
+        doc.isNew = false;
+      }
       return doc;
     }
     return originalFindOneAndUpdate.apply(this, [query, update, options, ...args]);
@@ -279,8 +291,14 @@ export function patchMongooseModels() {
       const type = getCollectionName(this.constructor.modelName);
       const data = this.toObject({ flattenMaps: true });
       
-      if (data._id) {
-        await updateLocalItem(type, data._id, data);
+      let id = this._id;
+      if (id && typeof id === 'object' && id.toString) {
+        id = id.toString();
+      }
+      
+      if (id) {
+        data._id = id;
+        await updateLocalItem(type, id, data);
       } else {
         const created = await createLocalItem(type, data);
         this._id = created._id;

@@ -16,6 +16,7 @@ const pages = [
   { key: 'important_rules_config', label: 'Important Rules & Checklists', group: 'Website Content Pages', path: '/important-rules', desc: 'Add or modify land conversion rules, checklists of required files, and action buttons.' },
   { key: 'important_concepts_config', label: 'Important Concepts', group: 'Website Content Pages', path: '/resources/important-concepts', desc: 'Configure agricultural terms, reference guidelines, and key summaries of legal concepts.' },
   { key: 'judgment_writing_config', label: 'Judgment Writing Guide', group: 'Website Content Pages', path: '/resources/how-to-write-judgments', desc: 'Update templates, formats, and rules for drafting professional revenue judgments.' },
+  { key: 'contact_config', label: 'Contact Page Details', group: 'Website Content Pages', path: '/contact', desc: 'Configure contact helpline numbers, emails, addresses, social page links, and hero banners.' },
 
   // Group: Global Theme and Configs
   { key: 'homepage_config', label: 'Home Page CMS & Hero', group: 'Core Website Settings', path: '/', desc: 'Updates the home page banner tagline, main background photo, core highlights, and features.' },
