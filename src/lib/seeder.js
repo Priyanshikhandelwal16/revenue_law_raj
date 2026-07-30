@@ -18,11 +18,6 @@ import {
 
 export async function checkAndSeedDatabase() {
   try {
-    const isOffline = global.mongoose && global.mongoose.isOffline;
-    if (isOffline) {
-      return;
-    }
-
     await dbConnect();
 
     // 1. Articles

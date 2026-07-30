@@ -31,13 +31,20 @@ export async function GET(req) {
     }
 
     if (q) {
+      let regexPattern = q;
+      if (/^Section\s+/i.test(q)) {
+        regexPattern = q.replace(/^Section\s+/i, '(Section|Sec\\.?)\\s+');
+      } else if (/^Sec\\.?\s+/i.test(q)) {
+        regexPattern = q.replace(/^Sec\\.?\s+/i, '(Section|Sec\\.?)\\s+');
+      }
+
       query.$or = [
-        { title: { $regex: q, $options: 'i' } },
-        { citation: { $regex: q, $options: 'i' } },
-        { caseNumber: { $regex: q, $options: 'i' } },
-        { parties: { $regex: q, $options: 'i' } },
-        { judgeName: { $regex: q, $options: 'i' } },
-        { fullText: { $regex: q, $options: 'i' } }
+        { title: { $regex: regexPattern, $options: 'i' } },
+        { citation: { $regex: regexPattern, $options: 'i' } },
+        { caseNumber: { $regex: regexPattern, $options: 'i' } },
+        { parties: { $regex: regexPattern, $options: 'i' } },
+        { judgeName: { $regex: regexPattern, $options: 'i' } },
+        { fullText: { $regex: regexPattern, $options: 'i' } }
       ];
     }
 
