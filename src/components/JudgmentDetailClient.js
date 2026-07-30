@@ -163,9 +163,13 @@ export default function JudgmentDetailClient({ judgment, initialComments = [], i
             </div>
             <div>
               <p style={{ fontWeight: 600, textTransform: 'uppercase', fontSize: '0.7rem', color: 'var(--text-muted)' }}>Decided Date</p>
-              <p style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+              <p suppressHydrationWarning={true} style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                 <Calendar size={14} />
-                {new Date(judgment.judgmentDate).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
+                {(() => {
+                  if (!judgment.judgmentDate) return 'Date Unavailable';
+                  const d = new Date(judgment.judgmentDate);
+                  return isNaN(d.getTime()) ? 'Date Unavailable' : d.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+                })()}
               </p>
             </div>
             <div>
@@ -226,7 +230,12 @@ export default function JudgmentDetailClient({ judgment, initialComments = [], i
                       <h4 style={{ fontSize: '0.95rem', fontFamily: 'var(--font-serif)', fontStyle: 'italic', margin: '0.25rem 0' }}>
                         <Link href={`/judgments/${rj._id}`}>{rj.title}</Link>
                       </h4>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{new Date(rj.judgmentDate).toLocaleDateString('en-IN')}</span>
+                      <span suppressHydrationWarning={true} style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                        {rj.judgmentDate ? (() => {
+                          const d = new Date(rj.judgmentDate);
+                          return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-IN');
+                        })() : ''}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -249,7 +258,12 @@ export default function JudgmentDetailClient({ judgment, initialComments = [], i
                       <h4 style={{ fontSize: '0.95rem', margin: '0.25rem 0' }}>
                         <Link href={`/articles/${ra.slug}`}>{ra.title}</Link>
                       </h4>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{new Date(ra.createdAt).toLocaleDateString('en-IN')}</span>
+                      <span suppressHydrationWarning={true} style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                        {ra.createdAt ? (() => {
+                          const d = new Date(ra.createdAt);
+                          return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-IN');
+                        })() : ''}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -274,7 +288,12 @@ export default function JudgmentDetailClient({ judgment, initialComments = [], i
                 <div key={c._id} className="comment-card">
                   <div className="comment-meta">
                     <span className="comment-author">{c.authorName}</span>
-                    <span>{new Date(c.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                    <span suppressHydrationWarning={true}>
+                      {c.createdAt ? (() => {
+                        const d = new Date(c.createdAt);
+                        return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+                      })() : ''}
+                    </span>
                   </div>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-dark)' }}>{c.content}</p>
                 </div>

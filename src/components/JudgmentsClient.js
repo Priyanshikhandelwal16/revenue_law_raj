@@ -107,9 +107,13 @@ export default function JudgmentsClient({ initialJudgments = [], initialCourt = 
                       <span style={{ fontSize: '0.8rem', fontWeight: 700, backgroundColor: 'rgba(197, 168, 128, 0.15)', color: 'var(--primary-blue)', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>
                         {j.citation}
                       </span>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                      <span suppressHydrationWarning={true} style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                         <Calendar size={14} />
-                        {new Date(j.judgmentDate).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
+                        {(() => {
+                          if (!j.judgmentDate) return 'Date Unavailable';
+                          const d = new Date(j.judgmentDate);
+                          return isNaN(d.getTime()) ? 'Date Unavailable' : d.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+                        })()}
                       </span>
                     </div>
                     <h3 style={{ fontSize: '1.35rem', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>{j.title}</h3>

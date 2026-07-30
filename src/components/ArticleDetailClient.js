@@ -93,9 +93,12 @@ export default function ArticleDetailClient({ article, initialComments = [], id 
               
               <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
                 <div className="article-meta">
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                  <span suppressHydrationWarning={true} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <Calendar size={14} />
-                    {new Date(article.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    {article.createdAt ? (() => {
+                      const d = new Date(article.createdAt);
+                      return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+                    })() : ''}
                   </span>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                     <User size={14} />
@@ -153,7 +156,12 @@ export default function ArticleDetailClient({ article, initialComments = [], id 
                   <div key={c._id} className="comment-card">
                     <div className="comment-meta">
                       <span className="comment-author">{c.authorName}</span>
-                      <span>{new Date(c.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                    <span suppressHydrationWarning={true}>
+                      {c.createdAt ? (() => {
+                        const d = new Date(c.createdAt);
+                        return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+                      })() : ''}
+                    </span>
                     </div>
                     <p style={{ fontSize: '0.9rem' }}>{c.content}</p>
                   </div>
