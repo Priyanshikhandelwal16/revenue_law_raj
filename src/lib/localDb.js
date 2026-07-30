@@ -34,8 +34,23 @@ function createCanonicalSettings() {
   return settings;
 }
 
+// Simple in-memory cache for Firestore reads
+const localDbCache = {};
+const CACHE_TTL_MS = 15000; // 15 seconds to bundle concurrent server queries
+
+function invalidateCache(type) {
+  if (localDbCache[type]) {
+    delete localDbCache[type];
+  }
+}
+
 // Read all items from Firestore
 export async function readLocalDb(type) {
+  const now = Date.now();
+  if (localDbCache[type] && (now - localDbCache[type].timestamp < CACHE_TTL_MS)) {
+    return JSON.parse(JSON.stringify(localDbCache[type].data));
+  }
+
   try {
     const colRef = collection(db, type);
     const snapshot = await getDocs(colRef);
@@ -91,6 +106,12 @@ export async function readLocalDb(type) {
       }
     }
 
+    // Update Cache
+    localDbCache[type] = {
+      timestamp: now,
+      data: JSON.parse(JSON.stringify(items))
+    };
+
     return items;
   } catch (err) {
     console.error(`Error reading Firestore collection ${type}:`, err);
@@ -131,6 +152,7 @@ export async function createLocalItem(type, itemData) {
     delete cleaned._id;
 
     await setDoc(doc(db, type, id), cleaned);
+    invalidateCache(type);
     return newItem;
   } catch (err) {
     console.error(`Error creating document in Firestore:`, err);
@@ -150,6 +172,7 @@ export async function updateLocalItem(type, id, updates) {
 
     // Fetch the updated document
     const docSnap = await getDoc(docRef);
+    invalidateCache(type);
     return { ...docSnap.data(), _id: id };
   } catch (err) {
     console.error(`Error updating document in Firestore:`, err);
@@ -161,6 +184,7 @@ export async function updateLocalItem(type, id, updates) {
 export async function deleteLocalItem(type, id) {
   try {
     await deleteDoc(doc(db, type, id));
+    invalidateCache(type);
     return true;
   } catch (err) {
     console.error(`Error deleting document in Firestore:`, err);
