@@ -1669,10 +1669,12 @@ export default function AdminDashboard() {
                             </span>
                           </td>
                           <td>{art.views || 0}</td>
-                          <td>{art.createdAt ? new Date(art.createdAt).toLocaleDateString() : '—'}</td>
-                          <td style={{ display: 'flex', gap: '0.5rem' }}>
-                            <button onClick={() => startEdit('articles', art)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                            <button onClick={() => handleDelete('articles', art._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          <td className="nowrap-cell">{art.createdAt ? new Date(art.createdAt).toLocaleDateString() : '—'}</td>
+                          <td className="actions-cell">
+                            <div className="actions-btn-wrapper">
+                              <button onClick={() => startEdit('articles', art)} className="editor-btn action-edit" title="Edit"><Edit size={14} /></button>
+                              <button onClick={() => handleDelete('articles', art._id)} className="editor-btn action-delete" title="Delete"><Trash size={14} /></button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -1720,9 +1722,9 @@ export default function AdminDashboard() {
                       {filteredJudgments.map(j => (
                         <tr key={j._id}>
                           <td><strong>{j.title}</strong></td>
-                          <td style={{ color: 'var(--accent-gold)', fontWeight: 600 }}>{j.citation || '—'}</td>
+                          <td className="nowrap-cell" style={{ color: 'var(--accent-gold)', fontWeight: 600 }}>{j.citation || '—'}</td>
                           <td>{(j.courtName || '').split(',')[0] || '—'}</td>
-                          <td>{j.judgmentDate ? new Date(j.judgmentDate).toLocaleDateString() : '—'}</td>
+                          <td className="nowrap-cell">{j.judgmentDate ? new Date(j.judgmentDate).toLocaleDateString() : '—'}</td>
                           <td>{j.views || 0}</td>
                           <td>
                             {j.pdfData || j.pdfUrl ? (
@@ -1733,9 +1735,11 @@ export default function AdminDashboard() {
                               <span className="admin-status-badge critical">No</span>
                             )}
                           </td>
-                          <td style={{ display: 'flex', gap: '0.5rem' }}>
-                            <button onClick={() => startEdit('judgments', j)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                            <button onClick={() => handleDelete('judgments', j._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          <td className="actions-cell">
+                            <div className="actions-btn-wrapper">
+                              <button onClick={() => startEdit('judgments', j)} className="editor-btn action-edit" title="Edit"><Edit size={14} /></button>
+                              <button onClick={() => handleDelete('judgments', j._id)} className="editor-btn action-delete" title="Delete"><Trash size={14} /></button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -1780,11 +1784,13 @@ export default function AdminDashboard() {
                       {filteredLaws.map(l => (
                         <tr key={l._id}>
                           <td><strong>{l.title}</strong></td>
-                          <td>{l.category}</td>
-                          <td>{l.sections ? l.sections.length : 0} sections</td>
-                          <td style={{ display: 'flex', gap: '0.5rem' }}>
-                            <button onClick={() => startEdit('laws', l)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                            <button onClick={() => handleDelete('laws', l._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          <td className="nowrap-cell">{l.category}</td>
+                          <td className="nowrap-cell">{l.sections ? l.sections.length : 0} sections</td>
+                          <td className="actions-cell">
+                            <div className="actions-btn-wrapper">
+                              <button onClick={() => startEdit('laws', l)} className="editor-btn action-edit" title="Edit"><Edit size={14} /></button>
+                              <button onClick={() => handleDelete('laws', l._id)} className="editor-btn action-delete" title="Delete"><Trash size={14} /></button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -1829,13 +1835,15 @@ export default function AdminDashboard() {
                     <tbody>
                       {filteredNotifications.map(n => (
                         <tr key={n._id}>
-                          <td><strong>{n.refNumber || '—'}</strong></td>
+                          <td className="nowrap-cell"><strong>{n.refNumber || '—'}</strong></td>
                           <td>{(n.title || '').slice(0, 50)}{n.title && n.title.length > 50 ? '...' : ''}</td>
                           <td>{(n.department || '').split(',')[0] || '—'}</td>
-                          <td>{n.publishDate ? new Date(n.publishDate).toLocaleDateString() : '—'}</td>
-                          <td style={{ display: 'flex', gap: '0.5rem' }}>
-                            <button onClick={() => startEdit('notifications', n)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                            <button onClick={() => handleDelete('notifications', n._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          <td className="nowrap-cell">{n.publishDate ? new Date(n.publishDate).toLocaleDateString() : '—'}</td>
+                          <td className="actions-cell">
+                            <div className="actions-btn-wrapper">
+                              <button onClick={() => startEdit('notifications', n)} className="editor-btn action-edit" title="Edit"><Edit size={14} /></button>
+                              <button onClick={() => handleDelete('notifications', n._id)} className="editor-btn action-delete" title="Delete"><Trash size={14} /></button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -1881,12 +1889,14 @@ export default function AdminDashboard() {
                       {filteredDownloads.map(d => (
                         <tr key={d._id}>
                           <td><strong>{d.title}</strong></td>
-                          <td>{d.fileType}</td>
-                          <td>{d.fileSize}</td>
-                          <td>{d.downloadCount || 0}</td>
-                          <td style={{ display: 'flex', gap: '0.5rem' }}>
-                            <button onClick={() => startEdit('downloads', d)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                            <button onClick={() => handleDelete('downloads', d._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          <td className="nowrap-cell">{d.fileType}</td>
+                          <td className="nowrap-cell">{d.fileSize}</td>
+                          <td className="nowrap-cell">{d.downloadCount || 0}</td>
+                          <td className="actions-cell">
+                            <div className="actions-btn-wrapper">
+                              <button onClick={() => startEdit('downloads', d)} className="editor-btn action-edit" title="Edit"><Edit size={14} /></button>
+                              <button onClick={() => handleDelete('downloads', d._id)} className="editor-btn action-delete" title="Delete"><Trash size={14} /></button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -1934,20 +1944,22 @@ export default function AdminDashboard() {
                             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{c.authorEmail}</div>
                           </td>
                           <td>{c.content.slice(0, 80)}...</td>
-                          <td>{c.entityType}</td>
-                          <td>{new Date(c.createdAt).toLocaleDateString()}</td>
+                          <td className="nowrap-cell">{c.entityType}</td>
+                          <td className="nowrap-cell">{new Date(c.createdAt).toLocaleDateString()}</td>
                           <td>
                             <span className={`admin-status-badge ${c.isApproved ? 'approved' : 'pending'}`}>
                               {c.isApproved ? 'Approved' : 'Pending'}
                             </span>
                           </td>
-                          <td style={{ display: 'flex', gap: '0.5rem' }}>
-                            {!c.isApproved ? (
-                              <button onClick={() => handleCommentApproval(c._id, true)} className="editor-btn" style={{ color: 'green' }} title="Approve Comment"><CheckSquare size={14} /></button>
-                            ) : (
-                              <button onClick={() => handleCommentApproval(c._id, false)} className="editor-btn" style={{ color: 'orange' }} title="Unapprove / Send back"><Trash size={14} /></button>
-                            )}
-                            <button onClick={() => handleDelete('comments', c._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          <td className="actions-cell">
+                            <div className="actions-btn-wrapper">
+                              {!c.isApproved ? (
+                                <button onClick={() => handleCommentApproval(c._id, true)} className="editor-btn action-approve" title="Approve Comment"><CheckSquare size={14} /></button>
+                              ) : (
+                                <button onClick={() => handleCommentApproval(c._id, false)} className="editor-btn action-unapprove" title="Unapprove / Send back"><Trash size={14} /></button>
+                              )}
+                              <button onClick={() => handleDelete('comments', c._id)} className="editor-btn action-delete" title="Delete"><Trash size={14} /></button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -1996,19 +2008,21 @@ export default function AdminDashboard() {
                           </td>
                           <td>{q.subject}</td>
                           <td>{q.message.slice(0, 100)}...</td>
-                          <td>{new Date(q.createdAt).toLocaleDateString()}</td>
+                          <td className="nowrap-cell">{new Date(q.createdAt).toLocaleDateString()}</td>
                           <td>
                             <span className={`admin-status-badge ${q.isResolved ? 'resolved' : 'pending'}`}>
                               {q.isResolved ? 'Resolved' : 'Active Ticket'}
                             </span>
                           </td>
-                          <td style={{ display: 'flex', gap: '0.5rem' }}>
-                            {!q.isResolved ? (
-                              <button onClick={() => handleQueryResolution(q._id, true)} className="editor-btn" style={{ color: 'green' }} title="Mark Resolved"><Check size={14} /></button>
-                            ) : (
-                              <button onClick={() => handleQueryResolution(q._id, false)} className="editor-btn" style={{ color: 'orange' }} title="Reopen Ticket"><Edit size={14} /></button>
-                            )}
-                            <button onClick={() => handleDelete('queries', q._id)} className="editor-btn" style={{ color: 'red' }} title="Delete query"><Trash size={14} /></button>
+                          <td className="actions-cell">
+                            <div className="actions-btn-wrapper">
+                              {!q.isResolved ? (
+                                <button onClick={() => handleQueryResolution(q._id, true)} className="editor-btn action-approve" title="Mark Resolved"><Check size={14} /></button>
+                              ) : (
+                                <button onClick={() => handleQueryResolution(q._id, false)} className="editor-btn action-unapprove" title="Reopen Ticket"><Edit size={14} /></button>
+                              )}
+                              <button onClick={() => handleDelete('queries', q._id)} className="editor-btn action-delete" title="Delete query"><Trash size={14} /></button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -2053,9 +2067,11 @@ export default function AdminDashboard() {
                         <tr key={g._id}>
                           <td><strong>{g.term}</strong></td>
                           <td><div dangerouslySetInnerHTML={{ __html: g.definition ? g.definition.slice(0, 100) + '...' : '' }} /></td>
-                          <td style={{ display: 'flex', gap: '0.5rem' }}>
-                            <button onClick={() => startEdit('glossary', g)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                            <button onClick={() => handleDelete('glossary', g._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          <td className="actions-cell">
+                            <div className="actions-btn-wrapper">
+                              <button onClick={() => startEdit('glossary', g)} className="editor-btn action-edit" title="Edit"><Edit size={14} /></button>
+                              <button onClick={() => handleDelete('glossary', g._id)} className="editor-btn action-delete" title="Delete"><Trash size={14} /></button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -2280,16 +2296,18 @@ export default function AdminDashboard() {
                       {filteredUsers.map(u => (
                         <tr key={u._id}>
                           <td><strong>{u.name}</strong></td>
-                          <td>{u.email}</td>
+                          <td className="nowrap-cell">{u.email}</td>
                           <td>
                             <span className={`admin-status-badge ${u.role === 'admin' ? 'published' : 'pending'}`}>
                               {u.role}
                             </span>
                           </td>
-                          <td>{new Date(u.createdAt).toLocaleDateString()}</td>
-                          <td style={{ display: 'flex', gap: '0.5rem' }}>
-                            <button onClick={() => startEdit('users', u)} className="editor-btn" title="Edit"><Edit size={14} /></button>
-                            <button onClick={() => handleDelete('users', u._id)} className="editor-btn" style={{ color: 'red' }} title="Delete"><Trash size={14} /></button>
+                          <td className="nowrap-cell">{new Date(u.createdAt).toLocaleDateString()}</td>
+                          <td className="actions-cell">
+                            <div className="actions-btn-wrapper">
+                              <button onClick={() => startEdit('users', u)} className="editor-btn action-edit" title="Edit"><Edit size={14} /></button>
+                              <button onClick={() => handleDelete('users', u._id)} className="editor-btn action-delete" title="Delete"><Trash size={14} /></button>
+                            </div>
                           </td>
                         </tr>
                       ))}

@@ -1773,11 +1773,91 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all var(--transition-fast);
 }
 
 .editor-btn:hover {
   background-color: var(--border-color);
   border-color: #CBD5E1;
+}
+
+/* Premium Admin Table action buttons */
+.admin-table .editor-btn {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--border-color) !important;
+  background-color: var(--bg-offwhite) !important;
+  color: var(--text-dark) !important;
+  flex-shrink: 0 !important;
+}
+
+.admin-table .editor-btn:hover {
+  background-color: var(--border-color) !important;
+  color: var(--accent-gold) !important;
+}
+
+.admin-table .editor-btn svg {
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  min-height: 15px !important;
+  flex-shrink: 0 !important;
+}
+
+.admin-table .editor-btn.action-delete {
+  color: #EF4444 !important;
+  background-color: #FEE2E2 !important;
+  border-color: #FCA5A5 !important;
+}
+.admin-table .editor-btn.action-delete:hover {
+  background-color: #EF4444 !important;
+  border-color: #EF4444 !important;
+  color: #FFFFFF !important;
+}
+
+.admin-table .editor-btn.action-approve {
+  color: #10B981 !important;
+  background-color: #D1FAE5 !important;
+  border-color: #A7F3D0 !important;
+}
+.admin-table .editor-btn.action-approve:hover {
+  background-color: #10B981 !important;
+  border-color: #10B981 !important;
+  color: #FFFFFF !important;
+}
+
+.admin-table .editor-btn.action-unapprove {
+  color: #F59E0B !important;
+  background-color: #FEF3C7 !important;
+  border-color: #FDE68A !important;
+}
+.admin-table .editor-btn.action-unapprove:hover {
+  background-color: #F59E0B !important;
+  border-color: #F59E0B !important;
+  color: #FFFFFF !important;
+}
+
+.admin-table .nowrap-cell {
+  white-space: nowrap !important;
+}
+
+.admin-table .actions-cell {
+  white-space: nowrap !important;
+  width: 1%;
+}
+
+.admin-table .actions-btn-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .editor-area {
