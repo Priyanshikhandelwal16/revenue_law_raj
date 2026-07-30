@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Mail, MapPin, Phone, Facebook, Twitter, Linkedin, Youtube, Instagram, Shield } from 'lucide-react';
 import usePublicSetting from '@/hooks/usePublicSetting';
@@ -20,9 +21,19 @@ const linkLeave = event => { event.currentTarget.style.color = 'var(--text-dark)
 const policyLeave = event => { event.currentTarget.style.color = 'var(--text-muted)'; };
 
 export default function Footer() {
+  const [pathname, setPathname] = useState('');
+
+  useEffect(() => {
+    setPathname(window.location.pathname);
+  }, []);
+
   const config = usePublicSetting('site_config');
   const { brand, footer } = config;
   const year = new Date().getFullYear();
+
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
   const copyright = footer.copyright.replaceAll('{year}', year);
   const poweredByLabel = footer.poweredBy.label;
   const poweredByPrefix = footer.poweredBy.text.includes(poweredByLabel)

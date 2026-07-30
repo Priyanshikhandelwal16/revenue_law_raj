@@ -51,7 +51,7 @@ export default function PageSettingsEditor({ settings = [], onSaved, initialSele
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       
       {/* Visual Configuration Control Panel Card */}
-      <section className="admin-card" style={{ padding: '2rem', borderLeft: '4px solid var(--accent-gold)' }}>
+      <section className="admin-card" style={{ borderLeft: '4px solid var(--accent-gold)' }}>
         <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}>
           <div style={{
             backgroundColor: 'rgba(197, 168, 128, 0.15)',
@@ -126,6 +126,7 @@ export default function PageSettingsEditor({ settings = [], onSaved, initialSele
             borderRadius: '8px',
             padding: '1.25rem',
             display: 'flex',
+            flexWrap: 'wrap',
             gap: '1rem',
             alignItems: 'flex-start',
             maxWidth: '720px'
@@ -165,7 +166,7 @@ export default function PageSettingsEditor({ settings = [], onSaved, initialSele
       </section>
 
       {/* Editor Frame Card */}
-      <div className="admin-card" style={{ padding: '2.5rem 2rem' }}>
+      <div className="admin-card">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
           <FileText size={18} style={{ color: 'var(--accent-gold)' }} />
           <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary-blue)' }}>

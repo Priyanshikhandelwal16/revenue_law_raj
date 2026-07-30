@@ -3195,3 +3195,56 @@ body {
     padding: 1.2rem;
   }
 }
+
+/* Responsive login page card */
+.admin-login-card {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+  max-width: 430px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Redefine grid column wrap at 991px for general form layouts to remain readable on tablet */
+@media (max-width: 991px) {
+  .grid-2col, .grid-3col, .grid-2to1, .grid-1to3 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Responsive margins and paddings for config schemas & nested fieldsets on mobile */
+@media (max-width: 768px) {
+  .admin-login-card {
+    padding: 2rem 1.5rem !important;
+  }
+  .config-editor-fieldset {
+    padding: 1rem 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  .config-editor-array-item {
+    padding: 1rem 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-login-card {
+    padding: 1.5rem 1rem !important;
+  }
+  .config-editor-fieldset {
+    padding: 0.75rem 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .config-editor-array-item {
+    padding: 0.75rem 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .admin-welcome-banner svg {
+    display: none !important;
+  }
+}
+

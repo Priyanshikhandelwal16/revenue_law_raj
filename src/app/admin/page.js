@@ -514,17 +514,7 @@ export default function AdminDashboard() {
         minHeight: '85vh',
         padding: '2rem 1rem'
       }}>
-        <div style={{
-          backgroundColor: 'white',
-          border: '1px solid var(--border-color)',
-          borderRadius: '16px',
-          padding: '3rem 2.5rem',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.03)',
-          maxWidth: '430px',
-          width: '100%',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
+        <div className="admin-login-card">
           <div style={{
             position: 'absolute',
             top: 0,

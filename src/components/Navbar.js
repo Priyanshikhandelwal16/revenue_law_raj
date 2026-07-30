@@ -24,8 +24,9 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <div className="header-wrapper" style={{ boxShadow: scrolled ? 'var(--shadow-md)' : 'none' }}>
