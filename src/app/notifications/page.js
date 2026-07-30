@@ -4,6 +4,8 @@ import Notification from '@/lib/models/Notification';
 import NewsSidebar from '@/components/NewsSidebar';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 // Mock list fallback
 const defaultNotifications = [
   {

@@ -4,6 +4,8 @@ import DownloadModel from '@/lib/models/Download';
 import NewsSidebar from '@/components/NewsSidebar';
 import DownloadsList from '@/components/DownloadsList';
 
+export const dynamic = 'force-dynamic';
+
 // Mock baseline files
 const defaultDownloads = [
   {
