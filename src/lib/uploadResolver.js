@@ -6,7 +6,7 @@ export async function resolveUploadSession(body) {
   
   // 1. Resolve pdfUploadId (chunked upload) if present
   let base64Pdf = null;
-  let filename = 'document.pdf';
+  let filename = target.fileName || target.pdfFileName || 'document.pdf';
   
   if (target.pdfUploadId) {
     const session = await UploadSession.findOne({ uploadId: target.pdfUploadId });
@@ -25,7 +25,7 @@ export async function resolveUploadSession(body) {
         chunksArray.push(chunk);
       }
       base64Pdf = chunksArray.join('');
-      filename = session.fileName || 'document.pdf';
+      filename = session.fileName || filename;
       delete target.pdfUploadId;
       
       // Auto-clean the session document
@@ -57,7 +57,7 @@ export async function resolveUploadSession(body) {
 
   // 2. Resolve general fileUploadId (chunked upload) if present
   let base64File = null;
-  let fileDocName = 'file.bin';
+  let fileDocName = target.fileName || target.fileDocName || 'file.bin';
 
   if (target.fileUploadId) {
     const session = await UploadSession.findOne({ uploadId: target.fileUploadId });
@@ -76,7 +76,7 @@ export async function resolveUploadSession(body) {
         chunksArray.push(chunk);
       }
       base64File = chunksArray.join('');
-      fileDocName = session.fileName || 'file.bin';
+      fileDocName = session.fileName || fileDocName;
       delete target.fileUploadId;
       
       // Auto-clean the session document
@@ -105,6 +105,11 @@ export async function resolveUploadSession(body) {
     target.url = secureUrl; // Map general URL (e.g. for Media list)
     target.fileData = ''; // Ensure raw data is cleared
   }
+
+  // Clean keys to avoid Mongoose Validation Error
+  delete target.fileName;
+  delete target.pdfFileName;
+  delete target.fileDocName;
 
   return target;
 }

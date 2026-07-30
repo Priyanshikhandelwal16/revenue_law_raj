@@ -324,6 +324,7 @@ export default function AdminDashboard() {
           setFormData(prev => ({
             ...prev,
             pdfData: reader.result,
+            pdfFileName: file.name,
             fileSize: (file.size / 1024).toFixed(0) + ' KB',
             pdfUploadId: '' // clear any previous chunked upload token
           }));
@@ -375,6 +376,10 @@ export default function AdminDashboard() {
         if (payload.pdfUploadId) {
           payload.fileUploadId = payload.pdfUploadId;
           delete payload.pdfUploadId;
+        }
+        if (payload.pdfFileName) {
+          payload.fileName = payload.pdfFileName;
+          delete payload.pdfFileName;
         }
       }
       const res = await fetch(url, {
