@@ -82,7 +82,7 @@ export default function PageSettingsEditor({ settings = [], onSaved, initialSele
             <label htmlFor="page-settings-selector" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.5rem', color: 'var(--text-dark)' }}>
               Choose Website Page or Config section:
             </label>
-            <div style={{ position: 'relative', width: '100%', maxWidth: '640px' }}>
+            <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
               <select 
                 id="page-settings-selector" 
                 value={selectedKey} 

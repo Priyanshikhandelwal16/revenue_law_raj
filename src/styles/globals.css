@@ -1223,6 +1223,7 @@ a {
 
 .table-responsive .admin-table {
   margin-top: 0;
+  min-width: 1000px !important;
 }
 
 /* Responsive Grid Helpers */
