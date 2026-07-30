@@ -131,7 +131,6 @@ export default function DownloadsList({ initialDownloads }) {
                       {d.fileType || 'PDF'}
                     </span>
                     {d.fileSize && <span>File Size: {d.fileSize}</span>}
-                    <span>Total Downloads: {d.downloadCount || 0}</span>
                   </div>
                 </div>
               </div>
