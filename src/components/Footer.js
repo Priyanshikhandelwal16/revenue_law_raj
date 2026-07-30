@@ -28,17 +28,24 @@ export default function Footer() {
   }, []);
 
   const config = usePublicSetting('site_config');
-  const { brand, footer } = config;
+  const brand = config?.brand || {};
+  const footer = config?.footer || {};
   const year = new Date().getFullYear();
 
   if (pathname.startsWith('/admin')) {
     return null;
   }
-  const copyright = footer.copyright.replaceAll('{year}', year);
-  const poweredByLabel = footer.poweredBy.label;
-  const poweredByPrefix = footer.poweredBy.text.includes(poweredByLabel)
-    ? footer.poweredBy.text.slice(0, footer.poweredBy.text.indexOf(poweredByLabel))
-    : footer.poweredBy.text;
+  const copyright = footer?.copyright
+    ? footer.copyright.replaceAll('{year}', year)
+    : `© ${year} Rajasthan Revenue Law Platform. All rights reserved.`;
+
+  const poweredByLabel = footer?.poweredBy?.label || 'JAINUP | Growth System';
+  const poweredByText = footer?.poweredBy?.text || 'Powered by JAINUP | Growth System';
+  const poweredByHref = footer?.poweredBy?.href || 'https://jainup.in';
+
+  const poweredByPrefix = poweredByText.includes(poweredByLabel)
+    ? poweredByText.slice(0, poweredByText.indexOf(poweredByLabel))
+    : poweredByText;
 
   return (
     <footer className="footer no-print" style={{ backgroundColor: '#F5F2EB', borderTop: '4px solid var(--accent-gold)', color: 'var(--text-dark)', padding: '5rem 0 2rem 0' }}>
@@ -66,7 +73,7 @@ export default function Footer() {
 
             {/* Social Icons Section */}
             <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
-              {footer.socials.map(social => {
+              {(footer?.socials || []).map(social => {
                 const SocialIcon = SOCIAL_ICONS[social.icon] || Shield;
                 const presentation = SOCIAL_STYLES[social.icon] || { color: 'var(--primary-blue)', backgroundColor: 'rgba(30, 27, 24, 0.06)', hoverBackground: 'rgba(30, 27, 24, 0.12)' };
                 return (
@@ -87,13 +94,13 @@ export default function Footer() {
             </div>
           </div>
 
-          {footer.columns.map(column => (
+          {(footer?.columns || []).map(column => (
             <div key={column.title} className="footer-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <h3 style={{ fontSize: '1.05rem', color: 'var(--primary-blue)', fontWeight: 600, borderBottom: '2px solid rgba(197, 168, 128, 0.3)', paddingBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                 {column.title}
               </h3>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
-                {column.links.map(link => (
+                {(column.links || []).map(link => (
                   <li key={`${link.label}-${link.href}`}>
                     <Link href={link.href} style={footerLinkStyle} onMouseEnter={linkEnter} onMouseLeave={linkLeave}>{link.label}</Link>
                   </li>
@@ -104,20 +111,20 @@ export default function Footer() {
           {/* Official Contact Column */}
           <div className="footer-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <h3 style={{ fontSize: '1.05rem', color: 'var(--primary-blue)', fontWeight: 600, borderBottom: '2px solid rgba(197, 168, 128, 0.3)', paddingBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-              {footer.contact.title}
+              {footer?.contact?.title || 'Official Contact'}
             </h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem', color: 'var(--text-dark)', fontSize: '0.9rem' }}>
               <li style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
                 <MapPin size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.15rem' }} />
-                <span>{footer.contact.address}</span>
+                <span>{footer?.contact?.address || ''}</span>
               </li>
               <li style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
                 <Phone size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
-                <span>{footer.contact.phone}</span>
+                <span>{footer?.contact?.phone || ''}</span>
               </li>
               <li style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
                 <Mail size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
-                <span>{footer.contact.email}</span>
+                <span>{footer?.contact?.email || ''}</span>
               </li>
             </ul>
           </div>
@@ -129,7 +136,7 @@ export default function Footer() {
 
             {/* Policy links at the bottom with underlines removed */}
             <div style={{ display: 'flex', gap: '0.5rem 1.5rem', flexWrap: 'wrap', fontSize: '0.85rem' }}>
-              {footer.legalLinks.map((link, index) => (
+              {(footer?.legalLinks || []).map((link, index) => (
                 <span key={`${link.label}-${link.href}`} style={{ display: 'contents' }}>
                   {index > 0 && <span style={{ color: 'var(--border-color)' }}>|</span>}
                   <Link href={link.href} style={policyLinkStyle} onMouseEnter={linkEnter} onMouseLeave={policyLeave}>{link.label}</Link>
@@ -138,10 +145,10 @@ export default function Footer() {
             </div>
           </div>
 
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.6 }}>{footer.disclaimer}</p>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.6 }}>{footer?.disclaimer || ''}</p>
 
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0, textAlign: 'center', borderTop: '1px solid rgba(197, 168, 128, 0.15)', paddingTop: '1.25rem' }}>
-            {poweredByPrefix}<a href={footer.poweredBy.href} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: 600, transition: 'color 0.2s' }} onMouseEnter={linkEnter} onMouseLeave={linkLeave}>{poweredByLabel}</a>
+            {poweredByPrefix}<a href={poweredByHref} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-dark)', textDecoration: 'none', fontWeight: 600, transition: 'color 0.2s' }} onMouseEnter={linkEnter} onMouseLeave={linkLeave}>{poweredByLabel}</a>
           </p>
         </div>
       </div>

@@ -109,13 +109,13 @@ export default function NewsSidebar() {
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', padding: '1rem 0' }}>Loading news...</div>
           ) : (
             <ul className="sidebar-news-list scrolling-ticker" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', margin: 0, padding: 0, listStyle: 'none' }}>
-              {tickerItems.map((article, idx) => (
-                <li key={`${article._id}-${idx}`} className="sidebar-news-item" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.05)', paddingBottom: '0.75rem' }}>
-                  <span className="sidebar-news-category" style={{ fontSize: '0.7rem', color: 'var(--accent-gold)', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '0.2rem' }}>{article.category}</span>
-                  <Link href={`/articles/${article.slug}`} className="sidebar-news-title" style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary-blue)', textDecoration: 'none', lineHeight: '1.4', display: 'block' }}>
-                    {article.title}
+              {(tickerItems || []).map((article, idx) => (
+                <li key={`${article?._id || idx}-${idx}`} className="sidebar-news-item" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.05)', paddingBottom: '0.75rem' }}>
+                  <span className="sidebar-news-category" style={{ fontSize: '0.7rem', color: 'var(--accent-gold)', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '0.2rem' }}>{article?.category || ''}</span>
+                  <Link href={`/articles/${article?.slug || ''}`} className="sidebar-news-title" style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary-blue)', textDecoration: 'none', lineHeight: '1.4', display: 'block' }}>
+                    {article?.title || ''}
                   </Link>
-                  <span className="sidebar-news-date" style={{ fontSize: '0.72rem', color: 'var(--text-muted)', display: 'block', marginTop: '0.2rem' }}>{formatDate(article.createdAt)}</span>
+                  <span className="sidebar-news-date" style={{ fontSize: '0.72rem', color: 'var(--text-muted)', display: 'block', marginTop: '0.2rem' }}>{formatDate(article?.createdAt)}</span>
                 </li>
               ))}
             </ul>
