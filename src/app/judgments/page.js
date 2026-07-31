@@ -37,7 +37,9 @@ async function getFilteredJudgments(court, q) {
         { caseNumber: { $regex: regexPattern, $options: 'i' } },
         { parties: { $regex: regexPattern, $options: 'i' } },
         { judgeName: { $regex: regexPattern, $options: 'i' } },
-        { fullText: { $regex: regexPattern, $options: 'i' } }
+        { fullText: { $regex: regexPattern, $options: 'i' } },
+        { lawsCited: { $regex: regexPattern, $options: 'i' } },
+        { summary: { $regex: regexPattern, $options: 'i' } }
       ];
     }
 

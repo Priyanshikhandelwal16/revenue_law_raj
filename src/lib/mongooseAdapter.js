@@ -57,15 +57,31 @@ export function patchMongooseModels() {
                   for (let k in condition) {
                     let v = condition[k];
                     if (v && typeof v === 'object' && Array.isArray(v.$in)) {
-                      if (v.$in.includes(item[k])) return true;
+                      if (Array.isArray(item[k])) {
+                        if (item[k].some(valEl => v.$in.includes(valEl))) return true;
+                      } else {
+                        if (v.$in.includes(item[k])) return true;
+                      }
                     } else if (v && typeof v === 'object' && v instanceof RegExp) {
-                      if (v.test(item[k] || '')) return true;
+                      if (Array.isArray(item[k])) {
+                        if (item[k].some(valEl => v.test(valEl || ''))) return true;
+                      } else {
+                        if (v.test(item[k] || '')) return true;
+                      }
                     } else if (v && typeof v === 'object' && v.$regex) {
                       const opts = v.$options || '';
                       const r = new RegExp(v.$regex, opts);
-                      if (r.test(item[k] || '')) return true;
+                      if (Array.isArray(item[k])) {
+                        if (item[k].some(valEl => r.test(valEl || ''))) return true;
+                      } else {
+                        if (r.test(item[k] || '')) return true;
+                      }
                     } else {
-                      if (item[k] === v) return true;
+                      if (Array.isArray(item[k])) {
+                        if (item[k].includes(v)) return true;
+                      } else {
+                        if (item[k] === v) return true;
+                      }
                     }
                   }
                   return false;
@@ -75,13 +91,25 @@ export function patchMongooseModels() {
               }
               if (key.startsWith('$')) continue; // Skip other operators for simple list responses
               if (val && typeof val === 'object' && Array.isArray(val.$in)) {
-                if (!val.$in.includes(item[key])) return false;
+                if (Array.isArray(item[key])) {
+                  if (!item[key].some(valEl => val.$in.includes(valEl))) return false;
+                } else {
+                  if (!val.$in.includes(item[key])) return false;
+                }
               } else if (val && typeof val === 'object' && val instanceof RegExp) {
-                if (!val.test(item[key] || '')) return false;
+                if (Array.isArray(item[key])) {
+                  if (!item[key].some(valEl => val.test(valEl || ''))) return false;
+                } else {
+                  if (!val.test(item[key] || '')) return false;
+                }
               } else if (val && typeof val === 'object' && val.$regex) {
                 const opts = val.$options || '';
                 const r = new RegExp(val.$regex, opts);
-                if (!r.test(item[key] || '')) return false;
+                if (Array.isArray(item[key])) {
+                  if (!item[key].some(valEl => r.test(valEl || ''))) return false;
+                } else {
+                  if (!r.test(item[key] || '')) return false;
+                }
               } else {
                 if (item[key] !== val) return false;
               }

@@ -37,11 +37,14 @@ function SupremeCourtJudgmentsContent() {
       j.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       j.citation.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (j.summary && j.summary.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (j.caseNumber && j.caseNumber.toLowerCase().includes(searchTerm.toLowerCase()));
+      (j.caseNumber && j.caseNumber.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (Array.isArray(j.lawsCited) && j.lawsCited.some(law => law.toLowerCase().includes(searchTerm.toLowerCase()))) ||
+      (typeof j.lawsCited === 'string' && j.lawsCited.toLowerCase().includes(searchTerm.toLowerCase()));
 
     const matchesCategory = 
       selectedCategory === "all" || 
-      (j.lawsCited && j.lawsCited.some(law => law.toLowerCase().includes(selectedCategory.toLowerCase())));
+      (Array.isArray(j.lawsCited) && j.lawsCited.some(law => law.toLowerCase().includes(selectedCategory.toLowerCase()))) ||
+      (typeof j.lawsCited === 'string' && j.lawsCited.toLowerCase().includes(selectedCategory.toLowerCase()));
 
     return matchesSearch && matchesCategory;
   });
