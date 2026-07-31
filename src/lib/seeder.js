@@ -17,6 +17,9 @@ import {
 } from './fallbacks';
 
 export async function checkAndSeedDatabase() {
+  if (global.mongoose && global.mongoose.isOffline) {
+    return;
+  }
   try {
     await dbConnect();
 
