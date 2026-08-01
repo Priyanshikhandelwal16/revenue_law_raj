@@ -1,6 +1,23 @@
 import mongoose from 'mongoose';
 import { readLocalDb, getLocalItem, createLocalItem, updateLocalItem, deleteLocalItem } from './localDb';
 
+function convertDatesToStrings(obj) {
+  if (obj instanceof Date) {
+    return obj.toISOString();
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(convertDatesToStrings);
+  }
+  if (obj && typeof obj === 'object' && Object.prototype.toString.call(obj) === '[object Object]') {
+    const res = {};
+    for (let k in obj) {
+      res[k] = convertDatesToStrings(obj[k]);
+    }
+    return res;
+  }
+  return obj;
+}
+
 let patched = false;
 
 export function patchMongooseModels() {
@@ -196,6 +213,7 @@ export function patchMongooseModels() {
         if (doc) {
           doc._id = found._id;
           doc.isNew = false;
+          doc.__originalId = found._id;
         }
         return doc;
       });
@@ -219,6 +237,7 @@ export function patchMongooseModels() {
         if (doc) {
           doc._id = found._id;
           doc.isNew = false;
+          doc.__originalId = found._id;
         }
         return doc;
       });
@@ -239,6 +258,8 @@ export function patchMongooseModels() {
       const created = await createLocalItem(type, doc);
       const docInstance = new this(created);
       docInstance._id = created._id;
+      docInstance.isNew = false;
+      docInstance.__originalId = created._id;
       return docInstance;
     }
     return originalCreate.apply(this, [doc, ...args]);
@@ -255,6 +276,7 @@ export function patchMongooseModels() {
       if (doc) {
         doc._id = updated._id;
         doc.isNew = false;
+        doc.__originalId = updated._id;
       }
       return doc;
     }
@@ -287,6 +309,7 @@ export function patchMongooseModels() {
       if (doc) {
         doc._id = item._id;
         doc.isNew = false;
+        doc.__originalId = item._id;
       }
       return doc;
     }
@@ -379,9 +402,9 @@ export function patchMongooseModels() {
     if (isOffline()) {
       console.warn(`[FirestoreAdapter] Intercepting Model.prototype.save for ${this.constructor.modelName}`);
       const type = getCollectionName(this.constructor.modelName);
-      const data = this.toObject({ flattenMaps: true });
+      const data = convertDatesToStrings(this.toObject({ flattenMaps: true }));
       
-      let id = this._id;
+      let id = this.__originalId || this._id;
       if (id && typeof id === 'object' && id.toString) {
         id = id.toString();
       }
@@ -392,6 +415,7 @@ export function patchMongooseModels() {
       } else {
         const created = await createLocalItem(type, data);
         this._id = created._id;
+        this.__originalId = created._id;
       }
       return this;
     }
