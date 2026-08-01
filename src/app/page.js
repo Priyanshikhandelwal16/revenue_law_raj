@@ -477,7 +477,7 @@ export default async function HomePage() {
                       </p>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <Link href={contactCta.href || '/contact'} className="btn-gold" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.8rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontSize: '0.8rem', borderRadius: '4px', fontWeight: 700 }}>
+                      <Link href={contactCta.href || '/contact'} className="btn-cta-submit">
                         <ContactIcon size={14} /> {contactCta.label || 'Submit Legal Query'}
                       </Link>
                     </div>

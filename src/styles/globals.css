@@ -288,6 +288,41 @@ a {
   transform: translateY(-1px);
 }
 
+.btn-cta-submit {
+  background-color: var(--accent-gold) !important;
+  color: var(--primary-blue) !important;
+  padding: 0.8rem 1.8rem;
+  border: 1px solid var(--accent-gold) !important;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.8rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-cta-submit:hover {
+  background-color: var(--accent-gold-hover) !important;
+  border-color: var(--accent-gold-hover) !important;
+  color: var(--primary-blue) !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn-cta-submit svg {
+  color: var(--primary-blue) !important;
+  transition: transform 0.3s ease !important;
+}
+
+.btn-cta-submit:hover svg {
+  color: var(--primary-blue) !important;
+  transform: scale(1.1) rotate(5deg) !important;
+}
+
+
 .btn-outline {
   background-color: transparent;
   color: var(--primary-blue);

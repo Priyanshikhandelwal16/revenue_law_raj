@@ -3,15 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [pathname, setPathname] = useState('');
+  const pathname = usePathname() || '';
 
-  useEffect(() => {
-    setPathname(window.location.pathname);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

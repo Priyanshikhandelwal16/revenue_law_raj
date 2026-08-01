@@ -31,6 +31,7 @@ const ADMIN_TAB_TITLES = {
   media_library: 'Photos & Files',
   backup_restore: 'Backup & Restore',
   users: 'Admin Users',
+  change_password: 'Change Password',
 };
 
 export default function AdminDashboard() {
@@ -66,6 +67,14 @@ export default function AdminDashboard() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null);
   const [notification, setNotification] = useState(null);
+
+  // Change Password Form State
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [changePasswordError, setChangePasswordError] = useState('');
+  const [changePasswordSuccess, setChangePasswordSuccess] = useState('');
+  const [changingPassword, setChangingPassword] = useState(false);
 
   const showNotification = (message, type = 'success') => {
     setNotification({ message, type });
@@ -128,6 +137,49 @@ export default function AdminDashboard() {
     await fetch('/api/auth/logout', { method: 'POST' });
     setSession(null);
     setActiveTab('overview');
+  };
+
+  const handleChangePasswordSubmit = async (e) => {
+    e.preventDefault();
+    setChangePasswordError('');
+    setChangePasswordSuccess('');
+
+    if (newPassword !== confirmPassword) {
+      setChangePasswordError('New passwords do not match');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setChangePasswordError('New password must be at least 6 characters long');
+      return;
+    }
+
+    setChangingPassword(true);
+    try {
+      const res = await fetch('/api/auth/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ currentPassword, newPassword })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setChangePasswordSuccess('Password updated successfully');
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+        showNotification('Password updated successfully', 'success');
+      } else {
+        setChangePasswordError(data.error || 'Failed to change password');
+        showNotification(data.error || 'Failed to change password', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      setChangePasswordError('Server error, please try again.');
+      showNotification('Server error, please try again.', 'error');
+    } finally {
+      setChangingPassword(false);
+    }
   };
 
   const loadDashboardData = async () => {
@@ -666,6 +718,9 @@ export default function AdminDashboard() {
             </li>
             <li className={`admin-nav-item ${activeTab === 'users' ? 'active' : ''}`}>
               <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('users'); setEditingItem(null); setSidebarOpen(false); }}><User size={16} /> Admin Users</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'change_password' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('change_password'); setEditingItem(null); setSidebarOpen(false); }}><Key size={16} /> Change Password</a>
             </li>
           </ul>
         </div>
@@ -2321,6 +2376,70 @@ export default function AdminDashboard() {
                 </div>
               </div>
             )}
+
+            {/* Tab: Change Password */}
+            {activeTab === 'change_password' && (
+              <div className="admin-card" style={{ maxWidth: '600px', margin: '0 auto' }}>
+                <div className="admin-card-header">
+                  <h2>Change Password</h2>
+                </div>
+                
+                {changePasswordError && (
+                  <div style={{ backgroundColor: '#FEE2E2', color: '#991B1B', border: '1px solid #FCA5A5', padding: '0.75rem 1rem', borderRadius: '4px', marginBottom: '1.25rem', fontSize: '0.88rem' }}>
+                    {changePasswordError}
+                  </div>
+                )}
+
+                {changePasswordSuccess && (
+                  <div style={{ backgroundColor: '#DCFCE7', color: '#166534', border: '1px solid #86EFAC', padding: '0.75rem 1rem', borderRadius: '4px', marginBottom: '1.25rem', fontSize: '0.88rem' }}>
+                    {changePasswordSuccess}
+                  </div>
+                )}
+
+                <form onSubmit={handleChangePasswordSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                  <div className="form-group">
+                    <label>Current Password *</label>
+                    <input 
+                      type="password" 
+                      value={currentPassword} 
+                      onChange={(e) => setCurrentPassword(e.target.value)} 
+                      className="form-control" 
+                      placeholder="Enter current password"
+                      required 
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>New Password *</label>
+                    <input 
+                      type="password" 
+                      value={newPassword} 
+                      onChange={(e) => setNewPassword(e.target.value)} 
+                      className="form-control" 
+                      placeholder="Enter new password (min. 6 characters)"
+                      required 
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Confirm New Password *</label>
+                    <input 
+                      type="password" 
+                      value={confirmPassword} 
+                      onChange={(e) => setConfirmPassword(e.target.value)} 
+                      className="form-control" 
+                      placeholder="Confirm new password"
+                      required 
+                    />
+                  </div>
+
+                  <button type="submit" disabled={changingPassword} className="btn-primary" style={{ alignSelf: 'flex-start', marginTop: '0.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Key size={14} /> {changingPassword ? 'Updating Password...' : 'Update Password'}
+                  </button>
+                </form>
+              </div>
+            )}
+
           </div>
         )}
       </main>
