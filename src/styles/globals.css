@@ -306,13 +306,14 @@ a {
 }
 
 .btn-cta-submit:hover {
-  background-color: var(--accent-gold-hover) !important;
-  border-color: var(--accent-gold-hover) !important;
+  background-color: var(--bg-white) !important;
+  border-color: var(--bg-white) !important;
   color: var(--primary-blue) !important;
   transform: translateY(-2px) !important;
 }
 
-.btn-cta-submit svg {
+.btn-cta-submit svg,
+.premium-card:hover .btn-cta-submit svg {
   color: var(--primary-blue) !important;
   transition: transform 0.3s ease !important;
 }
@@ -321,6 +322,7 @@ a {
   color: var(--primary-blue) !important;
   transform: scale(1.1) rotate(5deg) !important;
 }
+
 
 
 .btn-outline {
