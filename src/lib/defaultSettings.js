@@ -61,24 +61,30 @@ const siteConfig = {
   navigation: [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
-    { label: "Revenue Law", items: [
-      { label: "Revenue Law in Rajasthan", href: "/laws" },
-      { label: "Working of Revenue Law", href: "/working-of-revenue-law" },
-      { label: "Hierarchy of Revenue Courts", href: "/hierarchy-of-courts" },
-      { label: "Types of Cases in Revenue Law", href: "/types-of-cases" },
-      { label: "The Stages in Revenue Cases", href: "/the-stages-in-revenue-cases" },
-    ] },
+    {
+      label: "Revenue Law", items: [
+        { label: "Revenue Law in Rajasthan", href: "/laws" },
+        { label: "Working of Revenue Law", href: "/working-of-revenue-law" },
+        { label: "Hierarchy of Revenue Courts", href: "/hierarchy-of-courts" },
+        { label: "Types of Cases in Revenue Law", href: "/types-of-cases" },
+        { label: "The Stages in Revenue Cases", href: "/the-stages-in-revenue-cases" },
+      ]
+    },
     { label: "Important Rules", href: "/important-rules" },
-    { label: "Judgments", items: [
-      { label: "All Judgments", href: "/judgments" },
-      { label: "Supreme Court Judgments", href: "/judgments/supreme-court" },
-      { label: "Rajasthan High Court Judgments", href: "/judgments/high-court" },
-    ] },
-    { label: "Resources", items: [
-      { label: "Important Concepts", href: "/resources/important-concepts" },
-      { label: "How to Write a Judgment", href: "/resources/how-to-write-judgments" },
-      { label: "Imp Notifications", href: "/notifications" },
-    ] },
+    {
+      label: "Judgments", items: [
+        { label: "All Judgments", href: "/judgments" },
+        { label: "Supreme Court Judgments", href: "/judgments/supreme-court" },
+        { label: "Rajasthan High Court Judgments", href: "/judgments/high-court" },
+      ]
+    },
+    {
+      label: "Resources", items: [
+        { label: "Important Concepts", href: "/resources/important-concepts" },
+        { label: "How to Write a Judgment", href: "/resources/how-to-write-judgments" },
+        { label: "Imp Notifications", href: "/notifications" },
+      ]
+    },
     { label: "Glossary", href: "/glossary" },
     { label: "Contact Us", href: "/contact", cta: true },
   ],
@@ -198,7 +204,7 @@ const contactConfig = {
   contact: { addressLabel: "Mailing Address", address: "B-30, Jamuna Nagar, Sodala, Jaipur, Rajasthan – 302006", phoneLabel: "Secretary Helpline", phone: "+91 99820 57461", emailLabel: "Email Support", email: "revenuelawraj@gmail.com", securityNote: "GDPR & Information Protection Secure" },
   socials: { facebook: "https://www.facebook.com/profile.php?id=61591658014580", twitter: "https://x.com/revenuelawraj", youtube: "https://www.youtube.com/@revenuelawraj", instagram: "https://www.instagram.com/revenuelawraj/" },
   form: { title: "Submit Legal Query", fields: [{ name: "name", label: "Full Name *", type: "text", required: true }, { name: "email", label: "Email Address *", type: "email", required: true }, { name: "phone", label: "Contact Number (Optional)", type: "tel", required: false }, { name: "subject", label: "Subject *", type: "text", placeholder: "e.g., 'Article Submission', '90-A Query'", required: true }, { name: "message", label: "Message Content *", type: "textarea", placeholder: "Enter detailed message contents here...", required: true }], submitLabel: "Submit Query", submittingLabel: "Submitting query..." },
-  success: { title: "Query Submitted", description: "Thank you for writing to RRLKP. Your query has been logged and assigned a case reference. Our support desk will reach out within 48 business hours.", resetLabel: "Send another message" },
+  success: { title: "Query Submitted", description: "Thank you for writing to us. Your query has been logged and assigned a case reference. Our support desk will reach out within 48 business hours.", resetLabel: "Send another message" },
 };
 
 
@@ -361,7 +367,8 @@ const judgmentWritingConfig = {
     { title: "5. Findings & Analysis", description: "Evaluating issues against the Rajasthan Tenancy Act, Land Revenue Rules, and binding judicial precedents." },
     { title: "6. Operative Decree", description: "The final executable order. Explicit instructions on property partition, eviction actions, or record corrections." },
   ],
-  format: { title: "Important Components & Format", description: "Drafting a judgment requires maintaining an objective, logical, and sequential format. Review the formal layout structure commonly practiced in revenue adjudication:", sampleTitle: "SAMPLE DRAFT FORMAT - REVENUE COURT OF RAJASTHAN", sample: `IN THE COURT OF THE SUB-DIVISIONAL OFFICER, KISHANGARH (AJMER)
+  format: {
+    title: "Important Components & Format", description: "Drafting a judgment requires maintaining an objective, logical, and sequential format. Review the formal layout structure commonly practiced in revenue adjudication:", sampleTitle: "SAMPLE DRAFT FORMAT - REVENUE COURT OF RAJASTHAN", sample: `IN THE COURT OF THE SUB-DIVISIONAL OFFICER, KISHANGARH (AJMER)
 Presided by: Hon'ble Shri _________________, SDO
 
 Revenue Suit No: SDO/TA/452/2026
