@@ -4,8 +4,8 @@ import '@/styles/globals.css';
 
 export const metadata = {
   title: {
-    default: 'Overview of Rajasthan Revenue Law | RRLKP',
-    template: '%s | RRLKP'
+    default: 'Overview of Rajasthan Revenue Law | Revenue Law Raj',
+    template: '%s | Revenue Law Raj'
   },
   description: 'Revenue Law Raj is dedicated to Rajasthan Revenue Law, designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The system offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.',
   keywords: ['Rajasthan revenue law', 'Board of Revenue Ajmer', 'Rajasthan Land Revenue Act 1956', 'Rajasthan Tenancy Act 1955', '90-A land conversion', 'revenue judgments'],
@@ -22,7 +22,7 @@ export const metadata = {
     title: 'Overview of Rajasthan Revenue Law',
     description: 'Revenue Law Raj is dedicated to Rajasthan Revenue Law, designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The system offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.',
     url: '/',
-    siteName: 'RRLKP',
+    siteName: 'Revenue Law Raj',
     locale: 'en_IN',
     type: 'website',
   },
