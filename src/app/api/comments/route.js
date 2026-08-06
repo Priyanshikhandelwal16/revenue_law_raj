@@ -60,7 +60,7 @@ export async function POST(req) {
         await resend.emails.send({
           from: "Revenue Law Rajasthan <noreply@revenuelawraj.com>",
           to: 'revenuelawraj@gmail.com',
-          reply_to: body.authorEmail,
+          replyTo: body.authorEmail,
           subject: `📩 New Discussion Comment: ${body.entityType}`,
           html: `
             <div style="font-family: sans-serif; line-height: 1.6; color: #1E293B; max-width: 600px; margin: 0 auto; border: 1px solid #E2E8F0; border-radius: 8px; padding: 2rem;">
@@ -84,7 +84,7 @@ export async function POST(req) {
         await resend.emails.send({
           from: "Revenue Law Rajasthan <noreply@revenuelawraj.com>",
           to: body.authorEmail,
-          reply_to: 'revenuelawraj@gmail.com',
+          replyTo: 'revenuelawraj@gmail.com',
           subject: `Comment Received: ${body.entityType}`,
           html: `
             <div style="font-family: sans-serif; line-height: 1.6; color: #1E293B; max-width: 600px; margin: 0 auto; border: 1px solid #E2E8F0; border-radius: 8px; padding: 2rem;">
