@@ -82,7 +82,11 @@ export const fallbackLaws = [
     fullText: "<h2>The Rajasthan Tenancy Act, 1955</h2><p>Act No. 3 of 1955. An Act to consolidate and amend the law relating to tenancies of agricultural lands.</p>",
     sections: [
       { sectionNumber: "15", title: "Khatedar Tenants", content: "Every person who, at the commencement of this Act, is a tenant of land shall be deemed to be a Khatedar tenant." },
-      { sectionNumber: "42", title: "SC/ST Sale Restrictions", content: "The sale of Khatedar interest is void if in favor of a person who is not SC/ST." }
+      { sectionNumber: "42", title: "SC/ST Sale Restrictions", content: "The sale of Khatedar interest is void if in favor of a person who is not SC/ST." },
+      { sectionNumber: "53", title: "Partition of agricultural holding", content: "Any co-sharer (khatedar tenant) has the right to sue for partition of their joint holding to separate their individual share on maps and records." },
+      { sectionNumber: "88", title: "Suit for declaration of Khatedari rights", content: "Any person claiming to be a tenant or a co-tenant may sue for a declaration of his right, which is the baseline suit for establishing agricultural land ownership title in Rajasthan." },
+      { sectionNumber: "188", title: "Suit for injunction against trespass", content: "A tenant in possession may sue for permanent injunction to prevent any third party or trespasser from interfering with their agricultural operations or possession." },
+      { sectionNumber: "251", title: "Rights of way and other easements", content: "A tenant can file an application before the Tehsildar to demand a new path or resolve blockades on agricultural cart-tracks through adjoining fields." }
     ],
     status: "published"
   },
@@ -94,7 +98,8 @@ export const fallbackLaws = [
     fullText: "<h2>The Rajasthan Land Revenue Act, 1956</h2><p>Act No. 15 of 1956. An Act to consolidate and amend the law relating to land revenue.</p>",
     sections: [
       { sectionNumber: "90-A", title: "Land Conversion", content: "No agricultural land shall be used for residential or commercial purposes without permission." },
-      { sectionNumber: "91", title: "Trespassers Eviction", content: "Any person occupying land without authority may be summarily evicted by the Tehsildar." }
+      { sectionNumber: "91", title: "Trespassers Eviction", content: "Any person occupying land without authority may be summarily evicted by the Tehsildar." },
+      { sectionNumber: "135", title: "Mutation on succession or transfer", content: "Every person acquiring land by succession or transfer must report the transaction to the Patwari to update record of rights (Jamabandi) through mutation." }
     ],
     status: "published"
   }

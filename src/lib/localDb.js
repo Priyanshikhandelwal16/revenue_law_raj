@@ -162,6 +162,56 @@ export async function readLocalDb(type) {
       }
     }
 
+    // Special logic for laws: append missing sections to seeded acts in Firestore
+    if (type === 'laws') {
+      for (const item of items) {
+        if (item.title === 'Rajasthan Tenancy Act, 1955' && Array.isArray(item.sections)) {
+          const existingSecs = new Set(item.sections.map(s => String(s.sectionNumber)));
+          const toAdd = [
+            { sectionNumber: "53", title: "Partition of agricultural holding", content: "Any co-sharer (khatedar tenant) has the right to sue for partition of their joint holding to separate their individual share on maps and records." },
+            { sectionNumber: "88", title: "Suit for declaration of Khatedari rights", content: "Any person claiming to be a tenant or a co-tenant may sue for a declaration of his right, which is the baseline suit for establishing agricultural land ownership title in Rajasthan." },
+            { sectionNumber: "188", title: "Suit for injunction against trespass", content: "A tenant in possession may sue for permanent injunction to prevent any third party or trespasser from interfering with their agricultural operations or possession." },
+            { sectionNumber: "251", title: "Rights of way and other easements", content: "A tenant can file an application before the Tehsildar to demand a new path or resolve blockades on agricultural cart-tracks through adjoining fields." }
+          ];
+          let updated = false;
+          for (const sec of toAdd) {
+            if (!existingSecs.has(sec.sectionNumber)) {
+              item.sections.push(sec);
+              updated = true;
+            }
+          }
+          if (updated) {
+            const docRef = doc(db, type, item._id);
+            const cleaned = { ...item };
+            delete cleaned._id;
+            await setDoc(docRef, cleaned, { merge: true });
+            console.log(`Migrated laws in Firestore: Added missing sections to Rajasthan Tenancy Act, 1955`);
+          }
+        }
+
+        if (item.title === 'Rajasthan Land Revenue Act, 1956' && Array.isArray(item.sections)) {
+          const existingSecs = new Set(item.sections.map(s => String(s.sectionNumber)));
+          const toAdd = [
+            { sectionNumber: "135", title: "Mutation on succession or transfer", content: "Every person acquiring land by succession or transfer must report the transaction to the Patwari to update record of rights (Jamabandi) through mutation." }
+          ];
+          let updated = false;
+          for (const sec of toAdd) {
+            if (!existingSecs.has(sec.sectionNumber)) {
+              item.sections.push(sec);
+              updated = true;
+            }
+          }
+          if (updated) {
+            const docRef = doc(db, type, item._id);
+            const cleaned = { ...item };
+            delete cleaned._id;
+            await setDoc(docRef, cleaned, { merge: true });
+            console.log(`Migrated laws in Firestore: Added missing sections to Rajasthan Land Revenue Act, 1956`);
+          }
+        }
+      }
+    }
+
     // Update Cache
     localDbCache[type] = {
       timestamp: now,
