@@ -4,32 +4,38 @@ import dbConnect from '@/lib/db';
 import RevenueLaw from '@/lib/models/RevenueLaw';
 import NewsSidebar from '@/components/NewsSidebar';
 
+function slugify(text) {
+  return String(text || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 async function getSectionData(actSlug, sectionNumber) {
   try {
     await dbConnect();
-    // Find the act by slug or part of the title
-    let act = await RevenueLaw.findOne({ slug: actSlug });
-    if (!act) {
-      // Fallback search by case-insensitive matching
-      const allActs = await RevenueLaw.find({});
-      act = allActs.find(l => 
-        l.slug === actSlug || 
-        l.title?.toLowerCase().includes(actSlug.toLowerCase()) ||
-        actSlug.toLowerCase().includes(l.title?.toLowerCase())
-      );
-    }
+    
+    // Find all acts and match using slugified titles
+    const allActs = await RevenueLaw.find({});
+    const act = allActs.find(l => {
+      const dbSlug = l.slug || slugify(l.title);
+      const urlSlug = slugify(actSlug);
+      return dbSlug === urlSlug || 
+             dbSlug.includes(urlSlug) || 
+             urlSlug.includes(dbSlug);
+    });
 
     if (!act) return null;
 
     const section = act.sections?.find(s => 
-      String(s.sectionNumber).toLowerCase() === String(sectionNumber).toLowerCase()
+      String(s.sectionNumber).toLowerCase().trim() === String(sectionNumber).toLowerCase().trim()
     );
 
     if (!section) return null;
 
     return {
       actTitle: act.title,
-      actSlug: act.slug || actSlug,
+      actSlug: act.slug || slugify(act.title),
       sectionNumber: section.sectionNumber,
       title: section.title,
       content: section.content

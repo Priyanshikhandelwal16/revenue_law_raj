@@ -261,8 +261,8 @@ export default function LawsClient({ laws = [], initialActSlug = '', initialSect
                   </div>
                   
                   {(() => {
-                    const matchedAct = laws.find(l => l.title?.toLowerCase().includes(sec.act?.toLowerCase()) || sec.act?.toLowerCase().includes(l.title?.toLowerCase()));
-                    const actSlug = matchedAct?.slug || 'rajasthan-tenancy-act-1955';
+                    const slugify = (text) => String(text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+                    const actSlug = matchedAct?.slug || slugify(matchedAct?.title) || 'rajasthan-tenancy-act-1955';
                     return (
                       <Link 
                         href={`/laws/${actSlug}/${sec.sectionNumber}`}
