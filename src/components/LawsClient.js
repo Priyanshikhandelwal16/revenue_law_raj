@@ -261,6 +261,11 @@ export default function LawsClient({ laws = [], initialActSlug = '', initialSect
                   </div>
                   
                   {(() => {
+                    const actName = sec.act ? String(sec.act).toLowerCase() : '';
+                    const matchedAct = laws.find(l => {
+                      const lawTitle = l.title ? String(l.title).toLowerCase() : '';
+                      return actName && (lawTitle.includes(actName) || actName.includes(lawTitle));
+                    });
                     const slugify = (text) => String(text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
                     const actSlug = matchedAct?.slug || slugify(matchedAct?.title) || 'rajasthan-tenancy-act-1955';
                     return (
