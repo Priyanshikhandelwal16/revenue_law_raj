@@ -14,13 +14,14 @@ const pages = [
   { key: 'case_types_config', label: 'Types of Cases Page', group: 'Website Content Pages', path: '/types-of-cases', desc: 'Modify the definitions, list items, and details of agricultural land cases (partition, mutation, eviction).' },
   { key: 'case_stages_config', label: 'Stages of Case Litigation', group: 'Website Content Pages', path: '/the-stages-in-revenue-cases', desc: 'Manage the stage details, lists of trials, and procedures followed in revenue court hearings.' },
   { key: 'important_rules_config', label: 'Important Rules & Checklists', group: 'Website Content Pages', path: '/important-rules', desc: 'Add or modify land conversion rules, checklists of required files, and action buttons.' },
+  { key: 'important_sections_config', label: 'Important Law Sections', group: 'Website Content Pages', path: '/laws', desc: 'Add, edit, or delete the list of key statutory sections highlighted on the Laws page.' },
   { key: 'important_concepts_config', label: 'Important Concepts', group: 'Website Content Pages', path: '/resources/important-concepts', desc: 'Configure agricultural terms, reference guidelines, and key summaries of legal concepts.' },
   { key: 'judgment_writing_config', label: 'Judgment Writing Guide', group: 'Website Content Pages', path: '/resources/how-to-write-judgments', desc: 'Update templates, formats, and rules for drafting professional revenue judgments.' },
   { key: 'contact_config', label: 'Contact Page Details', group: 'Website Content Pages', path: '/contact', desc: 'Configure contact helpline numbers, emails, addresses, social page links, and hero banners.' },
 
   // Group: Global Theme and Configs
   { key: 'homepage_config', label: 'Home Page CMS & Hero', group: 'Core Website Settings', path: '/', desc: 'Updates the home page banner tagline, main background photo, core highlights, and features.' },
-  { key: 'site_config', label: 'Footer, Contact & Social Links', group: 'Core Website Settings', path: null, desc: 'Update global contact numbers, email, physical office address, social links, and footer paragraphs.' },
+  { key: 'site_config', label: 'Header, Footer & Navigation Settings', group: 'Core Website Settings', path: null, desc: 'Update navigation menus, header logo, contact details, social links, and footer configuration.' },
   { key: 'legal_config', label: 'Privacy, Terms & Disclaimers', group: 'Core Website Settings', path: null, desc: 'Edit global legal page content (Terms of Service, Privacy Policy, and legal disclaimer blocks).' }
 ];
 

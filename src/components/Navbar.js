@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import usePublicSetting from '@/hooks/usePublicSetting';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname() || '';
-
+  const config = usePublicSetting('site_config');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,10 +31,10 @@ export default function Navbar() {
     <div className="header-wrapper" style={{ boxShadow: scrolled ? 'var(--shadow-md)' : 'none' }}>
       <nav className="navbar">
         {/* Left Side: Logo and Text */}
-        <Link href="/" className="logo-container" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.2rem 0' }}>
+        <Link href={config?.brand?.homeUrl || "/"} className="logo-container" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.2rem 0' }}>
           <img 
-            src="/images/logo_main.jpg" 
-            alt="Revenue Law Raj" 
+            src={config?.brand?.logo || "/images/logo_main.jpg"} 
+            alt={config?.brand?.logoAlt || "Revenue Law Raj"} 
             className="brand-logo-img" 
             style={{ 
               display: 'block', 
@@ -44,62 +45,46 @@ export default function Navbar() {
           />
           <div className="logo-text-group" style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.1' }}>
             <span className="logo-title-text" style={{ fontFamily: 'var(--font-serif)', fontWeight: 700, color: 'var(--primary-blue)', letterSpacing: '-0.5px' }}>
-              Revenue Law
+              {config?.brand?.name || "Revenue Law"}
             </span>
             <span className="logo-subtitle-text" style={{ fontFamily: 'var(--font-serif)', fontWeight: 700, color: 'var(--accent-gold)', letterSpacing: '-0.5px' }}>
-              Rajasthan
+              {config?.brand?.subtitle || "Rajasthan"}
             </span>
           </div>
         </Link>
 
         {/* Middle: Sections (Desktop Menu arranged in clean dropdowns) */}
         <div className="nav-links">
-          <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`}>Home</Link>
-          <Link href="/about" className={`nav-link ${pathname === '/about' ? 'active' : ''}`}>About</Link>
-          
-          {/* Dropdown 1: Revenue Law */}
-          <div className="nav-item-dropdown">
-            <span className={`nav-link ${['/laws', '/working-of-revenue-law', '/hierarchy-of-courts', '/types-of-cases', '/the-stages-in-revenue-cases'].includes(pathname) ? 'active' : ''}`}>
-              Revenue Law <ChevronDown size={12} />
-            </span>
-            <div className="dropdown-menu">
-              <Link href="/laws" className="dropdown-item">Revenue Law in Rajasthan</Link>
-              <Link href="/working-of-revenue-law" className="dropdown-item">Working of Revenue Law</Link>
-              <Link href="/hierarchy-of-courts" className="dropdown-item">Hierarchy of Revenue Courts</Link>
-              <Link href="/types-of-cases" className="dropdown-item">Types of Cases in Revenue Law</Link>
-              <Link href="/the-stages-in-revenue-cases" className="dropdown-item">The Stages in Revenue Cases</Link>
-            </div>
-          </div>
-
-          {/* Flat Link: Important Rules */}
-          <Link href="/important-rules" className={`nav-link ${pathname === '/important-rules' ? 'active' : ''}`}>Important Rules</Link>
-
-          {/* Dropdown: Judgments */}
-          <div className="nav-item-dropdown">
-            <span className={`nav-link ${['/judgments', '/judgments/supreme-court', '/judgments/high-court'].includes(pathname) ? 'active' : ''}`}>
-              Judgments <ChevronDown size={12} />
-            </span>
-            <div className="dropdown-menu">
-              <Link href="/judgments" className="dropdown-item">All Judgments</Link>
-              <Link href="/judgments/supreme-court" className="dropdown-item">Supreme Court Judgments</Link>
-              <Link href="/judgments/high-court" className="dropdown-item">Rajasthan High Court Judgments</Link>
-            </div>
-          </div>
-
-          {/* Dropdown 3: Resources */}
-          <div className="nav-item-dropdown">
-            <span className={`nav-link ${['/resources/important-concepts', '/resources/how-to-write-judgments', '/notifications'].includes(pathname) ? 'active' : ''}`}>
-              Resources <ChevronDown size={12} />
-            </span>
-            <div className="dropdown-menu">
-              <Link href="/resources/important-concepts" className="dropdown-item">Important Concepts</Link>
-              <Link href="/resources/how-to-write-judgments" className="dropdown-item">How to Write a Judgment</Link>
-              <Link href="/notifications" className="dropdown-item">Imp Notifications</Link>
-            </div>
-          </div>
-
-          <Link href="/glossary" className={`nav-link ${pathname === '/glossary' ? 'active' : ''}`}>Glossary</Link>
-          <Link href="/contact" className={`nav-link nav-btn-cta ${pathname === '/contact' ? 'active' : ''}`}>Contact Us</Link>
+          {(config?.navigation || []).map((item, idx) => {
+            if (item.items && item.items.length > 0) {
+              const subPaths = item.items.map(sub => sub.href);
+              const isActive = subPaths.includes(pathname);
+              return (
+                <div key={idx} className="nav-item-dropdown">
+                  <span className={`nav-link ${isActive ? 'active' : ''}`}>
+                    {item.label} <ChevronDown size={12} />
+                  </span>
+                  <div className="dropdown-menu">
+                    {item.items.map((sub, subIdx) => (
+                      <Link key={subIdx} href={sub.href} className="dropdown-item">
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+            const isActive = pathname === item.href;
+            return (
+              <Link 
+                key={idx} 
+                href={item.href} 
+                className={`nav-link ${item.cta ? 'nav-btn-cta' : ''} ${isActive ? 'active' : ''}`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
         <div className="nav-actions no-print" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -149,7 +134,7 @@ export default function Navbar() {
         }
       `}</style>
 
-      {/* Mobile Menu Content (All 12 items listed clearly with a scroll container) */}
+      {/* Mobile Menu Content (All items listed clearly with a scroll container) */}
       {isMobileMenuOpen && (
         <div style={{
           position: 'fixed',
@@ -167,26 +152,27 @@ export default function Navbar() {
           maxHeight: 'calc(100vh - 100px)',
           overflowY: 'auto'
         }} className="no-print mobile-menu-overlay">
-          <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-          <Link href="/about" className={`nav-link ${pathname === '/about' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>About</Link>
-          <Link href="/laws" className={`nav-link ${pathname === '/laws' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Revenue Law in Rajasthan</Link>
-          <Link href="/working-of-revenue-law" className={`nav-link ${pathname === '/working-of-revenue-law' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Working of Revenue Law</Link>
-          <Link href="/hierarchy-of-courts" className={`nav-link ${pathname === '/hierarchy-of-courts' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Hierarchy of Revenue Courts</Link>
-          <Link href="/types-of-cases" className={`nav-link ${pathname === '/types-of-cases' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Types of Cases in Revenue Law</Link>
-          <Link href="/the-stages-in-revenue-cases" className={`nav-link ${pathname === '/the-stages-in-revenue-cases' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>The Stages in Revenue Cases</Link>
-          <Link href="/judgments" className={`nav-link ${pathname === '/judgments' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>All Judgments</Link>
-          <Link href="/judgments/supreme-court" className={`nav-link ${pathname === '/judgments/supreme-court' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Supreme Court Judgments</Link>
-          <Link href="/judgments/high-court" className={`nav-link ${pathname === '/judgments/high-court' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Rajasthan High Court Judgments</Link>
-          <Link href="/resources/how-to-write-judgments" className={`nav-link ${pathname === '/resources/how-to-write-judgments' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>How to Write a Judgment</Link>
-          <Link href="/glossary" className={`nav-link ${pathname === '/glossary' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Glossary of Revenue Law</Link>
-          <Link href="/notifications" className={`nav-link ${pathname === '/notifications' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Imp Notifications</Link>
-          <Link href="/resources/important-concepts" className={`nav-link ${pathname === '/resources/important-concepts' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Important Concepts</Link>
-          <Link href="/important-rules" className={`nav-link ${pathname === '/important-rules' ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>Important Rules</Link>
-          <Link href="/contact" className={`nav-link nav-btn-cta ${pathname === '/contact' ? 'active' : ''}`} style={{ width: '100%', justifyContent: 'center', marginTop: '1rem' }} onClick={() => setIsMobileMenuOpen(false)}>Contact Us</Link>
-          
-
-        </div>
-      )}
+          {(config?.navigation || []).reduce((acc, item) => {
+            if (item.items && item.items.length > 0) {
+              item.items.forEach(sub => acc.push(sub));
+            } else {
+              acc.push(item);
+            }
+            return acc;
+          }, []).map((item, idx) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link 
+                key={idx} 
+                href={item.href} 
+                className={`nav-link ${item.cta ? 'nav-btn-cta' : ''} ${isActive ? 'active' : ''}`} 
+                style={item.cta ? { width: '100%', justifyContent: 'center', marginTop: '1rem' } : undefined}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
 
 
     </div>

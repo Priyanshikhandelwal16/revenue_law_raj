@@ -1,21 +1,28 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { BookOpen, Search, ArrowRight, Landmark, Scale, FileText } from 'lucide-react';
 import NewsSidebar from '@/components/NewsSidebar';
+import usePublicSetting from '@/hooks/usePublicSetting';
 
 export default function LawsClient({ laws = [], initialActSlug = '', initialSectionNumber = '' }) {
   const [activeActId, setActiveActId] = useState('');
   const [activeSection, setActiveSection] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
+  const importantSections = usePublicSetting('important_sections_config');
+
   // Initial selection logic
   useEffect(() => {
     if (Array.isArray(laws) && laws.length > 0) {
       let matched = laws[0];
       if (initialActSlug) {
-        const found = laws.find(l => l.slug === initialActSlug || l._id === initialActSlug);
+        const found = laws.find(l => 
+          l.slug === initialActSlug || 
+          l._id === initialActSlug || 
+          l.title?.toLowerCase().includes(initialActSlug.toLowerCase())
+        );
         if (found) matched = found;
       }
       setActiveActId(matched?._id || '');
@@ -189,6 +196,105 @@ export default function LawsClient({ laws = [], initialActSlug = '', initialSect
           </div>
           <NewsSidebar />
         </div>
+
+        {/* Few Important Sections Section */}
+        {importantSections && importantSections.sections && importantSections.sections.length > 0 && (
+          <div style={{
+            marginTop: '4rem',
+            paddingTop: '3rem',
+            borderTop: '2px dashed var(--border-color)',
+            width: '100%'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '2rem', borderLeft: '4px solid var(--accent-gold)', paddingLeft: '1rem' }}>
+              <BookOpen size={22} style={{ color: 'var(--accent-gold)' }} />
+              <div>
+                <h3 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', margin: 0, fontFamily: 'var(--font-serif)', fontWeight: 700 }}>
+                  {importantSections.title || "Few Important Sections"}
+                </h3>
+                <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                  {importantSections.description || "Key statutory sections highlighted for quick reference."}
+                </p>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+              {importantSections.sections.map((sec, idx) => (
+                <div 
+                  key={idx} 
+                  style={{
+                    backgroundColor: 'white',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '8px',
+                    padding: '1.5rem',
+                    boxShadow: 'var(--shadow-sm)',
+                    position: 'relative',
+                    transition: 'all 0.2s ease',
+                    borderLeft: '4px solid var(--primary-blue)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
+                  className="premium-card"
+                >
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                      <span style={{ fontSize: '0.72rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        {sec.act?.split(',')[0]}
+                      </span>
+                      <span style={{ 
+                        fontSize: '0.75rem', 
+                        backgroundColor: 'var(--bg-offwhite)', 
+                        color: 'var(--primary-blue)', 
+                        padding: '0.2rem 0.6rem', 
+                        borderRadius: '4px', 
+                        fontWeight: 700 
+                      }}>
+                        Sec. {sec.sectionNumber}
+                      </span>
+                    </div>
+                    <h4 style={{ fontSize: '1.1rem', color: 'var(--primary-blue)', fontWeight: 700, margin: '0 0 0.5rem 0' }}>
+                      {sec.title}
+                    </h4>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--text-dark)', lineHeight: 1.6, margin: '0 0 1.5rem 0' }}>
+                      {sec.description}
+                    </p>
+                  </div>
+                  
+                  <button 
+                    onClick={() => {
+                      const matchedAct = laws.find(l => l.title?.toLowerCase().includes(sec.act?.toLowerCase()) || sec.act?.toLowerCase().includes(l.title?.toLowerCase()));
+                      if (matchedAct) {
+                        setActiveActId(matchedAct._id);
+                        const matchedSec = matchedAct.sections?.find(s => String(s.sectionNumber || '').toLowerCase() === String(sec.sectionNumber).toLowerCase());
+                        if (matchedSec) {
+                          setActiveSection(matchedSec);
+                        } else if (matchedAct.sections && matchedAct.sections.length > 0) {
+                          setActiveSection(matchedAct.sections[0]);
+                        }
+                      }
+                      window.scrollTo({ top: 400, behavior: 'smooth' });
+                    }}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.25rem',
+                      fontSize: '0.8rem',
+                      color: 'var(--accent-gold)',
+                      fontWeight: 700,
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                      textAlign: 'left'
+                    }}
+                  >
+                    Read Full Section <ArrowRight size={12} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

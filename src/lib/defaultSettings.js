@@ -13,6 +13,7 @@ const SETTING_KEYS = [
   "important_rules_config",
   "important_concepts_config",
   "judgment_writing_config",
+  "important_sections_config",
 ];
 
 const BLOCKED_KEYS = new Set(["__proto__", "constructor", "prototype"]);
@@ -64,7 +65,7 @@ const siteConfig = {
     {
       label: "Revenue Law", items: [
         { label: "Revenue Law in Rajasthan", href: "/laws" },
-        { label: "Working of Revenue Law", href: "/working-of-revenue-law" },
+        { label: "Procedure of Revenue Law", href: "/working-of-revenue-law" },
         { label: "Hierarchy of Revenue Courts", href: "/hierarchy-of-courts" },
         { label: "Types of Cases in Revenue Law", href: "/types-of-cases" },
         { label: "The Stages in Revenue Cases", href: "/the-stages-in-revenue-cases" },
@@ -92,7 +93,7 @@ const siteConfig = {
     description: "Revenue Law Raj is Rajasthan's leading platform for agricultural and land administration laws. We provide a structured database of judgments, statutes, glossary definitions, and official gazettes to support legal research and administrative clarity across the state.",
     columns: [
       { title: "Quick Links", links: [{ label: "Home", href: "/" }, { label: "About Us", href: "/about" }, { label: "Contact Us", href: "/contact" }, { label: "Judgments", href: "/judgments" }, { label: "FAQ", href: "/faq" }] },
-      { title: "Revenue Law", links: [{ label: "Acts & Statutes", href: "/laws" }, { label: "Working of Law", href: "/working-of-revenue-law" }, { label: "Court Hierarchy", href: "/hierarchy-of-courts" }, { label: "Types of Cases", href: "/types-of-cases" }] },
+      { title: "Revenue Law", links: [{ label: "Acts & Statutes", href: "/laws" }, { label: "Procedure of Law", href: "/working-of-revenue-law" }, { label: "Court Hierarchy", href: "/hierarchy-of-courts" }, { label: "Types of Cases", href: "/types-of-cases" }] },
       { title: "Important Concepts", links: [{ label: "Important Rules", href: "/important-rules" }, { label: "Important Concepts", href: "/resources/important-concepts" }, { label: "Circulars & Gazettes", href: "/notifications" }, { label: "Revenue Glossary", href: "/glossary" }] },
     ],
     contact: { title: "Official Contact", address: "B-30, Jamuna Nagar, Sodala, Jaipur, Rajasthan – 302006", phone: "+91 99820 57461", email: "revenuelawraj@gmail.com" },
@@ -240,7 +241,7 @@ const faqConfig = {
 
 const workingRevenueConfig = {
   schemaVersion: 1,
-  hero: { eyebrow: "Procedural Guide", title: "Working of Revenue Law", highlight: "in Rajasthan", description: "Understand the step-by-step workflow of revenue litigation, land record corrections, and judicial processes in Rajasthan courts." },
+  hero: { eyebrow: "Procedural Guide", title: "Procedure of Revenue Law", highlight: "in Rajasthan", description: "Understand the step-by-step workflow of revenue litigation, land record corrections, and judicial processes in Rajasthan courts." },
   framework: { title: "The Statutory Framework", paragraphs: ["The administration of land in Rajasthan revolves around two primary legislations: the Rajasthan Land Revenue Act, 1956 (which governs records, surveys, boundaries, and the powers of revenue officers) and the Rajasthan Tenancy Act, 1955 (which determines rights of tenancy, land transfer, division of agricultural holdings, and disputes).", "Revenue courts act as quasi-judicial authorities. Unlike civil courts, they follow special procedures that emphasize field verifications, reports from village patwaris, and settlement rules designed to protect agrarian rights and maintain state land logs."] },
   workflow: { title: "Workflow of a Revenue Proceeding", description: "From initiating a petition to final decree execution in the field." },
   steps: [
@@ -311,7 +312,7 @@ const caseStagesConfig = {
 const importantRulesConfig = {
   schemaVersion: 1,
   hero: { eyebrow: "Statutory Rules & Guidelines", title: "Important Rules &", highlight: "Land Conversion Guidelines", description: "Access the 10 critical rules of Rajasthan Revenue Law alongside the complete statutory process for agricultural land conversion under Section 90-A." },
-  tabs: { rules: "10 Important Rules", conversion: "Land Conversion (Section 90-A)" },
+  tabs: { rules: "10 Important Rules", conversion: "Land Conversion (Section 90-A)", gochar: "Gochar Land Rules", mandir: "Mandir Maafi Land" },
   rulesTitle: "10 Critical Rules of Rajasthan Land Revenue",
   rules: [
     { number: 1, title: "Section 42 (Restriction on Land Transfer)", description: "Sale, gift, bequest, or mortgage of agricultural land belonging to a Scheduled Caste (SC) or Scheduled Tribe (ST) member to a non-SC/ST member is strictly prohibited. Any such transaction is legally void (ab initio)." },
@@ -336,6 +337,32 @@ const importantRulesConfig = {
   documentsTitle: "Documents Checklist",
   documents: ["Latest copy of Jamabandi (not older than six months)", "Revenue map (Khasra Naksha) signed by the Patwari", "Proposed layout plan of the conversion area showing public roads", "Title deed or registry copy proving Khatedari ownership", "Affidavit stating that the land is not subject to court stay/ceiling limit", "No-Objection Certificate (NOC) if close to forest/historical sites"],
   cta: { icon: "FileText", title: "Need the Official Form-A Application Template?", description: "Download the official print-ready Form-A PDF required for submitting your land conversion file to the SDO/Local Authority.", label: "Download Form-A PDF", href: "/downloads" },
+  gochar: {
+    title: "Rules Governing Gochar (Pasture) Land",
+    description: "Gochar (pasture) lands in Rajasthan are communal properties reserved for village cattle grazing, regulated under the Rajasthan Tenancy Act, 1955, and the Land Revenue Act, 1956.",
+    warningTitle: "Strict Prohibition on Allotment",
+    warning: "Under Section 16 of the Rajasthan Tenancy Act, 1955, Khatedari rights cannot accrue in pasture lands. Any allotment of Gochar land for residential, agricultural, or commercial use is void and illegal.",
+    pointsTitle: "Key Guidelines for Pasture Land Protection",
+    points: [
+      { title: "No Khatedari Rights", text: "Pasture lands are recorded as 'Ghair Mumkin Charagah'. No person can acquire permanent tenancy rights over pasture lands." },
+      { title: "Mandatory Equivalent Allotment", text: "If any pasture land is diverted for a public utility project (e.g., roads, electricity sub-stations), the state government must allocate an equivalent area of agricultural land of equal value to be developed as pasture land in the same village." },
+      { title: "Gram Panchayat Management", text: "The local Gram Panchayat holds the right of management and is responsible for maintaining pasture lands and ensuring they remain free from unauthorized occupation." },
+      { title: "Tehsildar Eviction Powers", text: "Under Section 91 of the Land Revenue Act, 1956, Tehsildars have summary powers to evict encroachers on pasture land, demolish unauthorized structures, and impose penalty fines." }
+    ]
+  },
+  mandir: {
+    title: "Rules Governing Mandir Maafi (Temple) Land",
+    description: "Mandir Maafi lands are special revenue grants made historically to temples for their maintenance and worship, governed under strict deity ownership principles in Rajasthan.",
+    warningTitle: "No Personal Ownership for Pujaris",
+    warning: "A Pujari or priest is merely a manager of the temple land and holds no personal Khatedari or transfer rights. Any sale, mortgage, gift, or long-term lease of temple lands by a Pujari is null and void.",
+    pointsTitle: "Key Guidelines for Mandir Maafi Land Protection",
+    points: [
+      { title: "Deity as Juristic Owner", text: "The presiding deity of the temple is recognized as a juristic person and perpetual minor. The title and Khatedari of the land rest solely with the deity (idol)." },
+      { title: "Pujari as Manager Only", text: "The Pujari’s name is recorded in the Jamabandi only as 'Prabandhak' (manager) or 'Pujari' for performing worship, never as the tenant or owner." },
+      { title: "Strict Prohibition on Sale", text: "Temple lands cannot be alienated or sold. Any registration of sale deeds or mutation based on transfers made by a Pujari is illegal and subject to cancellation." },
+      { title: "Devasthan Supervision", text: "Public temples and their associated Maafi lands are supervised by the Devasthan Department. Encroachments or illegal transfers are prosecuted under public trust guidelines." }
+    ]
+  }
 };
 
 const importantConceptsConfig = {
@@ -398,7 +425,57 @@ Date of Pronouncement: July 10, 2026
     { question: "Why is marshalling of evidence critical in revenue cases?", answer: "Land cases depend heavily on survey maps (Khasras) and revenue register records (Jamabandi). Marshalling ensures all documentary evidence is weighed against oral testimonies to establish continuous possession." },
     { question: "What is the standard format for writing a header in Rajasthan Revenue Courts?", answer: "The header must specify the court tier (e.g., 'In the Court of Sub-Divisional Officer, Kishangarh'), followed by the Case Type and Registration Number, Parties' details, and the date of reserving and pronouncing the judgment." },
   ],
-  related: { title: "Related Reference Guides", links: [{ label: "Working of Revenue Law in Rajasthan", href: "/working-of-revenue-law" }, { label: "Glossary of Revenue Terms", href: "/glossary" }, { label: "Rajasthan Tenancy Act Statutory Guide", href: "/laws" }] },
+  related: { title: "Related Reference Guides", links: [{ label: "Procedure of Revenue Law in Rajasthan", href: "/working-of-revenue-law" }, { label: "Glossary of Revenue Terms", href: "/glossary" }, { label: "Rajasthan Tenancy Act Statutory Guide", href: "/laws" }] },
+};
+
+const importantSectionsConfig = {
+  schemaVersion: 1,
+  title: "Few Important Sections of Rajasthan Revenue Laws",
+  description: "Quick reference guide to the most vital statutory clauses of the Rajasthan Tenancy Act, 1955 and Rajasthan Land Revenue Act, 1956 frequently cited in revenue courts.",
+  sections: [
+    {
+      act: "Rajasthan Tenancy Act, 1955",
+      sectionNumber: "88",
+      title: "Suit for declaration of Khatedari rights",
+      description: "Any person claiming to be a tenant or a co-tenant may sue for a declaration of his right, which is the baseline suit for establishing agricultural land ownership title in Rajasthan."
+    },
+    {
+      act: "Rajasthan Tenancy Act, 1955",
+      sectionNumber: "53",
+      title: "Partition of agricultural holding",
+      description: "Enables a co-sharer (joint khatedar) to file a suit to divide a joint agricultural holding and demarcate individual shares on maps."
+    },
+    {
+      act: "Rajasthan Tenancy Act, 1955",
+      sectionNumber: "188",
+      title: "Suit for injunction against trespass",
+      description: "Protects a tenant in peaceful possession from unlawful dispossession or interference by any other person or trespasser."
+    },
+    {
+      act: "Rajasthan Tenancy Act, 1955",
+      sectionNumber: "251",
+      title: "Rights of way and other easements",
+      description: "Empowers the Tehsildar to adjudicate disputes regarding passage through fields and grant new passages or clear blocked tracks."
+    },
+    {
+      act: "Rajasthan Land Revenue Act, 1956",
+      sectionNumber: "90-A",
+      title: "Use of agricultural land for non-agricultural purposes",
+      description: "Regulates the conversion of agricultural holdings to residential, commercial, or industrial purposes, detailing SDO/UIT conversion power."
+    },
+    {
+      act: "Rajasthan Land Revenue Act, 1956",
+      sectionNumber: "91",
+      title: "Eviction of trespassers from government land",
+      description: "Summary powers given to Tehsildars to evict unauthorized occupants of government, pasture (Charagah), or communal lands, and levy penalty fines."
+    },
+    {
+      act: "Rajasthan Land Revenue Act, 1956",
+      sectionNumber: "135",
+      title: "Mutation on succession or transfer",
+      description: "Mandates reporting of land transfers (sales, gifts, inheritance) to update the record of rights (Jamabandi) through mutation entries."
+    }
+  ]
 };
 
 export const DEFAULT_SETTINGS = {
@@ -416,4 +493,5 @@ export const DEFAULT_SETTINGS = {
   important_rules_config: importantRulesConfig,
   important_concepts_config: importantConceptsConfig,
   judgment_writing_config: judgmentWritingConfig,
+  important_sections_config: importantSectionsConfig,
 };

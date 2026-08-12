@@ -92,13 +92,15 @@ const importantRules = [
 ];
 
 export default function ImportantRulesPage() {
-  const [activeTab, setActiveTab] = useState('rules'); // 'rules' or 'conversion'
+  const [activeTab, setActiveTab] = useState('rules'); // 'rules', 'conversion', 'gochar', 'mandir'
   const config = usePublicSetting('important_rules_config');
   const displayedRules = config.rules?.map(rule => ({ ...rule, num: rule.number, desc: rule.description })) ?? importantRules;
   const displayedSteps = config.conversionSteps?.map(step => ({ ...step, desc: step.description })) ?? steps;
   const displayedDocuments = config.documents ?? documents;
+  const displayedGochar = config.gochar || { title: '', description: '', warningTitle: '', warning: '', pointsTitle: '', points: [] };
+  const displayedMandir = config.mandir || { title: '', description: '', warningTitle: '', warning: '', pointsTitle: '', points: [] };
   const actName = 'Rajasthan Land Revenue Act, 1956';
-  const conversionDescription = config.conversion.description;
+  const conversionDescription = config.conversion?.description || '';
   const actNameIndex = conversionDescription.indexOf(actName);
 
   return (
@@ -114,14 +116,14 @@ export default function ImportantRulesPage() {
         <div className="layout-container">
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(30, 27, 24, 0.05)', border: '1px solid rgba(30, 27, 24, 0.15)', borderRadius: '50px', padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>
             <FileCheck size={14} style={{ color: 'var(--accent-gold-hover)' }} />
-            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>{config.hero.eyebrow}</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>{config.hero?.eyebrow || 'Rules & Procedures'}</span>
           </div>
           <h1 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: 'var(--primary-blue)' }}>
-            {config.hero.title}<br />
-            <span style={{ color: '#B38F4F' }}>{config.hero.highlight}</span>
+            {config.hero?.title || 'Revenue'}<br />
+            <span style={{ color: '#B38F4F' }}>{config.hero?.highlight || 'Rules'}</span>
           </h1>
           <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-            {config.hero.description}
+            {config.hero?.description || 'Statutory guides and guidelines.'}
           </p>
         </div>
       </div>
@@ -135,50 +137,37 @@ export default function ImportantRulesPage() {
         <div className="segmented-tabs" style={{
           display: 'flex',
           justifyContent: 'center',
-          gap: '1rem',
+          gap: '0.75rem',
           marginBottom: '3rem',
           borderBottom: '2px solid var(--border-color)',
-          paddingBottom: '1rem'
+          paddingBottom: '1rem',
+          flexWrap: 'wrap'
         }}>
-          <button 
-            onClick={() => setActiveTab('rules')}
-            style={{
-              padding: '0.75rem 2rem',
-              fontSize: '1rem',
-              fontWeight: 700,
-              border: 'none',
-              borderRadius: '50px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              backgroundColor: activeTab === 'rules' ? 'var(--primary-blue)' : 'transparent',
-              color: activeTab === 'rules' ? 'white' : 'var(--text-muted)',
-              border: activeTab === 'rules' ? 'none' : '1px solid var(--border-color)'
-            }}
-          >
-            {config.tabs.rules}
-          </button>
-          <button 
-            onClick={() => setActiveTab('conversion')}
-            style={{
-              padding: '0.75rem 2rem',
-              fontSize: '1rem',
-              fontWeight: 700,
-              border: 'none',
-              borderRadius: '50px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              backgroundColor: activeTab === 'conversion' ? 'var(--primary-blue)' : 'transparent',
-              color: activeTab === 'conversion' ? 'white' : 'var(--text-muted)',
-              border: activeTab === 'conversion' ? 'none' : '1px solid var(--border-color)'
-            }}
-          >
-            {config.tabs.conversion}
-          </button>
+          {Object.entries(config.tabs || {}).map(([key, label]) => (
+            <button 
+              key={key}
+              onClick={() => setActiveTab(key)}
+              style={{
+                padding: '0.75rem 1.5rem',
+                fontSize: '0.92rem',
+                fontWeight: 700,
+                border: 'none',
+                borderRadius: '50px',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                backgroundColor: activeTab === key ? 'var(--primary-blue)' : 'transparent',
+                color: activeTab === key ? 'white' : 'var(--text-muted)',
+                border: activeTab === key ? 'none' : '1px solid var(--border-color)'
+              }}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
         <div className="layout-with-sidebar">
           <div>
-            {activeTab === 'rules' ? (
+            {activeTab === 'rules' && (
               /* TAB 1: 10 Important Rules */
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
                 <h2 style={{ fontSize: '1.75rem', fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', marginBottom: '1.5rem' }}>
@@ -219,14 +208,16 @@ export default function ImportantRulesPage() {
                   </div>
                 ))}
               </div>
-            ) : (
+            )}
+
+            {activeTab === 'conversion' && (
               /* TAB 2: Section 90-A Land Conversion */
               <div>
                 {/* Introduction to Section 90-A */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', marginBottom: '4rem' }}>
                   <div style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '2.5rem', boxShadow: 'var(--shadow-sm)' }}>
                     <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1.25rem', fontFamily: 'var(--font-serif)' }}>
-                      {config.conversion.title}
+                      {config.conversion?.title}
                     </h2>
                     <p style={{ color: 'var(--text-dark)', fontSize: '1rem', lineHeight: 1.8, marginBottom: '1.25rem' }}>
                       {actNameIndex >= 0 ? (
@@ -237,9 +228,9 @@ export default function ImportantRulesPage() {
                     <div style={{ display: 'flex', gap: '1rem', background: '#fffbeb', border: '1px solid #fef3c7', borderRadius: '8px', padding: '1.25rem', marginBottom: '1.25rem' }}>
                       <AlertCircle size={24} style={{ color: '#d97706', flexShrink: 0, marginTop: '0.15rem' }} />
                       <div>
-                        <h4 style={{ color: '#92400e', fontWeight: 700, margin: '0 0 0.25rem 0', fontSize: '0.92rem' }}>{config.conversion.warningTitle}</h4>
+                        <h4 style={{ color: '#92400e', fontWeight: 700, margin: '0 0 0.25rem 0', fontSize: '0.92rem' }}>{config.conversion?.warningTitle}</h4>
                         <p style={{ color: '#b45309', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
-                          {config.conversion.warning}
+                          {config.conversion?.warning}
                         </p>
                       </div>
                     </div>
@@ -249,10 +240,10 @@ export default function ImportantRulesPage() {
                 {/* Step by Step Procedure */}
                 <div style={{ marginBottom: '4rem' }}>
                   <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)', textAlign: 'center' }}>
-                    {config.conversion.workflowTitle}
+                    {config.conversion?.workflowTitle}
                   </h2>
                   <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '3rem', fontSize: '0.95rem' }}>
-                    {config.conversion.workflowDescription}
+                    {config.conversion?.workflowDescription}
                   </p>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.5rem', maxWidth: '800px', margin: '0 auto' }}>
@@ -317,17 +308,62 @@ export default function ImportantRulesPage() {
                   border: '1px solid var(--border-color)'
                 }}>
                   <FileText size={36} style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }} />
-                  <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>{config.cta.title}</h2>
+                  <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>{config.cta?.title}</h2>
                   <p style={{ color: 'var(--text-dark)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem auto', fontSize: '0.95rem', lineHeight: 1.7 }}>
-                    {config.cta.description}
+                    {config.cta?.description}
                   </p>
-                  <Link href={config.cta.href} className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span>{config.cta.label}</span>
+                  <Link href={config.cta?.href || '/downloads'} className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span>{config.cta?.label}</span>
                     <ArrowRight size={16} />
                   </Link>
                 </div>
               </div>
             )}
+
+            {(activeTab === 'gochar' || activeTab === 'mandir') && (() => {
+              const data = activeTab === 'gochar' ? displayedGochar : displayedMandir;
+              return (
+                <div>
+                  <div style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '2.5rem', boxShadow: 'var(--shadow-sm)', marginBottom: '3rem' }}>
+                    <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-blue)', marginBottom: '1.25rem', fontFamily: 'var(--font-serif)' }}>
+                      {data.title}
+                    </h2>
+                    <p style={{ color: 'var(--text-dark)', fontSize: '1rem', lineHeight: 1.8, marginBottom: '1.25rem' }}>
+                      {data.description}
+                    </p>
+                    
+                    {data.warning && (
+                      <div style={{ display: 'flex', gap: '1rem', background: '#fffbeb', border: '1px solid #fef3c7', borderRadius: '8px', padding: '1.25rem' }}>
+                        <AlertCircle size={24} style={{ color: '#d97706', flexShrink: 0, marginTop: '0.15rem' }} />
+                        <div>
+                          <h4 style={{ color: '#92400e', fontWeight: 700, margin: '0 0 0.25rem 0', fontSize: '0.92rem' }}>{data.warningTitle || "Legal Warning"}</h4>
+                          <p style={{ color: '#b45309', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
+                            {data.warning}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '2.5rem', boxShadow: 'var(--shadow-sm)' }}>
+                    <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', marginBottom: '1.5rem', fontFamily: 'var(--font-serif)' }}>
+                      {data.pointsTitle || "Key Guidelines"}
+                    </h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.5rem' }}>
+                      {(data.points || []).map((point, i) => (
+                        <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                          <CheckCircle2 size={20} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.2rem' }} />
+                          <div>
+                            <h4 style={{ color: 'var(--primary-blue)', fontWeight: 700, margin: '0 0 0.25rem 0', fontSize: '1rem' }}>{point.title}</h4>
+                            <p style={{ color: 'var(--text-dark)', fontSize: '0.9rem', lineHeight: 1.6, margin: 0 }}>{point.text}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
           <NewsSidebar />
         </div>

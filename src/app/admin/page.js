@@ -25,6 +25,7 @@ const ADMIN_TAB_TITLES = {
   glossary: 'Legal Dictionary',
   settings: 'Website & Contact Settings',
   homepage_cms: 'Home Page Editor',
+  header_cms: 'Header & Navigation Editor',
   pages_cms: 'Website Pages Editor',
   important_rules_cms: 'Important Rules Editor',
   policies_cms: 'Terms, Privacy & Disclaimer',
@@ -232,7 +233,7 @@ export default function AdminDashboard() {
       } else if (activeTab === 'glossary') {
         const res = await fetch('/api/glossary');
         setGlossary(await res.json());
-      } else if (activeTab === 'settings' || activeTab === 'homepage_cms' || activeTab === 'pages_cms' || activeTab === 'important_rules_cms' || activeTab === 'policies_cms') {
+      } else if (activeTab === 'settings' || activeTab === 'homepage_cms' || activeTab === 'pages_cms' || activeTab === 'important_rules_cms' || activeTab === 'policies_cms' || activeTab === 'header_cms') {
         const res = await fetch('/api/settings');
         setSettings(await res.json());
       } else if (activeTab === 'media_library') {
@@ -667,6 +668,9 @@ export default function AdminDashboard() {
             <li className="admin-nav-section">Website Pages</li>
             <li className={`admin-nav-item ${activeTab === 'homepage_cms' ? 'active' : ''}`}>
               <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('homepage_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Edit Home Page</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'header_cms' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('header_cms'); setEditingItem(null); setSidebarOpen(false); }}><Menu size={16} /> Edit Header & Navigation</a>
             </li>
             <li className={`admin-nav-item ${activeTab === 'important_rules_cms' ? 'active' : ''}`}>
               <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('important_rules_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Edit Important Rules</a>
@@ -2149,6 +2153,11 @@ export default function AdminDashboard() {
             {/* Tab: Homepage CMS */}
             {activeTab === 'homepage_cms' && (
               <HomepageSettingsEditor settings={settings} onSaved={loadDashboardData} />
+            )}
+
+            {/* Tab: Edit Header & Navigation */}
+            {activeTab === 'header_cms' && (
+              <PageSettingsEditor settings={settings} onSaved={loadDashboardData} initialSelectedKey="site_config" />
             )}
 
             {/* Tab: Important Rules */}

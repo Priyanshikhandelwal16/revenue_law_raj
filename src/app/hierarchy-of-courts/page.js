@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Landmark, Scale, Award, Gavel } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Landmark, Scale, Award, Gavel } from 'lucide-react';
 import NewsSidebar from '@/components/NewsSidebar';
 import ThirdScheduleTable from '@/components/ThirdScheduleTable';
 import usePublicSetting from '@/hooks/usePublicSetting';
@@ -50,9 +50,15 @@ export default function HierarchyOfCourtsPage() {
             {config.hero.title}<br />
             <span style={{ color: '#B38F4F' }}>{config.hero.highlight}</span>
           </h1>
-          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
+          <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '2rem' }}>
             {config.hero.description}
           </p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/court-jurisdictions" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
+              <span>View Detailed Jurisdictions (Third Schedule)</span>
+              <ArrowRight size={16} />
+            </Link>
+          </div>
         </div>
       </div>
 
