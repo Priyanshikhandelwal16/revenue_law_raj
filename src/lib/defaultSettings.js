@@ -152,6 +152,7 @@ const homepageConfig = {
   hero: { eyebrow: "Rajasthan Legal Research Portal", title: "Overview of", highlight: "Revenue Law", description: "Empowering legal professionals, landholders, and officers with instant access to Rajasthan's land revenue database. Explore Board of Revenue precedents, tenancy statutes, notification circulars, and comprehensive step-by-step litigation guides on a unified platform.", image: "/images/hero_revenue_law-removebg-preview.png", imageAlt: "Rajasthan Legal Research Platform" },
   quickLinks: [
     { label: "Hierarchy of Revenue Courts", href: "/hierarchy-of-courts", icon: "Landmark" },
+    { label: "Jurisdiction of Revenue Court", href: "/court-jurisdictions", icon: "Gavel" },
     { label: "Stages in Revenue Cases", href: "/the-stages-in-revenue-cases", icon: "Layers" },
     { label: "Types of Cases", href: "/types-of-cases", icon: "Scale" },
   ],

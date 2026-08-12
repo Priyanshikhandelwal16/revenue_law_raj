@@ -22,7 +22,7 @@ export default function CourtJurisdictionsPage() {
             <span style={{ fontSize: '0.8rem', color: 'var(--primary-blue)', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase' }}>Statutory Directory</span>
           </div>
           <h1 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.8rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: 'var(--primary-blue)' }}>
-            Court Jurisdictions & Limitations<br />
+            Jurisdiction Of Revenue Court<br />
             <span style={{ color: '#B38F4F' }}>The Third Schedule</span>
           </h1>
           <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>

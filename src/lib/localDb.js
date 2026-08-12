@@ -104,6 +104,62 @@ export async function readLocalDb(type) {
           items.push(newSetting);
         }
       }
+
+      // AUTO MIGRATION: Update existing site_config and homepage_config in Firestore if they have old text or lack the new link
+      for (const item of items) {
+        if (item.key === 'site_config' && item.value) {
+          let modified = false;
+          if (Array.isArray(item.value.navigation)) {
+            item.value.navigation = item.value.navigation.map(nav => {
+              if (nav.label === 'Working of Revenue Law') {
+                nav.label = 'Procedure of Revenue Law';
+                modified = true;
+              }
+              if (Array.isArray(nav.items)) {
+                nav.items = nav.items.map(sub => {
+                  if (sub.label === 'Working of Revenue Law') {
+                    sub.label = 'Procedure of Revenue Law';
+                    modified = true;
+                  }
+                  return sub;
+                });
+              }
+              return nav;
+            });
+          }
+          if (modified) {
+            const docRef = doc(db, type, item._id);
+            const cleaned = { ...item };
+            delete cleaned._id;
+            await setDoc(docRef, cleaned, { merge: true });
+            console.log(`Migrated site_config in Firestore: Working of Revenue Law -> Procedure of Revenue Law`);
+          }
+        }
+
+        if (item.key === 'homepage_config' && item.value) {
+          let modified = false;
+          if (Array.isArray(item.value.quickLinks)) {
+            const hasJurisdictionLink = item.value.quickLinks.some(link => link.href === '/court-jurisdictions');
+            if (!hasJurisdictionLink) {
+              const hierarchyIdx = item.value.quickLinks.findIndex(link => link.href === '/hierarchy-of-courts');
+              const newLink = { label: "Jurisdiction of Revenue Court", href: "/court-jurisdictions", icon: "Gavel" };
+              if (hierarchyIdx !== -1) {
+                item.value.quickLinks.splice(hierarchyIdx + 1, 0, newLink);
+              } else {
+                item.value.quickLinks.push(newLink);
+              }
+              modified = true;
+            }
+          }
+          if (modified) {
+            const docRef = doc(db, type, item._id);
+            const cleaned = { ...item };
+            delete cleaned._id;
+            await setDoc(docRef, cleaned, { merge: true });
+            console.log(`Migrated homepage_config in Firestore: Added Jurisdiction of Revenue Court quick link`);
+          }
+        }
+      }
     }
 
     // Update Cache

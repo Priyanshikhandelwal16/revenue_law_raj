@@ -55,7 +55,7 @@ export default function HierarchyOfCourtsPage() {
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/court-jurisdictions" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
-              <span>View Detailed Jurisdictions (Third Schedule)</span>
+              <span>Jurisdiction of Revenue Court (Third Schedule)</span>
               <ArrowRight size={16} />
             </Link>
           </div>
