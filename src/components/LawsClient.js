@@ -260,36 +260,26 @@ export default function LawsClient({ laws = [], initialActSlug = '', initialSect
                     </p>
                   </div>
                   
-                  <button 
-                    onClick={() => {
-                      const matchedAct = laws.find(l => l.title?.toLowerCase().includes(sec.act?.toLowerCase()) || sec.act?.toLowerCase().includes(l.title?.toLowerCase()));
-                      if (matchedAct) {
-                        setActiveActId(matchedAct._id);
-                        const matchedSec = matchedAct.sections?.find(s => String(s.sectionNumber || '').toLowerCase() === String(sec.sectionNumber).toLowerCase());
-                        if (matchedSec) {
-                          setActiveSection(matchedSec);
-                        } else if (matchedAct.sections && matchedAct.sections.length > 0) {
-                          setActiveSection(matchedAct.sections[0]);
-                        }
-                      }
-                      window.scrollTo({ top: 400, behavior: 'smooth' });
-                    }}
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.25rem',
-                      fontSize: '0.8rem',
-                      color: 'var(--accent-gold)',
-                      fontWeight: 700,
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: 0,
-                      textAlign: 'left'
-                    }}
-                  >
-                    Read Full Section <ArrowRight size={12} />
-                  </button>
+                  {(() => {
+                    const matchedAct = laws.find(l => l.title?.toLowerCase().includes(sec.act?.toLowerCase()) || sec.act?.toLowerCase().includes(l.title?.toLowerCase()));
+                    const actSlug = matchedAct?.slug || 'rajasthan-tenancy-act-1955';
+                    return (
+                      <Link 
+                        href={`/laws/${actSlug}/${sec.sectionNumber}`}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                          fontSize: '0.8rem',
+                          color: 'var(--accent-gold)',
+                          fontWeight: 700,
+                          textDecoration: 'none'
+                        }}
+                      >
+                        Read Full Section <ArrowRight size={12} />
+                      </Link>
+                    );
+                  })()}
                 </div>
               ))}
             </div>
