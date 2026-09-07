@@ -216,20 +216,19 @@ An Act to consolidate and amend the law relating to land, the appointment, power
               {heroTitle} <br />
               <span style={{ color: '#B38F4F' }}>{heroSubtitle}</span>
             </h1>
-            {/* Judicial Matters Notice — only this appears in hero */}
-            <div style={{ maxWidth: '680px' }}>
-              <Link
-                href="/types-of-cases#first-schedule"
-                style={{ textDecoration: 'none', display: 'block' }}
-              >
-                <div style={{ backgroundColor: 'rgba(197, 168, 128, 0.18)', borderLeft: '4px solid var(--accent-gold)', padding: '1rem 1.25rem', borderRadius: '0 10px 10px 0', display: 'flex', alignItems: 'center', gap: '0.75rem', transition: 'background 0.2s' }}>
-                  <Gavel size={20} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
-                  <span style={{ color: '#000000', fontSize: '1rem', lineHeight: 1.65, fontWeight: 600 }}>
-                    The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the First Schedule of the Act.
-                  </span>
-                  <ChevronRight size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginLeft: 'auto' }} />
-                </div>
-              </Link>
+            {/* Hero Description — Preamble text */}
+            <div style={{ fontSize: '1rem', color: '#000000', lineHeight: 1.8, maxWidth: '680px', fontWeight: 500 }}>
+              <p style={{ marginBottom: '1.25rem' }}>
+                The simple objective of Revenue Law in Rajasthan is to provide help to the tenant to ensure that he/she enjoys and maintains his/her rights relating to the land holding. It also helps the state government to realize and collect revenue from the tenant. Furthermore, the preamble of the Rajasthan Land Revenue Act 1956 states as follows:
+              </p>
+              <div style={{ textAlign: 'center', margin: '1.25rem 0 1rem 0' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#000000', fontFamily: 'var(--font-serif)', display: 'inline-block', borderBottom: '2px solid var(--accent-gold)', paddingBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  Preamble
+                </h3>
+              </div>
+              <p style={{ marginBottom: 0 }}>
+                An Act to consolidate and amend the law relating to land, the appointment, powers and duties of revenue courts, revenue officers, and village servants, the preparation and maintenance of maps and land records, the settlement of revenue and rent, the partition of estates, the collection of revenue and matters incidental thereto.
+              </p>
             </div>
 
             {/* Configured quick-access links; intentionally no search UI. */}
@@ -294,6 +293,22 @@ An Act to consolidate and amend the law relating to land, the appointment, power
                         </div>
                       );
                     })}
+                  </div>
+
+                  {/* Judicial Matters Notice — clickable, links to First Schedule */}
+                  <div style={{ marginTop: '1.5rem' }}>
+                    <Link href="/types-of-cases#first-schedule" style={{ textDecoration: 'none', display: 'block' }}>
+                      <div style={{ backgroundColor: 'rgba(197, 168, 128, 0.12)', borderLeft: '4px solid var(--accent-gold)', padding: '1rem 1.25rem', borderRadius: '0 8px 8px 0', display: 'flex', alignItems: 'center', gap: '0.75rem', border: '1px solid rgba(197,168,128,0.3)', borderLeftWidth: '4px' }}>
+                        <Gavel size={20} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
+                        <div>
+                          <div style={{ fontSize: '0.72rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.2rem' }}>Judicial Matters</div>
+                          <span style={{ color: '#000000', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 600 }}>
+                            The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the First Schedule of the Act.
+                          </span>
+                        </div>
+                        <ChevronRight size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginLeft: 'auto' }} />
+                      </div>
+                    </Link>
                   </div>
                 </div>
               </ScrollReveal>

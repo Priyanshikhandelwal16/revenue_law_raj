@@ -39,6 +39,257 @@ export const fallbackArticles = [
     createdAt: new Date(2026, 5, 1).toISOString(),
     status: 'published'
   },
+  // Mutation & Succession
+  {
+    _id: 'art_mutation_rights',
+    title: 'Mutation & Succession — Land Record Correction under Rajasthan Revenue Law',
+    slug: 'mutation-rights',
+    category: 'Mutation & Succession',
+    summary: 'Mutation (Namantaran) is the process of updating the Record of Rights (Jamabandi) upon transfer or succession of agricultural land. Under the Rajasthan Land Revenue Act, 1956, every person acquiring land by succession or transfer must report the transaction to the Patwari.',
+    content: `<p>Mutation (Namantaran) is the process of updating the Record of Rights (Jamabandi) upon transfer or succession of agricultural land in Rajasthan. Under Section 135 of the Rajasthan Land Revenue Act, 1956, every person acquiring land by succession or transfer must report the transaction to the Patwari to update the Jamabandi through mutation.</p>
+<h2>What is Mutation?</h2>
+<p>Mutation means the substitution of the name of the new owner or tenant in the revenue records in place of the previous owner or tenant. It is a process of updating the Record of Rights (Jamabandi) whenever there is a change in the ownership or possession of land.</p>
+<h2>Types of Mutation</h2>
+<p><strong>Succession Mutation:</strong> When land passes from a deceased person to his legal heirs, mutation is carried out based on succession. The heirs must apply to the Patwari with relevant documents such as death certificate and proof of legal heirship.</p>
+<p><strong>Transfer Mutation:</strong> When land is transferred through sale, gift, or exchange, mutation is required to be done based on the registered deed of transfer.</p>
+<h2>Procedure for Mutation</h2>
+<p>1. Application to be submitted to the Patwari/Tehsildar of the concerned area.</p>
+<p>2. Documents required: Jamabandi copy, sale deed/will/succession certificate, identity proof.</p>
+<p>3. The Patwari verifies the documents and records the mutation in the Jamabandi.</p>
+<p>4. If there is any dispute, the matter is referred to the Tehsildar for adjudication.</p>
+<h2>Legal Provisions</h2>
+<p>Section 135 of the Rajasthan Land Revenue Act, 1956 mandates reporting of every transfer or succession of land to the Patwari. Failure to do so may result in penalties. The Board of Revenue has held in several judgments that mutation entries are only for revenue purposes and do not confer title.</p>`,
+    createdAt: new Date(2026, 5, 2).toISOString(),
+    status: 'published'
+  },
+  // Eviction & Encroachments
+  {
+    _id: 'art_encroachments',
+    title: 'Eviction & Encroachments — Section 91 of the Rajasthan Land Revenue Act, 1956',
+    slug: 'encroachments',
+    category: 'Eviction & Encroachments',
+    summary: 'Section 91 of the Rajasthan Land Revenue Act, 1956 empowers the Tehsildar to summarily evict any person occupying government land without authority. Encroachments on Charagah (pasture) and government wasteland are treated as serious violations under revenue law.',
+    content: `<p>Section 91 of the Rajasthan Land Revenue Act, 1956 is the primary provision dealing with trespassers and encroachments on government land. It empowers the Tehsildar to summarily evict any person who occupies land without lawful authority.</p>
+<h2>Section 91 — Trespasser Eviction Powers</h2>
+<p>Under Section 91, if any person occupies any land without authority, the Tehsildar may, after giving such person an opportunity of being heard, pass an order for eviction of such person from the land and for removal of any crop or structure erected by such person on such land.</p>
+<h2>Charagah (Pasture Land) Encroachments</h2>
+<p>Charagah lands are communal village grazing lands held in public trust. Any encroachment on Charagah land is treated as a serious violation. The Supreme Court and High Court of Rajasthan have repeatedly held that Charagah lands cannot be regularised in favour of encroachers, regardless of the duration of possession.</p>
+<h2>Government Wasteland Encroachments</h2>
+<p>Government wasteland includes lands which are not under cultivation and have not been assigned to any individual. Encroachments on such lands are dealt with under Section 91 and the concerned Tehsildar is empowered to initiate eviction proceedings.</p>
+<h2>Procedure for Eviction</h2>
+<p>1. A complaint or suo motu action by the Tehsildar initiates the proceedings.</p>
+<p>2. Notice is issued to the encroacher.</p>
+<p>3. After hearing the encroacher, an eviction order is passed if encroachment is established.</p>
+<p>4. The encroacher can appeal before the Sub-Divisional Officer (SDO) and further before the Revenue Appeals Commissioner.</p>`,
+    createdAt: new Date(2026, 5, 3).toISOString(),
+    status: 'published'
+  },
+  // Partition & Boundaries
+  {
+    _id: 'art_partition_boundaries',
+    title: 'Partition & Boundaries — Section 53 of the Rajasthan Tenancy Act, 1955',
+    slug: 'partition-boundaries',
+    category: 'Partition & Boundaries',
+    summary: 'Partition of agricultural holdings is governed by Section 53 of the Rajasthan Tenancy Act, 1955. Any co-sharer (khatedar tenant) has the right to sue for partition of their joint holding to separate their individual share on maps and records.',
+    content: `<p>Partition of agricultural holdings in Rajasthan is primarily governed by Section 53 of the Rajasthan Tenancy Act, 1955. Any co-sharer (khatedar tenant) has the right to sue for partition of their joint holding to separate their individual share on maps and records.</p>
+<h2>Right to Partition</h2>
+<p>Under Section 53, any co-sharer of a joint agricultural holding has an indefeasible right to sue for partition. This right cannot be waived or extinguished by any agreement among co-sharers. Even a female co-sharer (under Hindu Succession Act amendments) is entitled to demand partition.</p>
+<h2>Procedure for Partition</h2>
+<p><strong>Step 1:</strong> File a partition suit before the Tehsildar (for holdings less than the prescribed limit) or the Sub-Divisional Officer.</p>
+<p><strong>Step 2:</strong> The Tehsildar issues notice to all co-sharers and records their statements.</p>
+<p><strong>Step 3:</strong> A local commissioner (Patwari) is appointed to prepare a site plan showing the proposed division of the holding.</p>
+<p><strong>Step 4:</strong> After hearing parties, a preliminary decree is passed approving the partition plan.</p>
+<p><strong>Step 5:</strong> The final decree records the separate Khasra numbers and boundaries for each co-sharer's share.</p>
+<h2>Boundary Disputes</h2>
+<p>Boundary disputes between neighbouring Khasra numbers are settled by the Patwari through demarcation proceedings. If the dispute is not resolved at the Patwari level, the matter is referred to the Tehsildar for formal adjudication. The Tehsildar has the power to appoint a local commissioner to conduct a fresh demarcation survey.</p>
+<h2>Section 52 — Bar on Transfer</h2>
+<p>While partition is a right, Section 52 of the Rajasthan Tenancy Act restricts the transfer of Khatedar interest to non-agricultural persons, and any partition that results in sub-economic holdings (below the prescribed minimum) may be challenged.</p>`,
+    createdAt: new Date(2026, 5, 4).toISOString(),
+    status: 'published'
+  },
+  // Appeals & Revisions
+  {
+    _id: 'art_appeals_revisions',
+    title: 'Appeals & Revisions — Appellate Structure in Rajasthan Revenue Law',
+    slug: 'appeals-revisions',
+    category: 'Appeals & Revisions',
+    summary: 'The appellate structure in Rajasthan revenue law provides for a hierarchical system of appeals from the Tehsildar Court up to the Board of Revenue, Ajmer. Understanding the correct appellate forum and limitation period is critical for revenue litigants.',
+    content: `<p>The appellate structure in Rajasthan revenue law provides for a clear hierarchy of appellate forums. Every order passed by a revenue authority can be challenged in appeal before the next higher authority. Understanding the correct forum and the limitation period for filing appeals is critical for revenue litigants and advocates.</p>
+<h2>Appellate Hierarchy</h2>
+<p><strong>Level 1 — Tehsildar:</strong> The Tehsildar passes orders in mutation disputes, eviction matters, partition suits below the prescribed limit, and boundary disputes.</p>
+<p><strong>Level 2 — Sub-Divisional Officer (SDO):</strong> First appeal lies before the SDO against orders of the Tehsildar.</p>
+<p><strong>Level 3 — Revenue Appellate Authority (RAA):</strong> Second appeal against SDO orders lies before the Revenue Appellate Authority (RAA) at the divisional level.</p>
+<p><strong>Level 4 — Board of Revenue, Ajmer:</strong> The Board of Revenue is the highest revenue court in the state. Second or further appeals and revisions lie before the Board under various provisions of the Rajasthan Land Revenue Act and the Rajasthan Tenancy Act.</p>
+<h2>Limitation Period</h2>
+<p>Generally, an appeal must be filed within 90 days from the date of the lower court's order. However, specific statutory provisions may prescribe different limitation periods for particular types of matters. Courts have the discretion to condone delay on sufficient cause being shown.</p>
+<h2>Revision Powers</h2>
+<p>The Board of Revenue and the Collector have powers of revision to call for and examine the record of any case decided by any subordinate revenue court to satisfy itself as to the legality or propriety of such decision.</p>
+<h2>High Court Jurisdiction</h2>
+<p>After exhausting the revenue appellate hierarchy, a writ petition can be filed before the High Court of Rajasthan (Jodhpur Bench or Jaipur Bench) challenging revenue court orders on questions of law or fundamental rights violations.</p>`,
+    createdAt: new Date(2026, 5, 5).toISOString(),
+    status: 'published'
+  },
+  // General Commentary
+  {
+    _id: 'art_commentary',
+    title: 'General Commentary — Understanding Rajasthan Revenue Law',
+    slug: 'commentary',
+    category: 'General Commentary',
+    summary: 'General commentary and analysis on Rajasthan Revenue Law covers the comprehensive framework of the Rajasthan Land Revenue Act, 1956 and the Rajasthan Tenancy Act, 1955, including local customs, judicial precedents, and practical guidance for advocates and landowners.',
+    content: `<p>Rajasthan Revenue Law is a vast and specialised body of law that governs all aspects of agricultural land, tenancies, estates, land revenue assessments, boundaries, pasture lands, and land conversions in the State of Rajasthan. The two primary statutes are the Rajasthan Land Revenue Act, 1956 and the Rajasthan Tenancy Act, 1955.</p>
+<h2>Rajasthan Land Revenue Act, 1956</h2>
+<p>The Rajasthan Land Revenue Act, 1956 (Act No. 15 of 1956) is the principal legislation defining the powers of revenue courts, the conduct of land surveys, the maintenance of records-of-rights (Jamabandi), and the administration of land revenue in Rajasthan. It establishes the revenue court hierarchy and prescribes procedures for mutation, partition, eviction, and land conversion.</p>
+<h2>Rajasthan Tenancy Act, 1955</h2>
+<p>The Rajasthan Tenancy Act, 1955 (Act No. 3 of 1955) consolidates the law relating to tenancies of agricultural lands in Rajasthan. It defines the classes of tenants (Khatedar and Gair-Khatedar), their rights and liabilities, rent, partition, ejectment, and protections for SC/ST landholders.</p>
+<h2>Key Legal Concepts</h2>
+<p><strong>Jamabandi:</strong> The primary Record of Rights document maintained by the Patwari, updated every five years, recording all land holdings, tenancies, and rights.</p>
+<p><strong>Khatedar Tenant:</strong> A tenant with permanent, inheritable, and transferable rights over agricultural land — the highest class of tenant right in Rajasthan.</p>
+<p><strong>Gair-Khatedar Tenant:</strong> A temporary, probationary tenant with cultivation rights but without the right to transfer.</p>
+<p><strong>Khasra:</strong> A cadastral registry number assigned to a specific agricultural parcel in the village cadastral map.</p>
+<h2>Role of Local Customs</h2>
+<p>Local customs (Riwaj-i-Abpashi) play an important role in Rajasthan revenue law, particularly in matters of inheritance, water rights, and grazing rights. Courts have recognised and enforced local customs where they are established, consistent, and not opposed to statutory provisions.</p>
+<h2>Practical Guidance</h2>
+<p>Advocates practising in revenue courts must be familiar with the revenue court hierarchy, the correct appellate forum, limitation periods, and the documents required for each type of proceeding. Regular reference to Board of Revenue judgments and High Court decisions is essential for staying updated on evolving interpretations of revenue law.</p>`,
+    createdAt: new Date(2026, 5, 6).toISOString(),
+    status: 'published'
+  },
+
+  // Tenancy Rights
+  {
+    _id: 'art_tenancy_rights',
+    title: 'Tenancy Rights — Khatedar & Gair-Khatedar under Rajasthan Tenancy Act, 1955',
+    slug: 'tenancy-rights',
+    category: 'Tenancy Rights',
+    summary: 'Khatedar and Gair-Khatedar tenant rights, protections, and restrictions under the Rajasthan Tenancy Act, 1955. A Khatedar tenant holds the highest and most secure class of tenant right in Rajasthan — permanent, inheritable, and transferable.',
+    content: `<p>The Rajasthan Tenancy Act, 1955 defines and protects the rights of agricultural tenants in Rajasthan. Two primary classes of tenants are recognized: Khatedar tenants and Gair-Khatedar tenants.</p>
+<h2>Khatedar Tenant</h2>
+<p>A Khatedar tenant (Section 5 of the Rajasthan Tenancy Act, 1955) holds the highest and most secure class of tenant right in Rajasthan. Khatedar tenancy is permanent, inheritable, and transferable. A Khatedar tenant cannot be ejected from land except on specified statutory grounds such as non-payment of rent, personal cultivation by the landlord, or breach of conditions.</p>
+<h2>Gair-Khatedar Tenant</h2>
+<p>A Gair-Khatedar tenant (Section 16) is a temporary, probationary tenant who has cultivated land for less than 5 consecutive years. Gair-Khatedar tenancy is not transferable. Upon completing 5 years of continuous cultivation, a Gair-Khatedar tenant acquires Khatedar rights.</p>
+<h2>Rights of Khatedar Tenants</h2>
+<p>1. Right to permanent occupation and cultivation of land.</p>
+<p>2. Right to bequeath tenancy rights to legal heirs.</p>
+<p>3. Right to transfer land subject to restrictions on transfers to non-agriculturists.</p>
+<p>4. Right to sub-let land for up to 5 years.</p>
+<p>5. Right to demand partition of joint holdings (Section 53).</p>
+<h2>SC/ST Protections</h2>
+<p>Section 42 of the Rajasthan Tenancy Act prohibits transfer of SC/ST Khatedar land to non-SC/ST persons. Any such transfer is void ab initio. This is a constitutional protection upheld by the Supreme Court and High Court of Rajasthan in numerous judgments.</p>`,
+    createdAt: new Date(2026, 5, 7).toISOString(),
+    status: 'published'
+  },
+
+  // Land Records & Jamabandi
+  {
+    _id: 'art_land_records',
+    title: 'Land Records & Jamabandi — Rajasthan Revenue Records System',
+    slug: 'land-records',
+    category: 'Land Records & Jamabandi',
+    summary: 'Jamabandi is the primary Record of Rights (RoR) in Rajasthan, updated every 5 years by the Patwari. It records all landholding details, tenancy rights, encumbrances, and irrigation sources for each Khasra number in a village.',
+    content: `<p>Jamabandi is the primary Record of Rights (RoR) document maintained for every village in Rajasthan. It is updated every 5 years during the process of Patwari annual crop registers (Girdawari). The Jamabandi records ownership, tenancy, area, nature of holding, and encumbrances for each Khasra parcel.</p>
+<h2>Key Revenue Records</h2>
+<p><strong>Jamabandi (Record of Rights):</strong> The primary document recording khatedari rights, area, and nature of land. Updated every 5 years.</p>
+<p><strong>Khasra Register:</strong> The parcel-level register recording crop details, area, and nature of cultivation for each Khasra number.</p>
+<p><strong>Khatoni (Khatedari Register):</strong> A tenant-wise register listing all Khasra parcels held by a particular tenant in a village.</p>
+<p><strong>Roznamcha Waqiati:</strong> The Patwari's daily diary recording all transactions, mutations, and events affecting land records in the village.</p>
+<h2>Correction of Land Records</h2>
+<p>Errors in revenue records can be corrected through a formal application to the Tehsildar. The Tehsildar has the power to correct clerical and factual errors under Section 136 of the Rajasthan Land Revenue Act, 1956. Substantive disputes about ownership and boundaries must be resolved through proper revenue court proceedings.</p>
+<h2>Digitization of Land Records</h2>
+<p>The Government of Rajasthan has digitized Jamabandi and Khasra records under the Bhu-Abhilekh portal (apnakhata.raj.nic.in), making it possible for landowners to view and download their records online. However, discrepancies between digital and physical records must be resolved through formal correction proceedings.</p>`,
+    createdAt: new Date(2026, 5, 8).toISOString(),
+    status: 'published'
+  },
+
+  // Revenue Court Jurisdiction
+  {
+    _id: 'art_court_jurisdiction',
+    title: 'Revenue Court Jurisdiction — Powers of Revenue Courts in Rajasthan',
+    slug: 'court-jurisdiction',
+    category: 'Revenue Court Jurisdiction',
+    summary: 'Revenue courts in Rajasthan exercise jurisdiction over land disputes, mutation proceedings, partition suits, eviction cases, and boundary disputes. Their jurisdiction is defined by the Rajasthan Land Revenue Act, 1956 and the Rajasthan Tenancy Act, 1955.',
+    content: `<p>Revenue courts in Rajasthan derive their jurisdiction from the Rajasthan Land Revenue Act, 1956 and the Rajasthan Tenancy Act, 1955. They exercise exclusive jurisdiction over agricultural land disputes and related matters, excluding civil courts in most cases.</p>
+<h2>Tehsildar Court</h2>
+<p>The Tehsildar is the primary revenue court at the tehsil level. The Tehsildar has jurisdiction over mutation disputes, boundary disputes (demarcation), eviction from government land under Section 91, partition suits of small holdings, and applications for correction of land records.</p>
+<h2>Sub-Divisional Officer (SDO)</h2>
+<p>The SDO exercises first appellate jurisdiction over Tehsildar orders and also has original jurisdiction over conversion of agricultural land under Section 90-A for rural areas. The SDO also adjudicates certain partition suits involving larger holdings.</p>
+<h2>Collector Court</h2>
+<p>The District Collector exercises revisional jurisdiction over SDO and Tehsildar orders and also has original jurisdiction over settlement of revenue and assessment disputes at the district level.</p>
+<h2>Board of Revenue, Ajmer</h2>
+<p>The Board of Revenue is the highest revenue court in Rajasthan, located at Ajmer. It exercises appellate and revisional jurisdiction over all lower revenue courts. Decisions of the Board of Revenue on questions of law are binding on all subordinate revenue courts in Rajasthan.</p>
+<h2>Bar on Civil Court Jurisdiction</h2>
+<p>Section 9 of the Code of Civil Procedure (CPC) read with specific provisions of the Rajasthan Tenancy Act creates a bar on civil court jurisdiction in matters exclusively cognizable by revenue courts. Civil courts cannot entertain suits relating to tenancy rights, mutations, or partitions of agricultural holdings.</p>`,
+    createdAt: new Date(2026, 5, 9).toISOString(),
+    status: 'published'
+  },
+
+  // Government Land Allotment
+  {
+    _id: 'art_govt_land_allotment',
+    title: 'Government Land Allotment — Wasteland Allotment Rules in Rajasthan',
+    slug: 'govt-land-allotment',
+    category: 'Government Land Allotment',
+    summary: 'Government wasteland in Rajasthan can be allotted to eligible persons under prescribed rules for agricultural and other permissible purposes. The Rajasthan Land Revenue Act, 1956 and the Rajasthan Allocation of Land for Agricultural Purposes Rules govern such allotments.',
+    content: `<p>Government wasteland allotment in Rajasthan is governed by the Rajasthan Land Revenue Act, 1956 and the Rules framed thereunder. Eligible persons can apply for allotment of government wasteland for agricultural cultivation and other permissible purposes.</p>
+<h2>Who Can Apply?</h2>
+<p>Preference for allotment of government wasteland is given to:</p>
+<p>1. Landless agricultural labourers belonging to SC/ST communities.</p>
+<p>2. Small and marginal farmers who do not hold sufficient land.</p>
+<p>3. Ex-servicemen and war widows in certain categories.</p>
+<h2>Procedure for Allotment</h2>
+<p>Applications for wasteland allotment are submitted to the Tehsildar of the concerned area. The Tehsildar verifies the eligibility of the applicant and the availability of government wasteland. The Collector has the final power to sanction allotment.</p>
+<h2>Conditions of Allotment</h2>
+<p>Allotment of government wasteland is typically subject to conditions including:</p>
+<p>1. Land to be brought under cultivation within a stipulated period.</p>
+<p>2. Payment of annual land revenue at assessed rates.</p>
+<p>3. No transfer of allotted land without prior permission of the Collector.</p>
+<p>4. The allottee acquires Khatedar rights only after fulfilling prescribed conditions and upon formal grant order.</p>
+<h2>Regularisation of Old Allotments</h2>
+<p>The Rajasthan Government has periodically issued regularisation schemes for old and unauthorized occupants of government wasteland who have been cultivating the land for a long period, subject to prescribed conditions and payment of regularisation fees.</p>`,
+    createdAt: new Date(2026, 5, 10).toISOString(),
+    status: 'published'
+  },
+
+  // SC/ST Land Protections
+  {
+    _id: 'art_sc_st_protections',
+    title: 'SC/ST Land Protections — Statutory Safeguards in Rajasthan Revenue Law',
+    slug: 'sc-st-protections',
+    category: 'SC/ST Land Protections',
+    summary: 'Special statutory protections for Scheduled Caste and Scheduled Tribe landholders under the Rajasthan Tenancy Act, 1955. Section 42 prohibits transfer of SC/ST Khatedar land to non-SC/ST persons — any such transfer is void ab initio.',
+    content: `<p>The Rajasthan Tenancy Act, 1955 and allied revenue laws provide special statutory protections for Scheduled Caste (SC) and Scheduled Tribe (ST) agricultural landholders in Rajasthan. These protections are designed to prevent alienation of SC/ST lands and preserve their economic base.</p>
+<h2>Section 42 — Bar on Transfer</h2>
+<p>Section 42 of the Rajasthan Tenancy Act, 1955 prohibits the transfer of Khatedar tenancy rights held by SC/ST persons to non-SC/ST persons. Any sale, gift, mortgage, or exchange of SC/ST Khatedar land to a non-SC/ST person without the prior permission of the Collector is void ab initio and of no legal effect.</p>
+<h2>Restoration of Alienated Land</h2>
+<p>Where SC/ST land has been illegally transferred, the original SC/ST landholder or his heirs can apply to the Tehsildar for restoration of the land. The Tehsildar has the power to cancel such transfers and restore possession to the original landholder. The limitation period for restoration applications is generally 12 years from the date of alienation.</p>
+<h2>Prohibition on Mortgage</h2>
+<p>SC/ST agricultural land cannot be mortgaged with possession (usufructuary mortgage) to non-SC/ST persons. Any such mortgage transaction is void. Banks and financial institutions providing agricultural loans on SC/ST land must comply with these restrictions.</p>
+<h2>Supreme Court Directives</h2>
+<p>The Supreme Court of India has repeatedly emphasized the importance of strictly enforcing SC/ST land protection laws. State governments have been directed to proactively identify and restore illegally alienated SC/ST lands without waiting for applications from the affected landholders.</p>`,
+    createdAt: new Date(2026, 5, 11).toISOString(),
+    status: 'published'
+  },
+
+  // Revenue Penalties & Offences
+  {
+    _id: 'art_penalties_offences',
+    title: 'Revenue Penalties & Offences — Rajasthan Land Revenue Act, 1956',
+    slug: 'penalties-offences',
+    category: 'Revenue Penalties & Offences',
+    summary: 'The Rajasthan Land Revenue Act, 1956 prescribes penalties for various offences including unauthorized occupation of government land, failure to report mutations, obstruction of revenue officers, and unauthorized conversion of agricultural land.',
+    content: `<p>The Rajasthan Land Revenue Act, 1956 contains several provisions prescribing penalties and punishments for offences against revenue law. These provisions ensure compliance with land revenue obligations and protect government land from unauthorized occupation and misuse.</p>
+<h2>Unauthorized Occupation (Section 91)</h2>
+<p>Any person who occupies government land without authority is liable to be summarily evicted under Section 91 and may additionally be required to pay damages equivalent to the market value of any crops grown or structures erected on the encroached land.</p>
+<h2>Failure to Report Mutation (Section 135)</h2>
+<p>Every person acquiring land by transfer or succession is required to report the transaction to the Patwari within 90 days. Failure to report the transaction within the prescribed period attracts a penalty under Section 135 of the Act.</p>
+<h2>Unauthorized Land Conversion (Section 90-A)</h2>
+<p>Using agricultural land for non-agricultural purposes without prior permission under Section 90-A constitutes an offence. The unauthorized conversion is liable to be reversed, and the defaulter may be required to pay conversion charges at penal rates in addition to restoring the land to its original agricultural status.</p>
+<h2>Obstruction of Revenue Officers</h2>
+<p>Obstructing or interfering with revenue officers (Patwari, Tehsildar, SDO) while discharging their official duties, such as during demarcation surveys, inspection of crops, or attachment of property, is a punishable offence under the Act.</p>
+<h2>False Statements in Revenue Proceedings</h2>
+<p>Making false statements or producing forged documents in any revenue court proceeding is an offence that can be prosecuted under the Indian Penal Code in addition to the revenue law penalties. Revenue courts have the power to refer such matters to the police for investigation.</p>`,
+    createdAt: new Date(2026, 5, 12).toISOString(),
+    status: 'published'
+  },
+
   // General fallback articles
   ...articleTemplates.map((t, idx) => ({
     _id: `art_mock_${idx + 1}`,

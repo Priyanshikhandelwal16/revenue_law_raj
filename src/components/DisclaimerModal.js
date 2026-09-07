@@ -8,19 +8,11 @@ export default function DisclaimerModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Check if user already accepted disclaimer in this session
-    if (typeof window !== 'undefined') {
-      const accepted = sessionStorage.getItem('rrl_disclaimer_accepted');
-      if (!accepted) {
-        setIsOpen(true);
-      }
-    }
+    // Show disclaimer on every page load
+    setIsOpen(true);
   }, []);
 
   const handleClose = () => {
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('rrl_disclaimer_accepted', 'true');
-    }
     setIsOpen(false);
   };
 

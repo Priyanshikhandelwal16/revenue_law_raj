@@ -57,6 +57,22 @@ export async function readLocalDb(type) {
     let items = snapshot.docs.map(doc => ({ ...doc.data(), _id: doc.id }));
 
     // If empty, auto-seed with fallbacks
+    // Always upsert dedicated (non-mock) category articles by slug into Firestore
+    if (type === 'articles') {
+      const dedicatedArticles = fallbackArticles.filter(a => !a._id.startsWith('art_mock_'));
+      const existingSlugs = new Set(items.map(i => i.slug));
+      for (const art of dedicatedArticles) {
+        if (!existingSlugs.has(art.slug)) {
+          const id = art._id;
+          const cleanedArt = { ...art };
+          delete cleanedArt._id;
+          await setDoc(doc(db, type, id), { _id: id, ...cleanedArt });
+          items.push({ ...art });
+          console.log(`Upserted dedicated article: ${art.slug}`);
+        }
+      }
+    }
+
     if (items.length === 0) {
       console.log(`Auto-seeding empty Firestore collection: ${type}...`);
       let seedData = [];
