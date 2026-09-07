@@ -12,6 +12,7 @@ import { getSettingValue } from '@/lib/settings';
 import NewsSidebar from '@/components/NewsSidebar';
 import ScrollReveal from '@/components/ScrollReveal';
 import HomeHierarchyPreview from '@/components/HomeHierarchyPreview';
+import DisclaimerModal from '@/components/DisclaimerModal';
 
 export const dynamic = 'force-dynamic';
 
@@ -211,12 +212,45 @@ export default async function HomePage() {
               {heroTitle} <br />
               <span style={{ color: '#B38F4F' }}>{heroSubtitle}</span>
             </h1>
-            <p style={{ fontSize: '1.05rem', color: 'var(--text-dark)', lineHeight: 1.7, maxWidth: '650px', margin: 0 }}>
-              {heroDesc}
-            </p>
+            <div style={{ fontSize: '1.02rem', color: 'var(--text-dark)', lineHeight: 1.7, maxWidth: '680px', margin: 0 }}>
+              {typeof heroDesc === 'string' && (heroDesc.includes('Preamble') || heroDesc.includes('\n')) ? (
+                <div>
+                  {heroDesc.split(/\n\s*\n/).map((para, idx) => {
+                    const trimmed = para.trim();
+                    if (trimmed.toLowerCase() === 'preamble') {
+                      return (
+                        <div key={idx} style={{ textAlign: 'center', margin: '1.25rem 0 1rem 0' }}>
+                          <h3 style={{ fontSize: '1.35rem', fontWeight: 700, color: 'var(--primary-blue)', fontFamily: 'var(--font-serif)', display: 'inline-block', borderBottom: '2px solid var(--accent-gold)', paddingBottom: '0.2rem' }}>
+                            Preamble
+                          </h3>
+                        </div>
+                      );
+                    }
+                    return (
+                      <p key={idx} style={{ marginBottom: '1rem', lineHeight: 1.75 }}>
+                        {trimmed}
+                      </p>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p style={{ margin: 0 }}>{heroDesc}</p>
+              )}
+            </div>
+
+            {/* Clickable Judicial Matters First Schedule Link Notice */}
+            <div style={{ marginTop: '1.5rem', backgroundColor: 'rgba(197, 168, 128, 0.12)', borderLeft: '4px solid var(--accent-gold)', padding: '0.85rem 1.15rem', borderRadius: '0 8px 8px 0', maxWidth: '680px' }}>
+              <Link href="/types-of-cases#first-schedule" style={{ textDecoration: 'none', color: 'var(--primary-blue)', fontSize: '0.92rem', lineHeight: 1.6, display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600 }} className="link-hover-gold">
+                <Gavel size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
+                <span>
+                  The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the First Schedule of the Act.
+                </span>
+                <ChevronRight size={14} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
+              </Link>
+            </div>
 
             {/* Configured quick-access links; intentionally no search UI. */}
-            <div style={{ marginTop: '2.25rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               {quickLinks.map((quickLink, index) => {
                 const QuickLinkIcon = homepageIcons[quickLink.icon] || ChevronRight;
                 return (
@@ -268,8 +302,8 @@ export default async function HomePage() {
                             <h3 style={{ fontSize: '1.05rem', fontFamily: 'var(--font-sans)', fontWeight: 700, color: 'var(--primary-blue)' }}>{cat.title}</h3>
                           </div>
                           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.25rem', flexGrow: 1, lineHeight: 1.6 }}>{cat.description || cat.desc}</p>
-                          <Link href={`/articles?category=${encodeURIComponent(cat.slug || cat.title)}`} style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--accent-gold)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginTop: 'auto', transition: 'var(--transition-fast)' }} className="link-hover-gold">
-                            {categoriesSection.ctaLabel || 'Browse Category Articles'} <ChevronRight size={12} />
+                          <Link href={`/articles/${cat.slug || cat.title}`} style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--accent-gold)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginTop: 'auto', transition: 'var(--transition-fast)' }} className="link-hover-gold">
+                            {categoriesSection.ctaLabel || 'View All'} <ChevronRight size={12} />
                           </Link>
                         </div>
                       );
@@ -494,6 +528,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Automatic Disclaimer Modal on Homepage Load */}
+      <DisclaimerModal />
     </div>
   );
 }

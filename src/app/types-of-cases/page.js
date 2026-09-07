@@ -93,7 +93,7 @@ export default function TypesOfCasesPage() {
             </div>
 
             {/* Section 23 and the First Schedule List of Judicial Matters */}
-            <div style={{
+            <div id="first-schedule" style={{
               background: 'white',
               border: '1px solid var(--border-color)',
               borderRadius: '12px',

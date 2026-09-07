@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Calendar, User, ArrowLeft, Bookmark, Share2, Check, Send, MessageSquare } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Bookmark, Share2, Check, Send, MessageSquare, Download } from 'lucide-react';
 import NewsSidebar from '@/components/NewsSidebar';
 
 export default function ArticleDetailClient({ article, initialComments = [], id }) {
@@ -42,6 +42,22 @@ export default function ArticleDetailClient({ article, initialComments = [], id 
       setIsBookmarked(true);
     }
     localStorage.setItem('rrlkp_art_bookmarks', JSON.stringify(updated));
+  };
+
+  const handleDownloadPdf = () => {
+    if (article.pdfData || article.pdfUrl) {
+      const url = article.pdfData
+        ? (article.pdfData.startsWith('data:') ? article.pdfData : `data:application/pdf;base64,${article.pdfData}`)
+        : article.pdfUrl;
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${article.slug || 'article'}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } else {
+      window.print();
+    }
   };
 
   const handleCommentSubmit = async (e) => {
@@ -106,6 +122,10 @@ export default function ArticleDetailClient({ article, initialComments = [], id 
                   </span>
                 </div>
                 <div className="no-print" style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button onClick={handleDownloadPdf} className="btn-primary" style={{ padding: '0.35rem 0.75rem', display: 'flex', gap: '0.3rem', alignItems: 'center', fontSize: '0.75rem', borderRadius: '4px' }}>
+                    <Download size={14} />
+                    <span>Download PDF</span>
+                  </button>
                   <button onClick={handleBookmark} className="btn-outline" style={{ padding: '0.35rem 0.6rem', display: 'flex', gap: '0.25rem', alignItems: 'center', fontSize: '0.75rem' }}>
                     <Bookmark size={14} fill={isBookmarked ? 'var(--primary-blue)' : 'none'} />
                     <span>{isBookmarked ? 'Bookmarked' : 'Save'}</span>
