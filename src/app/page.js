@@ -176,8 +176,12 @@ export default async function HomePage() {
   const hero = config.hero || {};
   const heroEyebrow = hero.eyebrow || "Rajasthan Legal Research Portal";
   const heroTitle = hero.title || "Overview of";
-  const heroSubtitle = hero.highlight || "Revenue Law";
-  const heroDesc = hero.description || "Empowering legal professionals, landholders, and officers with instant access to Rajasthan's land revenue database. Explore Board of Revenue precedents, tenancy statutes, notification circulars, and comprehensive step-by-step litigation guides on a unified platform.";
+  const defaultPreambleDesc = `The simple objective of Revenue Law in Rajasthan is to provide help to the tenant to ensure that he/she enjoys and maintains his/her rights relating to the land holding. It also helps the state government to realize and collect revenue from the tenant. Furthermore, the preamble of the Rajasthan Land Revenue Act 1956 states as follows:
+
+Preamble
+
+An Act to consolidate and amend the law relating to land, the appointment, powers and duties of revenue courts, revenue officers, and village servants, the preparation and maintenance of maps and land records, the settlement of revenue and rent, the partition of estates, the collection of revenue and matters incidental thereto.`;
+  const heroDesc = (hero.description && hero.description.includes('Preamble')) ? hero.description : defaultPreambleDesc;
   const heroImage = hero.image || "/images/hero_revenue_law-removebg-preview.png";
   const heroImageAlt = hero.imageAlt || "Rajasthan Legal Research Platform";
   const quickLinks = Array.isArray(config.quickLinks) ? config.quickLinks : [];

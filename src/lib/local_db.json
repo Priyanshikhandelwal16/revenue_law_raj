@@ -661,7 +661,13 @@
       "value": {
         "heroTitle": "Overview of",
         "heroSubtitle": "Revenue Law",
-        "heroDesc": "Revenue Law Raj is a dedicated Rajasthan Revenue Law Platform designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The platform offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.",
+        "heroDesc": "The simple objective of Revenue Law in Rajasthan is to provide help to the tenant to ensure that he/she enjoys and maintains his/her rights relating to the land holding. It also helps the state government to realize and collect revenue from the tenant. Furthermore, the preamble of the Rajasthan Land Revenue Act 1956 states as follows:\n\nPreamble\n\nAn Act to consolidate and amend the law relating to land, the appointment, powers and duties of revenue courts, revenue officers, and village servants, the preparation and maintenance of maps and land records, the settlement of revenue and rent, the partition of estates, the collection of revenue and matters incidental thereto.",
+        "hero": {
+          "eyebrow": "Rajasthan Legal Research Portal",
+          "title": "Overview of",
+          "highlight": "Revenue Law",
+          "description": "The simple objective of Revenue Law in Rajasthan is to provide help to the tenant to ensure that he/she enjoys and maintains his/her rights relating to the land holding. It also helps the state government to realize and collect revenue from the tenant. Furthermore, the preamble of the Rajasthan Land Revenue Act 1956 states as follows:\n\nPreamble\n\nAn Act to consolidate and amend the law relating to land, the appointment, powers and duties of revenue courts, revenue officers, and village servants, the preparation and maintenance of maps and land records, the settlement of revenue and rent, the partition of estates, the collection of revenue and matters incidental thereto."
+        },
         "heroButtonText": "Search Judgments",
         "heroButtonUrl": "/judgments",
         "heroSecButtonText": "Acts & Statutes",
