@@ -216,40 +216,19 @@ An Act to consolidate and amend the law relating to land, the appointment, power
               {heroTitle} <br />
               <span style={{ color: '#B38F4F' }}>{heroSubtitle}</span>
             </h1>
-            <div style={{ fontSize: '1.02rem', color: '#000000', lineHeight: 1.75, maxWidth: '680px', margin: 0, fontWeight: 500 }}>
-              {typeof heroDesc === 'string' && (heroDesc.includes('Preamble') || heroDesc.includes('\n')) ? (
-                <div>
-                  {heroDesc.split(/\n\s*\n/).map((para, idx) => {
-                    const trimmed = para.trim();
-                    if (trimmed.toLowerCase() === 'preamble') {
-                      return (
-                        <div key={idx} style={{ textAlign: 'center', margin: '1.25rem 0 1rem 0' }}>
-                          <h3 style={{ fontSize: '1.35rem', fontWeight: 700, color: '#000000', fontFamily: 'var(--font-serif)', display: 'inline-block', borderBottom: '2px solid var(--accent-gold)', paddingBottom: '0.2rem' }}>
-                            Preamble
-                          </h3>
-                        </div>
-                      );
-                    }
-                    return (
-                      <p key={idx} style={{ marginBottom: '1rem', lineHeight: 1.75, color: '#000000', fontWeight: 500 }}>
-                        {trimmed}
-                      </p>
-                    );
-                  })}
+            {/* Judicial Matters Notice — only this appears in hero */}
+            <div style={{ maxWidth: '680px' }}>
+              <Link
+                href="/types-of-cases#first-schedule"
+                style={{ textDecoration: 'none', display: 'block' }}
+              >
+                <div style={{ backgroundColor: 'rgba(197, 168, 128, 0.18)', borderLeft: '4px solid var(--accent-gold)', padding: '1rem 1.25rem', borderRadius: '0 10px 10px 0', display: 'flex', alignItems: 'center', gap: '0.75rem', transition: 'background 0.2s' }}>
+                  <Gavel size={20} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
+                  <span style={{ color: '#000000', fontSize: '1rem', lineHeight: 1.65, fontWeight: 600 }}>
+                    The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the First Schedule of the Act.
+                  </span>
+                  <ChevronRight size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginLeft: 'auto' }} />
                 </div>
-              ) : (
-                <p style={{ margin: 0, color: '#000000', fontWeight: 500 }}>{heroDesc}</p>
-              )}
-            </div>
-
-            {/* Clickable Judicial Matters First Schedule Link Notice */}
-            <div style={{ marginTop: '1.5rem', backgroundColor: 'rgba(197, 168, 128, 0.15)', borderLeft: '4px solid var(--accent-gold)', padding: '0.85rem 1.15rem', borderRadius: '0 8px 8px 0', maxWidth: '680px' }}>
-              <Link href="/types-of-cases#first-schedule" style={{ textDecoration: 'none', color: '#000000', fontSize: '0.92rem', lineHeight: 1.6, display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600 }} className="link-hover-gold">
-                <Gavel size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
-                <span style={{ color: '#000000' }}>
-                  The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the First Schedule of the Act.
-                </span>
-                <ChevronRight size={14} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
               </Link>
             </div>
 
@@ -306,8 +285,11 @@ An Act to consolidate and amend the law relating to land, the appointment, power
                             <h3 style={{ fontSize: '1.05rem', fontFamily: 'var(--font-sans)', fontWeight: 700, color: 'var(--primary-blue)' }}>{cat.title}</h3>
                           </div>
                           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.25rem', flexGrow: 1, lineHeight: 1.6 }}>{cat.description || cat.desc}</p>
-                          <Link href={`/articles/${cat.slug || cat.title}`} style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--accent-gold)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginTop: 'auto', transition: 'var(--transition-fast)' }} className="link-hover-gold">
-                            {categoriesSection.ctaLabel || 'View All'} <ChevronRight size={12} />
+                          <Link
+                            href={`/articles/${cat.slug || encodeURIComponent(cat.title)}`}
+                            style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--accent-gold)', display: 'inline-flex', alignItems: 'center', gap: '0.3rem', marginTop: 'auto', transition: 'var(--transition-fast)', padding: '0.5rem 1rem', border: '1px solid var(--accent-gold)', borderRadius: '4px' }}
+                          >
+                            View All <ChevronRight size={13} />
                           </Link>
                         </div>
                       );
@@ -454,8 +436,8 @@ An Act to consolidate and amend the law relating to land, the appointment, power
                           </li>
                         ))}
                       </ul>
-                      <Link href={conversionSection.cta?.href || '/articles/land-conversion-90-a'} className="btn-primary" style={{ padding: '0.75rem 1.5rem', fontSize: '0.8rem', borderRadius: '4px' }}>
-                        {conversionSection.cta?.label || 'Read 90-A Guide'}
+                      <Link href={conversionSection.cta?.href || '/articles/land-conversion-90-a'} className="btn-primary" style={{ padding: '0.85rem 1.5rem', fontSize: '0.85rem', borderRadius: '6px', lineHeight: 1.5, textAlign: 'center', display: 'inline-block', color: '#FFFFFF', backgroundColor: 'var(--accent-gold)' }}>
+                        {conversionSection.cta?.label || 'Read Section 90-A of the Rajasthan Land Revenue Act 1956 also read conversion of agricultural land into non agricultural land rules 1961'}
                       </Link>
                     </div>
                     <div>

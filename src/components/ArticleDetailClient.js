@@ -2,19 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Calendar, User, ArrowLeft, Bookmark, Share2, Check, Send, MessageSquare, Download } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Bookmark, Share2, Check, Send, MessageSquare, Download, ChevronDown, ChevronUp } from 'lucide-react';
 import NewsSidebar from '@/components/NewsSidebar';
 
 export default function ArticleDetailClient({ article, initialComments = [], id }) {
-  // Comments state
   const [comments, setComments] = useState(initialComments);
   const [commentForm, setCommentForm] = useState({ name: '', email: '', content: '' });
   const [commentSubmitted, setCommentSubmitted] = useState(false);
   const [submittingComment, setSubmittingComment] = useState(false);
-
-  // Action states
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [showFullContent, setShowFullContent] = useState(false);
 
   useEffect(() => {
     // Check if bookmarked in local storage
@@ -45,7 +43,10 @@ export default function ArticleDetailClient({ article, initialComments = [], id 
   };
 
   const handleDownloadPdf = () => {
-    if (article.pdfData || article.pdfUrl) {
+    if (article.pdfUrl && article.pdfUrl.startsWith('http')) {
+      // External PDF — open in new tab
+      window.open(article.pdfUrl, '_blank', 'noopener,noreferrer');
+    } else if (article.pdfData || article.pdfUrl) {
       const url = article.pdfData
         ? (article.pdfData.startsWith('data:') ? article.pdfData : `data:application/pdf;base64,${article.pdfData}`)
         : article.pdfUrl;
@@ -145,11 +146,74 @@ export default function ArticleDetailClient({ article, initialComments = [], id 
               </div>
             )}
 
-            {/* Content Body */}
-            <div 
-              className="article-body"
-              dangerouslySetInnerHTML={{ __html: article.content }}
-            />
+            {/* Content Body — with truncation toggle */}
+            <div style={{ position: 'relative' }}>
+              {/* Preview (summary) shown when collapsed */}
+              {!showFullContent && article.summary && (
+                <div style={{ fontSize: '1rem', color: '#000000', lineHeight: 1.75, fontWeight: 500 }}>
+                  <p style={{ margin: 0 }}>{article.summary}</p>
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>&nbsp;...</span>
+                </div>
+              )}
+
+              {/* Full content shown when expanded */}
+              {showFullContent && (
+                <div
+                  className="article-body"
+                  dangerouslySetInnerHTML={{ __html: article.content }}
+                />
+              )}
+
+              {/* View Full Text / Show Less button */}
+              <div style={{ marginTop: '1.25rem' }}>
+                <button
+                  onClick={() => setShowFullContent(prev => !prev)}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    padding: '0.6rem 1.4rem',
+                    border: '2px solid var(--accent-gold)',
+                    borderRadius: '6px',
+                    backgroundColor: showFullContent ? 'var(--accent-gold)' : 'transparent',
+                    color: showFullContent ? '#FFFFFF' : 'var(--accent-gold)',
+                    fontWeight: 700,
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  {showFullContent ? <><ChevronUp size={15} /> Show Less</> : <><ChevronDown size={15} /> View Full Text</>}
+                </button>
+              </div>
+
+              {/* Download PDF button — always visible */}
+              {(article.pdfUrl || article.pdfData) && (
+                <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)' }}>
+                  <button
+                    onClick={handleDownloadPdf}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.75rem 1.75rem',
+                      backgroundColor: '#000000',
+                      color: '#FFFFFF',
+                      border: 'none',
+                      borderRadius: '6px',
+                      fontWeight: 700,
+                      fontSize: '0.88rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--accent-gold)'}
+                    onMouseLeave={e => e.currentTarget.style.backgroundColor = '#000000'}
+                  >
+                    <Download size={16} /> Download Full PDF
+                  </button>
+                </div>
+              )}
+            </div>
 
             {/* Tags */}
             {article.tags && article.tags.length > 0 && (

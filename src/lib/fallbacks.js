@@ -15,16 +15,42 @@ const articleTemplates = [
   { title: "Mutation Process and Heir Declaration in Rajasthan", category: "Latest News", slug: "mutation-process-heir" }
 ];
 
-export const fallbackArticles = articleTemplates.map((t, idx) => ({
-  _id: `art_mock_${idx + 1}`,
-  title: t.title,
-  slug: t.slug,
-  category: t.category,
-  summary: `Detailed legal study and administrative guideline regarding ${t.title.toLowerCase()} in the state of Rajasthan.`,
-  content: `<p>This article provides an in-depth analysis of <strong>${t.title}</strong>.</p><h2>Overview</h2><p>Under the Rajasthan Land Revenue framework, administrative clarity is essential for land management. Advocates and landowners must adhere to state statutes and circulars.</p><h2>Key Provisions</h2><p>Section guidelines and case precedents govern execution processes.</p>`,
-  createdAt: new Date(2026, 5, 10 + idx).toISOString(),
-  status: "published"
-}));
+export const fallbackArticles = [
+  // Dedicated Land Conversion 90-A article
+  {
+    _id: 'art_land_conversion_90a',
+    title: 'Land Conversion (Section 90-A) — Rajasthan Land Revenue Act, 1956',
+    slug: 'land-conversion-90-a',
+    category: 'Land Conversion',
+    summary: 'Land conversion means the conversion of the status of the land from agricultural status to either residential/commercial/institutional or Industrial land. In simple words it is the conversion of Agricultural Land into Non-Agricultural Land.',
+    content: `<p>Land conversion means the conversion of the status of the land from agricultural status to either residential/commercial/institutional or Industrial land. In simple words it is the conversion of Agricultural Land into Non-Agricultural Land.</p>
+<p>The Section 90-A of the Rajasthan Land Revenue Act, 1956, deals with the conversion of the Agricultural Land. The Conversion of Agricultural into Non Agricultural Land, Rules 1961 are given below.</p>
+<h2>Section 90-A — Key Provisions</h2>
+<p>Section 90-A of the Rajasthan Land Revenue Act, 1956 provides that no person shall use any agricultural land for any non-agricultural purpose except with the prior permission of the competent authority.</p>
+<h2>Who is the Competent Authority?</h2>
+<p>The Sub-Divisional Officer (SDO) is generally the competent authority for granting permission for conversion of agricultural land into non-agricultural land in rural areas. However, for urban areas falling under municipal/UIT jurisdiction, the respective urban bodies hold jurisdiction.</p>
+<h2>Procedure for Conversion</h2>
+<p>An application for conversion of land under Section 90-A must be submitted to the Sub-Divisional Officer of the concerned area, along with prescribed conversion fees, site plan, and proof of ownership (Jamabandi copy). The SDO examines the application and may grant or reject the conversion order after due enquiry.</p>
+<h2>Conversion Fees</h2>
+<p>Conversion fees are charged based on the District Level Committee (DLC) rates applicable to the land at the time of conversion. The fee schedule is revised periodically by the state government.</p>
+<h2>Conversion of Agricultural Land into Non-Agricultural Land Rules, 1961</h2>
+<p>The Rajasthan Land Revenue (Conversion of Agricultural Land for Non-Agricultural Purposes in Rural Areas) Rules, 2007 (updated till December 2023) govern the detailed procedure, fees, and conditions applicable to such conversions. These rules elaborate on the categories of permissible non-agricultural uses, the procedural requirements, time limits for decision, and the consequences of unauthorized conversion.</p>`,
+    pdfUrl: 'https://landrevenue.rajasthan.gov.in/content/dam/landrevenue/revenuedepartment/pdf/Rules/Rajasthan%20Land%20Revenue%20(Conversion%20of%20agricultural%20land%20for%20non-agricultural%20purposes%20in%20rural%20areas)%20Rules,%202007.%20updated%20till%20dec%202023.pdf',
+    createdAt: new Date(2026, 5, 1).toISOString(),
+    status: 'published'
+  },
+  // General fallback articles
+  ...articleTemplates.map((t, idx) => ({
+    _id: `art_mock_${idx + 1}`,
+    title: t.title,
+    slug: t.slug,
+    category: t.category,
+    summary: `Detailed legal study and administrative guideline regarding ${t.title.toLowerCase()} in the state of Rajasthan.`,
+    content: `<p>This article provides an in-depth analysis of <strong>${t.title}</strong>.</p><h2>Overview</h2><p>Under the Rajasthan Land Revenue framework, administrative clarity is essential for land management. Advocates and landowners must adhere to state statutes and circulars.</p><h2>Key Provisions</h2><p>Section guidelines and case precedents govern execution processes.</p>`,
+    createdAt: new Date(2026, 5, 10 + idx).toISOString(),
+    status: 'published'
+  }))
+];
 
 // 2. DUMMY JUDGMENTS (25 items)
 const judgmentTemplates = [
