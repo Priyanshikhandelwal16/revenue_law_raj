@@ -18,7 +18,8 @@ export async function getSettingValue(key) {
   } catch (error) {
     console.warn(`Mongo setting read failed for ${key}; using local fallback:`, error.message);
     try {
-      return resolveSetting(key, getLocalItem('settings', key, 'key')?.value);
+      const localItem = await getLocalItem('settings', key, 'key');
+      return resolveSetting(key, localItem?.value);
     } catch (localError) {
       console.warn(`Local setting read failed for ${key}; using defaults:`, localError.message);
       return resolveSetting(key, undefined);
@@ -38,12 +39,16 @@ export async function getSettingsValues(keys) {
     return Object.fromEntries(requestedKeys.map(key => [key, resolveSetting(key, values.get(key))]));
   } catch (error) {
     console.warn('Mongo settings read failed; using local fallback:', error.message);
-    return Object.fromEntries(requestedKeys.map(key => {
-      try {
-        return [key, resolveSetting(key, getLocalItem('settings', key, 'key')?.value)];
-      } catch {
-        return [key, resolveSetting(key, undefined)];
-      }
-    }));
+    const entries = await Promise.all(
+      requestedKeys.map(async key => {
+        try {
+          const localItem = await getLocalItem('settings', key, 'key');
+          return [key, resolveSetting(key, localItem?.value)];
+        } catch {
+          return [key, resolveSetting(key, undefined)];
+        }
+      })
+    );
+    return Object.fromEntries(entries);
   }
 }

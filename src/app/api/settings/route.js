@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import dbConnect from '@/lib/db';
 import Setting from '@/lib/models/Setting';
 import { verifyToken } from '@/lib/auth';
@@ -9,6 +10,7 @@ import {
   deepMergeSettings,
 } from '@/lib/defaultSettings';
 import { getSettingValue, getSettingsValues } from '@/lib/settings';
+import { getLocalItem, createLocalItem, updateLocalItem } from '@/lib/localDb';
 
 export const dynamic = 'force-dynamic';
 
@@ -95,17 +97,19 @@ export async function POST(req) {
       );
     } catch (dbErr) {
       console.warn('DB offline, saving setting in local file DB:', dbErr.message);
-      const { readLocalDb, writeLocalDb } = require('@/lib/localDb');
-      const settings = readLocalDb('settings');
-      const index = settings.findIndex(setting => setting.key === key);
-      item = index >= 0 ? { ...settings[index], value: mergedValue } : {
-        _id: `set_${Date.now()}`,
-        key,
-        value: mergedValue,
-      };
-      if (index >= 0) settings[index] = item;
-      else settings.push(item);
-      if (!writeLocalDb('settings', settings)) throw new Error('Failed to persist local setting');
+      const existing = await getLocalItem('settings', key, 'key');
+      if (existing) {
+        item = await updateLocalItem('settings', existing._id, { key, value: mergedValue });
+      } else {
+        item = await createLocalItem('settings', { _id: `set_${key}`, key, value: mergedValue });
+      }
+      if (!item) throw new Error('Failed to persist local setting');
+    }
+
+    try {
+      revalidatePath('/', 'layout');
+    } catch (revalErr) {
+      console.warn('Revalidate error:', revalErr.message);
     }
 
     return NextResponse.json({ success: true, item });

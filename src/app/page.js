@@ -13,6 +13,8 @@ import NewsSidebar from '@/components/NewsSidebar';
 import ScrollReveal from '@/components/ScrollReveal';
 import HomeHierarchyPreview from '@/components/HomeHierarchyPreview';
 
+export const dynamic = 'force-dynamic';
+
 // Mock data fallbacks for a premium editorial presentation if database is empty
 const defaultNews = [
   {
