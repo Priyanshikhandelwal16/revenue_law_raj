@@ -451,8 +451,8 @@ An Act to consolidate and amend the law relating to land, the appointment, power
                           </li>
                         ))}
                       </ul>
-                      <Link href={conversionSection.cta?.href || '/articles/land-conversion-90-a'} className="btn-primary" style={{ padding: '0.85rem 1.5rem', fontSize: '0.85rem', borderRadius: '6px', lineHeight: 1.5, textAlign: 'center', display: 'inline-block', color: '#FFFFFF', backgroundColor: 'var(--accent-gold)' }}>
-                        {conversionSection.cta?.label || 'Read Section 90-A of the Rajasthan Land Revenue Act 1956 also read conversion of agricultural land into non agricultural land rules 1961'}
+                      <Link href="/articles/land-conversion-90-a" className="btn-primary" style={{ padding: '0.85rem 1.5rem', fontSize: '0.85rem', borderRadius: '6px', lineHeight: 1.5, textAlign: 'center', display: 'inline-block', color: '#000000', backgroundColor: 'var(--accent-gold)', fontWeight: 700 }}>
+                        Read Section 90-A of the rajasthan land revenue act 1956  also read conversion of agricultural land into non agricultural land rules 1961
                       </Link>
                     </div>
                     <div>

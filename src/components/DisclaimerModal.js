@@ -145,8 +145,8 @@ export default function DisclaimerModal() {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              backgroundColor: '#000000',
-              color: '#FFFFFF',
+              backgroundColor: 'var(--accent-gold)',
+              color: '#000000',
               border: 'none',
               cursor: 'pointer'
             }}
