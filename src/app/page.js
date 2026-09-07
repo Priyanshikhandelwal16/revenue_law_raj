@@ -176,6 +176,7 @@ export default async function HomePage() {
   const hero = config.hero || {};
   const heroEyebrow = hero.eyebrow || "Rajasthan Legal Research Portal";
   const heroTitle = hero.title || "Overview of";
+  const heroSubtitle = hero.highlight || "Revenue Law";
   const defaultPreambleDesc = `The simple objective of Revenue Law in Rajasthan is to provide help to the tenant to ensure that he/she enjoys and maintains his/her rights relating to the land holding. It also helps the state government to realize and collect revenue from the tenant. Furthermore, the preamble of the Rajasthan Land Revenue Act 1956 states as follows:
 
 Preamble
