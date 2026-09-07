@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import DisclaimerModal from '@/components/DisclaimerModal';
 import '@/styles/globals.css';
 
 export const metadata = {
@@ -67,6 +68,7 @@ export default function RootLayout({ children }) {
           {children}
         </main>
         <Footer />
+        <DisclaimerModal />
       </body>
     </html>
   );

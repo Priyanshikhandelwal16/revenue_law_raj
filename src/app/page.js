@@ -12,7 +12,6 @@ import { getSettingValue } from '@/lib/settings';
 import NewsSidebar from '@/components/NewsSidebar';
 import ScrollReveal from '@/components/ScrollReveal';
 import HomeHierarchyPreview from '@/components/HomeHierarchyPreview';
-import DisclaimerModal from '@/components/DisclaimerModal';
 
 export const dynamic = 'force-dynamic';
 
@@ -213,11 +212,11 @@ An Act to consolidate and amend the law relating to land, the appointment, power
               <Scale size={15} style={{ color: '#9A7B56' }} />
               <span style={{ color: '#9A7B56', fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1.5px' }}>{heroEyebrow}</span>
             </div>
-            <h1 style={{ fontSize: 'clamp(1.8rem, 6vw, 3.8rem)', fontWeight: 700, lineHeight: 1.15, marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)' }}>
+            <h1 style={{ fontSize: 'clamp(1.8rem, 6vw, 3.8rem)', fontWeight: 700, lineHeight: 1.15, marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', color: '#000000' }}>
               {heroTitle} <br />
               <span style={{ color: '#B38F4F' }}>{heroSubtitle}</span>
             </h1>
-            <div style={{ fontSize: '1.02rem', color: 'var(--text-dark)', lineHeight: 1.7, maxWidth: '680px', margin: 0 }}>
+            <div style={{ fontSize: '1.02rem', color: '#000000', lineHeight: 1.75, maxWidth: '680px', margin: 0, fontWeight: 500 }}>
               {typeof heroDesc === 'string' && (heroDesc.includes('Preamble') || heroDesc.includes('\n')) ? (
                 <div>
                   {heroDesc.split(/\n\s*\n/).map((para, idx) => {
@@ -225,29 +224,29 @@ An Act to consolidate and amend the law relating to land, the appointment, power
                     if (trimmed.toLowerCase() === 'preamble') {
                       return (
                         <div key={idx} style={{ textAlign: 'center', margin: '1.25rem 0 1rem 0' }}>
-                          <h3 style={{ fontSize: '1.35rem', fontWeight: 700, color: 'var(--primary-blue)', fontFamily: 'var(--font-serif)', display: 'inline-block', borderBottom: '2px solid var(--accent-gold)', paddingBottom: '0.2rem' }}>
+                          <h3 style={{ fontSize: '1.35rem', fontWeight: 700, color: '#000000', fontFamily: 'var(--font-serif)', display: 'inline-block', borderBottom: '2px solid var(--accent-gold)', paddingBottom: '0.2rem' }}>
                             Preamble
                           </h3>
                         </div>
                       );
                     }
                     return (
-                      <p key={idx} style={{ marginBottom: '1rem', lineHeight: 1.75 }}>
+                      <p key={idx} style={{ marginBottom: '1rem', lineHeight: 1.75, color: '#000000', fontWeight: 500 }}>
                         {trimmed}
                       </p>
                     );
                   })}
                 </div>
               ) : (
-                <p style={{ margin: 0 }}>{heroDesc}</p>
+                <p style={{ margin: 0, color: '#000000', fontWeight: 500 }}>{heroDesc}</p>
               )}
             </div>
 
             {/* Clickable Judicial Matters First Schedule Link Notice */}
-            <div style={{ marginTop: '1.5rem', backgroundColor: 'rgba(197, 168, 128, 0.12)', borderLeft: '4px solid var(--accent-gold)', padding: '0.85rem 1.15rem', borderRadius: '0 8px 8px 0', maxWidth: '680px' }}>
-              <Link href="/types-of-cases#first-schedule" style={{ textDecoration: 'none', color: 'var(--primary-blue)', fontSize: '0.92rem', lineHeight: 1.6, display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600 }} className="link-hover-gold">
+            <div style={{ marginTop: '1.5rem', backgroundColor: 'rgba(197, 168, 128, 0.15)', borderLeft: '4px solid var(--accent-gold)', padding: '0.85rem 1.15rem', borderRadius: '0 8px 8px 0', maxWidth: '680px' }}>
+              <Link href="/types-of-cases#first-schedule" style={{ textDecoration: 'none', color: '#000000', fontSize: '0.92rem', lineHeight: 1.6, display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600 }} className="link-hover-gold">
                 <Gavel size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
-                <span>
+                <span style={{ color: '#000000' }}>
                   The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the First Schedule of the Act.
                 </span>
                 <ChevronRight size={14} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
@@ -533,9 +532,6 @@ An Act to consolidate and amend the law relating to land, the appointment, power
           </div>
         </div>
       </section>
-
-      {/* Automatic Disclaimer Modal on Homepage Load */}
-      <DisclaimerModal />
     </div>
   );
 }
