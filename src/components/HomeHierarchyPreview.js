@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Award, Gavel, Landmark, Scale } from 'lucide-react';
+import { Award, Gavel, Landmark, Scale, ArrowRight } from 'lucide-react';
 
 const courtsDetail = [
   {
@@ -522,6 +522,42 @@ export default function HomeHierarchyPreview() {
             </div>
           );
         })}
+      </div>
+
+      {/* Jurisdiction Of Revenue Court Link Banner */}
+      <div style={{ marginTop: '2.5rem', width: '100%', maxWidth: '850px' }}>
+        <Link href="/court-jurisdictions" style={{ textDecoration: 'none', display: 'block' }} title="Click to view Jurisdiction Of Revenue Court">
+          <div 
+            className="judicial-matters-card"
+            style={{ 
+              backgroundColor: 'rgba(197, 168, 128, 0.12)', 
+              borderLeft: '4px solid var(--accent-gold)', 
+              padding: '1.1rem 1.35rem', 
+              borderRadius: '0 8px 8px 0', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '0.85rem', 
+              border: '1px solid rgba(197,168,128,0.35)', 
+              borderLeftWidth: '4px',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease'
+            }}
+          >
+            <Gavel size={22} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
+            <div style={{ flexGrow: 1 }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.2rem' }}>
+                Statutory Reference
+              </div>
+              <p style={{ color: '#000000', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 600, margin: 0 }}>
+                Jurisdiction Of Revenue Court — <span style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>Explore Third Schedule Powers & Pecuniary Limits</span>
+              </p>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', color: 'var(--accent-gold)', fontWeight: 700, fontSize: '0.82rem', flexShrink: 0 }}>
+              <span>View Jurisdiction</span>
+              <ArrowRight size={18} />
+            </div>
+          </div>
+        </Link>
       </div>
 
       <style jsx global>{`
