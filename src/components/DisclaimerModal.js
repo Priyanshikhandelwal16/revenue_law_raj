@@ -10,8 +10,8 @@ export default function DisclaimerModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Show disclaimer on public pages only (not in admin panel)
-    if (pathname && !pathname.startsWith('/admin')) {
+    // Show disclaimer ONLY on the home page ('/') when website is loaded
+    if (pathname === '/') {
       setIsOpen(true);
     } else {
       setIsOpen(false);
@@ -22,7 +22,7 @@ export default function DisclaimerModal() {
     setIsOpen(false);
   };
 
-  if (!isOpen || (pathname && pathname.startsWith('/admin'))) return null;
+  if (!isOpen || pathname !== '/') return null;
 
   return (
     <div 

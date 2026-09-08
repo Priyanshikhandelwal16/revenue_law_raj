@@ -263,15 +263,48 @@ An Act to consolidate and amend the law relating to land, the appointment, power
           <div className="layout-with-sidebar" style={{ marginTop: 0 }}>
             {/* Left Content Column */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem', position: 'relative', zIndex: 5 }}>
-              
-              {/* 3. Revenue Law Categories */}
+                            {/* 3. Revenue Law Categories */}
               <ScrollReveal>
                 <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
                   <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2rem 0' }}>
                     <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.4rem' }}>{categoriesSection.eyebrow || 'Subject Directory'}</div>
-                    <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem' }}>{categoriesSection.title || 'Revenue Law Categories'}</h2>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{categoriesSection.description || 'Access structured directories covering key subject matters in Rajasthan land and tenancy codes.'}</p>
+                    <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', fontSize: '1.75rem', marginBottom: '1rem' }}>{categoriesSection.title || 'Judicial Matters'}</h2>
+                    
+                    {/* Clickable Judicial Matters Notice — placed directly under heading */}
+                    <Link href={categoriesSection.noticeUrl || "/types-of-cases#first-schedule"} style={{ textDecoration: 'none', display: 'block' }} title="Click to view First Schedule in Types of Cases">
+                      <div 
+                        className="judicial-matters-card"
+                        style={{ 
+                          backgroundColor: 'rgba(197, 168, 128, 0.12)', 
+                          borderLeft: '4px solid var(--accent-gold)', 
+                          padding: '1.1rem 1.35rem', 
+                          borderRadius: '0 8px 8px 0', 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          gap: '0.85rem', 
+                          border: '1px solid rgba(197,168,128,0.35)', 
+                          borderLeftWidth: '4px',
+                          cursor: 'pointer',
+                          transition: 'all 0.25s ease'
+                        }}
+                      >
+                        <Gavel size={22} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
+                        <div style={{ flexGrow: 1 }}>
+                          <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.2rem' }}>
+                            {categoriesSection.noticeEyebrow || 'Judicial Matters'}
+                          </div>
+                          <p style={{ color: '#000000', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 600, margin: 0 }}>
+                            {categoriesSection.noticeText || 'The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the First Schedule of the Act.'}
+                          </p>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', color: 'var(--accent-gold)', fontWeight: 700, fontSize: '0.82rem', flexShrink: 0 }}>
+                          <span>{categoriesSection.noticeLabel || 'View First Schedule'}</span>
+                          <ChevronRight size={18} />
+                        </div>
+                      </div>
+                    </Link>
                   </div>
+
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
                     {categories.map((cat, i) => {
                       const CategoryIcon = homepageIcons[cat.icon] || FileCheck;
@@ -293,40 +326,6 @@ An Act to consolidate and amend the law relating to land, the appointment, power
                         </div>
                       );
                     })}
-                  </div>
-
-                  {/* Judicial Matters Notice — clickable, links to First Schedule */}
-                  <div style={{ marginTop: '1.5rem' }}>
-                    <Link href="/types-of-cases#first-schedule" style={{ textDecoration: 'none', display: 'block' }} title="Click to view First Schedule in Types of Cases">
-                      <div 
-                        className="judicial-matters-card"
-                        style={{ 
-                          backgroundColor: 'rgba(197, 168, 128, 0.12)', 
-                          borderLeft: '4px solid var(--accent-gold)', 
-                          padding: '1.1rem 1.35rem', 
-                          borderRadius: '0 8px 8px 0', 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          gap: '0.85rem', 
-                          border: '1px solid rgba(197,168,128,0.35)', 
-                          borderLeftWidth: '4px',
-                          cursor: 'pointer',
-                          transition: 'all 0.25s ease'
-                        }}
-                      >
-                        <Gavel size={22} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
-                        <div style={{ flexGrow: 1 }}>
-                          <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.2rem' }}>Judicial Matters</div>
-                          <p style={{ color: '#000000', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 600, margin: 0 }}>
-                            The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the <span style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>First Schedule</span> of the Act.
-                          </p>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', color: 'var(--accent-gold)', fontWeight: 700, fontSize: '0.82rem', flexShrink: 0 }}>
-                          <span>View First Schedule</span>
-                          <ChevronRight size={18} />
-                        </div>
-                      </div>
-                    </Link>
                   </div>
                 </div>
               </ScrollReveal>

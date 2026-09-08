@@ -156,7 +156,16 @@ const homepageConfig = {
     { label: "Stages in Revenue Cases", href: "/the-stages-in-revenue-cases", icon: "Layers" },
     { label: "Types of Cases", href: "/types-of-cases", icon: "Scale" },
   ],
-  categoriesSection: { eyebrow: "Subject Directory", title: "Revenue Law Categories", description: "Access structured directories covering key subject matters in Rajasthan land and tenancy codes.", ctaLabel: "View All" },
+  categoriesSection: { 
+    eyebrow: "Subject Directory", 
+    title: "Judicial Matters", 
+    noticeEyebrow: "Judicial Matters",
+    noticeText: "The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the First Schedule of the Act.",
+    noticeUrl: "/types-of-cases#first-schedule",
+    noticeLabel: "View First Schedule",
+    description: "Access structured directories covering key subject matters in Rajasthan land and tenancy codes.", 
+    ctaLabel: "View All" 
+  },
   categories: [
     { title: "Land Conversion (90-A)", description: "Rules and guides for conversion of agriculture lands to residential and commercial use.", slug: "land-conversion-90-a", icon: "FileCheck" },
     { title: "Mutation & Succession", description: "Succession filings, partition mutations, and records correction procedures.", slug: "mutation-rights", icon: "Layers" },

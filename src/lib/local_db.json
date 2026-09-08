@@ -912,7 +912,11 @@
         ],
         "categoriesSection": {
           "eyebrow": "Subject Directory",
-          "title": "Revenue Law Categories",
+          "title": "Judicial Matters",
+          "noticeEyebrow": "Judicial Matters",
+          "noticeText": "The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the First Schedule of the Act.",
+          "noticeUrl": "/types-of-cases#first-schedule",
+          "noticeLabel": "View First Schedule",
           "description": "Access structured directories covering key subject matters in Rajasthan land and tenancy codes.",
           "ctaLabel": "View All"
         },
