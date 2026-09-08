@@ -46,11 +46,14 @@ export async function POST(req) {
     await dbConnect();
     const body = await req.json();
 
-    if (!body.slug && body.title) {
-      body.slug = body.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4);
+    const { resolveUploadSession } = require('@/lib/uploadResolver');
+    const payload = await resolveUploadSession(body);
+
+    if (!payload.slug && payload.title) {
+      payload.slug = payload.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4);
     }
 
-    const article = await Article.create(body);
+    const article = await Article.create(payload);
     return NextResponse.json({ success: true, article });
   } catch (err) {
     console.error(err);

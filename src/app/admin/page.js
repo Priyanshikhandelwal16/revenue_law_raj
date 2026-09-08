@@ -878,6 +878,46 @@ export default function AdminDashboard() {
                       </small>
                     </div>
                   </div>
+
+                  {/* PDF Upload Field for Articles */}
+                  <div className="form-group" style={{ backgroundColor: 'var(--bg-offwhite)', padding: '1.25rem', borderRadius: '8px', border: '1px solid var(--border-color)', marginTop: '1rem' }}>
+                    <label style={{ fontWeight: 700, color: 'var(--primary-blue)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <Download size={16} style={{ color: 'var(--accent-gold)' }} />
+                      Upload Attachment PDF Document (Cloudinary)
+                    </label>
+                    <input 
+                      type="file" 
+                      accept="application/pdf,.pdf"
+                      onChange={handlePdfUpload} 
+                      className="form-control" 
+                      style={{ marginTop: '0.5rem' }}
+                    />
+                    <small style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.35rem', display: 'block' }}>
+                      Upload an official PDF copy for this article (Uploaded to Cloudinary). When users click "Download PDF", this file will download automatically.
+                    </small>
+                    {isUploading && (
+                      <div style={{ color: 'var(--accent-gold)', fontSize: '0.85rem', marginTop: '0.5rem', fontWeight: 600 }}>
+                        Uploading PDF to Cloudinary: {uploadProgress}% Completed...
+                      </div>
+                    )}
+                    {!isUploading && (formData.pdfUrl || formData.pdfUploadId) && (
+                      <div style={{ color: '#16A34A', fontSize: '0.85rem', marginTop: '0.5rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                        <span>✓ PDF Attached Successfully!</span>
+                        {formData.pdfUrl && (
+                          <a href={formData.pdfUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>
+                            Preview PDF
+                          </a>
+                        )}
+                        <button 
+                          type="button" 
+                          onClick={() => setFormData({ ...formData, pdfUrl: '', pdfUploadId: '', pdfData: '' })}
+                          style={{ border: 'none', background: 'none', color: '#DC2626', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 700 }}
+                        >
+                          Remove PDF
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </>
               )}
 

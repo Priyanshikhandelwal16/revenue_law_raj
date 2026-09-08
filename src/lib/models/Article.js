@@ -8,6 +8,8 @@ const ArticleSchema = new mongoose.Schema({
   category: { type: String, required: true }, // e.g., 'News', 'Case Studies', 'Land Acquisition'
   author: { type: String, default: 'Admin' },
   featuredImage: { type: String }, // Base64 data URL or external URL
+  pdfUrl: { type: String }, // Cloudinary URL
+  pdfData: { type: String }, // Fallback base64 data
   tags: [{ type: String }],
   isFeatured: { type: Boolean, default: false },
   status: { type: String, enum: ['draft', 'published'], default: 'published' },

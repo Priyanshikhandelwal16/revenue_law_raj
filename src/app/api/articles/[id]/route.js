@@ -48,7 +48,10 @@ export async function PUT(req, { params }) {
     const { id } = params;
     const body = await req.json();
 
-    const article = await Article.findByIdAndUpdate(id, body, { new: true });
+    const { resolveUploadSession } = require('@/lib/uploadResolver');
+    const payload = await resolveUploadSession(body);
+
+    const article = await Article.findByIdAndUpdate(id, payload, { new: true });
     if (!article) {
       return NextResponse.json({ error: 'Article not found' }, { status: 404 });
     }
