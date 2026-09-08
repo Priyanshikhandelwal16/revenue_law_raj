@@ -68,40 +68,69 @@ export async function POST(req) {
     if (!isAdmin(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
 
     const body = await req.json();
-    const { key, value } = body;
-    if (!key || value === undefined) {
+
+    // Support resetting all settings to latest defaults
+    if (body.resetAll) {
+      for (const k of EDITABLE_SETTING_KEYS) {
+        const defaultValue = DEFAULT_SETTINGS[k];
+        try {
+          await dbConnect();
+          await Setting.findOneAndUpdate(
+            { key: k },
+            { value: defaultValue },
+            { new: true, upsert: true, setDefaultsOnInsert: true }
+          );
+        } catch (dbErr) {
+          const existing = await getLocalItem('settings', k, 'key');
+          if (existing) {
+            await updateLocalItem('settings', existing._id, { key: k, value: defaultValue });
+          } else {
+            await createLocalItem('settings', { _id: `set_${k}`, key: k, value: defaultValue });
+          }
+        }
+      }
+      try { revalidatePath('/', 'layout'); } catch (e) {}
+      return NextResponse.json({ success: true, message: 'All settings reset to latest defaults successfully' });
+    }
+
+    const { key, value, reset, forceOverwrite } = body;
+    if (!key || (value === undefined && !reset)) {
       return NextResponse.json({ error: 'Key and Value are required' }, { status: 400 });
     }
     if (!EDITABLE_SETTING_KEYS.includes(key)) {
       return NextResponse.json({ error: 'Setting key is not editable' }, { status: 400 });
     }
-    if (typeof value !== 'string' && (value === null || Array.isArray(value) || typeof value !== 'object')) {
-      return NextResponse.json({ error: 'Value must be a JSON object or string' }, { status: 400 });
+
+    let finalValue;
+    if (reset) {
+      finalValue = DEFAULT_SETTINGS[key];
+    } else if (forceOverwrite) {
+      finalValue = value;
+    } else {
+      try {
+        validatePayload(value);
+      } catch (validationError) {
+        return NextResponse.json({ error: validationError.message }, { status: 400 });
+      }
+      const currentValue = await getSettingValue(key);
+      finalValue = deepMergeSettings(currentValue ?? DEFAULT_SETTINGS[key], value);
     }
 
-    try {
-      validatePayload(value);
-    } catch (validationError) {
-      return NextResponse.json({ error: validationError.message }, { status: 400 });
-    }
-
-    const currentValue = await getSettingValue(key);
-    const mergedValue = deepMergeSettings(currentValue ?? DEFAULT_SETTINGS[key], value);
     let item;
     try {
       await dbConnect();
       item = await Setting.findOneAndUpdate(
         { key },
-        { value: mergedValue },
+        { value: finalValue },
         { new: true, upsert: true, setDefaultsOnInsert: true }
       );
     } catch (dbErr) {
       console.warn('DB offline, saving setting in local file DB:', dbErr.message);
       const existing = await getLocalItem('settings', key, 'key');
       if (existing) {
-        item = await updateLocalItem('settings', existing._id, { key, value: mergedValue });
+        item = await updateLocalItem('settings', existing._id, { key, value: finalValue });
       } else {
-        item = await createLocalItem('settings', { _id: `set_${key}`, key, value: mergedValue });
+        item = await createLocalItem('settings', { _id: `set_${key}`, key, value: finalValue });
       }
       if (!item) throw new Error('Failed to persist local setting');
     }

@@ -78,46 +78,126 @@ export default function PageSettingsEditor({ settings = [], onSaved, initialSele
           </div>
         </div>
 
-        {/* Dropdown Selector Layout */}
+        {/* Dropdown Selector Layout & Action Controls */}
         <div style={{ marginTop: '1.75rem', display: 'grid', gridTemplateColumns: '1fr', gap: '1.25rem' }}>
-          <div>
-            <label htmlFor="page-settings-selector" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.5rem', color: 'var(--text-dark)' }}>
-              Choose Website Page or Config section:
-            </label>
-            <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
-              <select 
-                id="page-settings-selector" 
-                value={selectedKey} 
-                onChange={event => setSelectedKey(event.target.value)} 
-                className="config-editor-input"
-                style={{ 
-                  width: '100%', 
-                  padding: '0.75rem 1rem', 
-                  fontSize: '0.92rem', 
-                  fontWeight: 600,
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
+            <div>
+              <label htmlFor="page-settings-selector" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.5rem', color: 'var(--text-dark)' }}>
+                Choose Website Page or Config section:
+              </label>
+              <div style={{ position: 'relative', width: '100%', minWidth: '300px', maxWidth: '400px' }}>
+                <select 
+                  id="page-settings-selector" 
+                  value={selectedKey} 
+                  onChange={event => setSelectedKey(event.target.value)} 
+                  className="config-editor-input"
+                  style={{ 
+                    width: '100%', 
+                    padding: '0.75rem 1rem', 
+                    fontSize: '0.92rem', 
+                    fontWeight: 600,
+                    color: 'var(--primary-blue)',
+                    backgroundColor: '#FFFFFF',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '8px',
+                    outline: 'none',
+                    cursor: 'pointer',
+                    appearance: 'none',
+                    backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231e3a8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'right 1rem center',
+                    backgroundSize: '1.25em'
+                  }}
+                >
+                  {Object.entries(groupedPages).map(([groupName, items]) => (
+                    <optgroup key={groupName} label={groupName} style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                      {items.map(item => (
+                        <option key={item.key} value={item.key} style={{ fontWeight: 500, fontSize: '0.9rem', color: 'var(--text-dark)' }}>
+                          {item.label}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                onClick={async () => {
+                  if (!confirm(`Reset ${activePage.label} settings to latest default values?`)) return;
+                  try {
+                    const res = await fetch('/api/settings', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ key: selectedKey, reset: true })
+                    });
+                    if (res.ok) {
+                      alert(`${activePage.label} updated to latest defaults!`);
+                      if (onSaved) onSaved();
+                    } else {
+                      alert("Failed to reset setting.");
+                    }
+                  } catch (e) {
+                    alert("Error: " + e.message);
+                  }
+                }}
+                style={{
+                  padding: '0.65rem 1.1rem',
+                  fontSize: '0.8rem',
+                  fontWeight: 700,
+                  backgroundColor: 'var(--bg-white)',
                   color: 'var(--primary-blue)',
-                  backgroundColor: '#FFFFFF',
                   border: '1px solid var(--border-color)',
-                  borderRadius: '8px',
-                  outline: 'none',
+                  borderRadius: '6px',
                   cursor: 'pointer',
-                  appearance: 'none',
-                  backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231e3a8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'right 1rem center',
-                  backgroundSize: '1.25em'
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  transition: 'var(--transition-fast)'
                 }}
               >
-                {Object.entries(groupedPages).map(([groupName, items]) => (
-                  <optgroup key={groupName} label={groupName} style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                    {items.map(item => (
-                      <option key={item.key} value={item.key} style={{ fontWeight: 500, fontSize: '0.9rem', color: 'var(--text-dark)' }}>
-                        {item.label}
-                      </option>
-                    ))}
-                  </optgroup>
-                ))}
-              </select>
+                Sync {activePage.label} Defaults
+              </button>
+
+              <button
+                type="button"
+                onClick={async () => {
+                  if (!confirm("Update ALL Admin Panel settings to the latest defaults? This will refresh all CMS sections with the latest codebase configuration.")) return;
+                  try {
+                    const res = await fetch('/api/settings', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ resetAll: true })
+                    });
+                    if (res.ok) {
+                      alert("All Admin Panel settings have been updated to the latest defaults!");
+                      if (onSaved) onSaved();
+                    } else {
+                      alert("Failed to update settings.");
+                    }
+                  } catch (e) {
+                    alert("Error: " + e.message);
+                  }
+                }}
+                style={{
+                  padding: '0.65rem 1.1rem',
+                  fontSize: '0.8rem',
+                  fontWeight: 700,
+                  backgroundColor: 'var(--accent-gold)',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  boxShadow: 'var(--shadow-sm)'
+                }}
+              >
+                Sync All Admin Settings
+              </button>
             </div>
           </div>
 
@@ -169,11 +249,13 @@ export default function PageSettingsEditor({ settings = [], onSaved, initialSele
 
       {/* Editor Frame Card */}
       <div className="admin-card">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
-          <FileText size={18} style={{ color: 'var(--accent-gold)' }} />
-          <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary-blue)' }}>
-            Editing: {activePage.label} Content Schema
-          </h3>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <FileText size={18} style={{ color: 'var(--accent-gold)' }} />
+            <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary-blue)' }}>
+              Editing: {activePage.label} Content Schema
+            </h3>
+          </div>
         </div>
         
         <ConfigObjectEditor 

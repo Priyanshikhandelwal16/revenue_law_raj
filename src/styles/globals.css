@@ -345,16 +345,29 @@ a {
 /* Hero Section */
 .hero-section {
   background: linear-gradient(135deg, #FAF8F5 0%, #EFECE6 100%);
-  color: var(--text-dark);
+  color: #000000;
   padding: 3rem 0;
   position: relative;
   overflow: hidden;
   border-bottom: 4px solid var(--accent-gold);
 }
+.hero-section p {
+  color: #000000 !important;
+}
+.hero-section h1, .hero-section h2, .hero-section h3 {
+  color: #000000 !important;
+}
 @media (max-width: 768px) {
   .hero-section {
     padding: 1.5rem 0 !important;
   }
+}
+
+.judicial-matters-card:hover {
+  background-color: rgba(197, 168, 128, 0.22) !important;
+  border-color: var(--accent-gold) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(163, 112, 44, 0.18);
 }
 
 .btn-hero-quick-access {

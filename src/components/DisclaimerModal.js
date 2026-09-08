@@ -1,22 +1,28 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { ShieldAlert, X, CheckCircle, ArrowRight } from 'lucide-react';
 
 export default function DisclaimerModal() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Show disclaimer on every page load
-    setIsOpen(true);
-  }, []);
+    // Show disclaimer on public pages only (not in admin panel)
+    if (pathname && !pathname.startsWith('/admin')) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [pathname]);
 
   const handleClose = () => {
     setIsOpen(false);
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || (pathname && pathname.startsWith('/admin'))) return null;
 
   return (
     <div 
