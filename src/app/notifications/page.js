@@ -38,7 +38,13 @@ async function getNotifications() {
   try {
     await dbConnect();
     const list = await Notification.find({ status: 'published' }).sort({ publishDate: -1 });
-    return list.length > 0 ? list : defaultNotifications;
+    const rawList = list.length > 0 ? list : defaultNotifications;
+    // Filter for last 5 years: 2022 to 2026
+    const filtered = rawList.filter(n => {
+      const year = new Date(n.publishDate).getFullYear();
+      return year >= 2022 && year <= 2026;
+    });
+    return filtered.length > 0 ? filtered : defaultNotifications;
   } catch (err) {
     console.error(err);
     return defaultNotifications;
@@ -65,7 +71,7 @@ export default async function NotificationsPage() {
           </div>
           <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontFamily: 'var(--font-serif)', fontWeight: 700, margin: '0 auto 1.25rem auto', maxWidth: '800px', lineHeight: 1.2, color: 'var(--primary-blue)' }}>
             Government Notifications<br />
-            <span style={{ color: '#B38F4F' }}>Official Circulars & Orders</span>
+            <span style={{ color: '#B38F4F' }}>Last 5 Years (2022 – 2026)</span>
           </h1>
           <p style={{ maxWidth: '650px', margin: '0 auto', fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
             Track official circulars, orders, and statutory notifications issued by the Revenue Department, Government of Rajasthan.
@@ -76,6 +82,24 @@ export default async function NotificationsPage() {
       <div className="layout-container" style={{ padding: '4rem 1.5rem' }}>
         <div className="layout-with-sidebar">
           <div>
+
+          {/* 5 Years Banner Notice */}
+          <div style={{
+            backgroundColor: '#FAF8F5',
+            border: '1.5px solid var(--accent-gold)',
+            borderRadius: '8px',
+            padding: '1.25rem 1.5rem',
+            marginBottom: '2rem',
+            fontSize: '0.95rem',
+            lineHeight: 1.6,
+            color: 'var(--primary-blue)',
+            fontWeight: 600
+          }}>
+            📋 <strong>Latest Government Notifications (Last 5 Years Only: 2026, 2025, 2024, 2023, 2022)</strong>
+            <p style={{ margin: '0.35rem 0 0 0', fontSize: '0.88rem', color: 'var(--text-muted)', fontWeight: 400 }}>
+              For notifications prior to 2022 — please visit the official Rajasthan Government Gazette & Revenue Department portal.
+            </p>
+          </div>
 
           {/* List */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>

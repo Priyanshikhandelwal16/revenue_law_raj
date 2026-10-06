@@ -39,6 +39,21 @@ export default function AboutPage() {
           {/* Main content (Left side) */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
             
+            {/* Explanation of Preamble of Revenue Law Act (ABOVE What is Revenue Law) */}
+            <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '1rem' }}>
+                <BookOpen size={14} />
+                <span>Preamble Explanation</span>
+              </div>
+              <h2 style={{ fontSize: '1.9rem', color: 'var(--primary-blue)', marginBottom: '1.25rem', fontWeight: 700 }}>
+                Explanation of Preamble of Revenue Law Act
+              </h2>
+              <p style={{ fontSize: '1.05rem', color: 'var(--text-dark)', lineHeight: 1.8 }}>
+                The Preamble of the Rajasthan Land Revenue Act, 1956 and Rajasthan Tenancy Act, 1955 establishes the foundational legal framework to consolidate, amend, and govern laws relating to agricultural land, land tenancies, land revenue assessment, boundary demarcations, and the administrative hierarchy of Revenue Courts in Rajasthan. It aims to protect tenancy rights, secure public revenue, and enable transparent administrative resolution of land disputes across the State.
+              </p>
+            </div>
+
+            {/* Sections like What is Revenue Law & Who We Are */}
             {config.sections.map((section, index) => {
               const SectionIcon = sectionIcons[section.icon] || (index === 0 ? BookOpen : Users);
               return (
@@ -57,16 +72,17 @@ export default function AboutPage() {
               );
             })}
 
+            {/* Our Mission Section */}
             <div style={{ backgroundColor: 'var(--bg-white)', padding: '2.5rem 2rem', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '1rem' }}>
                 <Users size={14} />
                 <span>Our Mission</span>
               </div>
               <h2 style={{ fontSize: '1.9rem', color: 'var(--primary-blue)', marginBottom: '1.25rem', fontWeight: 700 }}>
-                {config.mission.title}
+                Mission
               </h2>
-              <p style={{ fontSize: '1.05rem', color: 'var(--text-dark)', lineHeight: 1.8 }}>
-                {config.mission.content}
+              <p style={{ fontSize: '1.05rem', color: 'var(--text-dark)', lineHeight: 1.8, fontWeight: 500 }}>
+                To make available all information relating to revenue Law accessible in easy and simple manner.
               </p>
             </div>
 

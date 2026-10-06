@@ -81,9 +81,8 @@ const siteConfig = {
     },
     {
       label: "Resources", items: [
-        { label: "Important Concepts", href: "/resources/important-concepts" },
-        { label: "How to Write a Judgment", href: "/resources/how-to-write-judgments" },
-        { label: "Imp Notifications", href: "/notifications" },
+        { label: "Articles on Revenue Law", href: "/articles" },
+        { label: "How to Write a Good Judgement", href: "/resources/how-to-write-judgments" },
       ]
     },
     { label: "Glossary", href: "/glossary" },

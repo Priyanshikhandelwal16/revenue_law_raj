@@ -102,12 +102,12 @@ export default function TypesOfCasesPage() {
               marginBottom: '4rem'
             }}>
               <div style={{ borderLeft: '4px solid var(--accent-gold)', paddingLeft: '1rem', marginBottom: '1.5rem' }}>
-                <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>{config.firstSchedule.eyebrow}</span>
-                <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-blue)', margin: '0.25rem 0 0 0', fontFamily: 'var(--font-serif)' }}>{config.firstSchedule.title}</h3>
+                <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>{config.firstSchedule?.eyebrow || 'Judicial Jurisdiction'}</span>
+                <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-blue)', margin: '0.25rem 0 0 0', fontFamily: 'var(--font-serif)' }}>The First Schedule (Rajasthan Land Revenue Act, 1956)</h3>
               </div>
 
               <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: 'var(--text-dark)', marginBottom: '1.5rem' }}>
-                {config.firstSchedule.introduction}
+                {config.firstSchedule?.introduction}
               </p>
 
               <div style={{
@@ -121,10 +121,10 @@ export default function TypesOfCasesPage() {
                 marginBottom: '2rem'
               }}>
                 <strong style={{ color: 'var(--primary-blue)', fontFamily: 'var(--font-serif)', display: 'block', marginBottom: '0.75rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
-                  {config.firstSchedule.sectionTitle}
+                  {config.firstSchedule?.sectionTitle}
                 </strong>
                 <p style={{ margin: 0 }}>
-                  {config.firstSchedule.sectionText}
+                  {config.firstSchedule?.sectionText}
                 </p>
               </div>
 
@@ -135,21 +135,25 @@ export default function TypesOfCasesPage() {
                 padding: '2rem',
                 boxShadow: 'var(--shadow-sm)'
               }}>
-                <h4 style={{ color: 'var(--primary-blue)', margin: '0 0 1rem 0', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid rgba(197, 168, 128, 0.3)', paddingBottom: '0.5rem', fontSize: '1rem', textAlign: 'center' }}>
-                  {config.firstSchedule.listTitle}
+                <h4 style={{ color: 'var(--primary-blue)', margin: '0 0 1.25rem 0', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '2px solid rgba(197, 168, 128, 0.3)', paddingBottom: '0.5rem', fontSize: '1rem' }}>
+                  The First Schedule (See Section 23) — List of Judicial Matters (Straight Line Manner 1-15)
                 </h4>
 
                 <ol style={{ 
                   margin: 0, 
                   paddingLeft: '1.5rem', 
-                  display: 'grid', 
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', 
-                  gap: '0.85rem 2rem',
-                  fontSize: '0.88rem',
-                  lineHeight: '1.5',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.75rem',
+                  fontSize: '0.92rem',
+                  lineHeight: '1.6',
                   color: 'var(--text-dark)'
                 }}>
-                  {firstScheduleItems.map((item, index) => <li key={index}>{item}</li>)}
+                  {firstScheduleItems.map((item, index) => (
+                    <li key={index} style={{ borderBottom: index < firstScheduleItems.length - 1 ? '1px dashed #EAE6DF' : 'none', paddingBottom: '0.5rem' }}>
+                      {item}
+                    </li>
+                  ))}
                 </ol>
               </div>
             </div>

@@ -47,7 +47,8 @@ async function getArticles() {
 }
 
 export default async function ArticlesPage() {
-  const articles = await getArticles();
+  const allArticles = await getArticles();
+  const articles = allArticles.slice(0, 3);
 
   return (
     <div className="layout-container" style={{ padding: '3rem 1.5rem' }}>

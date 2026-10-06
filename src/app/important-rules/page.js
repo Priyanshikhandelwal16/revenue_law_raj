@@ -61,33 +61,8 @@ const importantRules = [
   },
   {
     num: 5,
-    title: "Limitation Period for Revenue Appeals",
-    desc: "Appeals against Tehsildar decisions must be filed within 30 days. Appeals against SDO or Collector decrees to higher appellate forums (RAC or BOR) must generally be filed within 60 to 90 days from the date of the decision."
-  },
-  {
-    num: 6,
-    title: "Succession Mutation (Fauti Namantaran)",
-    desc: "Upon the death of a Khatedar tenant, mutations in favor of legal heirs must be reported to the Patwari. Undisputed successions must be registered immediately; disputes must be referred to the Tehsildar court."
-  },
-  {
-    num: 7,
-    title: "Protection of Charagah (Pasture) Lands",
-    desc: "Pasture lands (Charagah) belong to the local Gram Panchayat and are reserved for communal grazing. Allotment or commercial conversion of Charagah land is strictly illegal, as upheld by multiple Board of Revenue rulings."
-  },
-  {
-    num: 8,
-    title: "Section 188 (Injunction against Trespass)",
-    desc: "A khatedar tenant in peaceful possession of land can file a suit for permanent injunction to prevent any third party or trespasser from interfering with their agricultural operations or possession."
-  },
-  {
-    num: 9,
     title: "Section 251 (Easement and Right of Way)",
-    desc: "Landowners have a right of easement. A tenant can file an application before the Tehsildar to demand a new path or resolve blockades on existing agricultural cart-tracks through adjoining fields."
-  },
-  {
-    num: 10,
-    title: "Revisional Jurisdiction of Board of Revenue",
-    desc: "The Board of Revenue (Ajmer) retains apex revisional powers to call for records of any subordinate revenue court and correct material irregularities or jurisdictional errors, even if no appeal has been filed."
+    desc: "Landowners have an inherent right of easement. A tenant can file an application before the Tehsildar to demand a new path or resolve blockades on existing agricultural cart-tracks through adjoining fields."
   }
 ];
 

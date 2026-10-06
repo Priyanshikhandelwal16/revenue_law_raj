@@ -10,19 +10,28 @@ export default function DisclaimerModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Show disclaimer ONLY on the home page ('/') when website is loaded
-    if (pathname === '/') {
-      setIsOpen(true);
-    } else {
-      setIsOpen(false);
+    // Show disclaimer ONLY ONCE per session on initial load
+    if (typeof window !== 'undefined') {
+      const hasSeen = sessionStorage.getItem('hasSeenDisclaimer');
+      if (!hasSeen) {
+        setIsOpen(true);
+        sessionStorage.setItem('hasSeenDisclaimer', 'true');
+
+        // Auto close after 2 seconds as requested by client
+        const timer = setTimeout(() => {
+          setIsOpen(false);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+      }
     }
-  }, [pathname]);
+  }, []);
 
   const handleClose = () => {
     setIsOpen(false);
   };
 
-  if (!isOpen || pathname !== '/') return null;
+  if (!isOpen) return null;
 
   return (
     <div 
@@ -103,22 +112,18 @@ export default function DisclaimerModal() {
         </div>
 
         {/* Body Content */}
-        <div style={{ padding: '1.75rem 2rem', overflowY: 'auto', fontSize: '0.92rem', lineHeight: 1.7, color: '#000000' }}>
-          <p style={{ marginTop: 0, marginBottom: '1rem', fontWeight: 700, color: '#000000', fontSize: '1rem' }}>
-            Welcome to Rajasthan Revenue Law Platform (Revenue Law Raj).
+        <div style={{ padding: '1.75rem 2rem', overflowY: 'auto', fontSize: '0.95rem', lineHeight: 1.7, color: '#000000' }}>
+          <p style={{ marginTop: 0, marginBottom: '1rem', fontWeight: 700, color: '#000000', fontSize: '1.05rem' }}>
+            Welcome to Rajasthan Revenue Law Platform (Revenue Law Raj)
           </p>
-          <p style={{ marginBottom: '1.25rem', color: '#000000', fontWeight: 500 }}>
-            The statutory acts, tenancy rules, circular notifications, and judicial precedents published on this platform are compiled for research, general guidance, and educational reference under the <strong style={{ color: '#000000' }}>Rajasthan Land Revenue Act, 1956</strong> and <strong style={{ color: '#000000' }}>Rajasthan Tenancy Act, 1955</strong>.
-          </p>
-
-          <div style={{ backgroundColor: 'var(--bg-offwhite)', borderLeft: '4px solid var(--accent-gold)', padding: '1rem 1.25rem', borderRadius: '0 8px 8px 0', marginBottom: '1.25rem', fontSize: '0.88rem', color: '#000000' }}>
-            <strong style={{ color: '#000000' }}>Important Notice:</strong> This platform does not constitute formal advocate legal advice. Users and litigants are advised to verify statutory clauses and notification copies with official Rajasthan Government prints before pleading cases in revenue courts.
+          
+          <div style={{ backgroundColor: 'var(--bg-offwhite)', borderLeft: '4px solid var(--accent-gold)', padding: '1.25rem', borderRadius: '0 8px 8px 0', marginBottom: '1rem', fontSize: '0.95rem', color: '#000000', fontWeight: 600 }}>
+            This site provides general information and for any professional legal advice please contact a professional legal expert.
           </div>
 
-          <ul style={{ paddingLeft: '1.2rem', margin: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.86rem', color: '#000000', fontWeight: 500 }}>
-            <li>No advocate-client relationship is created by accessing this website.</li>
-            <li>All precedent summaries and gazette notifications are updated periodically from official sources.</li>
-          </ul>
+          <p style={{ marginBottom: '0.5rem', color: '#666', fontSize: '0.85rem' }}>
+            This notice auto-dismisses in 2 seconds.
+          </p>
         </div>
 
         {/* Footer Actions */}

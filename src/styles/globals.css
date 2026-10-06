@@ -28,7 +28,7 @@
 }
 
 html, body {
-  font-family: var(--font-sans);
+  font-family: 'Poppins', sans-serif;
   color: var(--text-dark);
   background-color: var(--bg-offwhite);
   line-height: 1.6;
@@ -44,6 +44,10 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.25;
   overflow-wrap: break-word;
   word-wrap: break-word;
+}
+
+p, span, li, a, label, button, input, textarea, td, th {
+  font-family: 'Poppins', sans-serif;
 }
 
 p {
@@ -678,6 +682,7 @@ a {
   flex-grow: 1;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
