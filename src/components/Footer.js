@@ -94,20 +94,29 @@ export default function Footer() {
             </div>
           </div>
 
-          {(footer?.columns || []).map(column => (
-            <div key={column.title} className="footer-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <h3 style={{ fontSize: '1.05rem', color: 'var(--primary-blue)', fontWeight: 600, borderBottom: '2px solid rgba(197, 168, 128, 0.3)', paddingBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                {column.title}
-              </h3>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
-                {(column.links || []).map(link => (
-                  <li key={`${link.label}-${link.href}`}>
-                    <Link href={link.href} style={footerLinkStyle} onMouseEnter={linkEnter} onMouseLeave={linkLeave}>{link.label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {(footer?.columns || []).map(column => {
+            const links = [...(column.links || [])];
+            if (column.title === 'Important Concepts' || column.title === 'Quick Links') {
+              const hasNotif = links.some(l => l.href === '/notifications');
+              if (!hasNotif) {
+                links.push({ label: 'Important Notifications', href: '/notifications' });
+              }
+            }
+            return (
+              <div key={column.title} className="footer-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                <h3 style={{ fontSize: '1.05rem', color: 'var(--primary-blue)', fontWeight: 600, borderBottom: '2px solid rgba(197, 168, 128, 0.3)', paddingBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                  {column.title}
+                </h3>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
+                  {links.map(link => (
+                    <li key={`${link.label}-${link.href}`}>
+                      <Link href={link.href} style={footerLinkStyle} onMouseEnter={linkEnter} onMouseLeave={linkLeave}>{link.label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
           {/* Official Contact Column */}
           <div className="footer-column" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <h3 style={{ fontSize: '1.05rem', color: 'var(--primary-blue)', fontWeight: 600, borderBottom: '2px solid rgba(197, 168, 128, 0.3)', paddingBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>

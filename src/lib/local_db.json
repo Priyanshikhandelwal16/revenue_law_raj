@@ -1767,15 +1767,15 @@
           "eyebrow": "Statutory Rules & Guidelines",
           "title": "Important Rules &",
           "highlight": "Land Conversion Guidelines",
-          "description": "Access the 10 critical rules of Rajasthan Revenue Law alongside the complete statutory process for agricultural land conversion under Section 90-A."
+          "description": "Access the 5 major rules of Rajasthan Revenue Law alongside the complete statutory process for agricultural land conversion under Section 90-A."
         },
         "tabs": {
-          "rules": "10 Important Rules",
+          "rules": "5 Major Rules",
           "conversion": "Land Conversion (Section 90-A)",
           "gochar": "Gochar Land Rules",
           "mandir": "Mandir Maafi Land"
         },
-        "rulesTitle": "10 Critical Rules of Rajasthan Land Revenue",
+        "rulesTitle": "5 Major Rules of Rajasthan Land Revenue",
         "rules": [
           {
             "number": 1,
@@ -1799,33 +1799,8 @@
           },
           {
             "number": 5,
-            "title": "Limitation Period for Revenue Appeals",
-            "description": "Appeals against Tehsildar decisions must be filed within 30 days. Appeals against SDO or Collector decrees to higher appellate forums (RAC or BOR) must generally be filed within 60 to 90 days from the date of the decision."
-          },
-          {
-            "number": 6,
-            "title": "Succession Mutation (Fauti Namantaran)",
-            "description": "Upon the death of a Khatedar tenant, mutations in favor of legal heirs must be reported to the Patwari. Undisputed successions must be registered immediately; disputes must be referred to the Tehsildar court."
-          },
-          {
-            "number": 7,
-            "title": "Protection of Charagah (Pasture) Lands",
-            "description": "Pasture lands (Charagah) belong to the local Gram Panchayat and are reserved for communal grazing. Allotment or commercial conversion of Charagah land is strictly illegal, as upheld by multiple Board of Revenue rulings."
-          },
-          {
-            "number": 8,
-            "title": "Section 188 (Injunction against Trespass)",
-            "description": "A khatedar tenant in peaceful possession of land can file a suit for permanent injunction to prevent any third party or trespasser from interfering with their agricultural operations or possession."
-          },
-          {
-            "number": 9,
             "title": "Section 251 (Easement and Right of Way)",
-            "description": "Landowners have a right of easement. A tenant can file an application before the Tehsildar to demand a new path or resolve blockades on existing agricultural cart-tracks through adjoining fields."
-          },
-          {
-            "number": 10,
-            "title": "Revisional Jurisdiction of Board of Revenue",
-            "description": "The Board of Revenue (Ajmer) retains apex revisional powers to call for records of any subordinate revenue court and correct material irregularities or jurisdictional errors, even if no appeal has been filed."
+            "description": "Landowners have an inherent right of easement. A tenant can file an application before the Tehsildar to demand a new path or resolve blockades on existing agricultural cart-tracks through adjoining fields."
           }
         ],
         "conversion": {

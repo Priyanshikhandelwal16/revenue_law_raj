@@ -55,7 +55,27 @@ export default function Navbar() {
 
         {/* Middle: Sections (Desktop Menu arranged in clean dropdowns) */}
         <div className="nav-links">
-          {(config?.navigation || []).map((item, idx) => {
+          {(config?.navigation || [])
+            .filter(item => item.href !== '/notifications')
+            .map(item => {
+              if (item.label === 'Resources') {
+                return {
+                  ...item,
+                  items: [
+                    { label: "Articles on Revenue Law", href: "/articles" },
+                    { label: "How to Write a Good Judgement", href: "/resources/how-to-write-judgments" }
+                  ]
+                };
+              }
+              if (item.items && item.items.length > 0) {
+                return {
+                  ...item,
+                  items: item.items.filter(sub => sub.href !== '/notifications')
+                };
+              }
+              return item;
+            })
+            .map((item, idx) => {
             if (item.items && item.items.length > 0) {
               const subPaths = item.items.map(sub => sub.href);
               const isActive = subPaths.includes(pathname);

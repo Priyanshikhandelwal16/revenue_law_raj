@@ -69,7 +69,8 @@ const importantRules = [
 export default function ImportantRulesPage() {
   const [activeTab, setActiveTab] = useState('rules'); // 'rules', 'conversion', 'gochar', 'mandir'
   const config = usePublicSetting('important_rules_config');
-  const displayedRules = config.rules?.map(rule => ({ ...rule, num: rule.number, desc: rule.description })) ?? importantRules;
+  const rawRules = (Array.isArray(config.rules) && config.rules.length > 0) ? config.rules : importantRules;
+  const displayedRules = rawRules.slice(0, 5).map((rule, idx) => ({ ...rule, num: rule.number || rule.num || (idx + 1), desc: rule.description || rule.desc }));
   const displayedSteps = config.conversionSteps?.map(step => ({ ...step, desc: step.description })) ?? steps;
   const displayedDocuments = config.documents ?? documents;
   const displayedGochar = config.gochar || { title: '', description: '', warningTitle: '', warning: '', pointsTitle: '', points: [] };
@@ -146,7 +147,7 @@ export default function ImportantRulesPage() {
               /* TAB 1: 10 Important Rules */
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
                 <h2 style={{ fontSize: '1.75rem', fontFamily: 'var(--font-serif)', color: 'var(--primary-blue)', marginBottom: '1.5rem' }}>
-                  {config.rulesTitle}
+                  5 Major Rules of Rajasthan Land Revenue
                 </h2>
                 {displayedRules.map((rule, index) => (
                   <div key={`${rule.num}-${index}`} style={{
@@ -279,7 +280,7 @@ export default function ImportantRulesPage() {
                   padding: '3rem 2rem',
                   textAlign: 'center',
                   maxWidth: '800px',
-                  margin: '0 auto',
+                  margin: '4rem auto 0 auto',
                   border: '1px solid var(--border-color)'
                 }}>
                   <FileText size={36} style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }} />

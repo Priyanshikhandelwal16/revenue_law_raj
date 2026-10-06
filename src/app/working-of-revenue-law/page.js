@@ -106,7 +106,7 @@ export default function WorkingOfRevenueLawPage() {
               padding: '2.5rem 2rem',
               textAlign: 'center',
               maxWidth: '850px',
-              margin: '0 auto'
+              margin: '4rem auto 0 auto'
             }}>
               <Gavel size={36} style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }} />
               <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', marginBottom: '1rem', fontFamily: 'var(--font-serif)' }}>{config.cta.title}</h2>

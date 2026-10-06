@@ -91,7 +91,7 @@ export default function ImportantConceptsPage() {
               padding: '3rem 2rem',
               textAlign: 'center',
               maxWidth: '850px',
-              margin: '0 auto',
+              margin: '4rem auto 0 auto',
               border: '1px solid var(--border-color)'
             }}>
               <CtaIcon size={36} style={{ color: 'var(--accent-gold)', marginBottom: '1rem' }} />

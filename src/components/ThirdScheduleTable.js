@@ -65,7 +65,7 @@ export default function ThirdScheduleTable() {
       borderRadius: '12px',
       padding: '2.5rem',
       boxShadow: 'var(--shadow-sm)',
-      marginTop: '3rem',
+      margin: '3rem 0 4rem 0',
       maxWidth: '100%',
       overflow: 'hidden'
     }}>
