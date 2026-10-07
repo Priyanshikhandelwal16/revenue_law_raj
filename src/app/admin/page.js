@@ -12,6 +12,7 @@ import SiteSettingsEditor from '@/components/admin/SiteSettingsEditor';
 import HomepageSettingsEditor from '@/components/admin/HomepageSettingsEditor';
 import PageSettingsEditor from '@/components/admin/PageSettingsEditor';
 import LegalSettingsEditor from '@/components/admin/LegalSettingsEditor';
+import CaseTypesEditor from '@/components/admin/CaseTypesEditor';
 
 const ADMIN_TAB_TITLES = {
   overview: 'Dashboard',
@@ -2218,7 +2219,7 @@ export default function AdminDashboard() {
 
             {/* Tab: Types of Cases */}
             {activeTab === 'case_types_cms' && (
-              <PageSettingsEditor settings={settings} onSaved={loadDashboardData} initialSelectedKey="case_types_config" />
+              <CaseTypesEditor settings={settings} onSaved={loadDashboardData} />
             )}
 
             {/* Tab: Important Rules */}

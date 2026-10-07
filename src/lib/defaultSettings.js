@@ -44,6 +44,15 @@ function cloneValue(value) {
 
 export function deepMergeSettings(defaultValue, storedValue) {
   if (storedValue === undefined) return cloneValue(defaultValue);
+  if (Array.isArray(defaultValue) && Array.isArray(storedValue)) {
+    return storedValue.map((item, index) => {
+      const defaultItem = defaultValue.find(d => (d && d.id && item && d.id === item.id) || (d && d.slug && item && d.slug === item.slug)) || defaultValue[index];
+      if (defaultItem && isPlainObject(defaultItem) && isPlainObject(item)) {
+        return deepMergeSettings(defaultItem, item);
+      }
+      return cloneValue(item);
+    });
+  }
   if (!isPlainObject(defaultValue) || !isPlainObject(storedValue)) return cloneValue(storedValue);
   const merged = {};
   for (const key of new Set([...Object.keys(defaultValue), ...Object.keys(storedValue)])) {
