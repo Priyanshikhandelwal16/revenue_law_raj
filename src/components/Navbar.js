@@ -58,9 +58,10 @@ export default function Navbar() {
           {(config?.navigation || [])
             .filter(item => item.href !== '/notifications')
             .map(item => {
-              if (item.label === 'Resources') {
+              if (item.label === 'Articles and resources' || item.label === 'Resources') {
                 return {
                   ...item,
+                  label: "Articles and resources",
                   items: [
                     { label: "Articles on Revenue Law", href: "/articles" },
                     { label: "How to Write a Good Judgement", href: "/resources/how-to-write-judgments" }

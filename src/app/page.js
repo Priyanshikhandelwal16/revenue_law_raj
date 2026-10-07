@@ -176,12 +176,8 @@ export default async function HomePage() {
   const heroEyebrow = hero.eyebrow || "Rajasthan Legal Research Portal";
   const heroTitle = hero.title || "Overview of";
   const heroSubtitle = hero.highlight || "Revenue Law";
-  const defaultPreambleDesc = `The simple objective of Revenue Law in Rajasthan is to provide help to the tenant to ensure that he/she enjoys and maintains his/her rights relating to the land holding. It also helps the state government to realize and collect revenue from the tenant. Furthermore, the preamble of the Rajasthan Land Revenue Act 1956 states as follows:
-
-Preamble
-
-An Act to consolidate and amend the law relating to land, the appointment, powers and duties of revenue courts, revenue officers, and village servants, the preparation and maintenance of maps and land records, the settlement of revenue and rent, the partition of estates, the collection of revenue and matters incidental thereto.`;
-  const heroDesc = (hero.description && hero.description.includes('Preamble')) ? hero.description : defaultPreambleDesc;
+  const heroHighlightLine1 = hero.highlightLine1 || "This website/platform is focussed only on Revenue Law in the State of Rajasthan";
+  const heroHighlightLine2 = hero.highlightLine2 || "The Revenue Law in other States of India have different Acts and Statutes and hence for other States the laws pertaining to that State of India must be studied";
   const heroImage = hero.image || "/images/hero_revenue_law-removebg-preview.png";
   const heroImageAlt = hero.imageAlt || "Rajasthan Legal Research Platform";
   const quickLinks = Array.isArray(config.quickLinks) ? config.quickLinks : [];
@@ -216,18 +212,61 @@ An Act to consolidate and amend the law relating to land, the appointment, power
               {heroTitle} <br />
               <span style={{ color: '#B38F4F' }}>{heroSubtitle}</span>
             </h1>
-            {/* Hero Description — Preamble text */}
+
+            {/* Highlighted Notice Lines (Requirement 1) */}
+            <div style={{
+              marginBottom: '1.75rem',
+              padding: '1.25rem 1.5rem',
+              backgroundColor: '#FFFBF3',
+              border: '1.5px solid #E5C483',
+              borderLeft: '5px solid #B38F4F',
+              borderRadius: '10px',
+              boxShadow: '0 4px 12px rgba(179, 143, 79, 0.08)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.75rem',
+              maxWidth: '680px'
+            }}>
+              {heroHighlightLine1 && (
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                  <span style={{ backgroundColor: '#B38F4F', color: '#FFFFFF', padding: '0.2rem 0.55rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', flexShrink: 0, marginTop: '0.15rem', letterSpacing: '0.5px' }}>Notice</span>
+                  <p style={{ margin: 0, fontWeight: 700, color: '#1E1B18', fontSize: '0.96rem', lineHeight: 1.55 }}>
+                    {heroHighlightLine1}
+                  </p>
+                </div>
+              )}
+              {heroHighlightLine2 && (
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', borderTop: '1px dashed #E2D2B4', paddingTop: '0.65rem' }}>
+                  <span style={{ backgroundColor: '#1E1B18', color: '#D4AF37', padding: '0.2rem 0.55rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', flexShrink: 0, marginTop: '0.15rem', letterSpacing: '0.5px' }}>Important</span>
+                  <p style={{ margin: 0, fontWeight: 600, color: '#333333', fontSize: '0.92rem', lineHeight: 1.55 }}>
+                    {heroHighlightLine2}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Hero Description — Preamble text (Requirement 2) */}
             <div style={{ fontSize: '1rem', color: '#000000', lineHeight: 1.8, maxWidth: '680px', fontWeight: 500 }}>
               <p style={{ marginBottom: '1.25rem', color: '#000000' }}>
-                The simple objective of Revenue Law in Rajasthan is to provide help to the tenant to ensure that he/she enjoys and maintains his/her rights relating to the land holding. It also helps the state government to realize and collect revenue from the tenant. Furthermore, the preamble of the Rajasthan Land Revenue Act 1956 states as follows:
+                The simple objective of Revenue Law is to provide help to the tenant to ensure that he/she enjoys and maintains his/her rights relating to the land holding. It also helps the state government to realize and collect revenue from the tenant. Furthermore, the preamble of the Rajasthan Land Revenue Act 1956 states as follows:
               </p>
               <div style={{ textAlign: 'center', margin: '1.25rem 0 1rem 0' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#000000', fontFamily: 'var(--font-serif)', display: 'inline-block', borderBottom: '2px solid var(--accent-gold)', paddingBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   Preamble
                 </h3>
               </div>
-              <p style={{ marginBottom: 0, color: '#000000' }}>
-                An Act to consolidate and amend the law relating to land, the appointment, powers and duties of revenue courts, revenue officers, and village servants, the preparation and maintenance of maps and land records, the settlement of revenue and rent, the partition of estates, the collection of revenue and matters incidental thereto.
+              <p style={{ 
+                marginBottom: 0, 
+                color: '#1E1B18',
+                fontStyle: 'italic',
+                fontSize: '1.02rem',
+                lineHeight: 1.7,
+                backgroundColor: 'rgba(197, 168, 128, 0.1)',
+                padding: '1.15rem 1.35rem',
+                borderRadius: '8px',
+                borderLeft: '4px solid var(--accent-gold)'
+              }}>
+                &ldquo;An Act to consolidate and amend the law relating to land, the appointment, powers and duties of revenue courts, revenue officers, and village servants, the preparation and maintenance of maps and land records, the settlement of revenue and rent, the partition of estates, the collection of revenue and matters incidental thereto.&rdquo;
               </p>
             </div>
 

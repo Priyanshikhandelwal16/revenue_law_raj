@@ -71,6 +71,9 @@ function newArrayItem(value, defaultValue) {
 
 function ScalarField({ fieldKey, value, onChange, readOnly }) {
   const label = labelFor(fieldKey);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
+
   if (typeof value === 'boolean') {
     return (
       <label className="config-editor-field" style={{ gridTemplateColumns: 'auto 1fr', alignItems: 'center' }}>
@@ -91,6 +94,60 @@ function ScalarField({ fieldKey, value, onChange, readOnly }) {
   }
 
   const stringValue = value == null ? '' : String(value);
+
+  const keyLower = String(fieldKey).toLowerCase();
+  const isImageField = 
+    keyLower.includes('image') || 
+    keyLower.includes('logo') || 
+    keyLower.includes('favicon') || 
+    keyLower.includes('photo') || 
+    keyLower.includes('banner') || 
+    keyLower.includes('pic') || 
+    keyLower.includes('avatar') || 
+    keyLower.includes('thumbnail') ||
+    /\.(png|jpe?g|gif|webp|svg)(\?.*)?$/i.test(stringValue) ||
+    stringValue.includes('cloudinary') ||
+    stringValue.startsWith('/images/');
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setUploadError('');
+
+    try {
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const dataUrl = event.target?.result;
+        if (!dataUrl) {
+          setUploadError('Failed to read file');
+          setUploading(false);
+          return;
+        }
+
+        const res = await fetch('/api/upload-cloudinary', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dataUrl, filename: file.name })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.url) {
+          onChange(data.url);
+        } else {
+          setUploadError(data.error || 'Upload failed');
+        }
+        setUploading(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      console.error(err);
+      setUploadError(err.message || 'Upload error');
+      setUploading(false);
+    }
+  };
+
   const control = shouldUseTextarea(stringValue) ? (
     <textarea className="config-editor-textarea" value={stringValue} readOnly={readOnly}
       onChange={event => onChange(event.target.value)} />
@@ -100,10 +157,33 @@ function ScalarField({ fieldKey, value, onChange, readOnly }) {
   );
 
   return (
-    <label className="config-editor-field">
-      <span className="config-editor-label">{label}</span>
-      {control}
-    </label>
+    <div className="config-editor-field" style={{ gridTemplateColumns: '1fr', gap: '0.4rem', marginBottom: '0.85rem' }}>
+      <span className="config-editor-label" style={{ fontWeight: 700 }}>{label}</span>
+      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div style={{ flexGrow: 1, minWidth: '240px' }}>
+          {control}
+        </div>
+        {isImageField && !readOnly && (
+          <label className="btn-outline config-editor-btn-small" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', cursor: uploading ? 'wait' : 'pointer', padding: '0.5rem 0.85rem', backgroundColor: '#FFFBF3', borderColor: 'var(--accent-gold)' }}>
+            <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--primary-blue)' }}>
+              {uploading ? 'Uploading to Cloudinary...' : '☁️ Upload Image to Cloudinary'}
+            </span>
+            <input type="file" accept="image/*" onChange={handleFileUpload} disabled={uploading} style={{ display: 'none' }} />
+          </label>
+        )}
+      </div>
+
+      {uploadError && (
+        <span style={{ color: '#DC2626', fontSize: '0.78rem', fontWeight: 600 }}>{uploadError}</span>
+      )}
+
+      {isImageField && stringValue && (stringValue.startsWith('http') || stringValue.startsWith('/')) && (
+        <div style={{ marginTop: '0.35rem', display: 'flex', alignItems: 'center', gap: '0.75rem', backgroundColor: '#F8FAFC', padding: '0.5rem', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
+          <img src={stringValue} alt="Preview" style={{ height: '45px', width: 'auto', maxHeight: '45px', objectFit: 'contain', borderRadius: '4px', border: '1px solid #CBD5E1' }} />
+          <span style={{ fontSize: '0.75rem', color: '#64748B', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '300px' }}>{stringValue}</span>
+        </div>
+      )}
+    </div>
   );
 }
 

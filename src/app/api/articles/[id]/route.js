@@ -69,16 +69,35 @@ export async function DELETE(req, { params }) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    await dbConnect();
     const { id } = params;
 
-    const article = await Article.findByIdAndDelete(id);
-    if (!article) {
-      return NextResponse.json({ error: 'Article not found' }, { status: 404 });
+    try {
+      await dbConnect();
+      let article = null;
+      if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
+        article = await Article.findByIdAndDelete(id);
+      } else {
+        article = await Article.findOneAndDelete({ $or: [{ _id: id }, { slug: id }] });
+      }
+
+      if (article) {
+        return NextResponse.json({ success: true, message: 'Article deleted successfully' });
+      }
+    } catch (dbErr) {
+      console.warn("DB error while deleting article:", dbErr.message);
     }
 
-    return NextResponse.json({ success: true });
+    // Try localDb deletion if stored in localDb
+    try {
+      const { deleteLocalItem } = require('@/lib/localDb');
+      await deleteLocalItem('articles', id);
+    } catch (_) {
+      /* ignore if not in localDb */
+    }
+
+    return NextResponse.json({ success: true, message: 'Article deleted' });
   } catch (err) {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    console.error("DELETE article error:", err);
+    return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
   }
 }

@@ -47,49 +47,74 @@ export default function TypesOfCasesPage() {
 
         <div className="layout-with-sidebar">
           <div>
-            {/* Case Types Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem', marginBottom: '4rem' }}>
-              {caseTypes.map((c, i) => {
-                const CaseIcon = CASE_TYPE_ICONS[c.icon] || Gavel;
-                return (
-                  <div key={i} style={{
-                    background: 'white',
-                    border: '1px solid var(--border-color)',
-                    borderRadius: '10px',
-                    padding: '2rem',
-                    boxShadow: 'var(--shadow-sm)',
-                    transition: 'var(--transition-normal)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '1rem'
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.boxShadow = 'var(--shadow-md)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.boxShadow = 'var(--shadow-sm)'; e.currentTarget.style.transform = 'none'; }}
-                  >
-                    <div style={{ width: '46px', height: '46px', background: 'rgba(197,168,128,0.12)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <CaseIcon size={22} style={{ color: 'var(--accent-gold)' }} />
-                    </div>
-                    <div>
-                      <h3 style={{ fontSize: '1.1rem', color: 'var(--primary-blue)', fontWeight: 700, marginBottom: '0.5rem' }}>{c.title}</h3>
-                      <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6, margin: 0 }}>{c.desc}</p>
-                    </div>
-                    <div style={{
-                      marginTop: 'auto',
-                      paddingTop: '0.75rem',
-                      borderTop: '1px solid var(--border-color)',
-                      fontSize: '0.8rem',
-                      fontWeight: 600,
-                      color: 'var(--primary-blue)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.25rem'
-                    }}>
-                      <Gavel size={14} style={{ color: 'var(--accent-gold)' }} />
-                      <span>Statutory Source: {c.statute}</span>
-                    </div>
-                  </div>
-                );
-              })}
+            {/* 1. Types of Cases List Section (Requirement 4 & 5) */}
+            <div style={{ marginBottom: '4rem' }}>
+              <div style={{ borderLeft: '4px solid var(--accent-gold)', paddingLeft: '1rem', marginBottom: '2rem' }}>
+                <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>Primary Classification</span>
+                <h2 style={{ fontSize: '1.8rem', color: 'var(--primary-blue)', margin: '0.25rem 0 0 0', fontFamily: 'var(--font-serif)', fontWeight: 700 }}>
+                  {config.sectionTitle || "Types of cases are as follows"}
+                </h2>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                {caseTypes.map((c, i) => {
+                  const CaseIcon = CASE_TYPE_ICONS[c.icon] || Gavel;
+                  const itemSlug = c.slug || c.id || `case-${i}`;
+                  return (
+                    <Link 
+                      key={i} 
+                      href={`/types-of-cases/${itemSlug}`} 
+                      style={{ textDecoration: 'none', color: 'inherit', display: 'flex' }}
+                    >
+                      <div style={{
+                        background: 'white',
+                        border: '1px solid var(--border-color)',
+                        borderRadius: '12px',
+                        padding: '2rem',
+                        boxShadow: 'var(--shadow-sm)',
+                        transition: 'all 0.3s ease',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1rem',
+                        width: '100%',
+                        cursor: 'pointer',
+                        position: 'relative',
+                        overflow: 'hidden'
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 24px rgba(0,0,0,0.08)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.borderColor = 'var(--accent-gold)'; }}
+                      onMouseLeave={e => { e.currentTarget.style.boxShadow = 'var(--shadow-sm)'; e.currentTarget.style.transform = 'none'; e.currentTarget.style.borderColor = 'var(--border-color)'; }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                          <div style={{ width: '48px', height: '48px', background: 'rgba(197,168,128,0.14)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <CaseIcon size={24} style={{ color: 'var(--accent-gold)' }} />
+                          </div>
+                          <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                            View Case Page <ArrowRight size={14} />
+                          </span>
+                        </div>
+                        <div>
+                          <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-blue)', fontWeight: 700, marginBottom: '0.5rem', lineHeight: 1.35 }}>{c.title}</h3>
+                          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6, margin: 0 }}>{c.desc || c.description}</p>
+                        </div>
+                        <div style={{
+                          marginTop: 'auto',
+                          paddingTop: '0.85rem',
+                          borderTop: '1px solid var(--border-color)',
+                          fontSize: '0.82rem',
+                          fontWeight: 600,
+                          color: 'var(--primary-blue)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.35rem'
+                        }}>
+                          <Gavel size={14} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
+                          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Statutory Source: {c.statute}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Section 23 and the First Schedule List of Judicial Matters */}
@@ -159,7 +184,7 @@ export default function TypesOfCasesPage() {
             </div>
 
             {/* Third Schedule Table */}
-            <ThirdScheduleTable />
+            <ThirdScheduleTable customIntro={config.thirdScheduleIntro} />
 
             {/* CTA Card */}
             <div style={{

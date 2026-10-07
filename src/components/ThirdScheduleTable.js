@@ -4,11 +4,14 @@ import { useState } from 'react';
 import { Search, ChevronLeft, ChevronRight, Gavel, HelpCircle } from 'lucide-react';
 import thirdScheduleData from '@/lib/third_schedule.json';
 
-export default function ThirdScheduleTable() {
+export default function ThirdScheduleTable({ customIntro }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('ALL'); // ALL, SUITS, APPLICATIONS, APPEALS
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  const defaultIntroText = "Third schedule is given in the end of the Rajasthan tenancy act 1955 and it provides a detailed jurisdiction and powers of the revenue courts and the cases and appeals dealt by the revenue officers/courts";
+  const introText = customIntro || defaultIntroText;
 
   // Filter items based on active tab and search query
   const filteredItems = thirdScheduleData.filter(item => {
@@ -76,8 +79,8 @@ export default function ThirdScheduleTable() {
           <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-blue)', margin: 0, fontFamily: 'var(--font-serif)', fontWeight: 700 }}>
             Third Schedule — Suits, Applications and Appeals
           </h3>
-          <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-            Verbatim list under Section 207 of the Rajasthan Tenancy Act, 1955 defining jurisdiction and limitation
+          <p style={{ margin: '0.4rem 0 0 0', fontSize: '0.92rem', color: 'var(--text-dark)', lineHeight: 1.6, fontWeight: 500 }}>
+            {introText}
           </p>
         </div>
       </div>

@@ -80,7 +80,7 @@ const siteConfig = {
       ]
     },
     {
-      label: "Resources", items: [
+      label: "Articles and resources", items: [
         { label: "Articles on Revenue Law", href: "/articles" },
         { label: "How to Write a Good Judgement", href: "/resources/how-to-write-judgments" },
       ]
@@ -95,7 +95,7 @@ const siteConfig = {
       { title: "Revenue Law", links: [{ label: "Acts & Statutes", href: "/laws" }, { label: "Procedure of Law", href: "/working-of-revenue-law" }, { label: "Court Hierarchy", href: "/hierarchy-of-courts" }, { label: "Types of Cases", href: "/types-of-cases" }] },
       { title: "Important Concepts", links: [{ label: "Important Rules", href: "/important-rules" }, { label: "Important Concepts", href: "/resources/important-concepts" }, { label: "Circulars & Gazettes", href: "/notifications" }, { label: "Revenue Glossary", href: "/glossary" }] },
     ],
-    contact: { title: "Official Contact", address: "B-30, Jamuna Nagar, Sodala, Jaipur, Rajasthan – 302006", phone: "+91 99820 57461", email: "revenuelawraj@gmail.com" },
+    contact: { title: "Official Contact", address: "", phone: "+91 99820 57461", email: "revenuelawraj@gmail.com" },
     socials: [{ label: "Facebook", icon: "Facebook", href: "https://www.facebook.com/profile.php?id=61591658014580" }, { label: "X", icon: "Twitter", href: "https://x.com/revenuelawraj" }, { label: "YouTube", icon: "Youtube", href: "https://www.youtube.com/@revenuelawraj" }, { label: "Instagram", icon: "Instagram", href: "https://www.instagram.com/revenuelawraj/" }],
     legalLinks: [{ label: "Terms of Service", href: "/terms" }, { label: "Privacy Policy", href: "/privacy" }, { label: "Disclaimer", href: "/disclaimer" }],
     copyright: "© {year} Rajasthan Revenue Law Platform. All rights reserved.",
@@ -148,7 +148,16 @@ export function normalizeSettingValue(key, value) {
 
 const homepageConfig = {
   schemaVersion: 1,
-  hero: { eyebrow: "Rajasthan Legal Research Portal", title: "Overview of", highlight: "Revenue Law", description: "The simple objective of Revenue Law in Rajasthan is to provide help to the tenant to ensure that he/she enjoys and maintains his/her rights relating to the land holding. It also helps the state government to realize and collect revenue from the tenant. Furthermore, the preamble of the Rajasthan Land Revenue Act 1956 states as follows:\n\nPreamble\n\nAn Act to consolidate and amend the law relating to land, the appointment, powers and duties of revenue courts, revenue officers, and village servants, the preparation and maintenance of maps and land records, the settlement of revenue and rent, the partition of estates, the collection of revenue and matters incidental thereto.", image: "/images/hero_revenue_law-removebg-preview.png", imageAlt: "Rajasthan Legal Research Platform" },
+  hero: { 
+    eyebrow: "Rajasthan Legal Research Portal", 
+    title: "Overview of", 
+    highlight: "Revenue Law", 
+    description: "The simple objective of Revenue Law is to provide help to the tenant to ensure that he/she enjoys and maintains his/her rights relating to the land holding. It also helps the state government to realize and collect revenue from the tenant. Furthermore, the preamble of the Rajasthan Land Revenue Act 1956 states as follows:\n\nPreamble\n\nAn Act to consolidate and amend the law relating to land, the appointment, powers and duties of revenue courts, revenue officers, and village servants, the preparation and maintenance of maps and land records, the settlement of revenue and rent, the partition of estates, the collection of revenue and matters incidental thereto.", 
+    highlightLine1: "This website/platform is focussed only on Revenue Law in the State of Rajasthan",
+    highlightLine2: "The Revenue Law in other States of India have different Acts and Statutes and hence for other States the laws pertaining to that State of India must be studied",
+    image: "/images/hero_revenue_law-removebg-preview.png", 
+    imageAlt: "Rajasthan Legal Research Platform" 
+  },
   quickLinks: [
     { label: "Hierarchy of Revenue Courts", href: "/hierarchy-of-courts", icon: "Landmark" },
     { label: "Jurisdiction of Revenue Court", href: "/court-jurisdictions", icon: "Gavel" },
@@ -288,13 +297,99 @@ const courtHierarchyConfig = {
 const caseTypesConfig = {
   schemaVersion: 1,
   hero: { eyebrow: "Legal Categories", title: "Types of Cases", highlight: "in Rajasthan Revenue Law", description: "A guide to the most common legal disputes, applications, and suits handled under the jurisdiction of state revenue officers." },
+  sectionTitle: "Types of cases are as follows",
+  thirdScheduleIntro: "third schedule is given in the end of the Rajasthan tenancy act 1955 and it provides a detailed jurisdiction and powers of the revenue courts and the cases and appeals dealt by the revenue officers/courts",
   caseTypes: [
-    { icon: "Layers", title: "Mutation & Record Corrections (Namantaran)", description: "Disputes relating to inheritance (Fauti), sale transfers, or gift deeds where the Patwari records or mutation entries are challenged or delayed.", statute: "Section 135, Rajasthan Land Revenue Act 1956" },
-    { icon: "Compass", title: "Partition of Agricultural Holdings (Bantwara)", description: "Suits filed by co-sharers (joint khatedars) to split their agricultural holdings into specific demarcated shares with independent land maps.", statute: "Section 53, Rajasthan Tenancy Act 1955" },
-    { icon: "ShieldAlert", title: "Eviction of Encroachments (Kabza / Trespass)", description: "Proceedings initiated by the state or landowners against unauthorized trespassers occupying public/private agricultural pasture land (Charagah).", statute: "Section 91 (State Land) & Section 188 (Tenant Protection)" },
-    { icon: "FileCheck", title: "Land Conversion Cases (Section 90-A)", description: "Applications or regularisation cases regarding changing agricultural land use for residential development, commercial layouts, or industrial units.", statute: "Section 90-A, Rajasthan Land Revenue Act 1956" },
-    { icon: "Gavel", title: "Right of Way & Easements (Rasta Nikaas)", description: "Suits filed before the Tehsildar to seek a new pathway, widen existing pathways, or clear blockages in paths leading to agricultural fields.", statute: "Section 251 & 251-A, Rajasthan Tenancy Act 1955" },
-    { icon: "Landmark", title: "Declaration of Tenancy Rights (Khatedari Suit)", description: "Suits seeking declaration that a tenant has acquired permanent, inheritable, and transferable Khatedari rights over specific revenue lands.", statute: "Section 88 & 183, Rajasthan Tenancy Act 1955" },
+    { 
+      id: "mutation",
+      slug: "mutation-record-corrections",
+      icon: "Layers", 
+      title: "Mutation & Record Corrections (Namantaran)", 
+      description: "Disputes relating to inheritance (Fauti), sale transfers, or gift deeds where the Patwari records or mutation entries are challenged or delayed.", 
+      statute: "Section 135, Rajasthan Land Revenue Act 1956",
+      competentCourt: "Tehsildar / Naib Tehsildar Courts & District Collector (Appellate)",
+      summary: "Mutation (Namantaran) is the legal process of updating the Record of Rights (Jamabandi) upon the transfer, sale, gift, exchange, or inheritance (Fauti) of agricultural land holdings in Rajasthan. Under Section 135 of the Rajasthan Land Revenue Act, 1956, every person obtaining possession of land by transfer or succession is bound to report the event to the Halka Patwari or Tehsildar.",
+      details: [
+        { title: "Statutory Source", text: "Section 135 & Section 136 of Rajasthan Land Revenue Act, 1956." },
+        { title: "Common Causes of Dispute", text: "Delayed entries by Patwari, objections raised by co-sharers, disputed succession (Fauti Namantaran), or transfers involving SC/ST land restrictions under Section 42 of Tenancy Act." },
+        { title: "Procedure & Escalation", text: "Undisputed mutations are verified in open Gram Sabha / Tehsil meetings. Contested mutations are registered as revenue suits before the Tehsildar. Appeals against Tehsildar mutation orders lie before the District Collector." }
+      ]
+    },
+    { 
+      id: "partition",
+      slug: "partition-agricultural-holdings",
+      icon: "Compass", 
+      title: "Partition of Agricultural Holdings (Bantwara)", 
+      description: "Suits filed by co-sharers (joint khatedars) to split their agricultural holdings into specific demarcated shares with independent land maps.", 
+      statute: "Section 53, Rajasthan Tenancy Act 1955",
+      competentCourt: "Sub-Divisional Officer (SDO) / Assistant Collector",
+      summary: "A partition suit under Section 53 of the Rajasthan Tenancy Act, 1955 allows joint Khatedar tenants to physically divide their joint agricultural holding according to their legal shares, giving each co-sharer independent title, separate Jamabandi entries, and distinct land trace maps (Aks Shajra).",
+      details: [
+        { title: "Statutory Source", text: "Section 53 of the Rajasthan Tenancy Act, 1955." },
+        { title: "Key Phases of Trial", text: "1. Plaint filing and service of summons to co-sharers. 2. Preliminary Decree determining legal share percentages. 3. Preparation of Naksha Khasra (division maps) by Revenue Inspector / Patwari. 4. Final Decree and field demarcation." },
+        { title: "Appellate Authority", text: "First appeal against SDO partition decree lies before the Revenue Appellate Authority (RAA)." }
+      ]
+    },
+    { 
+      id: "eviction",
+      slug: "eviction-encroachments",
+      icon: "ShieldAlert", 
+      title: "Eviction of Encroachments (Kabza / Trespass)", 
+      description: "Proceedings initiated by the state or landowners against unauthorized trespassers occupying public/private agricultural pasture land (Charagah).", 
+      statute: "Section 91 (State Land) & Section 188 (Tenant Protection)",
+      competentCourt: "Tehsildar Court (Sec 91) & Sub-Divisional Officer (Sec 188 Injunctions)",
+      summary: "Encroachment litigation in Rajasthan deals with unlawful occupation of government land, public pasture holdings (Charagah), or private agricultural tenant land. Under Section 91 of the Land Revenue Act 1956, Tehsildars hold summary powers to evict trespassers and demolish unauthorized structures.",
+      details: [
+        { title: "Section 91 Proceedings (Government & Pasture Land)", text: "Summary eviction powers exercised by Tehsildar against encroachers on Charagah, Oran, or government wasteland." },
+        { title: "Section 188 Suits (Private Khatedar Protection)", text: "Suit filed before SDO by a Khatedar tenant seeking temporary and permanent injunction against unlawful interference or trespass." },
+        { title: "Judicial Principles", text: "Landmark Supreme Court and High Court judgments bar regularisation of pasture land (Charagah) encroachments." }
+      ]
+    },
+    { 
+      id: "land-conversion",
+      slug: "land-conversion-90-a",
+      icon: "FileCheck", 
+      title: "Land Conversion Cases (Section 90-A)", 
+      description: "Applications or regularisation cases regarding changing agricultural land use for residential development, commercial layouts, or industrial units.", 
+      statute: "Section 90-A, Rajasthan Land Revenue Act 1956",
+      competentCourt: "Sub-Divisional Officer (SDO) / Urban Local Bodies (JDA / UIT / Municipalities)",
+      summary: "Section 90-A of the Rajasthan Land Revenue Act, 1956 regulates the conversion of agricultural land holdings for non-agricultural purposes (residential layouts, commercial hubs, institutional or industrial units). It sets statutory guidelines for surrendering tenancy rights to the state or urban development body in exchange for conversion regularisation.",
+      details: [
+        { title: "Statutory Source", text: "Section 90-A of Rajasthan Land Revenue Act 1956 & Land Conversion Rules 1961." },
+        { title: "Competent Authority", text: "Sub-Divisional Officer (SDO) for rural agricultural holdings; Jaipur Development Authority (JDA), Urban Improvement Trusts (UIT), or Municipal Councils for lands within urban master plan limits." },
+        { title: "Key Requirements", text: "Clean Khatedari title, payment of DLC conversion charges, submission of approved cadastral layout plan." }
+      ]
+    },
+    { 
+      id: "right-of-way",
+      slug: "right-of-way-easements",
+      icon: "Gavel", 
+      title: "Right of Way & Easements (Rasta Nikaas)", 
+      description: "Suits filed before the Tehsildar to seek a new pathway, widen existing pathways, or clear blockages in paths leading to agricultural fields.", 
+      statute: "Section 251 & 251-A, Rajasthan Tenancy Act 1955",
+      competentCourt: "Tehsildar Court",
+      summary: "Access rights to agricultural fields (Rasta Nikaas) are governed by Sections 251 and 251-A of the Rajasthan Tenancy Act, 1955. These statutory provisions empower Tehsildars to remove blockages from traditional field pathways or sanction new pathways through adjacent agricultural land upon payment of fair compensation.",
+      details: [
+        { title: "Section 251 (Removal of Obstructions)", text: "Summary application before Tehsildar to reopen blocked traditional pathways or customary field tracks." },
+        { title: "Section 251-A (Sanction of New Pathway)", text: "Statutory application seeking grant of a new passage through neighboring agricultural land when no reasonable alternative route exists." },
+        { title: "Spot Inspection Requirement", text: "Tehsildar orders immediate Mauka Girdawari (field spot report) by Halka Patwari before passing interim passage orders." }
+      ]
+    },
+    { 
+      id: "declaration-tenancy",
+      slug: "declaration-tenancy-rights",
+      icon: "Landmark", 
+      title: "Declaration of Tenancy Rights (Khatedari Suit)", 
+      description: "Suits seeking declaration that a tenant has acquired permanent, inheritable, and transferable Khatedari rights over specific revenue lands.", 
+      statute: "Section 88 & 183, Rajasthan Tenancy Act 1955",
+      competentCourt: "Sub-Divisional Officer (SDO) / Assistant Collector",
+      summary: "A suit for declaration under Section 88 of the Rajasthan Tenancy Act, 1955 is the primary civil lawsuit in revenue jurisdiction to establish Khatedari rights (permanent, inheritable, transferable ownership title). It is frequently combined with Section 183 (ejectment of trespassers) or Section 53 (partition).",
+      details: [
+        { title: "Statutory Source", text: "Section 88, Section 89, Section 183 of the Rajasthan Tenancy Act, 1955." },
+        { title: "Essential Evidence", text: "Historic Jamabandi entries, continuous proof of possession (Girdawari entries), receipts of land revenue paid to the state." },
+        { title: "Statutory Protections", text: "Protects tenant holdings against unauthorized government seizure or private rival claims." }
+      ]
+    }
   ],
   firstSchedule: { eyebrow: "Judicial Jurisdiction", title: "Section 23 & The First Schedule of RLRA 1956", introduction: "Under the Rajasthan Land Revenue Act, 1956, judicial matters are categorized separately to determine the correct jurisdiction and escalation. Section 23 of the Rajasthan Land Revenue Act, 1956 governs the list of these judicial proceedings, reproduced below:", sectionTitle: "Section 23 - Rules defining what matters are judicial or otherwise", sectionText: "The Board may, with the previous sanction of the State Government, make rules declaring what matters shall be deemed to be judicial matters and what matters shall be deemed to be non-judicial matters under this Act. The list of such judicial matters is detailed under the First Schedule of the Act.", listTitle: "The First Schedule (See Section 23) — List of Judicial Matters", items: ["Claims under sub-section (2) of section 88.", "Disputes with respect to the right of grazing cattle on pasturage land.", "Disputes as to the right of user over forest growth and exclusion from forest land.", "Settlement of boundary disputes.", "Disputes as to entries in the record of rights and annual registers.", "Disputes respecting the class or tenure of tenants.", "Mutation upon succession, transfer or otherwise.", "Disputes regarding the rent or revenue payable.", "Disputes concerning Waj-ul-arz or Dastoor Ganwai.", "Inquiry into and assessment of lands held free of revenue or rent.", "Partition and consolidation of estates.", "Imposition of fines, penalties, forfeitures and confiscations under this Act.", "Determination of compensation.", "Sales and auctions under this Act.", "Such other matters as may be prescribed by the State Government."] },
   cta: { title: "Looking for Judicial Precedents?", description: "Search through our database of judgments filtered by specific case categories like partition, mutation rights, and land conversions.", label: "Explore Board of Revenue Judgments", href: "/judgments" },

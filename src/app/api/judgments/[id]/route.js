@@ -62,16 +62,34 @@ export async function DELETE(req, { params }) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    await dbConnect();
     const { id } = params;
 
-    const judgment = await Judgment.findByIdAndDelete(id);
-    if (!judgment) {
-      return NextResponse.json({ error: 'Judgment not found' }, { status: 404 });
+    try {
+      await dbConnect();
+      let judgment = null;
+      if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
+        judgment = await Judgment.findByIdAndDelete(id);
+      } else {
+        judgment = await Judgment.findOneAndDelete({ $or: [{ _id: id }, { slug: id }] });
+      }
+
+      if (judgment) {
+        return NextResponse.json({ success: true, message: 'Judgment deleted successfully' });
+      }
+    } catch (dbErr) {
+      console.warn("DB error while deleting judgment:", dbErr.message);
     }
 
-    return NextResponse.json({ success: true });
+    try {
+      const { deleteLocalItem } = require('@/lib/localDb');
+      await deleteLocalItem('judgments', id);
+    } catch (_) {
+      /* ignore */
+    }
+
+    return NextResponse.json({ success: true, message: 'Judgment deleted' });
   } catch (err) {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    console.error("DELETE judgment error:", err);
+    return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
   }
 }
