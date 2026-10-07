@@ -297,7 +297,31 @@ const courtHierarchyConfig = {
 const caseTypesConfig = {
   schemaVersion: 1,
   hero: { eyebrow: "Legal Categories", title: "Types of Cases", highlight: "in Rajasthan Revenue Law", description: "A guide to the most common legal disputes, applications, and suits handled under the jurisdiction of state revenue officers." },
-  sectionTitle: "Types of cases are as follows",
+  
+  // Section A: List-wise cases list (1 to 15 cases list)
+  typesListTitle: "Types of cases are as follows",
+  typesListDescription: "Below is the structured list-wise classification of major revenue cases, applications, and judicial proceedings handled under Rajasthan revenue laws:",
+  typesList: [
+    "Mutation upon succession, transfer, sale, gift or exchange (Namantaran)",
+    "Partition and division of joint agricultural holdings (Bantwara - Sec 53)",
+    "Eviction of trespassers from government land and pasture holdings (Charagah Kabza - Sec 91)",
+    "Declaration of Khatedari rights and tenancy status (Sec 88 Suit)",
+    "Conversion of agricultural land for non-agricultural use (Sec 90-A)",
+    "Rights of way, field passage and easement disputes (Rasta Nikaas - Sec 251 & 251-A)",
+    "Suit for permanent injunction protecting tenant possession against trespass (Sec 188)",
+    "Settlement and demarcation of agricultural field boundaries (Seema Vivad / Aks Shajra)",
+    "Correction of entries in Jamabandi and Annual Record of Rights (Sec 136)",
+    "Determination and assessment of land revenue, rent liabilities and DLC valuations",
+    "Allotment and regularisation of government wasteland for agricultural purposes",
+    "Inquiry into and supervision of Mandir Maafi and Devasthan temple land grants",
+    "Disputes respecting cattle grazing rights on pasture lands (Gochar)",
+    "First and second statutory appeals before Revenue Appellate Authority (RAA) and RAC",
+    "Revisional and reference petitions before Board of Revenue Ajmer (BOR)"
+  ],
+
+  // Section B: Cards with individual detail pages & admin control
+  cardsTitle: "Detailed Case Categories & Practice Guides",
+  cardsDescription: "Click on any case card below to open its dedicated page containing full summary, statutory provisions, court workflow, and precedents.",
   thirdScheduleIntro: "third schedule is given in the end of the Rajasthan tenancy act 1955 and it provides a detailed jurisdiction and powers of the revenue courts and the cases and appeals dealt by the revenue officers/courts",
   caseTypes: [
     { 

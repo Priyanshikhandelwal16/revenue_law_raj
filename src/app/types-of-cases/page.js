@@ -47,12 +47,61 @@ export default function TypesOfCasesPage() {
 
         <div className="layout-with-sidebar">
           <div>
-            {/* 1. Types of Cases List Section (Requirement 4 & 5) */}
+            {/* Section A: List-wise Section (Types of cases are as follows - 1 to 15 list) */}
+            <div style={{
+              background: 'white',
+              border: '1px solid var(--border-color)',
+              borderRadius: '12px',
+              padding: '2.5rem',
+              boxShadow: 'var(--shadow-sm)',
+              marginBottom: '4rem'
+            }}>
+              <div style={{ borderLeft: '4px solid var(--accent-gold)', paddingLeft: '1rem', marginBottom: '1.5rem' }}>
+                <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>List-Wise Classification</span>
+                <h2 style={{ fontSize: '1.75rem', color: 'var(--primary-blue)', margin: '0.25rem 0 0 0', fontFamily: 'var(--font-serif)', fontWeight: 700 }}>
+                  {config.typesListTitle || "Types of cases are as follows"}
+                </h2>
+              </div>
+
+              {config.typesListDescription && (
+                <p style={{ fontSize: '0.96rem', lineHeight: 1.65, color: 'var(--text-dark)', marginBottom: '1.75rem', fontWeight: 500 }}>
+                  {config.typesListDescription}
+                </p>
+              )}
+
+              <div style={{
+                backgroundColor: 'var(--bg-offwhite)',
+                border: '1.5px solid var(--accent-gold)',
+                borderRadius: '10px',
+                padding: '2rem',
+                boxShadow: 'var(--shadow-sm)'
+              }}>
+                <ol style={{ 
+                  margin: 0, 
+                  paddingLeft: '1.5rem', 
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.85rem',
+                  fontSize: '0.96rem',
+                  lineHeight: '1.65',
+                  color: 'var(--primary-blue)',
+                  fontWeight: 600
+                }}>
+                  {(Array.isArray(config.typesList) ? config.typesList : []).map((item, index) => (
+                    <li key={index} style={{ borderBottom: index < (config.typesList?.length || 0) - 1 ? '1px dashed #E5DEC9' : 'none', paddingBottom: '0.65rem' }}>
+                      <span style={{ color: 'var(--text-dark)', fontWeight: 500 }}>{item}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+
+            {/* Section B: Interactive Cards Section (Each card opens its detail page) */}
             <div style={{ marginBottom: '4rem' }}>
               <div style={{ borderLeft: '4px solid var(--accent-gold)', paddingLeft: '1rem', marginBottom: '2rem' }}>
-                <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>Primary Classification</span>
-                <h2 style={{ fontSize: '1.8rem', color: 'var(--primary-blue)', margin: '0.25rem 0 0 0', fontFamily: 'var(--font-serif)', fontWeight: 700 }}>
-                  {config.sectionTitle || "Types of cases are as follows"}
+                <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>Practice Guides & Summaries</span>
+                <h2 style={{ fontSize: '1.75rem', color: 'var(--primary-blue)', margin: '0.25rem 0 0 0', fontFamily: 'var(--font-serif)', fontWeight: 700 }}>
+                  {config.cardsTitle || "Detailed Case Categories & Practice Guides"}
                 </h2>
               </div>
 
@@ -89,7 +138,7 @@ export default function TypesOfCasesPage() {
                             <CaseIcon size={24} style={{ color: 'var(--accent-gold)' }} />
                           </div>
                           <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-                            View Case Page <ArrowRight size={14} />
+                            View Summary <ArrowRight size={14} />
                           </span>
                         </div>
                         <div>

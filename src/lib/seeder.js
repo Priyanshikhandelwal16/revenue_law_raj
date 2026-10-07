@@ -23,30 +23,18 @@ export async function checkAndSeedDatabase() {
   try {
     await dbConnect();
 
-    // 1. Articles — always upsert dedicated category articles by slug
-    const dedicatedArticles = fallbackArticles.filter(a => !a._id.startsWith('art_mock_'));
-    for (const art of dedicatedArticles) {
-      const doc = { ...art };
-      delete doc._id;
-      await Article.updateOne(
-        { slug: doc.slug },
-        { $setOnInsert: doc },
-        { upsert: true }
-      );
-    }
-
-    // Also seed general articles if DB is empty
+    // 1. Articles — seed only if Articles collection is completely empty
     const artCount = await Article.countDocuments({});
-    if (artCount <= dedicatedArticles.length) {
+    if (artCount === 0) {
       console.log('Auto-seeding empty database: Articles...');
-      const generalArticles = fallbackArticles.filter(a => a._id.startsWith('art_mock_')).map(a => {
+      const cleanArticles = fallbackArticles.map(a => {
         const doc = { ...a };
-        delete doc._id;
+        if (doc._id && (doc._id.startsWith('art_mock_') || doc._id.startsWith('m'))) {
+          delete doc._id;
+        }
         return doc;
       });
-      for (const art of generalArticles) {
-        await Article.updateOne({ slug: art.slug }, { $setOnInsert: art }, { upsert: true });
-      }
+      await Article.insertMany(cleanArticles);
     }
 
     // 2. Judgments
