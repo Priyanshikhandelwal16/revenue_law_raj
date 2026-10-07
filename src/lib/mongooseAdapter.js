@@ -320,8 +320,17 @@ export function patchMongooseModels() {
     if (isOffline()) {
       console.warn(`[FirestoreAdapter] Intercepting Model.findByIdAndDelete for ${this.modelName}`);
       const type = getCollectionName(this.modelName);
-      await deleteLocalItem(type, id);
-      return { _id: id };
+      const items = await readLocalDb(type);
+      const targetId = typeof id === 'object' && id ? String(id) : String(id || '');
+      const found = items.find(i => i._id === targetId || i.slug === targetId);
+      if (found) {
+        if (found._id) await deleteLocalItem(type, found._id);
+        if (found.slug) await deleteLocalItem(type, found.slug);
+        return found;
+      } else {
+        await deleteLocalItem(type, targetId);
+      }
+      return { _id: targetId };
     }
     return originalFindByIdAndDelete.apply(this, [id, ...args]);
   };
@@ -330,8 +339,31 @@ export function patchMongooseModels() {
     if (isOffline()) {
       console.warn(`[FirestoreAdapter] Intercepting Model.findOneAndDelete for ${this.modelName}`);
       const type = getCollectionName(this.modelName);
-      if (query && query._id) {
-        await deleteLocalItem(type, query._id);
+      const items = await readLocalDb(type);
+      let found = null;
+      if (query) {
+        if (typeof query === 'string') {
+          found = items.find(i => i._id === query || i.slug === query);
+        } else if (query._id) {
+          found = items.find(i => i._id === query._id || i.slug === query._id);
+        } else if (query.slug) {
+          found = items.find(i => i.slug === query.slug || i._id === query.slug);
+        } else {
+          found = items.find(item => {
+            for (let k in query) {
+              if (item[k] !== query[k]) return false;
+            }
+            return true;
+          });
+        }
+      }
+      if (found) {
+        if (found._id) await deleteLocalItem(type, found._id);
+        if (found.slug) await deleteLocalItem(type, found.slug);
+        return found;
+      }
+      if (query && (query._id || query.slug)) {
+        await deleteLocalItem(type, query._id || query.slug);
       }
       return {};
     }

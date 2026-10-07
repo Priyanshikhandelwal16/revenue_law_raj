@@ -113,15 +113,23 @@ export default function CaseTypeDetailPage() {
               marginBottom: '2.5rem'
             }}>
               <div style={{ borderLeft: '4px solid var(--accent-gold)', paddingLeft: '1rem', marginBottom: '1.5rem' }}>
-                <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>Legal Overview</span>
+                <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>Legal Overview & Purpose</span>
                 <h2 style={{ fontSize: '1.5rem', color: 'var(--primary-blue)', margin: '0.25rem 0 0 0', fontFamily: 'var(--font-serif)', fontWeight: 700 }}>
                   Understanding {caseData.title}
                 </h2>
               </div>
 
-              <p style={{ fontSize: '1rem', lineHeight: 1.8, color: 'var(--text-dark)', marginBottom: 0 }}>
+              <p style={{ fontSize: '1.02rem', lineHeight: 1.8, color: 'var(--text-dark)', marginBottom: caseData.fullContent ? '1.5rem' : 0 }}>
                 {caseData.summary || caseData.description}
               </p>
+
+              {caseData.fullContent && (
+                <div 
+                  className="rich-text-content" 
+                  style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem', marginTop: '1.5rem' }}
+                  dangerouslySetInnerHTML={{ __html: caseData.fullContent }} 
+                />
+              )}
             </div>
 
             {/* Key Statutory Details & Guidelines */}
@@ -135,7 +143,7 @@ export default function CaseTypeDetailPage() {
                 marginBottom: '2.5rem'
               }}>
                 <h3 style={{ fontSize: '1.3rem', color: 'var(--primary-blue)', fontFamily: 'var(--font-serif)', fontWeight: 700, marginBottom: '1.5rem', borderBottom: '2px solid rgba(197,168,128,0.3)', paddingBottom: '0.5rem' }}>
-                  Key Provisions & Guidelines
+                  Key Provisions & Legal Guidelines
                 </h3>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -157,6 +165,157 @@ export default function CaseTypeDetailPage() {
                       </div>
                       <p style={{ margin: '0.25rem 0 0 1.6rem', fontSize: '0.92rem', lineHeight: 1.65, color: 'var(--text-dark)' }}>
                         {item.text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Step-by-Step Trial Procedure */}
+            {Array.isArray(caseData.procedureSteps) && caseData.procedureSteps.length > 0 && (
+              <div style={{
+                background: 'white',
+                border: '1px solid var(--border-color)',
+                borderRadius: '12px',
+                padding: '2.5rem',
+                boxShadow: 'var(--shadow-sm)',
+                marginBottom: '2.5rem'
+              }}>
+                <h3 style={{ fontSize: '1.3rem', color: 'var(--primary-blue)', fontFamily: 'var(--font-serif)', fontWeight: 700, marginBottom: '1.5rem', borderBottom: '2px solid rgba(197,168,128,0.3)', paddingBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Gavel size={20} style={{ color: 'var(--accent-gold)' }} />
+                  Step-by-Step Trial Procedure & Roadmap
+                </h3>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {caseData.procedureSteps.map((step, idx) => (
+                    <div key={idx} style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '1rem',
+                      backgroundColor: '#FAF8F5',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: '8px',
+                      padding: '1rem 1.25rem'
+                    }}>
+                      <div style={{
+                        width: '28px',
+                        height: '28px',
+                        borderRadius: '50%',
+                        backgroundColor: 'var(--primary-blue)',
+                        color: 'white',
+                        fontWeight: 700,
+                        fontSize: '0.85rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        {idx + 1}
+                      </div>
+                      <span style={{ fontSize: '0.95rem', color: 'var(--text-dark)', fontWeight: 600, lineHeight: 1.6, paddingTop: '0.15rem' }}>
+                        {typeof step === 'string' ? step.replace(/^\d+\.\s*/, '') : step}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Required Documents Checklist */}
+            {Array.isArray(caseData.requiredDocuments) && caseData.requiredDocuments.length > 0 && (
+              <div style={{
+                background: 'white',
+                border: '1px solid var(--border-color)',
+                borderRadius: '12px',
+                padding: '2.5rem',
+                boxShadow: 'var(--shadow-sm)',
+                marginBottom: '2.5rem'
+              }}>
+                <h3 style={{ fontSize: '1.3rem', color: 'var(--primary-blue)', fontFamily: 'var(--font-serif)', fontWeight: 700, marginBottom: '1.5rem', borderBottom: '2px solid rgba(197,168,128,0.3)', paddingBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <FileCheck size={20} style={{ color: 'var(--accent-gold)' }} />
+                  Required Document Checklist for Filing
+                </h3>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                  {caseData.requiredDocuments.map((docItem, idx) => (
+                    <div key={idx} style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem',
+                      backgroundColor: '#F8FAFC',
+                      border: '1px solid #E2E8F0',
+                      borderRadius: '8px',
+                      padding: '0.85rem 1rem'
+                    }}>
+                      <CheckCircle size={18} style={{ color: '#16A34A', flexShrink: 0 }} />
+                      <span style={{ fontSize: '0.9rem', color: 'var(--text-dark)', fontWeight: 600 }}>{docItem}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Key Precedents & Rulings */}
+            {Array.isArray(caseData.keyPrecedents) && caseData.keyPrecedents.length > 0 && (
+              <div style={{
+                background: 'white',
+                border: '1px solid var(--border-color)',
+                borderRadius: '12px',
+                padding: '2.5rem',
+                boxShadow: 'var(--shadow-sm)',
+                marginBottom: '2.5rem'
+              }}>
+                <h3 style={{ fontSize: '1.3rem', color: 'var(--primary-blue)', fontFamily: 'var(--font-serif)', fontWeight: 700, marginBottom: '1.5rem', borderBottom: '2px solid rgba(197,168,128,0.3)', paddingBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Landmark size={20} style={{ color: 'var(--accent-gold)' }} />
+                  Key Precedents & Judicial Rulings
+                </h3>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {caseData.keyPrecedents.map((prec, idx) => (
+                    <div key={idx} style={{
+                      backgroundColor: 'rgba(197, 168, 128, 0.08)',
+                      borderLeft: '4px solid var(--accent-gold)',
+                      borderRadius: '0 8px 8px 0',
+                      padding: '1rem 1.25rem'
+                    }}>
+                      <p style={{ margin: 0, fontSize: '0.92rem', color: 'var(--primary-blue)', fontWeight: 600, lineHeight: 1.6 }}>
+                        ⚖️ {prec}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Case Specific FAQs */}
+            {Array.isArray(caseData.faqs) && caseData.faqs.length > 0 && (
+              <div style={{
+                background: 'white',
+                border: '1px solid var(--border-color)',
+                borderRadius: '12px',
+                padding: '2.5rem',
+                boxShadow: 'var(--shadow-sm)',
+                marginBottom: '2.5rem'
+              }}>
+                <h3 style={{ fontSize: '1.3rem', color: 'var(--primary-blue)', fontFamily: 'var(--font-serif)', fontWeight: 700, marginBottom: '1.5rem', borderBottom: '2px solid rgba(197,168,128,0.3)', paddingBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <HelpCircle size={20} style={{ color: 'var(--accent-gold)' }} />
+                  Frequently Asked Questions (FAQs)
+                </h3>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {caseData.faqs.map((faq, idx) => (
+                    <div key={idx} style={{
+                      backgroundColor: 'var(--bg-offwhite)',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: '8px',
+                      padding: '1.25rem 1.5rem'
+                    }}>
+                      <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.98rem', color: 'var(--primary-blue)', fontWeight: 700 }}>
+                        Q: {faq.question}
+                      </h4>
+                      <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-dark)', lineHeight: 1.6 }}>
+                        Ans: {faq.answer}
                       </p>
                     </div>
                   ))}

@@ -337,6 +337,29 @@ const caseTypesConfig = {
         { title: "Statutory Source", text: "Section 135 & Section 136 of Rajasthan Land Revenue Act, 1956." },
         { title: "Common Causes of Dispute", text: "Delayed entries by Patwari, objections raised by co-sharers, disputed succession (Fauti Namantaran), or transfers involving SC/ST land restrictions under Section 42 of Tenancy Act." },
         { title: "Procedure & Escalation", text: "Undisputed mutations are verified in open Gram Sabha / Tehsil meetings. Contested mutations are registered as revenue suits before the Tehsildar. Appeals against Tehsildar mutation orders lie before the District Collector." }
+      ],
+      requiredDocuments: [
+        "Original Registered Sale Deed / Gift Deed / Will / Inheritance Fauti Certificate",
+        "Certified copy of latest Jamabandi (Record of Rights)",
+        "Aks Shajra (Cadastral Trace Map of Khasra)",
+        "Applicant Aadhaar & Identity Verification",
+        "No-Objection Affidavit from co-sharers (if applicable)"
+      ],
+      procedureSteps: [
+        "1. Application Report filing before Patwari or Tehsildar Court",
+        "2. Entry in Mutation Register (Pattra Namantaran)",
+        "3. Issuance of 15-day Statutory Notice in Gram Panchayat",
+        "4. Field Verification & Girdawari by Revenue Inspector (Kanungo)",
+        "5. Verification in open Gram Sabha / Tehsil court hearing",
+        "6. Sanction Order & Updating of official Jamabandi records"
+      ],
+      keyPrecedents: [
+        "2026 RRD 89 (Board of Revenue, Ajmer): Co-sharer objections cannot halt mutation based on undisputed registered sale deeds.",
+        "2025 RLW 412: Mutation entries do not create independent legal title but reflect fiscal possession for land revenue collection."
+      ],
+      faqs: [
+        { question: "What is the statutory timeline for sanctioned mutation in Rajasthan?", answer: "Undisputed mutations must be sanctioned within 30 days under Rajasthan Land Revenue Rules." },
+        { question: "What remedy exists if Patwari refuses to record mutation?", answer: "An application can be directly filed before the Tehsildar under Section 136 of the Land Revenue Act 1956." }
       ]
     },
     { 
@@ -352,6 +375,28 @@ const caseTypesConfig = {
         { title: "Statutory Source", text: "Section 53 of the Rajasthan Tenancy Act, 1955." },
         { title: "Key Phases of Trial", text: "1. Plaint filing and service of summons to co-sharers. 2. Preliminary Decree determining legal share percentages. 3. Preparation of Naksha Khasra (division maps) by Revenue Inspector / Patwari. 4. Final Decree and field demarcation." },
         { title: "Appellate Authority", text: "First appeal against SDO partition decree lies before the Revenue Appellate Authority (RAA)." }
+      ],
+      requiredDocuments: [
+        "Certified copy of Jamabandi showing joint Khatedari title",
+        "Aks Shajra (Cadastral Map of joint Khasra holdings)",
+        "Complete list of all legal co-sharers with residential addresses",
+        "Proposed Naksha Bantwara (Draft division map prepared by advocate)",
+        "Requisite Court Fee Stamps"
+      ],
+      procedureSteps: [
+        "1. Plaint Filing under Section 53 before SDO Court",
+        "2. Service of Summons to all joint Khatedars",
+        "3. Preliminary Decree determining legal share percentages",
+        "4. Appointment of Revenue Inspector / Patwari as Commissioner for Naksha Khasra",
+        "5. Hearing on objections against proposed physical division",
+        "6. Final Decree and physical spot demarcation of separate fields"
+      ],
+      keyPrecedents: [
+        "2026 RRD 194 (BoR Ajmer): Female Hindu co-sharers have an absolute right to demand partition under Section 53.",
+        "2024 RRD 301: Physical partition cannot be denied on grounds of fragment size if co-sharer demands independent Khatedari."
+      ],
+      faqs: [
+        { question: "Which court holds jurisdiction over agricultural partition suits?", answer: "The Sub-Divisional Officer (SDO) / Assistant Collector Court holds exclusive original jurisdiction." }
       ]
     },
     { 
@@ -367,6 +412,26 @@ const caseTypesConfig = {
         { title: "Section 91 Proceedings (Government & Pasture Land)", text: "Summary eviction powers exercised by Tehsildar against encroachers on Charagah, Oran, or government wasteland." },
         { title: "Section 188 Suits (Private Khatedar Protection)", text: "Suit filed before SDO by a Khatedar tenant seeking temporary and permanent injunction against unlawful interference or trespass." },
         { title: "Judicial Principles", text: "Landmark Supreme Court and High Court judgments bar regularisation of pasture land (Charagah) encroachments." }
+      ],
+      requiredDocuments: [
+        "Certified copy of Khasra Girdawari showing unauthorized entry",
+        "Mauka Inspection Report prepared by Tehsildar/Patwari",
+        "Photographs & GPS boundary data of field encroachment",
+        "Copy of Charagah / Oran gazette reservation notice"
+      ],
+      procedureSteps: [
+        "1. Notice under Section 91 issued to alleged trespasser",
+        "2. Filing of written reply by trespasser",
+        "3. Mauka Muayana (Spot Inspection) by Revenue Inspector",
+        "4. Order of eviction & imposition of penalty (up to 30 times land revenue)",
+        "5. Execution of eviction warrant with police assistance"
+      ],
+      keyPrecedents: [
+        "Supreme Court (Jagpal Singh vs. State of Punjab): Pasture & Charagah lands cannot be regularised or allotted to trespassers.",
+        "Rajasthan High Court (Gulab Kothari vs. State): Directs strict eviction of encroachers from water bodies and pasture lands."
+      ],
+      faqs: [
+        { question: "Can encroached Charagah land be regularised under Section 90-A?", answer: "No. Encroachments on pasture (Charagah) or forest lands are strictly barred from regularisation." }
       ]
     },
     { 
@@ -382,6 +447,27 @@ const caseTypesConfig = {
         { title: "Statutory Source", text: "Section 90-A of Rajasthan Land Revenue Act 1956 & Land Conversion Rules 1961." },
         { title: "Competent Authority", text: "Sub-Divisional Officer (SDO) for rural agricultural holdings; Jaipur Development Authority (JDA), Urban Improvement Trusts (UIT), or Municipal Councils for lands within urban master plan limits." },
         { title: "Key Requirements", text: "Clean Khatedari title, payment of DLC conversion charges, submission of approved cadastral layout plan." }
+      ],
+      requiredDocuments: [
+        "Registered Khatedari Jamabandi (issued within last 30 days)",
+        "Cadastral Layout Plan approved by certified architect/engineer",
+        "No-Dues Certificate (NDC) from local Gram Panchayat/Authority",
+        "Affidavit of non-violation of Urban Master Plan provisions",
+        "Requisite DLC conversion fee challan deposit receipt"
+      ],
+      procedureSteps: [
+        "1. Application submission before SDO or Urban Development Body (JDA/UIT)",
+        "2. Verification of Khatedari title & encumbrance search",
+        "3. Publication of 15-day Public Notice inviting objections",
+        "4. Assessment of DLC conversion fees & surrender charges",
+        "5. Issue of Section 90-A Surrender Order & approved site plan"
+      ],
+      keyPrecedents: [
+        "2026 RRD 182: Once conversion order is issued under Section 90-A, agricultural tenancy surrender is legally complete.",
+        "2025 RRD 99: SDO cannot refuse conversion if land falls in master plan permissible zone and DLC fees are deposited."
+      ],
+      faqs: [
+        { question: "Can SC/ST agricultural land be converted under Section 90-A?", answer: "Yes, SC/ST landholders can apply for conversion provided the converted plot remains in their ownership or complies with Section 42 restrictions." }
       ]
     },
     { 
@@ -397,6 +483,27 @@ const caseTypesConfig = {
         { title: "Section 251 (Removal of Obstructions)", text: "Summary application before Tehsildar to reopen blocked traditional pathways or customary field tracks." },
         { title: "Section 251-A (Sanction of New Pathway)", text: "Statutory application seeking grant of a new passage through neighboring agricultural land when no reasonable alternative route exists." },
         { title: "Spot Inspection Requirement", text: "Tehsildar orders immediate Mauka Girdawari (field spot report) by Halka Patwari before passing interim passage orders." }
+      ],
+      requiredDocuments: [
+        "Khasra Trace Map (Aks Shajra) showing location of fields",
+        "Proof of continuous customary field passage or harvest access",
+        "Details of adjoining field survey numbers and landholders",
+        "Formal application under Section 251 / 251-A before Tehsildar"
+      ],
+      procedureSteps: [
+        "1. Application filing before Tehsildar Court",
+        "2. Immediate order for Mauka Report (Spot inspection by Patwari)",
+        "3. Notice to owners of adjacent agricultural fields",
+        "4. Interim passage protection order if crop harvest is pending",
+        "5. Assessment of DLC land compensation under Sec 251-A if new path sanctioned",
+        "6. Final sanction order and physical boundary demarcation of pathway"
+      ],
+      keyPrecedents: [
+        "2026 RRD 150: Tehsildar has statutory duty under Sec 251 to reopen blocked customary paths even if a longer alternate route exists.",
+        "2025 RLW 210: Compensation under Section 251-A must be calculated on DLC rates of the affected land strip."
+      ],
+      faqs: [
+        { question: "What is the key difference between Section 251 and 251-A?", answer: "Section 251 reopens existing/traditional blocked paths; Section 251-A sanctions a new passage through adjacent fields." }
       ]
     },
     { 
@@ -412,6 +519,27 @@ const caseTypesConfig = {
         { title: "Statutory Source", text: "Section 88, Section 89, Section 183 of the Rajasthan Tenancy Act, 1955." },
         { title: "Essential Evidence", text: "Historic Jamabandi entries, continuous proof of possession (Girdawari entries), receipts of land revenue paid to the state." },
         { title: "Statutory Protections", text: "Protects tenant holdings against unauthorized government seizure or private rival claims." }
+      ],
+      requiredDocuments: [
+        "Historic Jamabandi & old revenue settlement records",
+        "Continuous Khasra Girdawari entries showing cultivation",
+        "Lagaan receipts (Land revenue payment receipts)",
+        "Plaint under Section 88 filed before SDO Court",
+        "Requisite Court fee stamps"
+      ],
+      procedureSteps: [
+        "1. Plaint filing under Section 88 in SDO Court",
+        "2. Service of Summons to State of Rajasthan & private defendants",
+        "3. Framing of Issues regarding tenancy origin & continuous possession",
+        "4. Examination of Witnesses & revenue record production",
+        "5. Judgment & Decree declaring Khatedari rights"
+      ],
+      keyPrecedents: [
+        "2026 RRD 220: Long continuous un-objected cultivation with revenue receipts creates strong legal presumption of Khatedari.",
+        "2024 RRD 115: Declaration suit under Sec 88 is not barred by limitation as long as cause of action continues."
+      ],
+      faqs: [
+        { question: "Who is a mandatory party in a Section 88 declaration suit?", answer: "The State of Rajasthan through the District Collector is a mandatory defendant in every Khatedari declaration suit." }
       ]
     }
   ],

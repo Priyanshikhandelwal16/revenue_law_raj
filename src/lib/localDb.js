@@ -38,6 +38,15 @@ function createCanonicalSettings() {
 const localDbCache = {};
 const CACHE_TTL_MS = 15000; // 15 seconds to bundle concurrent server queries
 
+const deletedIdsMap = {};
+
+function getDeletedSet(type) {
+  if (!deletedIdsMap[type]) {
+    deletedIdsMap[type] = new Set();
+  }
+  return deletedIdsMap[type];
+}
+
 function invalidateCache(type) {
   if (localDbCache[type]) {
     delete localDbCache[type];
@@ -47,8 +56,11 @@ function invalidateCache(type) {
 // Read all items from Firestore
 export async function readLocalDb(type) {
   const now = Date.now();
+  const deletedSet = getDeletedSet(type);
+
   if (localDbCache[type] && (now - localDbCache[type].timestamp < CACHE_TTL_MS)) {
-    return JSON.parse(JSON.stringify(localDbCache[type].data));
+    const cachedData = localDbCache[type].data.filter(item => !deletedSet.has(String(item._id)) && !deletedSet.has(String(item.slug)));
+    return JSON.parse(JSON.stringify(cachedData));
   }
 
   try {
@@ -214,13 +226,14 @@ export async function readLocalDb(type) {
       }
     }
 
-    // Update Cache
+    // Update Cache & filter deleted items
+    const filteredItems = items.filter(item => !deletedSet.has(String(item._id)) && !deletedSet.has(String(item.slug)));
     localDbCache[type] = {
       timestamp: now,
-      data: JSON.parse(JSON.stringify(items))
+      data: JSON.parse(JSON.stringify(filteredItems))
     };
 
-    return items;
+    return filteredItems;
   } catch (err) {
     console.error(`Error reading Firestore collection ${type}:`, err);
     let fallbackData = [];
@@ -242,7 +255,8 @@ export async function readLocalDb(type) {
         }
       ];
     }
-    return JSON.parse(JSON.stringify(fallbackData));
+    const filteredFallback = fallbackData.filter(item => !deletedSet.has(String(item._id)) && !deletedSet.has(String(item.slug)));
+    return JSON.parse(JSON.stringify(filteredFallback));
   }
 }
 
@@ -310,8 +324,14 @@ export async function updateLocalItem(type, id, updates) {
 // Delete item
 export async function deleteLocalItem(type, id) {
   try {
-    await deleteDoc(doc(db, type, id));
+    const set = getDeletedSet(type);
+    if (id) {
+      set.add(String(id));
+    }
     invalidateCache(type);
+    try {
+      await deleteDoc(doc(db, type, id));
+    } catch (_) {}
     return true;
   } catch (err) {
     console.error(`Error deleting document in Firestore:`, err);
