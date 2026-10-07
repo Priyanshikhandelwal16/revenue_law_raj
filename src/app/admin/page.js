@@ -28,6 +28,7 @@ const ADMIN_TAB_TITLES = {
   header_cms: 'Header & Navigation Editor',
   pages_cms: 'Website Pages Editor',
   important_rules_cms: 'Important Rules Editor',
+  case_types_cms: 'Types of Cases Editor',
   policies_cms: 'Terms, Privacy & Disclaimer',
   media_library: 'Photos & Files',
   backup_restore: 'Backup & Restore',
@@ -233,7 +234,7 @@ export default function AdminDashboard() {
       } else if (activeTab === 'glossary') {
         const res = await fetch('/api/glossary');
         setGlossary(await res.json());
-      } else if (activeTab === 'settings' || activeTab === 'homepage_cms' || activeTab === 'pages_cms' || activeTab === 'important_rules_cms' || activeTab === 'policies_cms' || activeTab === 'header_cms') {
+      } else if (activeTab === 'settings' || activeTab === 'homepage_cms' || activeTab === 'pages_cms' || activeTab === 'important_rules_cms' || activeTab === 'case_types_cms' || activeTab === 'policies_cms' || activeTab === 'header_cms') {
         const res = await fetch('/api/settings');
         setSettings(await res.json());
       } else if (activeTab === 'media_library') {
@@ -468,8 +469,20 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(`/api/${type}/${id}`, { method: 'DELETE' });
       if (res.ok) {
+        if (type === 'articles') setArticles(prev => prev.filter(item => item._id !== id && item.slug !== id));
+        if (type === 'judgments') setJudgments(prev => prev.filter(item => item._id !== id && item.slug !== id));
+        if (type === 'laws') setLaws(prev => prev.filter(item => item._id !== id && item.slug !== id));
+        if (type === 'notifications') setNotifications(prev => prev.filter(item => item._id !== id && item.slug !== id));
+        if (type === 'downloads') setDownloads(prev => prev.filter(item => item._id !== id && item.slug !== id));
+        if (type === 'comments') setComments(prev => prev.filter(item => item._id !== id && item.slug !== id));
+        if (type === 'queries') setQueries(prev => prev.filter(item => item._id !== id && item.slug !== id));
+        if (type === 'glossary') setGlossary(prev => prev.filter(item => item._id !== id && item.slug !== id));
+
         loadDashboardData();
         showNotification('Record deleted successfully!', 'success');
+      } else {
+        const data = await res.json().catch(() => ({}));
+        showNotification(data.error || 'Failed to delete record', 'error');
       }
     } catch (err) {
       showNotification('Delete failed: ' + err.message, 'error');
@@ -671,6 +684,9 @@ export default function AdminDashboard() {
             </li>
             <li className={`admin-nav-item ${activeTab === 'header_cms' ? 'active' : ''}`}>
               <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('header_cms'); setEditingItem(null); setSidebarOpen(false); }}><Menu size={16} /> Edit Header & Navigation</a>
+            </li>
+            <li className={`admin-nav-item ${activeTab === 'case_types_cms' ? 'active' : ''}`}>
+              <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('case_types_cms'); setEditingItem(null); setSidebarOpen(false); }}><Gavel size={16} /> Edit Types of Cases</a>
             </li>
             <li className={`admin-nav-item ${activeTab === 'important_rules_cms' ? 'active' : ''}`}>
               <a href="#" onClick={(event) => { event.preventDefault(); setActiveTab('important_rules_cms'); setEditingItem(null); setSidebarOpen(false); }}><FileText size={16} /> Edit Important Rules</a>
@@ -2198,6 +2214,11 @@ export default function AdminDashboard() {
             {/* Tab: Edit Header & Navigation */}
             {activeTab === 'header_cms' && (
               <PageSettingsEditor settings={settings} onSaved={loadDashboardData} initialSelectedKey="site_config" />
+            )}
+
+            {/* Tab: Types of Cases */}
+            {activeTab === 'case_types_cms' && (
+              <PageSettingsEditor settings={settings} onSaved={loadDashboardData} initialSelectedKey="case_types_config" />
             )}
 
             {/* Tab: Important Rules */}

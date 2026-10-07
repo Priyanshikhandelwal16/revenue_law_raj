@@ -76,8 +76,14 @@ export async function DELETE(req, { params }) {
       let article = null;
       if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
         article = await Article.findByIdAndDelete(id);
-      } else {
-        article = await Article.findOneAndDelete({ $or: [{ _id: id }, { slug: id }] });
+      }
+      if (!article) {
+        article = await Article.findOneAndDelete({ slug: id });
+      }
+      if (!article) {
+        try {
+          article = await Article.findOneAndDelete({ _id: id });
+        } catch (_) {}
       }
 
       if (article) {

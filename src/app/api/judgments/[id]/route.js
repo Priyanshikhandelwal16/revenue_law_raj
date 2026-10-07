@@ -69,8 +69,14 @@ export async function DELETE(req, { params }) {
       let judgment = null;
       if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
         judgment = await Judgment.findByIdAndDelete(id);
-      } else {
-        judgment = await Judgment.findOneAndDelete({ $or: [{ _id: id }, { slug: id }] });
+      }
+      if (!judgment) {
+        judgment = await Judgment.findOneAndDelete({ slug: id });
+      }
+      if (!judgment) {
+        try {
+          judgment = await Judgment.findOneAndDelete({ _id: id });
+        } catch (_) {}
       }
 
       if (judgment) {

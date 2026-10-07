@@ -23,6 +23,18 @@ function clone(value) {
 }
 
 const FIELD_LABELS = {
+  case_types_config: 'Types of Cases Page Settings',
+  typesListTitle: 'Section A Heading (List-wise Section)',
+  typesListDescription: 'Section A Description',
+  typesList: 'Types of Cases List (1-15 List-wise Items)',
+  cardsTitle: 'Section B Heading (Cards Section)',
+  cardsDescription: 'Section B Description',
+  caseTypes: 'Case Cards & Individual Summary Pages',
+  slug: 'Page URL Slug (e.g. mutation-record-corrections)',
+  statute: 'Statutory Source (e.g. Section 135 RLRA 1956)',
+  competentCourt: 'Competent Court Name',
+  summary: 'Full Case Summary & Detailed Content (Opens on Card Click)',
+  details: 'Key Provisions & Guidelines List (Detail Page Items)',
   important_rules_config: 'Important Rules Page',
   schemaVersion: 'System Version',
   hero: 'Top Banner',
