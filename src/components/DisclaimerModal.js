@@ -16,6 +16,13 @@ export default function DisclaimerModal() {
       if (!hasSeen) {
         setIsOpen(true);
         sessionStorage.setItem('hasSeenDisclaimer', 'true');
+
+        // Auto close after 5 seconds as requested by client
+        const timer = setTimeout(() => {
+          setIsOpen(false);
+        }, 5000);
+
+        return () => clearTimeout(timer);
       }
     }
   }, []);
@@ -110,9 +117,13 @@ export default function DisclaimerModal() {
             Welcome to Rajasthan Revenue Law Platform (Revenue Law Raj)
           </p>
           
-          <div style={{ backgroundColor: '#FAF8F5', borderLeft: '6px solid var(--accent-gold)', padding: '1.5rem 1.75rem', borderRadius: '0 10px 10px 0', marginBottom: '1.25rem', fontSize: '1.1rem', color: '#000000', fontWeight: 600, lineHeight: 1.7 }}>
+          <div style={{ backgroundColor: '#FAF8F5', borderLeft: '6px solid var(--accent-gold)', padding: '1.5rem 1.75rem', borderRadius: '0 10px 10px 0', marginBottom: '1rem', fontSize: '1.1rem', color: '#000000', fontWeight: 600, lineHeight: 1.7 }}>
             This site provides general information and for any professional legal advice please contact a professional legal expert.
           </div>
+
+          <p style={{ marginBottom: 0, color: '#777777', fontSize: '0.88rem', fontWeight: 500 }}>
+            Notice auto-dismisses in 5 seconds.
+          </p>
         </div>
 
         {/* Footer Actions */}
