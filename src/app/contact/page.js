@@ -79,17 +79,6 @@ export default function ContactPage() {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              {config.contact.address && config.contact.addressLabel ? (
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ backgroundColor: 'rgba(197, 168, 128, 0.1)', color: 'var(--primary-blue)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <MapPin size={20} />
-                  </div>
-                  <div>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-blue)' }}>{config.contact.addressLabel}</h3>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{config.contact.address}</p>
-                  </div>
-                </div>
-              ) : null}
 
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                 <div style={{ backgroundColor: 'rgba(197, 168, 128, 0.1)', color: 'var(--primary-blue)', width: '48px', height: '48px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>

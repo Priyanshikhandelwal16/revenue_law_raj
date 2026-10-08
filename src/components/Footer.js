@@ -123,12 +123,6 @@ export default function Footer() {
               {footer?.contact?.title || 'Official Contact'}
             </h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem', color: 'var(--text-dark)', fontSize: '0.9rem' }}>
-              {footer?.contact?.address ? (
-                <li style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                  <MapPin size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.15rem' }} />
-                  <span>{footer.contact.address}</span>
-                </li>
-              ) : null}
               <li style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
                 <Phone size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
                 <span>{footer?.contact?.phone || ''}</span>
