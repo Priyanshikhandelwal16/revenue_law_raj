@@ -3,7 +3,10 @@ import Article from '@/lib/models/Article';
 import Judgment from '@/lib/models/Judgment';
 
 export default async function sitemap() {
-  const rawBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://revenuelawraj.com';
+  let rawBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://revenuelawraj.com';
+  if (!rawBaseUrl || rawBaseUrl.includes('localhost')) {
+    rawBaseUrl = 'https://revenuelawraj.com';
+  }
   const baseUrl = rawBaseUrl.replace(/\/$/, '');
   const nowISO = new Date().toISOString();
 
