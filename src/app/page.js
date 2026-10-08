@@ -208,27 +208,11 @@ export default async function HomePage() {
               <Scale size={15} style={{ color: '#9A7B56' }} />
               <span style={{ color: '#9A7B56', fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '1.5px' }}>{heroEyebrow}</span>
             </div>
-            <h1 style={{ fontSize: 'clamp(1.8rem, 6vw, 3.8rem)', fontWeight: 700, lineHeight: 1.15, marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', color: '#000000' }}>
-              {heroTitle} <br />
-              <span style={{ color: '#B38F4F' }}>{heroSubtitle}</span>
-            </h1>
 
-            {/* Highlighted Notice Lines (Requirement 1) */}
-            <div style={{
-              marginBottom: '1.75rem',
-              padding: '1.25rem 1.5rem',
-              backgroundColor: '#FFFBF3',
-              border: '1.5px solid #E5C483',
-              borderLeft: '5px solid #B38F4F',
-              borderRadius: '10px',
-              boxShadow: '0 4px 12px rgba(179, 143, 79, 0.08)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.75rem',
-              maxWidth: '680px'
-            }}>
+            {/* Highlighted Notice & Important Lines (Added ABOVE Overview of Revenue Law) */}
+            <div className="hero-notice-card">
               {heroHighlightLine1 && (
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                <div className="hero-notice-item">
                   <span style={{ backgroundColor: '#B38F4F', color: '#FFFFFF', padding: '0.2rem 0.55rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', flexShrink: 0, marginTop: '0.15rem', letterSpacing: '0.5px' }}>Notice</span>
                   <p style={{ margin: 0, fontWeight: 700, color: '#1E1B18', fontSize: '0.96rem', lineHeight: 1.55 }}>
                     {heroHighlightLine1}
@@ -236,7 +220,7 @@ export default async function HomePage() {
                 </div>
               )}
               {heroHighlightLine2 && (
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', borderTop: '1px dashed #E2D2B4', paddingTop: '0.65rem' }}>
+                <div className="hero-notice-item hero-notice-item-important">
                   <span style={{ backgroundColor: '#1E1B18', color: '#D4AF37', padding: '0.2rem 0.55rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', flexShrink: 0, marginTop: '0.15rem', letterSpacing: '0.5px' }}>Important</span>
                   <p style={{ margin: 0, fontWeight: 600, color: '#333333', fontSize: '0.92rem', lineHeight: 1.55 }}>
                     {heroHighlightLine2}
@@ -244,6 +228,11 @@ export default async function HomePage() {
                 </div>
               )}
             </div>
+
+            <h1 style={{ fontSize: 'clamp(1.8rem, 6vw, 3.8rem)', fontWeight: 700, lineHeight: 1.15, marginBottom: '1.5rem', fontFamily: 'var(--font-serif)', color: '#000000' }}>
+              {heroTitle} <br />
+              <span style={{ color: '#B38F4F' }}>{heroSubtitle}</span>
+            </h1>
 
             {/* Hero Description — Preamble text (Requirement 2) */}
             <div style={{ fontSize: '1rem', color: '#000000', lineHeight: 1.8, maxWidth: '680px', fontWeight: 500 }}>
@@ -311,32 +300,19 @@ export default async function HomePage() {
                     
                     {/* Clickable Judicial Matters Notice — placed directly under heading */}
                     <Link href={categoriesSection.noticeUrl || "/types-of-cases#first-schedule"} style={{ textDecoration: 'none', display: 'block' }} title="Click to view First Schedule in Types of Cases">
-                      <div 
-                        className="judicial-matters-card"
-                        style={{ 
-                          backgroundColor: 'rgba(197, 168, 128, 0.12)', 
-                          borderLeft: '4px solid var(--accent-gold)', 
-                          padding: '1.1rem 1.35rem', 
-                          borderRadius: '0 8px 8px 0', 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          gap: '0.85rem', 
-                          border: '1px solid rgba(197,168,128,0.35)', 
-                          borderLeftWidth: '4px',
-                          cursor: 'pointer',
-                          transition: 'all 0.25s ease'
-                        }}
-                      >
-                        <Gavel size={22} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
-                        <div style={{ flexGrow: 1 }}>
-                          <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.2rem' }}>
-                            {categoriesSection.noticeEyebrow || 'Judicial Matters'}
+                      <div className="judicial-matters-card">
+                        <div className="judicial-matters-content">
+                          <Gavel size={22} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.15rem' }} />
+                          <div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.2rem' }}>
+                              {categoriesSection.noticeEyebrow || 'Judicial Matters'}
+                            </div>
+                            <p style={{ color: '#000000', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 600, margin: 0 }}>
+                              {categoriesSection.noticeText || 'The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the First Schedule of the Act.'}
+                            </p>
                           </div>
-                          <p style={{ color: '#000000', fontSize: '0.95rem', lineHeight: 1.6, fontWeight: 600, margin: 0 }}>
-                            {categoriesSection.noticeText || 'The list of judicial matters under the Rajasthan Land Revenue Act, 1956 are mentioned in the First Schedule of the Act.'}
-                          </p>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', color: 'var(--accent-gold)', fontWeight: 700, fontSize: '0.82rem', flexShrink: 0 }}>
+                        <div className="judicial-matters-btn">
                           <span>{categoriesSection.noticeLabel || 'View First Schedule'}</span>
                           <ChevronRight size={18} />
                         </div>
@@ -507,7 +483,7 @@ export default async function HomePage() {
                           </li>
                         ))}
                       </ul>
-                      <Link href="/articles/land-conversion-90-a" className="btn-primary" style={{ padding: '0.85rem 1.5rem', fontSize: '0.85rem', borderRadius: '6px', lineHeight: 1.5, textAlign: 'center', display: 'inline-block', color: '#000000', backgroundColor: 'var(--accent-gold)', fontWeight: 700 }}>
+                      <Link href="/articles/land-conversion-90-a" className="btn-primary" style={{ padding: '0.85rem 1.5rem', fontSize: '0.85rem', borderRadius: '6px', lineHeight: 1.5, textAlign: 'center', display: 'inline-block', color: '#000000', backgroundColor: 'var(--accent-gold)', fontWeight: 700, maxWidth: '100%', whiteSpace: 'normal', wordBreak: 'break-word' }}>
                         Read Section 90-A of the rajasthan land revenue act 1956  also read conversion of agricultural land into non agricultural land rules 1961
                       </Link>
                     </div>

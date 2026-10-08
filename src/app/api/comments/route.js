@@ -96,7 +96,7 @@ export async function POST(req) {
                 ${(body.content || '').replace(/\n/g, '<br />')}
               </div>
               <p style="font-size: 0.8rem; color: #64748B; margin-top: 2rem; border-top: 1px solid #E2E8F0; padding-top: 1rem;">
-                Revenue Law Rajasthan · B-30, Jamuna Nagar, Sodala, Jaipur · +91 99820 57461
+                Revenue Law Rajasthan · +91 99820 57461
               </p>
             </div>
           `

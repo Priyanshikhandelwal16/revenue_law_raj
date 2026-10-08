@@ -821,7 +821,7 @@
           ],
           "contact": {
             "title": "Official Contact",
-            "address": "B-30, Jamuna Nagar, Sodala, Jaipur, Rajasthan – 302006",
+            "address": "",
             "phone": "+91 99820 57461",
             "email": "revenuelawraj@gmail.com"
           },
@@ -1209,8 +1209,8 @@
           "description": "You can reach us through any of the channels below or submit the form on the right."
         },
         "contact": {
-          "addressLabel": "Mailing Address",
-          "address": "B-30, Jamuna Nagar, Sodala, Jaipur, Rajasthan – 302006",
+          "addressLabel": "",
+          "address": "",
           "phoneLabel": "Secretary Helpline",
           "phone": "+91 99820 57461",
           "emailLabel": "Email Support",
