@@ -31,7 +31,7 @@ export default async function sitemap() {
     '/disclaimer',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date().toISOString().split('T')[0],
+    lastModified: new Date(),
     changeFrequency: route === '' ? 'daily' : 'weekly',
     priority: route === '' ? 1.0 : 0.8,
   }));
@@ -41,7 +41,7 @@ export default async function sitemap() {
     const articles = await Article.find({ status: 'published' }).select('slug updatedAt').lean();
     const articleRoutes = articles.map((a) => ({
       url: `${baseUrl}/articles/${a.slug}`,
-      lastModified: a.updatedAt ? new Date(a.updatedAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+      lastModified: a.updatedAt ? new Date(a.updatedAt) : new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     }));
@@ -49,7 +49,7 @@ export default async function sitemap() {
     const judgments = await Judgment.find({ status: 'published' }).select('_id updatedAt').lean();
     const judgmentRoutes = judgments.map((j) => ({
       url: `${baseUrl}/judgments/${j._id}`,
-      lastModified: j.updatedAt ? new Date(j.updatedAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+      lastModified: j.updatedAt ? new Date(j.updatedAt) : new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     }));
