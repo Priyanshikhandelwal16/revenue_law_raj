@@ -37,24 +37,34 @@ export default async function sitemap() {
   }));
 
   try {
-    await dbConnect();
-    const articles = await Article.find({ status: 'published' }).select('slug updatedAt').lean();
-    const articleRoutes = articles.map((a) => ({
-      url: `${baseUrl}/articles/${a.slug}`,
-      lastModified: a.updatedAt ? new Date(a.updatedAt) : new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    }));
+    const fetchDynamicRoutes = async () => {
+      await dbConnect();
+      const [articles, judgments] = await Promise.all([
+        Article.find({ status: 'published' }).select('slug updatedAt').lean(),
+        Judgment.find({ status: 'published' }).select('_id updatedAt').lean(),
+      ]);
 
-    const judgments = await Judgment.find({ status: 'published' }).select('_id updatedAt').lean();
-    const judgmentRoutes = judgments.map((j) => ({
-      url: `${baseUrl}/judgments/${j._id}`,
-      lastModified: j.updatedAt ? new Date(j.updatedAt) : new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    }));
+      const articleRoutes = articles.map((a) => ({
+        url: `${baseUrl}/articles/${a.slug}`,
+        lastModified: a.updatedAt ? new Date(a.updatedAt) : new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.7,
+      }));
 
-    return [...staticRoutes, ...articleRoutes, ...judgmentRoutes];
+      const judgmentRoutes = judgments.map((j) => ({
+        url: `${baseUrl}/judgments/${j._id}`,
+        lastModified: j.updatedAt ? new Date(j.updatedAt) : new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.7,
+      }));
+
+      return [...articleRoutes, ...judgmentRoutes];
+    };
+
+    const timeout = new Promise((resolve) => setTimeout(() => resolve([]), 1500));
+    const dynamicRoutes = await Promise.race([fetchDynamicRoutes(), timeout]);
+
+    return [...staticRoutes, ...dynamicRoutes];
   } catch (e) {
     return staticRoutes;
   }
