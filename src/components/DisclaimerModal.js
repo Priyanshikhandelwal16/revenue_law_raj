@@ -112,6 +112,7 @@ export default function DisclaimerModal() {
           
           <div style={{ backgroundColor: '#FAF8F5', borderLeft: '6px solid var(--accent-gold)', padding: '1.5rem 1.75rem', borderRadius: '0 10px 10px 0', marginBottom: '1.25rem', fontSize: '1.1rem', color: '#000000', fontWeight: 600, lineHeight: 1.7 }}>
             This site provides general information and for any professional legal advice please contact a professional legal expert.
+          </div>
         </div>
 
         {/* Footer Actions */}
