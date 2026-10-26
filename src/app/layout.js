@@ -9,11 +9,11 @@ const gscVerification = process.env.NEXT_PUBLIC_GSC_VERIFICATION || 'Iod42uJ4C5c
 
 export const metadata = {
   title: {
-    default: 'Overview of Rajasthan Revenue Law | Revenue Law Raj',
+    default: 'Revenue Law Raj | Rajasthan Revenue Law, Judgments & Legal Portal',
     template: '%s | Revenue Law Raj'
   },
-  description: 'Revenue Law Raj is dedicated to Rajasthan Revenue Law, designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The system offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge through a structured and easy-to-understand publishing system.',
-  keywords: ['Rajasthan revenue law', 'Board of Revenue Ajmer', 'Rajasthan Land Revenue Act 1956', 'Rajasthan Tenancy Act 1955', '90-A land conversion', 'revenue judgments'],
+  description: 'Revenue Law Raj is dedicated to Rajasthan Revenue Law, designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources. The system offers Revenue Laws, important judgments, government notifications, legal concepts, court hierarchy, land conversion guidance, and practical legal knowledge.',
+  keywords: ['Revenue Law Raj', 'Revenue Law Rajasthan', 'Rajasthan revenue law', 'Board of Revenue Ajmer', 'Rajasthan Land Revenue Act 1956', 'Rajasthan Tenancy Act 1955', '90-A land conversion', 'revenue judgments', 'High court revenue judgments'],
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://revenuelawraj.com'),
   alternates: {
     canonical: '/',
@@ -24,7 +24,7 @@ export const metadata = {
     apple: '/icon.png',
   },
   openGraph: {
-    title: 'Overview of Rajasthan Revenue Law',
+    title: 'Revenue Law Raj | Rajasthan Revenue Law, Judgments & Legal Portal',
     description: 'Revenue Law Raj is dedicated to Rajasthan Revenue Law, designed to provide advocates, revenue officers, legal professionals, researchers, law students, and landowners with authentic legal resources.',
     url: '/',
     siteName: 'Revenue Law Raj',
@@ -44,6 +44,37 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  "@id": "https://revenuelawraj.com/#website",
+                  "url": "https://revenuelawraj.com/",
+                  "name": "Revenue Law Raj",
+                  "alternateName": ["RevenueLawRaj", "Revenue Law Rajasthan"],
+                  "description": "Comprehensive legal portal for Rajasthan Revenue Law, Board of Revenue judgments, Land Revenue Act, and Tenancy Act resources.",
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Revenue Law Raj",
+                    "url": "https://revenuelawraj.com/",
+                    "logo": "https://revenuelawraj.com/icon.png"
+                  }
+                },
+                {
+                  "@type": "Organization",
+                  "@id": "https://revenuelawraj.com/#organization",
+                  "name": "Revenue Law Raj",
+                  "url": "https://revenuelawraj.com/",
+                  "logo": "https://revenuelawraj.com/icon.png"
+                }
+              ]
+            })
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
